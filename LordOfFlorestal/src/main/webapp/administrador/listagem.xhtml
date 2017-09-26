@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/layout.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12">
+                    <h1>Listagem</h1>
+                    <p:separator />
+                </div>
+            </div>
+            <p:tabView>
+                <p:tab title="Carta" >
+                    <p:dataTable value="#{cartaBean.cartas}" var="carta" reflow="true">
+                        <p:column headerText="Id">
+                            <h:outputText value="#{carta.id}" />
+                        </p:column>
+
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{carta.nome}" />
+                        </p:column>
+
+                        <p:column headerText="Img">
+                            <h:outputText value="#{carta.imagem}" />
+                        </p:column>
+
+                        <p:column headerText="Tipo Carta">
+                            <h:outputText value="#{carta.tipoCarta}" />
+                        </p:column>
+
+                        <p:column headerText="Subtipo Carta">
+                            <h:outputText value="#{carta.subtipoCarta}" />
+                        </p:column>
+
+                        <p:column headerText="Efeito">
+                            <h:outputText value="#{carta.efeito}" />
+                        </p:column>
+
+                        <p:column headerText="Descrição">
+                            <h:outputText value="#{carta.descricao}" />
+                        </p:column>
+
+                        <p:column headerText="Valor ataque">
+                            <h:outputText value="#{carta.valorAtaque}" />
+                        </p:column>
+
+                        <p:column headerText="Valor Defesa">
+                            <h:outputText value="#{carta.valorDefesa}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Jogador" >
+                    <p:dataTable value="#{jogadorBean.jogadores}" var="jogador" reflow="true">
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{jogador.nome}" />
+                        </p:column>
+
+                        <p:column headerText="E-mail">
+                            <h:outputText value="#{jogador.email}" />
+                        </p:column>
+
+                        <p:column headerText="Matricula">
+                            <h:outputText value="#{jogador.matricula}" />
+                        </p:column>
+
+                        <p:column headerText="Img">
+                            <h:outputText value="#{jogador.imagem}" />
+                        </p:column>
+
+                        <p:column headerText="Login">
+                            <h:outputText value="#{jogador.login}" />
+                        </p:column>
+
+                        <p:column headerText="Tipo Jogador">
+                            <h:outputText value="#{jogador.tipoJogador}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Vale Carta" >
+                    <p:dataTable value="#{valeCartaBean.valeCartas}" var="vale" reflow="true">
+                        <p:column headerText="Código">
+                            <h:outputText value="#{vale.codigo}" />
+                        </p:column>
+
+                        <p:column headerText="Carta">
+                            <h:outputText value="#{vale.carta}" />
+                        </p:column>
+                        
+                        <p:column headerText="Válido">
+                            <h:outputText value="#{vale.valido}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+            </p:tabView>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/layout.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12" style="padding-top: 10px;">
+                    <h1>Cadastro de Jogador</h1>
+                    <p:separator/>
+                    <p:messages autoUpdate="true" closable="true" />
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <div class="ui-g-12 ui-md-8 noMargin">
+                        <div class="ui-g-12 ui-md-8">
+                            <p:outputLabel for="nome" value="Nome" class="label"/>
+                            <p:inputText id="nome" value="#{jogadorBean.jogador.nome}"  />
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:outputLabel for="tipo" value="Tipo" class="label"/>
+                            <p:selectOneMenu id="tipo" value="#{jogadorBean.jogador.tipoJogador}" >
+                                <f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+                                <f:selectItems value="#{jogadorBean.tipoJogador}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:outputLabel for="matricula" value="Matricula" class="label"/>
+                            <p:inputText id="matricula" value="#{jogadorBean.jogador.matricula}" />
+                        </div>
+                        <div class="ui-g-12 ui-md-8">
+                            <p:outputLabel for="email" value="E-mail" class="label"/>
+                            <p:inputText id="email" value="#{jogadorBean.jogador.email}" />
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:outputLabel for="login" value="Login" class="label"/>
+                            <p:inputText id="login" value="#{jogadorBean.jogador.login}" />
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:outputLabel for="senha" value="Senha" class="label"/>
+                            <p:password id="senha" value="#{jogadorBean.jogador.senha}" />
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:outputLabel for="confirmarSenha" value="Confirmar Senha" class="label"/>
+                            <p:password id="confirmarSenha" value="#{jogadorBean.confirmarSenha}" />
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-4 noMargin">
+                        <div class="ui-g-12">
+                            <p:outputLabel for="img" value="Imagem" class="label"/><br />
+                            <p:fileUpload id="img" mode="simple" class="input" value="#{jogadorBean.jogador.imagem}" />
+                        </div>
+                        <div class="ui-g-12">
+                            <center>
+                                <div style="background-color: #e3e3c9; width: 200px; height: 200px; margin-top: 15px;" />
+                            </center>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-8 noMargin">
+                        <div class="ui-g-12 ui-md-8" />
+                        <div class="ui-g-12 ui-md-4" >
+                            <p:commandButton value="Salvar" action="#{jogadorBean.salvar}" process="@form" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

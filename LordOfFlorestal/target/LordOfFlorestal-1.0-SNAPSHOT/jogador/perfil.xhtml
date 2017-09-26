@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/layout.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12" style="padding-top: 10px;">
+                    <h1>Perfil</h1>
+                    <p:separator/>
+                </div>
+                <div class="ui-g-12 ui-md-8 noMargin">
+                    <div class="ui-g-12 ui-md-10">
+                        <p:outputLabel for="nome" value="Nome" class="label" />
+                        <p:inputText id="nome" />
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        <p:outputLabel for="tipo" value="Tipo" class="label" />
+                        <p:inputText disabled="true" id="tipo" value="ALUNO" />
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <p:outputLabel for="matricula" value="Matricula" class="label" />
+                        <p:inputText disabled="true" id="matricula" />
+                    </div>
+                    <div class="ui-g-12 ui-md-8">
+                        <p:outputLabel for="email" value="E-mail" class="label" />
+                        <p:inputText id="email" />
+                    </div>
+                    <div class="ui-g-12 ui-md-10">
+                        <p:outputLabel for="login" value="Login" class="label" />
+                        <p:inputText id="login" />
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        <p:commandButton value="Verificar" class="verificar" />
+                    </div>
+                    <div class="ui-g-12 noMargin">
+                        <h3>Alterar senha</h3>
+                        <p:separator />
+                    </div>
+                    <div class="ui-g-12 noMargin">
+                        <div class="ui-g-12">
+                            <p:outputLabel for="senhaAtual" value="Senha atual" class="label" />
+                            <p:password id="senhaAtual" />
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <p:outputLabel for="novaSenha" value="Nova senha" class="label" />
+                            <p:password id="novaSenha"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <p:outputLabel for="confirmarSenha" value="Confirmar senha" class="label" />
+                            <p:password id="confirmarSenha" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="ui-g-12 ui-md-4 noMargin">
+                    <div class="ui-g-12">
+                        <center>
+                            <h:graphicImage library="img" name="user-icon.png" height="200px;" />
+                            <br/><br/>
+                            <p:fileUpload mode="simple" />
+                        </center>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-8 noMargin">
+                    <div class="ui-g-12 ui-md-8"/>
+                    <div class="ui-g-12 ui-md-4">
+                        <p:commandButton value="Salvar" />
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

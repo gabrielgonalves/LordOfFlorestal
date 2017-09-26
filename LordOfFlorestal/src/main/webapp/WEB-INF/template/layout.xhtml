@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Lord of Florestal</title>
+
+        <h:outputStylesheet library="css" name="custom.css" />
+        <h:outputStylesheet library="css" name="layout.css" />
+        <h:outputStylesheet library="css" name="components.css" />
+
+        <h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />
+        <h:outputScript target="body" library="js" name="app.js" />
+    </h:head>
+
+    <h:body>
+        <header class="topbar">
+            <h:outputText value="Lord Of Florestal" style="color: white; font-size: 30px; padding: 5px; padding-left: 15px; float: left; font-family: 'lord';" />
+            <a href="#" class="toggle  js-toggle"><i class="fa  fa-bars"></i></a>
+        </header>
+        <aside class="sidebar js-sidebar">
+            <div class="ui-g">
+                <center>
+                    <br/>
+                    <h:graphicImage library="img" name="user-icon.png" width="80%"/>
+                    <br/>
+                    <h:outputText value="Meu Nome É João" style="font-weight: bold;" />
+                    <br/><br/>
+                </center>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li class="#{menuBean.getItemCssClass('/jogador/index.xhtml')}">
+                        <h:link outcome="/jogador/index.xhtml"><i class="fa  fa-fw  fa-home"></i>Dashboard</h:link>
+                    </li>
+                    <li class="#{menuBean.getItemCssClass('/jogador/perfil.xhtml')}">
+                        <h:link outcome="/jogador/perfil.xhtml"><i class="fa  fa-fw  fa-user"></i>Perfil</h:link>
+                    </li>
+                    <li class="#{menuBean.getItemCssClass('/jogador/resgate.xhtml')}">
+                        <h:link outcome="/jogador/resgate.xhtml"><i class="fa  fa-fw  fa-plus"></i>Resgate</h:link>
+                    </li>
+                    <li class="#{menuBean.getItemCssClass('/administrador/cadastrarCarta.xhtml')}">
+                        <h:link outcome="/administrador/cadastrarCarta.xhtml"><i class="fa  fa-fw  fa-square"></i>Carta</h:link>
+                    </li>
+                    <li class="#{menuBean.getItemCssClass('/administrador/cadastrarJogador.xhtml')}">
+                        <h:link outcome="/administrador/cadastrarJogador.xhtml"><i class="fa  fa-fw  fa-user-plus"></i>Jogador</h:link>
+                    </li>
+                    <li class="#{menuBean.getItemCssClass('/administrador/cadastrarValeCarta.xhtml')}">
+                        <h:link outcome="/administrador/cadastrarValeCarta.xhtml"><i class="fa  fa-fw  fa-ticket"></i>Vale Carta</h:link>
+                    </li>
+                    <li class="#{menuBean.getItemCssClass('/administrador/listagem.xhtml')}">
+                        <h:link outcome="/administrador/listagem.xhtml"><i class="fa  fa-fw  fa-list"></i>Listagem</h:link>
+                    </li>
+                    <li>
+                        <h:link><i class="fa  fa-fw  fa-arrow-circle-left"></i>Sair</h:link>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <section class="content  js-content">
+            <ui:insert name="content"/>
+        </section>
+    </h:body>
+</html>
+

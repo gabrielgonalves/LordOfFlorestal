@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Lord Of Florestal</title>
+
+        <h:outputStylesheet library="css" name="custom.css" />
+        <h:outputStylesheet library="css" name="layout.css" />
+        <h:outputStylesheet library="css" name="components.css" />
+
+        <h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />
+        <h:outputScript target="body" library="js" name="app.js" />
+    </h:head>
+    <style>
+        @media (min-width: 640px) {
+            .ui-icon{
+                display: none !important;
+            }
+        }
+
+        .ui-carousel .ui-carousel-dropdown, .ui-carousel .ui-carousel-mobiledropdown {
+            display: none !important;
+        }
+
+        .ui-carousel .ui-carousel-viewport .ui-carousel-items .ui-carousel-item{
+            border: none;
+            padding: 4px;
+        }
+        .ui-carousel .ui-carousel-viewport{
+            margin-top: 5px;
+        }
+
+
+        .ui-carousel{
+            border: none;
+        }
+
+        .ui-carousel .ui-carousel-header{
+            background-color: #cc3e30;
+            color: white;
+        }
+
+        .ui-selectbooleanbutton {
+            color : red !important;
+        }
+
+        .ui-state-active{
+            color: green !important;
+        }
+    </style>
+    <h:body style="background-image: url(../resources/img/bg.jpg); background-repeat: repeat;">
+        <h:form prependId="false"> 
+            <p:growl />
+            <div class="ui-g ui-fluid">
+                <div class="ui-md-1" />
+                <div class="ui-g-12 ui-md-10 noMargin">
+                    <div class="ui-g-12 noMargin">
+                        <div class="ui-g-12" style="height: 200px;">
+                            <p:carousel itemStyleClass="teste" headerText="Mesa Oponente" responsive="true" numVisible="#{jogoBean.mesa.size()}" id="m" value="#{jogoBean.mesa}" var="m" >
+                                <center>
+                                    <p:graphicImage library="img" name="#{m.imagem}" width="100" />
+                                </center>
+                            </p:carousel>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 noMargin">
+                        <div class="ui-g-12" style="height: 200px;">
+                            <p:carousel headerText="Sua Mesa" responsive="true" numVisible="#{jogoBean.mesa.size()}"  id="mesa" value="#{jogoBean.mesa}" var="carta" >
+                                <center>
+                                    <p:graphicImage library="img" name="#{carta.imagem}" width="100" />
+                                </center>
+                            </p:carousel>
+                        </div>
+                        <div class="ui-g-12">
+                            <p:carousel headerText="Sua Mão" responsive="true" numVisible="#{jogoBean.mao.size()}" id="mao" value="#{jogoBean.mao}" var="suasCartas">
+                                <center>
+                                    <p:graphicImage library="img" name="#{suasCartas.imagem}" width="100" />
+                                </center>
+                                <p:selectBooleanButton style="background-color: white !important;" onLabel="Ataque" offLabel="Defesa" /><br/>
+                                <p:commandButton style="background-color: white !important;" value="Descer" action="#{jogoBean.descer()}" update="mao mesa m" >
+                                    <f:setPropertyActionListener target="#{jogoBean.carta}" value="#{suasCartas}" />
+                                </p:commandButton>
+                            </p:carousel>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-md-1" />
+            </div>
+                <p:diagram value="#{jogoBean.model}" style="height:600px" styleClass="ui-widget-content" var="el">
+            </p:diagram>
+        </h:form>
+    </h:body>
+</html>
+

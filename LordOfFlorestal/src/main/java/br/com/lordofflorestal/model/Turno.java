@@ -1,0 +1,78 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.lordofflorestal.model;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+/**
+ *
+ * @author gabriel
+ */
+public class Turno implements Serializable {
+
+    private int id;
+    private List<ItemTurno> itensTurno;
+
+    public Turno() {
+        itensTurno = new ArrayList();
+    }
+
+    public Turno(int id, List<ItemTurno> itensTurno) {
+        this.id = id;
+        this.itensTurno = itensTurno;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<ItemTurno> getItensTurno() {
+        return itensTurno;
+    }
+
+    public void setItensTurno(List<ItemTurno> itensTurno) {
+        this.itensTurno = itensTurno;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.itensTurno);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Turno other = (Turno) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.itensTurno, other.itensTurno)) {
+            return false;
+        }
+        return true;
+    }
+}
