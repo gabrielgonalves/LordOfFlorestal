@@ -9,14 +9,15 @@ import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  *
  * @author gabriel
  */
+@Entity
 public class ValeCarta implements Serializable {
 
+    @Id
     private String codigo;
     private Carta carta;
     private boolean valido;

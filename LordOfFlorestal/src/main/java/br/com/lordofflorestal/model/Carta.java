@@ -8,6 +8,8 @@ package br.com.lordofflorestal.model;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -23,7 +25,9 @@ public class Carta implements Serializable {
     protected int id;
     protected String nome;
     protected String imagem;
+    @Enumerated(EnumType.STRING)
     protected TipoCarta tipoCarta;
+    @Enumerated(EnumType.STRING)
     protected SubtipoCarta subtipoCarta;
     protected String efeito;
     protected String descricao;

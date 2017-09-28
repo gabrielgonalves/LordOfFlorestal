@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 /**
@@ -24,6 +24,7 @@ import javax.persistence.ManyToMany;
 public class Jogador implements Serializable {
 
     private String nome;
+    @Enumerated(EnumType.STRING)
     private TipoJogador tipoJogador;
     @Id
     private int matricula;
