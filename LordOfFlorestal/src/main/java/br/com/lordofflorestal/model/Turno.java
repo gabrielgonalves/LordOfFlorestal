@@ -9,18 +9,36 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author gabriel
  */
+@Entity
+@Table(name = "Turno")
 public class Turno implements Serializable {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id_turno")
     private int id;
+    @OneToMany(mappedBy = "turno", fetch = FetchType.LAZY)
     private List<ItemTurno> itensTurno;
+    @ManyToOne
+    @JoinColumn(name = "id_duelo")
+    private Duelo duelo;
+    @ManyToOne
+    @JoinColumn(name = "matricula_jogador")
+    private Jogador jogador;
 
     public Turno() {
         itensTurno = new ArrayList();

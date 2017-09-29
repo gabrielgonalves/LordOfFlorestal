@@ -15,20 +15,25 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author gabriel
  */
 @Entity
+@Table(name = "Jogador")
 public class Jogador implements Serializable {
 
     private String nome;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private TipoJogador tipoJogador;
     @Id
+    @Column(name = "matricula_jogador")
     private int matricula;
     private String email;
     private String login;
@@ -37,6 +42,7 @@ public class Jogador implements Serializable {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] imagem;
     @ManyToMany
+    @JoinTable(name = "Jogador_has_Carta", joinColumns = @JoinColumn(name = "matricula_jogador", referencedColumnName = "matricula_jogador"), inverseJoinColumns = @JoinColumn(name = "id_carta"))
     private List<Carta> cartas;
     @Embedded
     private EstatisticaJogador estatisticaJogador;

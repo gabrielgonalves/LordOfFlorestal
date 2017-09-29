@@ -6,6 +6,7 @@
 package br.com.lordofflorestal.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
@@ -15,9 +16,13 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class EstatisticaJogador implements Serializable {
 
+    @Column(name = "num_jogos")
     private int numJogos;
+    @Column(name = "num_jogos_ganho")
     private int numJogosGanho;
+    @Column(name = "num_jogos_perdido")
     private int numJogosPerdido;
+    @Column(name = "num_jogos_ganho_lord")
     private int numJogosGanhoLord;
 
     public EstatisticaJogador() {

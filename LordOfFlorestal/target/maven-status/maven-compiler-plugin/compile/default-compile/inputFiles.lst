@@ -19,6 +19,7 @@
 /home/gabriel/Documentos/Projeto Orientado a Computação/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/conversor/CartaConversor.java
 /home/gabriel/Documentos/Projeto Orientado a Computação/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/filter/ConexaoHibernateFilter.java
 /home/gabriel/Documentos/Projeto Orientado a Computação/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/DashboardBean.java
+/home/gabriel/Documentos/Projeto Orientado a Computação/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/ImageStreamer.java
 /home/gabriel/Documentos/Projeto Orientado a Computação/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/ValeCarta.java
 /home/gabriel/Documentos/Projeto Orientado a Computação/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/hibernate/DueloDAOHibernate.java
 /home/gabriel/Documentos/Projeto Orientado a Computação/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/ItemTurno.java

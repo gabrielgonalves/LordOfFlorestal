@@ -11,4 +11,5 @@ package br.com.lordofflorestal.model;
  */
 public enum AcaoTurno {
     ATACAR, BAIXAR, COMPRAR;
+
 }

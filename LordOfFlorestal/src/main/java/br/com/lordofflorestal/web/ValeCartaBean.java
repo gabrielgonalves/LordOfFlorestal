@@ -29,7 +29,6 @@ public class ValeCartaBean {
     private List<ValeCarta> vales = new ArrayList();
 
     public String gerar() {
-        carta = null;
         for (int i = 0; i < qt; i++) {
             UUID uuid = UUID.randomUUID();
             String codigo = uuid.toString();

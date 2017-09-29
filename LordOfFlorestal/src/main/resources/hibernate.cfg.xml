@@ -5,11 +5,11 @@
         <!-- Configuração da conexão com o banco MySQL e dialeto -->
         <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/lordofflorestal</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/LordOfFlorestal</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
         <property name="current_session_context_class">thread</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
         
         <!-- Usando as configurações do C3PO para pool de conexões -->
         <property name="c3po.min-size">5</property>
@@ -19,8 +19,9 @@
         <property name="c3po.idle_test_period">3000</property>
         
         <!-- Configurações de Debug -->
+        <property name="show_sql">true</property>
         <property name="format_sql">true</property>
-        <property name="generate_statistics">true</property>
+        <property name="generate_statistics">false</property>
         <property name="use_sql_comments">true</property>
         
         <!-- Mapeamento das classes -->

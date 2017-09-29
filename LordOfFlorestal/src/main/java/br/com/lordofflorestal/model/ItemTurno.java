@@ -7,20 +7,39 @@ package br.com.lordofflorestal.model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author gabriel
  */
+@Entity
+@Table(name = "ItemTurno")
 public class ItemTurno implements Serializable {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id_item_turno")
     private int id;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "acao_turno")
     private AcaoTurno acaoTurno;
+    @ManyToOne
+    @JoinColumn(name = "id_carta_jogo")
     private CartaJogo cartaJogo;
-
+    @ManyToOne
+    @JoinColumn(name = "id_turno")
+    private Turno turno;
+    
     public ItemTurno() {
     }
 

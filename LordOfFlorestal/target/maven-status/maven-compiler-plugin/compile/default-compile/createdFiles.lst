@@ -48,3 +48,4 @@ br/com/lordofflorestal/web/ValeCartaBean.class
 br/com/lordofflorestal/util/conversor/CartaConversor.class
 br/com/lordofflorestal/hibernate/CartaJogoDAOHibernate.class
 br/com/lordofflorestal/model/SituacaoDuelo.class
+ImageStreamer.class

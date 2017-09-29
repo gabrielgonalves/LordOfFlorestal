@@ -8,23 +8,39 @@ package br.com.lordofflorestal.model;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
  * @author gabriel
  */
+@Entity
+@Table(name = "Duelo")
 public class Duelo implements Serializable {
 
-    private int id;
+    @Id
+    @GeneratedValue
+    @Column(name = "id_duelo")
+    private int id; 
+    @Transient
     private Deck deckJogador1;
+    @Transient
     private Deck deckJogador2;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "situacao_duelo")
     private SituacaoDuelo situacaoDuelo;
+    @OneToMany(mappedBy = "duelo", fetch = FetchType.LAZY)
     private List<Turno> turnos;
 
     public Duelo() {

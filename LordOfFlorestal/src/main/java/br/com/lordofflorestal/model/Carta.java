@@ -6,7 +6,6 @@
 package br.com.lordofflorestal.model;
 
 import java.io.Serializable;
-import java.lang.annotation.Documented;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,29 +13,42 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Lob;
+import javax.persistence.Table;
 
 /**
  *
  * @author gabriel
  */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "Carta")
 public class Carta implements Serializable {
 
     @Id
     @GeneratedValue
+    @Column(name = "id_carta")
     protected int id;
+    @Column(nullable = false, length = 45)
     protected String nome;
     @Lob
-    @Column(columnDefinition = "LONGBLOB")
+    @Column(columnDefinition = "LONGBLOB", nullable = false)
     protected byte[] imagem;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "tipo_carta")
     protected TipoCarta tipoCarta;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "subtipo_carta")
     protected SubtipoCarta subtipoCarta;
+    @Column(length = 45)
     protected String efeito;
+    @Column(nullable = false, length = 45)
     protected String descricao;
+    @Column(name = "valor_ataque")
     protected int valorAtaque;
+    @Column(name = "valor_defesa")
     protected int valorDefesa;
 
     public Carta() {

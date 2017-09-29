@@ -9,16 +9,24 @@ import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import org.hibernate.annotations.NaturalId;
 
 /**
  *
  * @author gabriel
  */
 @Entity
+@Table(name = "ValeCarta")
 public class ValeCarta implements Serializable {
 
     @Id
+    @NaturalId
     private String codigo;
+    @ManyToOne
+    @JoinColumn(name = "id_carta")
     private Carta carta;
     private boolean valido;
 

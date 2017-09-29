@@ -25,7 +25,9 @@
                         </p:column>
 
                         <p:column headerText="Img">
-                            <h:outputText value="#{carta.imagem}" />
+                            <p:graphicImage value="#{imageStreamer.imagemCarta}" width="100">
+                                <f:param name="idCarta" value="#{carta.id}" />
+                            </p:graphicImage>
                         </p:column>
 
                         <p:column headerText="Tipo Carta">
@@ -68,7 +70,9 @@
                         </p:column>
 
                         <p:column headerText="Img">
-                            <h:outputText value="#{jogador.imagem}" />
+                            <p:graphicImage value="#{imageStreamer.imagemJogador}" width="100">
+                                <f:param name="idJogador" value="#{jogador.matricula}" />
+                            </p:graphicImage>
                         </p:column>
 
                         <p:column headerText="Login">
@@ -89,7 +93,7 @@
                         <p:column headerText="Carta">
                             <h:outputText value="#{vale.carta}" />
                         </p:column>
-                        
+
                         <p:column headerText="Válido">
                             <h:outputText value="#{vale.valido}" />
                         </p:column>

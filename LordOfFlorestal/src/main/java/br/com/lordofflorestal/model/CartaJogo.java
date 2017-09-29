@@ -6,16 +6,36 @@
 package br.com.lordofflorestal.model;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 /**
  *
  * @author gabriel
  */
+@Entity
+@PrimaryKeyJoinColumn(name = "id_carta")
+@Table(name = "CartaJogo")
 public class CartaJogo extends Carta {
 
-    private int id;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "local_carta")
     private LocalCarta localCarta;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "estado_carta")
     private EstadoCarta estadoCarta;
+    @ManyToOne
+    @JoinColumn(name = "id_deck")
+    private Deck deck;
 
     public CartaJogo() {
     }
