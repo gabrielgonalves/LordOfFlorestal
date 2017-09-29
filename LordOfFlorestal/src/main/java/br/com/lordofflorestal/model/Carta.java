@@ -6,12 +6,15 @@
 package br.com.lordofflorestal.model;
 
 import java.io.Serializable;
+import java.lang.annotation.Documented;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 /**
  *
@@ -24,7 +27,9 @@ public class Carta implements Serializable {
     @GeneratedValue
     protected int id;
     protected String nome;
-    protected String imagem;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    protected byte[] imagem;
     @Enumerated(EnumType.STRING)
     protected TipoCarta tipoCarta;
     @Enumerated(EnumType.STRING)
@@ -37,7 +42,7 @@ public class Carta implements Serializable {
     public Carta() {
     }
 
-    public Carta(int id, String nome, String imagem, TipoCarta tipoCarta, SubtipoCarta subtipoCarta, String efeito, String descricao, int valorAtaque, int valorDefesa) {
+    public Carta(int id, String nome, byte[] imagem, TipoCarta tipoCarta, SubtipoCarta subtipoCarta, String efeito, String descricao, int valorAtaque, int valorDefesa) {
         this.id = id;
         this.nome = nome;
         this.imagem = imagem;
@@ -65,14 +70,14 @@ public class Carta implements Serializable {
         this.nome = nome;
     }
 
-    public String getImagem() {
+    public byte[] getImagem() {
         return imagem;
     }
 
-    public void setImagem(String imagem) {
+    public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
-
+    
     public TipoCarta getTipoCarta() {
         return tipoCarta;
     }

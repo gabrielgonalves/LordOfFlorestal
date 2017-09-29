@@ -6,7 +6,7 @@
                 template="/WEB-INF/template/layout.xhtml">
 
     <ui:define name="content">
-        <h:form>
+        <h:form enctype="multipart/form-data">
             <div class="ui-g ui-fluid">
                 <div class="ui-g-12" style="padding-top: 10px;">
                     <h1>Cadastro de Jogador</h1>
@@ -50,7 +50,7 @@
                     <div class="ui-g-12 ui-md-4 noMargin">
                         <div class="ui-g-12">
                             <p:outputLabel for="img" value="Imagem" class="label"/><br />
-                            <p:fileUpload id="img" mode="simple" class="input" value="#{jogadorBean.jogador.imagem}" />
+                            <p:fileUpload id="img" mode="simple" class="input" value="#{jogadorBean.img}" />
                         </div>
                         <div class="ui-g-12">
                             <center>
@@ -61,7 +61,7 @@
                     <div class="ui-g-12 ui-md-8 noMargin">
                         <div class="ui-g-12 ui-md-8" />
                         <div class="ui-g-12 ui-md-4" >
-                            <p:commandButton value="Salvar" action="#{jogadorBean.salvar}" process="@form" />
+                            <p:commandButton value="Salvar" action="#{jogadorBean.salvar}" ajax="false" />
                         </div>
                     </div>
                 </div>

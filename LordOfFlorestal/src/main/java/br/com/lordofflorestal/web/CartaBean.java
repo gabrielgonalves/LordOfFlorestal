@@ -35,6 +35,7 @@ public class CartaBean {
     }
 
     public String salvar() {
+        carta.setImagem(img.getContents());
         CartaRN cartaRN = new CartaRN();
         cartaRN.salvar(carta);
 

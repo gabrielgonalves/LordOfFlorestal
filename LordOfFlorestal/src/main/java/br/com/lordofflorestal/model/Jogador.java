@@ -9,11 +9,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 
 /**
@@ -31,7 +33,9 @@ public class Jogador implements Serializable {
     private String email;
     private String login;
     private String senha;
-    private String imagem;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] imagem;
     @ManyToMany
     private List<Carta> cartas;
     @Embedded
@@ -42,7 +46,7 @@ public class Jogador implements Serializable {
         estatisticaJogador = new EstatisticaJogador();
     }
 
-    public Jogador(String nome, TipoJogador tipoJogador, int matricula, String email, String login, String senha, String imagem, List<Carta> cartas, EstatisticaJogador estatisticaJogador) {
+    public Jogador(String nome, TipoJogador tipoJogador, int matricula, String email, String login, String senha, byte[] imagem, List<Carta> cartas, EstatisticaJogador estatisticaJogador) {
         this.nome = nome;
         this.tipoJogador = tipoJogador;
         this.matricula = matricula;
@@ -53,6 +57,8 @@ public class Jogador implements Serializable {
         this.cartas = cartas;
         this.estatisticaJogador = estatisticaJogador;
     }
+
+   
 
     public String getNome() {
         return nome;
@@ -102,11 +108,11 @@ public class Jogador implements Serializable {
         this.senha = senha;
     }
 
-    public String getImagem() {
+    public byte[] getImagem() {
         return imagem;
     }
 
-    public void setImagem(String imagem) {
+    public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
 

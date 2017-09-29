@@ -6,9 +6,6 @@
 package br.com.lordofflorestal.model;
 
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 /**
  *
@@ -28,7 +25,7 @@ public class CartaJogo extends Carta {
         this.estadoCarta = estadoCarta;
     }
 
-    public CartaJogo(LocalCarta localCarta, EstadoCarta estadoCarta, int id, String nome, String imagem, TipoCarta tipoCarta, SubtipoCarta subtipoCarta, String efeito, String descricao, int valorAtaque, int valorDefesa) {
+    public CartaJogo(LocalCarta localCarta, EstadoCarta estadoCarta, int id, String nome, byte[] imagem, TipoCarta tipoCarta, SubtipoCarta subtipoCarta, String efeito, String descricao, int valorAtaque, int valorDefesa) {
         super(id, nome, imagem, tipoCarta, subtipoCarta, efeito, descricao, valorAtaque, valorDefesa);
         this.localCarta = localCarta;
         this.estadoCarta = estadoCarta;

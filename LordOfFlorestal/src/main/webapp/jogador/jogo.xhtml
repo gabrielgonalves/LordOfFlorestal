@@ -51,7 +51,7 @@
             color: green !important;
         }
     </style>
-    <h:body style="background-image: url(../resources/img/bg.jpg); background-repeat: repeat;">
+    <h:body style="background-image: url(../resources/img/bg2.jpg); background-repeat: repeat;">
         <h:form prependId="false"> 
             <p:growl />
             <div class="ui-g ui-fluid">
@@ -61,37 +61,49 @@
                         <div class="ui-g-12" style="height: 200px;">
                             <p:carousel itemStyleClass="teste" headerText="Mesa Oponente" responsive="true" numVisible="#{jogoBean.mesa.size()}" id="m" value="#{jogoBean.mesa}" var="m" >
                                 <center>
-                                    <p:graphicImage library="img" name="#{m.imagem}" width="100" />
+                                    <p:graphicImage library="img" name="/cartas/#{m.id}.jpg" width="100" />
                                 </center>
                             </p:carousel>
                         </div>
                     </div>
                     <div class="ui-g-12 noMargin">
                         <div class="ui-g-12" style="height: 200px;">
-                            <p:carousel headerText="Sua Mesa" responsive="true" numVisible="#{jogoBean.mesa.size()}"  id="mesa" value="#{jogoBean.mesa}" var="carta" >
-                                <center>
-                                    <p:graphicImage library="img" name="#{carta.imagem}" width="100" />
-                                </center>
-                            </p:carousel>
+                            <p:fieldset id="suaMesa" legend="Sua mesa" style="margin-top:20px">
+                                <p:outputPanel id="dropArea">
+                                    <h:outputText value="!!!Jogue suas cartas aqui!!!" rendered="#{empty jogoBean.mesa}" style="font-size:24px;" />
+                                    <p:dataTable id="cartasMesa" var="c" value="#{jogoBean.mesa}" rendered="#{not empty jogoBean.mesa}">
+                                        <p:column headerText="Id">
+                                            <h:outputText value="#{c.nome}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:outputPanel>
+                            </p:fieldset>
                         </div>
                         <div class="ui-g-12">
-                            <p:carousel headerText="Sua Mão" responsive="true" numVisible="#{jogoBean.mao.size()}" id="mao" value="#{jogoBean.mao}" var="suasCartas">
-                                <center>
-                                    <p:graphicImage library="img" name="#{suasCartas.imagem}" width="100" />
-                                </center>
-                                <p:selectBooleanButton style="background-color: white !important;" onLabel="Ataque" offLabel="Defesa" /><br/>
-                                <p:commandButton style="background-color: white !important;" value="Descer" action="#{jogoBean.descer()}" update="mao mesa m" >
-                                    <f:setPropertyActionListener target="#{jogoBean.carta}" value="#{suasCartas}" />
-                                </p:commandButton>
-                            </p:carousel>
+                            <p:fieldset legend="Sua Mão">
+                                <p:ring style="padding: -10px;" id="cartasDisponiveis" value="#{jogoBean.mao}" var="carta" styleClass="image-ring" easing="easeInOutBack">
+                                    <p:panel id="pnl" header="#{carta.id}" style="text-align:center">
+                                        <p:graphicImage library="img" width="100" name="/cartas/#{carta.id}.jpg" />
+                                    </p:panel>
+                                    <p:draggable for="pnl" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
+                                </p:ring>
+                            </p:fieldset>
                         </div>
                     </div>
                 </div>
                 <div class="ui-md-1" />
             </div>
-                <p:diagram value="#{jogoBean.model}" style="height:600px" styleClass="ui-widget-content" var="el">
-            </p:diagram>
+            <p:droppable for="suaMesa" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="cartasDisponiveis" onDrop="handleDrop">
+                <p:ajax listener="#{jogoBean.descer}" update="dropArea cartasDisponiveis" />
+            </p:droppable>
         </h:form>
     </h:body>
+    <script type="text/javascript">
+        function handleDrop(event, ui) {
+            var cs = ui.draggable;
+
+            cs.fadeOut('fast');
+        }
+    </script>
 </html>
 

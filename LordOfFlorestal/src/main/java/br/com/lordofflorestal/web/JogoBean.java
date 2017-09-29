@@ -11,13 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.event.DragDropEvent;
 
 /**
  *
  * @author gabriel
  */
 @ManagedBean
-@ViewScoped
+@ViewScoped 
 public class JogoBean implements Serializable {
 
     private List<CartaJogo> mao = new ArrayList();
@@ -28,16 +29,17 @@ public class JogoBean implements Serializable {
     public JogoBean() {
         for (int i = 0; i < 18; i++) {
             CartaJogo cartaJogo = new CartaJogo();
-            cartaJogo.setNome("Teste " + i);
-            cartaJogo.setImagem("/cartas/"+(i+1)+".jpg");
+            cartaJogo.setId(i+1);
+            cartaJogo.setNome("Carta" + i+1);
             mao.add(cartaJogo);
         }
     }
     
-    public void descer(){
-        mesa.add(carta);
+    public void descer(DragDropEvent ddEvent){
+        CartaJogo c = ((CartaJogo) ddEvent.getData());
+        mesa.add(c);
         for(int i=0;i<mao.size(); i++){
-            if(carta.getNome().equals(mao.get(i).getNome())){
+            if(c.getId() == mao.get(i).getId()){
                 mao.remove(i);
             }
         }

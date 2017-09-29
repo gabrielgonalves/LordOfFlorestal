@@ -11,6 +11,7 @@ import br.com.lordofflorestal.rn.JogadorRN;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -22,6 +23,8 @@ public class JogadorBean {
 
     private Jogador jogador = new Jogador();
     private String confirmarSenha;
+    
+    private UploadedFile img;
 
     public String novo() {
         this.jogador = new Jogador();
@@ -34,6 +37,7 @@ public class JogadorBean {
             return null;
         }
 
+        jogador.setImagem(img.getContents());
         JogadorRN jogadorRN = new JogadorRN();
         jogadorRN.salvar(jogador);
 
@@ -63,6 +67,14 @@ public class JogadorBean {
     public List<Jogador> getJogadores(){
         JogadorRN jogadorRN = new JogadorRN();
         return jogadorRN.listar();
+    }
+
+    public UploadedFile getImg() {
+        return img;
+    }
+
+    public void setImg(UploadedFile img) {
+        this.img = img;
     }
 
 }
