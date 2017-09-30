@@ -46,11 +46,12 @@ public class Deck implements Serializable {
         cartas = new ArrayList();
     }
 
-    public Deck(int id, Jogador jogador, int pontosDeterminacao, List<CartaJogo> cartas) {
+    public Deck(int id, Jogador jogador, int pontosDeterminacao, List<CartaJogo> cartas, Duelo duelo) {
         this.id = id;
         this.jogador = jogador;
         this.pontosDeterminacao = pontosDeterminacao;
         this.cartas = cartas;
+        this.duelo = duelo;
     }
 
     public int getId() {
@@ -85,13 +86,22 @@ public class Deck implements Serializable {
         this.cartas = cartas;
     }
 
+    public Duelo getDuelo() {
+        return duelo;
+    }
+
+    public void setDuelo(Duelo duelo) {
+        this.duelo = duelo;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + this.id;
-        hash = 53 * hash + Objects.hashCode(this.jogador);
-        hash = 53 * hash + this.pontosDeterminacao;
-        hash = 53 * hash + Objects.hashCode(this.cartas);
+        int hash = 5;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.jogador);
+        hash = 97 * hash + this.pontosDeterminacao;
+        hash = 97 * hash + Objects.hashCode(this.cartas);
+        hash = 97 * hash + Objects.hashCode(this.duelo);
         return hash;
     }
 
@@ -117,6 +127,9 @@ public class Deck implements Serializable {
             return false;
         }
         if (!Objects.equals(this.cartas, other.cartas)) {
+            return false;
+        }
+        if (!Objects.equals(this.duelo, other.duelo)) {
             return false;
         }
         return true;

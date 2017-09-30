@@ -41,9 +41,9 @@ public class DueloDAOHibernate implements DueloDAO {
 
     @Override
     public Duelo buscarPorId(Integer id) {
-        String hql = "select d from Duelo d where d.id = :id";
+        String hql = "select d from Duelo d where d.id = :idDuelo";
         Query consulta = this.session.createQuery(hql);
-        consulta.setInteger("idCarta", id);
+        consulta.setInteger("idDuelo", id);
         return (Duelo) consulta.uniqueResult();
     }
 

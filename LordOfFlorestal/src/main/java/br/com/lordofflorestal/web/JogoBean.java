@@ -30,7 +30,7 @@ public class JogoBean implements Serializable {
         for (int i = 0; i < 18; i++) {
             CartaJogo cartaJogo = new CartaJogo();
             cartaJogo.setId(i+1);
-            cartaJogo.setNome("Carta" + i+1);
+            cartaJogo.getCarta().setNome("Carta" + i+1);
             mao.add(cartaJogo);
         }
     }

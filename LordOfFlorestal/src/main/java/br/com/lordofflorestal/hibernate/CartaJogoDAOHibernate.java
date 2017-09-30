@@ -60,7 +60,7 @@ public class CartaJogoDAOHibernate implements CartaJogoDAO {
 
     @Override
     public CartaJogo buscarPorJogadorEDuelo(Integer idJogador, Integer idDuelo) {
-        String hql = "select c from Carta c where c.idJogador = :idJogador and c.idDuelo = :idDuelo";
+        String hql = "select c from Carta c where c.jogador = :idJogador and c.duelo = :idDuelo";
         Query consulta = this.session.createQuery(hql);
         consulta.setInteger("idJogador", idJogador);
         consulta.setInteger("idDuelo", idDuelo);

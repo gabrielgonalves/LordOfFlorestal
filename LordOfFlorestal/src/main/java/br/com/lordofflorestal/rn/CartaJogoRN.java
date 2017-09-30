@@ -38,7 +38,7 @@ public class CartaJogoRN {
         this.cartaJogoDAO.excluir(carta);
     }
 
-    public Carta buscarPorId(Integer idCarta) {
+    public CartaJogo buscarPorId(Integer idCarta) {
         return this.cartaJogoDAO.buscarPorId(idCarta);
     }
 

@@ -56,7 +56,7 @@ public class ValeCartaDAOHibernate implements ValeCartaDAO {
 
     @Override
     public List<ValeCarta> buscarPorCarta(Integer idCarta) {
-        String hql = "select v from ValeCarta v where v.idCarta = :idCarta";
+        String hql = "select v from ValeCarta v where v.carta = :idCarta";
         Query consulta = this.session.createQuery(hql);
         consulta.setInteger("idCarta", idCarta);
         return (List<ValeCarta>) consulta.list();

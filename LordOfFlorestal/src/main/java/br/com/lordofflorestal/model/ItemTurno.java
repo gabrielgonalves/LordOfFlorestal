@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -31,22 +30,23 @@ public class ItemTurno implements Serializable {
     @Column(name = "id_item_turno")
     private int id;
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "acao_turno")
+    @Column(name = "acao_turno", nullable = false)
     private AcaoTurno acaoTurno;
     @ManyToOne
-    @JoinColumn(name = "id_carta_jogo")
+    @JoinColumn(name = "id_carta_jogo", nullable = false)
     private CartaJogo cartaJogo;
     @ManyToOne
-    @JoinColumn(name = "id_turno")
+    @JoinColumn(name = "id_turno", nullable = false)
     private Turno turno;
-    
+
     public ItemTurno() {
     }
 
-    public ItemTurno(int id, AcaoTurno acaoTurno, CartaJogo cartaJogo) {
+    public ItemTurno(int id, AcaoTurno acaoTurno, CartaJogo cartaJogo, Turno turno) {
         this.id = id;
         this.acaoTurno = acaoTurno;
         this.cartaJogo = cartaJogo;
+        this.turno = turno;
     }
 
     public int getId() {
@@ -73,12 +73,21 @@ public class ItemTurno implements Serializable {
         this.cartaJogo = cartaJogo;
     }
 
+    public Turno getTurno() {
+        return turno;
+    }
+
+    public void setTurno(Turno turno) {
+        this.turno = turno;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + this.id;
-        hash = 67 * hash + Objects.hashCode(this.acaoTurno);
-        hash = 67 * hash + Objects.hashCode(this.cartaJogo);
+        int hash = 3;
+        hash = 89 * hash + this.id;
+        hash = 89 * hash + Objects.hashCode(this.acaoTurno);
+        hash = 89 * hash + Objects.hashCode(this.cartaJogo);
+        hash = 89 * hash + Objects.hashCode(this.turno);
         return hash;
     }
 
@@ -103,6 +112,10 @@ public class ItemTurno implements Serializable {
         if (!Objects.equals(this.cartaJogo, other.cartaJogo)) {
             return false;
         }
+        if (!Objects.equals(this.turno, other.turno)) {
+            return false;
+        }
         return true;
     }
+
 }

@@ -34,19 +34,21 @@ public class Turno implements Serializable {
     @OneToMany(mappedBy = "turno", fetch = FetchType.LAZY)
     private List<ItemTurno> itensTurno;
     @ManyToOne
-    @JoinColumn(name = "id_duelo")
+    @JoinColumn(name = "id_duelo", nullable = false)
     private Duelo duelo;
     @ManyToOne
-    @JoinColumn(name = "matricula_jogador")
+    @JoinColumn(name = "matricula_jogador", nullable = false)
     private Jogador jogador;
 
     public Turno() {
         itensTurno = new ArrayList();
     }
 
-    public Turno(int id, List<ItemTurno> itensTurno) {
+    public Turno(int id, List<ItemTurno> itensTurno, Duelo duelo, Jogador jogador) {
         this.id = id;
         this.itensTurno = itensTurno;
+        this.duelo = duelo;
+        this.jogador = jogador;
     }
 
     public int getId() {
@@ -65,11 +67,29 @@ public class Turno implements Serializable {
         this.itensTurno = itensTurno;
     }
 
+    public Duelo getDuelo() {
+        return duelo;
+    }
+
+    public void setDuelo(Duelo duelo) {
+        this.duelo = duelo;
+    }
+
+    public Jogador getJogador() {
+        return jogador;
+    }
+
+    public void setJogador(Jogador jogador) {
+        this.jogador = jogador;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + this.id;
-        hash = 97 * hash + Objects.hashCode(this.itensTurno);
+        int hash = 3;
+        hash = 61 * hash + this.id;
+        hash = 61 * hash + Objects.hashCode(this.itensTurno);
+        hash = 61 * hash + Objects.hashCode(this.duelo);
+        hash = 61 * hash + Objects.hashCode(this.jogador);
         return hash;
     }
 
@@ -91,6 +111,13 @@ public class Turno implements Serializable {
         if (!Objects.equals(this.itensTurno, other.itensTurno)) {
             return false;
         }
+        if (!Objects.equals(this.duelo, other.duelo)) {
+            return false;
+        }
+        if (!Objects.equals(this.jogador, other.jogador)) {
+            return false;
+        }
         return true;
     }
+
 }

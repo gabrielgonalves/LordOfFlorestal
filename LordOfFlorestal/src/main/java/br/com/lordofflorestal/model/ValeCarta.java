@@ -26,7 +26,7 @@ public class ValeCarta implements Serializable {
     @NaturalId
     private String codigo;
     @ManyToOne
-    @JoinColumn(name = "id_carta")
+    @JoinColumn(name = "id_carta", nullable = false)
     private Carta carta;
     private boolean valido;
 
@@ -66,9 +66,9 @@ public class ValeCarta implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.codigo);
-        hash = 59 * hash + Objects.hashCode(this.carta);
-        hash = 59 * hash + (this.valido ? 1 : 0);
+        hash = 67 * hash + Objects.hashCode(this.codigo);
+        hash = 67 * hash + Objects.hashCode(this.carta);
+        hash = 67 * hash + (this.valido ? 1 : 0);
         return hash;
     }
 

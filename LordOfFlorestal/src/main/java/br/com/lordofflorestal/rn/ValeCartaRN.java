@@ -25,8 +25,12 @@ public class ValeCartaRN {
 
     public void salvar(ValeCarta valeCarta) {
         if (valeCarta.isValido()) {
-            this.valeCartaDAO.salvar(valeCarta);
-            MessageUtil.info("Vale carta " + valeCarta.getCodigo() + " salvo com sucesso!");
+            if (valeCarta.getCarta() == null) {
+                MessageUtil.erro("É obrigatório selecionar uma carta");
+            } else {
+                this.valeCartaDAO.salvar(valeCarta);
+                MessageUtil.info("Vale carta " + valeCarta.getCodigo() + " salvo com sucesso!");
+            }
         } else {
             this.valeCartaDAO.atualizar(valeCarta);
             //MessageUtil.info("Vale carta " + valeCarta.getCodigo() + " editado com sucesso!");

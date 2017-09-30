@@ -40,7 +40,7 @@ public class DeckDAOHibernate implements DeckDAO {
 
     @Override
     public List<Deck> buscarPorJogador(Integer idJogador) {
-        String hql = "select d from Deck d where d.idJogador = :idJogador";
+        String hql = "select d from Deck d where d.jogador = :idJogador";
         Query consulta = this.session.createQuery(hql);
         consulta.setInteger("idJogador", idJogador);
         return (List<Deck>) consulta.list();
@@ -48,7 +48,7 @@ public class DeckDAOHibernate implements DeckDAO {
 
     @Override
     public List<Deck> buscarPorDuelo(Integer idDuelo) {
-        String hql = "select d from Deck d where d.idDuelo = :idDuelo";
+        String hql = "select d from Deck d where d.duelo = :idDuelo";
         Query consulta = this.session.createQuery(hql);
         consulta.setInteger("idDuelo", idDuelo);
         return (List<Deck>) consulta.list();
@@ -56,7 +56,7 @@ public class DeckDAOHibernate implements DeckDAO {
 
     @Override
     public Deck buscarPorDueloEJogador(Integer idDuelo, Integer idJogador) {
-        String hql = "select d from Deck d where d.idDuelo = :idDuelo and d.idJogador = :idJogador";
+        String hql = "select d from Deck d where d.duelo = :idDuelo and d.jogador = :idJogador";
         Query consulta = this.session.createQuery(hql);
         consulta.setInteger("idDuelo", idDuelo);
         consulta.setInteger("idJogador", idJogador);

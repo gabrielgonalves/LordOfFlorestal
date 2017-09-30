@@ -6,6 +6,7 @@
 package br.com.lordofflorestal.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +14,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
@@ -23,7 +22,6 @@ import javax.persistence.Table;
  * @author gabriel
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Carta")
 public class Carta implements Serializable {
 
@@ -89,7 +87,7 @@ public class Carta implements Serializable {
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
-    
+
     public TipoCarta getTipoCarta() {
         return tipoCarta;
     }
@@ -141,15 +139,15 @@ public class Carta implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 23 * hash + this.id;
-        hash = 23 * hash + Objects.hashCode(this.nome);
-        hash = 23 * hash + Objects.hashCode(this.imagem);
-        hash = 23 * hash + Objects.hashCode(this.tipoCarta);
-        hash = 23 * hash + Objects.hashCode(this.subtipoCarta);
-        hash = 23 * hash + Objects.hashCode(this.efeito);
-        hash = 23 * hash + Objects.hashCode(this.descricao);
-        hash = 23 * hash + this.valorAtaque;
-        hash = 23 * hash + this.valorDefesa;
+        hash = 89 * hash + this.id;
+        hash = 89 * hash + Objects.hashCode(this.nome);
+        hash = 89 * hash + Arrays.hashCode(this.imagem);
+        hash = 89 * hash + Objects.hashCode(this.tipoCarta);
+        hash = 89 * hash + Objects.hashCode(this.subtipoCarta);
+        hash = 89 * hash + Objects.hashCode(this.efeito);
+        hash = 89 * hash + Objects.hashCode(this.descricao);
+        hash = 89 * hash + this.valorAtaque;
+        hash = 89 * hash + this.valorDefesa;
         return hash;
     }
 
@@ -177,13 +175,13 @@ public class Carta implements Serializable {
         if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
-        if (!Objects.equals(this.imagem, other.imagem)) {
-            return false;
-        }
         if (!Objects.equals(this.efeito, other.efeito)) {
             return false;
         }
         if (!Objects.equals(this.descricao, other.descricao)) {
+            return false;
+        }
+        if (!Arrays.equals(this.imagem, other.imagem)) {
             return false;
         }
         if (this.tipoCarta != other.tipoCarta) {

@@ -7,6 +7,7 @@ package br.com.lordofflorestal.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -29,14 +30,19 @@ import javax.persistence.Table;
 @Table(name = "Jogador")
 public class Jogador implements Serializable {
 
+    @Column(nullable = false)
     private String nome;
     @Enumerated(EnumType.ORDINAL)
+    @Column(name = "tipo_jogador", nullable = false)
     private TipoJogador tipoJogador;
     @Id
     @Column(name = "matricula_jogador")
     private int matricula;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String login;
+    @Column(nullable = false)
     private String senha;
     @Lob
     @Column(columnDefinition = "LONGBLOB")
@@ -63,8 +69,6 @@ public class Jogador implements Serializable {
         this.cartas = cartas;
         this.estatisticaJogador = estatisticaJogador;
     }
-
-   
 
     public String getNome() {
         return nome;
@@ -140,16 +144,16 @@ public class Jogador implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + Objects.hashCode(this.nome);
-        hash = 23 * hash + Objects.hashCode(this.tipoJogador);
-        hash = 23 * hash + this.matricula;
-        hash = 23 * hash + Objects.hashCode(this.email);
-        hash = 23 * hash + Objects.hashCode(this.login);
-        hash = 23 * hash + Objects.hashCode(this.senha);
-        hash = 23 * hash + Objects.hashCode(this.imagem);
-        hash = 23 * hash + Objects.hashCode(this.cartas);
-        hash = 23 * hash + Objects.hashCode(this.estatisticaJogador);
+        int hash = 3;
+        hash = 11 * hash + Objects.hashCode(this.nome);
+        hash = 11 * hash + Objects.hashCode(this.tipoJogador);
+        hash = 11 * hash + this.matricula;
+        hash = 11 * hash + Objects.hashCode(this.email);
+        hash = 11 * hash + Objects.hashCode(this.login);
+        hash = 11 * hash + Objects.hashCode(this.senha);
+        hash = 11 * hash + Arrays.hashCode(this.imagem);
+        hash = 11 * hash + Objects.hashCode(this.cartas);
+        hash = 11 * hash + Objects.hashCode(this.estatisticaJogador);
         return hash;
     }
 
@@ -180,10 +184,10 @@ public class Jogador implements Serializable {
         if (!Objects.equals(this.senha, other.senha)) {
             return false;
         }
-        if (!Objects.equals(this.imagem, other.imagem)) {
+        if (this.tipoJogador != other.tipoJogador) {
             return false;
         }
-        if (this.tipoJogador != other.tipoJogador) {
+        if (!Arrays.equals(this.imagem, other.imagem)) {
             return false;
         }
         if (!Objects.equals(this.cartas, other.cartas)) {

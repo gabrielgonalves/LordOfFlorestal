@@ -15,8 +15,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -32,13 +30,13 @@ public class Duelo implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id_duelo")
-    private int id; 
+    private int id;
     @Transient
     private Deck deckJogador1;
     @Transient
     private Deck deckJogador2;
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "situacao_duelo")
+    @Column(name = "situacao_duelo", nullable = false)
     private SituacaoDuelo situacaoDuelo;
     @OneToMany(mappedBy = "duelo", fetch = FetchType.LAZY)
     private List<Turno> turnos;
@@ -99,11 +97,11 @@ public class Duelo implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + this.id;
-        hash = 71 * hash + Objects.hashCode(this.deckJogador1);
-        hash = 71 * hash + Objects.hashCode(this.deckJogador2);
-        hash = 71 * hash + Objects.hashCode(this.situacaoDuelo);
-        hash = 71 * hash + Objects.hashCode(this.turnos);
+        hash = 47 * hash + this.id;
+        hash = 47 * hash + Objects.hashCode(this.deckJogador1);
+        hash = 47 * hash + Objects.hashCode(this.deckJogador2);
+        hash = 47 * hash + Objects.hashCode(this.situacaoDuelo);
+        hash = 47 * hash + Objects.hashCode(this.turnos);
         return hash;
     }
 
@@ -136,6 +134,5 @@ public class Duelo implements Serializable {
         }
         return true;
     }
-
 
 }

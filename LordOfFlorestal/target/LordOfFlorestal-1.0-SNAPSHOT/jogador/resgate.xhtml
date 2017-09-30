@@ -6,7 +6,7 @@
                 template="/WEB-INF/template/layout.xhtml">
 
     <ui:define name="content">
-        <h:form>
+        <h:form prependId="false">
             <div class="ui-g ui-fluid">
                 <div class="ui-g-12" style="padding-top: 10px;">
                     <h1>Resgate</h1>
@@ -21,13 +21,17 @@
                     <div class="ui-g-12 noMargin">
                         <div class="ui-lg-8 ui-md-8 ui-g-12"/>
                         <div class="ui-lg-4 ui-md-4 ui-g-12">
-                            <p:commandButton value="Validar" action="#{resgateBean.validar}" />
+                            <p:commandButton value="Validar" action="#{resgateBean.validar}" update="img" />
                         </div>
                     </div>
                 </div>
                 <div class="ui-lg-4 ui-md-4 ui-g-12 noMargin">
                     <center>
-                        <div style="background-color: #e3e3c9; width: 200px; height: 200px; margin-top: 15px;" />
+                        <p:outputPanel id="img">
+                            <p:graphicImage value="#{imageStreamer.imagemCarta}" width="150">
+                                <f:param name="idCarta" value="#{resgateBean.idCarta}" />
+                            </p:graphicImage>
+                        </p:outputPanel>
                     </center>
                 </div>
             </div>
