@@ -5,6 +5,7 @@
  */
 package br.com.lordofflorestal.web;
 
+import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.CartaJogo;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,7 +30,9 @@ public class JogoBean implements Serializable {
     public JogoBean() {
         for (int i = 0; i < 18; i++) {
             CartaJogo cartaJogo = new CartaJogo();
-            cartaJogo.setId(i+1);
+            Carta carta = new Carta();
+            cartaJogo.setCarta(carta);
+            cartaJogo.getCarta().setId(i+1);
             cartaJogo.getCarta().setNome("Carta" + i+1);
             mao.add(cartaJogo);
         }
@@ -39,7 +42,7 @@ public class JogoBean implements Serializable {
         CartaJogo c = ((CartaJogo) ddEvent.getData());
         mesa.add(c);
         for(int i=0;i<mao.size(); i++){
-            if(c.getId() == mao.get(i).getId()){
+            if(c.getCarta().getId() == mao.get(i).getCarta().getId()){
                 mao.remove(i);
             }
         }
