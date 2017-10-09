@@ -11,27 +11,28 @@
                 <div class="ui-g-12" style="padding-top: 10px;">
                     <h1>Perfil</h1>
                     <p:separator/>
+                    <p:messages autoUpdate="true" closable="true" />
                 </div>
                 <div class="ui-g-12 ui-md-8 noMargin">
                     <div class="ui-g-12 ui-md-10">
                         <p:outputLabel for="nome" value="Nome" class="label" />
-                        <p:inputText id="nome" />
+                        <p:inputText id="nome" value="#{perfilBean.jogador.nome}" />
                     </div>
                     <div class="ui-g-12 ui-md-2">
                         <p:outputLabel for="tipo" value="Tipo" class="label" />
-                        <p:inputText disabled="true" id="tipo" value="ALUNO" />
+                        <p:inputText disabled="true" id="tipo" value="#{perfilBean.jogador.tipoJogador}" />
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <p:outputLabel for="matricula" value="Matricula" class="label" />
-                        <p:inputText disabled="true" id="matricula" />
+                        <p:inputText disabled="true" id="matricula" value="#{perfilBean.jogador.matricula}" />
                     </div>
                     <div class="ui-g-12 ui-md-8">
                         <p:outputLabel for="email" value="E-mail" class="label" />
-                        <p:inputText id="email" />
+                        <p:inputText id="email" value="#{perfilBean.jogador.email}" />
                     </div>
                     <div class="ui-g-12 ui-md-10">
                         <p:outputLabel for="login" value="Login" class="label" />
-                        <p:inputText id="login" />
+                        <p:inputText id="login" value="#{perfilBean.jogador.login}" />
                     </div>
                     <div class="ui-g-12 ui-md-2">
                         <p:commandButton value="Verificar" class="verificar" />
@@ -59,16 +60,18 @@
                 <div class="ui-g-12 ui-md-4 noMargin">
                     <div class="ui-g-12">
                         <center>
-                            <h:graphicImage library="img" name="user-icon.png" height="200px;" />
+                            <p:graphicImage value="#{imageStreamer.imagemJogador}" width="50%">
+                                <f:param name="idJogador" value="#{perfilBean.jogador.matricula}" />
+                            </p:graphicImage>
                             <br/><br/>
-                            <p:fileUpload mode="simple" />
+                            <p:fileUpload mode="simple" value="#{perfilBean.img}" />
                         </center>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-8 noMargin">
                     <div class="ui-g-12 ui-md-8"/>
                     <div class="ui-g-12 ui-md-4">
-                        <p:commandButton value="Salvar" />
+                        <p:commandButton value="Salvar" action="#{perfilBean.salvar}" update="@all" />
                     </div>
                 </div>
             </div>

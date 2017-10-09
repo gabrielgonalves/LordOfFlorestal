@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags">
     <h:head>
         <title>Lord of Florestal</title>
 
@@ -24,37 +26,53 @@
             <div class="ui-g">
                 <center>
                     <br/>
-                    <h:graphicImage library="img" name="user-icon.png" width="80%"/>
-                    <br/>
-                    <h:outputText value="Meu Nome É João" style="font-weight: bold;" />
+                    <p:graphicImage value="#{imageStreamer.imagemJogador}" width="80%" style="border-radius: 50%;">
+                        <f:param name="idJogador" value="#{perfilBean.jogador.matricula}" />
+                    </p:graphicImage>
+                    <br/><br/>
+                    <h:outputText value="#{perfilBean.jogador.nome}" style="font-weight: bold;" />
                     <br/><br/>
                 </center>
             </div>
             <nav class="menu">
                 <ul>
                     <li class="#{menuBean.getItemCssClass('/jogador/index.xhtml')}">
-                        <h:link outcome="/jogador/index.xhtml"><i class="fa  fa-fw  fa-home"></i>Dashboard</h:link>
+                        <sec:ifAnyGranted roles="ROLE_LORD, ROLE_ALUNO">
+                            <h:link outcome="/jogador/index.xhtml"><i class="fa  fa-fw  fa-home"></i>Dashboard</h:link>
+                        </sec:ifAnyGranted>
                     </li>
                     <li class="#{menuBean.getItemCssClass('/jogador/perfil.xhtml')}">
-                        <h:link outcome="/jogador/perfil.xhtml"><i class="fa  fa-fw  fa-user"></i>Perfil</h:link>
+                        <sec:ifAnyGranted roles="ROLE_ALUNO">
+                            <h:link outcome="/jogador/perfil.xhtml"><i class="fa  fa-fw  fa-user"></i>Perfil</h:link>
+                        </sec:ifAnyGranted>
                     </li>
                     <li class="#{menuBean.getItemCssClass('/jogador/resgate.xhtml')}">
-                        <h:link outcome="/jogador/resgate.xhtml"><i class="fa  fa-fw  fa-plus"></i>Resgate</h:link>
+                        <sec:ifAnyGranted roles="ROLE_ALUNO">
+                            <h:link outcome="/jogador/resgate.xhtml"><i class="fa  fa-fw  fa-plus"></i>Resgate</h:link>
+                        </sec:ifAnyGranted>
                     </li>
                     <li class="#{menuBean.getItemCssClass('/administrador/cadastrarCarta.xhtml')}">
-                        <h:link outcome="/administrador/cadastrarCarta.xhtml"><i class="fa  fa-fw  fa-square"></i>Carta</h:link>
+                        <sec:ifAnyGranted roles="ROLE_LORD">
+                            <h:link outcome="/administrador/cadastrarCarta.xhtml"><i class="fa  fa-fw  fa-square"></i>Carta</h:link>
+                        </sec:ifAnyGranted>
                     </li>
                     <li class="#{menuBean.getItemCssClass('/administrador/cadastrarJogador.xhtml')}">
-                        <h:link outcome="/administrador/cadastrarJogador.xhtml"><i class="fa  fa-fw  fa-user-plus"></i>Jogador</h:link>
+                        <sec:ifAnyGranted roles="ROLE_LORD">
+                            <h:link outcome="/administrador/cadastrarJogador.xhtml"><i class="fa  fa-fw  fa-user-plus"></i>Jogador</h:link>
+                        </sec:ifAnyGranted>
                     </li>
                     <li class="#{menuBean.getItemCssClass('/administrador/cadastrarValeCarta.xhtml')}">
-                        <h:link outcome="/administrador/cadastrarValeCarta.xhtml"><i class="fa  fa-fw  fa-ticket"></i>Vale Carta</h:link>
+                        <sec:ifAnyGranted roles="ROLE_LORD">
+                            <h:link outcome="/administrador/cadastrarValeCarta.xhtml"><i class="fa  fa-fw  fa-ticket"></i>Vale Carta</h:link>
+                        </sec:ifAnyGranted>
                     </li>
                     <li class="#{menuBean.getItemCssClass('/administrador/listagem.xhtml')}">
-                        <h:link outcome="/administrador/listagem.xhtml"><i class="fa  fa-fw  fa-list"></i>Listagem</h:link>
+                        <sec:ifAnyGranted roles="ROLE_LORD">
+                            <h:link outcome="/administrador/listagem.xhtml"><i class="fa  fa-fw  fa-list"></i>Listagem</h:link>
+                        </sec:ifAnyGranted>
                     </li>
                     <li>
-                        <h:link><i class="fa  fa-fw  fa-arrow-circle-left"></i>Sair</h:link>
+                        <a onclick="document.location = '#{request.contextPath}/j_spring_security_logout'"><i class="fa  fa-fw  fa-arrow-circle-left"></i>Sair</a>
                     </li>
                 </ul>
             </nav>

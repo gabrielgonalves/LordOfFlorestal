@@ -33,12 +33,8 @@ public class JogadorRN {
                 MessageUtil.erro("O login informado já esta em uso!");
             }
         } else {
-            if (buscarPorLogin(jogador.getLogin()) == null) {
-                this.jogadorDAO.atualizar(jogador);
-                MessageUtil.info("Jogador " + jogador.getNome() + " editado com sucesso!");
-            } else {
-                MessageUtil.erro("O login informado já esta em uso!");
-            }
+            this.jogadorDAO.atualizar(jogador);
+            MessageUtil.info("Jogador " + jogador.getNome() + " editado com sucesso!");
         }
     }
 

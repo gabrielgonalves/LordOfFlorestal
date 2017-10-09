@@ -23,6 +23,7 @@ br/com/lordofflorestal/dao/DueloDAO.class
 br/com/lordofflorestal/model/ValeCarta.class
 br/com/lordofflorestal/util/exception/UtilException.class
 br/com/lordofflorestal/model/TipoCarta.class
+br/com/lordofflorestal/web/PerfilBean.class
 br/com/lordofflorestal/dao/CartaJogoDAO.class
 br/com/lordofflorestal/model/ItemTurno.class
 br/com/lordofflorestal/hibernate/JogadorDAOHibernate.class
