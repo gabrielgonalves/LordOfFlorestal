@@ -2,59 +2,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Lord Of Florestal</title>
     </h:head>
-    <style>
-        * {
-            margin: 0px;
-            padding: 0px;
-            background-color: #cc3e30;
-        }
-
-        .telaLogin {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            margin-top: 12%;
-            border-radius: 25px;
-            padding: 30px;
-            background-color: #f0f0cd;
-        }
-
-        .ui-button {
-            background: #cc3e30 !important;
-            color: white;
-            font-size: 15px;
-        }
-        
-        .fundo{
-            background-color: #f0f0cd;
-        }
-    </style>
+    <h:outputStylesheet library="css" name="login.css" />
+    <f:metadata>
+        <f:event listener="#{loginBean.preRender}" type="preRenderView" />
+    </f:metadata>
     <h:body>
-        <h:form>
+        <form id="login" method="post" action="#{request.contextPath}/j_spring_security_check">
             <div class="ui-g ui-fluid">
                 <div class="ui-lg-4 ui-md-2 ui-g-1"/>
                 <div class="ui-lg-4 ui-md-8 ui-g-10 telaLogin">
                     <div class="ui-g-12 fundo" style="text-align: center; padding-bottom: 30px;">
                         <h:outputText value="Lord Of Florestal" class="fundo" style="font-size: 40px; color: #cc3e30"  />
+                        <p:growl autoUpdate="true" />
                     </div>
                     <div class="ui-g-12 fundo">
-                        <p:inputText placeholder="Login" />
+                        <p:inputText id="j_username" />
                     </div>
                     <div class="ui-g-12 fundo">
-                        <p:password placeholder="Senha" />
+                        <p:password id="j_password" />
                     </div>
                     <div class="ui-g-12 fundo">
-                        <p:link value="Esqueceu a senha?" class="fundo" style="float: right;"/>
+                        <input name="_spring_security_remeber_me" type="checkbox" /> Logar automaticamente
                     </div>
                     <div class="ui-g-12 fundo">
-                        <p:button value="Entrar" outcome="/jogador/index.html" />
+                        <a href="login.xhtml" class="fundo" style="float: right;">Esqueceu a senha?</a>
+                    </div>
+                    <div class="ui-g-12 fundo">
+                        <input style="width: 100%; padding: .3em 1em; color: white;" type="submit" value="Entrar" />
                     </div>
                 </div>
                 <div class="ui-lg-4 ui-md-2 ui-g-1"/>
             </div>
-        </h:form>
+        </form>
     </h:body>
 </html>
 

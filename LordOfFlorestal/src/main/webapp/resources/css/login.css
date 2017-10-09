@@ -1,0 +1,23 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    background-color: #cc3e30;
+}
+
+.telaLogin {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 12%;
+    border-radius: 25px;
+    padding: 30px;
+    background-color: #f0f0cd;
+}
+
+.ui-button {
+    background: #cc3e30 !important;
+    color: white;
+    font-size: 15px;
+}
+
+.fundo{
+    background-color: #f0f0cd;
+}
