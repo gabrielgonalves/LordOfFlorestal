@@ -38,6 +38,9 @@ public class ResgateBean {
             if (!jogador.getCartas().contains(valeCarta.getCarta())) {
                 valeCarta.setValido(false);
                 valeCartaRN.salvar(valeCarta);
+                
+                idCarta = valeCarta.getCarta().getId();
+                
                 jogador.getCartas().add(valeCarta.getCarta());
                 jogadorRN.salvar(jogador);
                 MessageUtil.info("Cupom " + valeCarta.getCodigo() + " resgatado com sucesso!");
