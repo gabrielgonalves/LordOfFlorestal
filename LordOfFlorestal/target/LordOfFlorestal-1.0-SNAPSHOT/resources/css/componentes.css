@@ -36,3 +36,13 @@
 .dialog {
     z-index: 1000 !important;
 }
+
+.botao-verificar {
+    margin-top: 25px !important;
+}
+
+@media(max-width: 640px){
+    .bota-verificar {
+        margin-top: 0px !important;
+    }
+}

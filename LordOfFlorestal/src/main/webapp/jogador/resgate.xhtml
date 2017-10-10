@@ -8,24 +8,21 @@
     <ui:define name="content">
         <h:form prependId="false">
             <div class="ui-g ui-fluid">
-                <div class="ui-g-12" style="padding-top: 10px;">
-                    <h1>Resgate</h1>
-                    <p:separator/>
+                <div class="ui-g-12">
                     <p:messages autoUpdate="true" closable="true" />
                 </div>
-                <div class="ui-lg-8 ui-md-8 ui-g-12 noMargin">
+                <div class="ui-g-12">
+                    <p:graphicImage library="icon" name="ticket.png" class="icone-titulo" />
+                    <h1>Resgate</h1>
+                    <p:separator/>
+                </div>
+                <div class="ui-lg-8 ui-md-8 ui-g-12 sem-espacamento">
                     <div class="ui-g-12">
                         <p:outputLabel for="codigo" value="Codigo" class="label" />
-                        <p:inputText id="codigo" value="#{resgateBean.codigo}" />
-                    </div>
-                    <div class="ui-g-12 noMargin">
-                        <div class="ui-lg-8 ui-md-8 ui-g-12"/>
-                        <div class="ui-lg-4 ui-md-4 ui-g-12">
-                            <p:commandButton value="Validar" action="#{resgateBean.validar}" update="img" />
-                        </div>
+                        <p:inputText id="codigo" value="#{resgateBean.codigo}" class="input" />
                     </div>
                 </div>
-                <div class="ui-lg-4 ui-md-4 ui-g-12 noMargin">
+                <div class="ui-lg-4 ui-md-4 ui-g-12 sem-espacamento">
                     <center>
                         <p:outputPanel id="img">
                             <p:graphicImage value="#{imageStreamer.imagemCarta}" width="150">
@@ -33,6 +30,11 @@
                             </p:graphicImage>
                         </p:outputPanel>
                     </center>
+                </div>
+                <div class="ui-g-12 ui-md-8 sem-espacamento">
+                    <div class="ui-g-12 ui-md-2">
+                        <p:commandButton value="Validar" icon="fa fa-floppy-o" action="#{resgateBean.validar}" update="img" class="botao-verde"/>
+                    </div>
                 </div>
             </div>
         </h:form>

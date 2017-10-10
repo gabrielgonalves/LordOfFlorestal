@@ -44,7 +44,7 @@ public class CartaBean {
 
     public String novo() {
         this.carta = new Carta();
-        return "/carta/cadastrar.xhtml?faces-redirect=true";
+        return "/adm/carta/cadastrar.xhtml?faces-redirect=true";
     }
 
     public String salvar() {

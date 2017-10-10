@@ -33,7 +33,7 @@ public class JogadorBean {
 
     public String novo() {
         this.jogador = new Jogador();
-        return "/jogador/cadastrar.xhtml?faces-redirect=true";
+        return "/adm/jogador/cadastrar.xhtml?faces-redirect=true";
     }
 
     public String salvar() {

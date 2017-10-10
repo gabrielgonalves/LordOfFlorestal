@@ -6,24 +6,26 @@
                 template="/WEB-INF/template/layout.xhtml">
 
     <ui:define name="content">
-        <h:form>
+        <h:form prependId="false">
             <div class="ui-g ui-fluid">
-                <div class="ui-g-12 noMargin">
+                <div class="ui-g-12 sem-espacamento">
                     <div class="ui-g-6">
-                        <p:button value="Novo Jogo" class="botao" />
+                        <p:button value="Novo Jogo" class="botao-vermelho" />
                     </div>
                     <div class="ui-g-6">
-                        <p:button value="Juntar-se" class="botao" />
+                        <p:button value="Juntar-se" class="botao-vermelho" />
                     </div>
                 </div>
                 <div class="ui-g-12">
-                    <p:carousel value="#{dashboardBean.cartas}" circular="true" numVisible="8" var="carta" responsive="true" headerText="Minhas Cartas">
+                    <p:carousel footerText="Você possui #{dashboardBean.jogador.cartas.size()} carta(s)" value="#{dashboardBean.jogador.cartas}" circular="true" numVisible="8" var="carta" responsive="true" headerText="Minhas Cartas">
                         <center>
-                            <p:graphicImage library="img" name="#{carta}" width="100" />
+                            <p:graphicImage value="#{imageStreamer.imagemCarta}" width="80">
+                                <f:param name="idCarta" value="#{carta.id}" />
+                            </p:graphicImage>
                         </center>
                     </p:carousel>
                 </div>
-                <div class="ui-g-12 noMargin" >
+                <div class="ui-g-12 sem-espacamento" >
                     <div class="ui-lg-6 ui-md-6 ui-g-12">
                         <p:panel header="Estatísticas">
                             <p:chart type="pie" model="#{dashboardBean.grafico}" responsive="true" />

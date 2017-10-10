@@ -5,10 +5,15 @@
  */
 package br.com.lordofflorestal.web;
 
+import br.com.lordofflorestal.model.Carta;
+import br.com.lordofflorestal.model.Jogador;
+import br.com.lordofflorestal.rn.JogadorRN;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.model.chart.PieChartModel;
 
 /**
@@ -16,14 +21,17 @@ import org.primefaces.model.chart.PieChartModel;
  * @author gabriel
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class DashboardBean {
 
-    private ArrayList<String> cartas;
+    private Jogador jogador;
+    private Carta carta;
     private ArrayList<String> tarefas;
     private ArrayList<String> ranking;
 
-    private PieChartModel pieModel1;
+    private PieChartModel grafico;
+    
+    HttpServletRequest request;
 
     @PostConstruct
     public void init() {
@@ -35,23 +43,23 @@ public class DashboardBean {
     }
 
     private void createPieModel1() {
-        pieModel1 = new PieChartModel();
+        grafico = new PieChartModel();
 
-        pieModel1.set("Ganhou", 540);
-        pieModel1.set("Perdeu", 325);
-        pieModel1.set("Desistiu", 112);
+        grafico.set("Ganhou", jogador.getEstatisticaJogador().getNumJogosGanho());
+        grafico.set("Perdeu", jogador.getEstatisticaJogador().getNumJogosPerdido());
+        grafico.set("Lord", jogador.getEstatisticaJogador().getNumJogosGanhoLord());
 
-        pieModel1.setTitle("Jogos");
-        pieModel1.setLegendPosition("w");
+        grafico.setTitle("Número de jogos: "+jogador.getEstatisticaJogador().getNumJogos());
+        grafico.setLegendPosition("w");
     }
 
     public DashboardBean() {
-        cartas = new ArrayList();
+        JogadorRN jogadorRN = new JogadorRN();
+        String login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        jogador = jogadorRN.buscarPorLogin(login);
+        
         tarefas = new ArrayList();
         ranking = new ArrayList();
-        for (int i = 1; i < 19; i++) {
-            cartas.add("/cartas/" + i + ".jpg");
-        }
         for (int i = 0; i < 3; i++) {
             tarefas.add("Tarefa " + i);
         }
@@ -60,8 +68,20 @@ public class DashboardBean {
         }
     }
 
-    public ArrayList<String> getCartas() {
-        return cartas;
+    public Jogador getJogador() {
+        return jogador;
+    }
+
+    public void setJogador(Jogador jogador) {
+        this.jogador = jogador;
+    }
+
+    public Carta getCarta() {
+        return carta;
+    }
+
+    public void setCarta(Carta carta) {
+        this.carta = carta;
     }
 
     public ArrayList<String> getTarefas() {
@@ -73,6 +93,6 @@ public class DashboardBean {
     }
 
     public PieChartModel getGrafico() {
-        return pieModel1;
+        return grafico;
     }
 }

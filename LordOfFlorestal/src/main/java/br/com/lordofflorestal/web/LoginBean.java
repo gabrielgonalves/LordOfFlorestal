@@ -8,7 +8,6 @@ package br.com.lordofflorestal.web;
 import br.com.lordofflorestal.util.MessageUtil;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 /**

@@ -8,56 +8,59 @@
     <ui:define name="content">
         <h:form enctype="multipart/form-data">
             <div class="ui-g ui-fluid">
-                <div class="ui-g-12" style="padding-top: 10px;">
-                    <h1>Perfil</h1>
-                    <p:separator/>
+                <div class="ui-g-12">
                     <p:messages autoUpdate="true" closable="true" />
                 </div>
-                <div class="ui-g-12 ui-md-8 noMargin">
+                <div class="ui-g-12">
+                    <p:graphicImage library="icon" name="student.png" class="icone-titulo" />
+                    <h1>Cadastrar jogador</h1>
+                    <p:separator/>
+                </div>
+                <div class="ui-g-12 ui-md-8 sem-espacamento">
                     <div class="ui-g-12 ui-md-10">
                         <p:outputLabel for="nome" value="Nome" class="label" />
-                        <p:inputText id="nome" value="#{perfilBean.jogador.nome}" />
+                        <p:inputText id="nome" value="#{perfilBean.jogador.nome}" class="input"/>
                     </div>
                     <div class="ui-g-12 ui-md-2">
                         <p:outputLabel for="tipo" value="Tipo" class="label" />
-                        <p:inputText disabled="true" id="tipo" value="#{perfilBean.jogador.tipoJogador}" />
+                        <p:inputText disabled="true" id="tipo" value="#{perfilBean.jogador.tipoJogador}" class="input"/>
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <p:outputLabel for="matricula" value="Matricula" class="label" />
-                        <p:inputText disabled="true" id="matricula" value="#{perfilBean.jogador.matricula}" />
+                        <p:inputText disabled="true" id="matricula" value="#{perfilBean.jogador.matricula}" class="input"/>
                     </div>
                     <div class="ui-g-12 ui-md-8">
                         <p:outputLabel for="email" value="E-mail" class="label" />
-                        <p:inputText id="email" value="#{perfilBean.jogador.email}" />
+                        <p:inputText id="email" value="#{perfilBean.jogador.email}" class="input"/>
                     </div>
                     <div class="ui-g-12 ui-md-10">
                         <p:outputLabel for="login" value="Login" class="label" />
-                        <p:inputText id="login" value="#{perfilBean.jogador.login}" />
+                        <p:inputText id="login" value="#{perfilBean.jogador.login}" class="input"/>
                     </div>
                     <div class="ui-g-12 ui-md-2">
-                        <p:commandButton value="Verificar" class="verificar" />
+                        <p:commandButton value="Verificar" class="botao-verificar" />
                     </div>
-                    <div class="ui-g-12 noMargin">
+                    <div class="ui-g-12 sem-espacamento">
                         <h3>Alterar senha</h3>
                         <p:separator />
                     </div>
-                    <div class="ui-g-12 noMargin">
+                    <div class="ui-g-12 sem-espacamento">
                         <div class="ui-g-12">
                             <p:outputLabel for="senhaAtual" value="Senha atual" class="label" />
-                            <p:password id="senhaAtual" />
+                            <p:password id="senhaAtual" class="input"/>
                         </div>
                         <div class="ui-g-12 ui-md-6">
                             <p:outputLabel for="novaSenha" value="Nova senha" class="label" />
-                            <p:password id="novaSenha"/>
+                            <p:password id="novaSenha" class="input"/>
                         </div>
                         <div class="ui-g-12 ui-md-6">
                             <p:outputLabel for="confirmarSenha" value="Confirmar senha" class="label" />
-                            <p:password id="confirmarSenha" />
+                            <p:password id="confirmarSenha" class="input"/>
                         </div>
                     </div>
 
                 </div>
-                <div class="ui-g-12 ui-md-4 noMargin">
+                <div class="ui-g-12 ui-md-4 sem-espacamento">
                     <div class="ui-g-12">
                         <center>
                             <p:graphicImage value="#{imageStreamer.imagemJogador}" width="50%">
@@ -68,12 +71,14 @@
                         </center>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-8 noMargin">
-                    <div class="ui-g-12 ui-md-8"/>
-                    <div class="ui-g-12 ui-md-4">
-                        <p:commandButton value="Salvar" action="#{perfilBean.salvar}" ajax="false" update="@all" />
+                <div class="ui-g-12 ui-md-8 sem-espacamento">
+                        <div class="ui-g-12 ui-md-2">
+                            <p:commandButton value="Salvar" icon="fa fa-floppy-o" action="#{perfilBean.salvar}" ajax="false" class="botao-verde"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-2">
+                            <p:button value="Cancelar" icon="fa fa-times" outcome="/jogador/perfil.xhtml" class="botao-vermelho"/>
+                        </div>
                     </div>
-                </div>
             </div>
         </h:form>
     </ui:define>

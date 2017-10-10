@@ -47,7 +47,7 @@ public class ValeCartaBean {
 
     public String novo() {
         this.valeCarta = new ValeCarta();
-        return "/administrador/cadastrarValeCarta.xhtml";
+        return "/adm/valecarta/cadastrar.xhtml?faces-redirect=true";
     }
 
     public int getQt() {
