@@ -51,8 +51,8 @@
                             <h:outputText value="#{jogador.login}" />
                         </p:column>
 
-                        <p:column headerText="Tipo Jogador">
-                            <h:outputText value="#{jogador.tipoJogador}" />
+                        <p:column headerText="Tipo Jogador" style="text-align: center">
+                            <p:graphicImage library="icon" name="#{jogador.tipoJogador == 'LORD' ? 'crown.png' : 'student-hat.png'}" />
                         </p:column>
 
                         <p:column>

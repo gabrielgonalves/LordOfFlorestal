@@ -44,7 +44,7 @@
                         </p:column>
 
                         <p:column headerText="Válido" width="100" style="text-align: center">
-                            <h:outputText value="#{vale.valido}" />
+                            <p:graphicImage library="icon" name="#{vale.valido == true ?'like.png' : 'dislike.png'}" />
                         </p:column>
 
                         <p:column width="100">

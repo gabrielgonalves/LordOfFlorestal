@@ -7,7 +7,6 @@ package br.com.lordofflorestal.web;
 
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.TipoJogador;
-import br.com.lordofflorestal.rn.CartaRN;
 import br.com.lordofflorestal.rn.JogadorRN;
 import java.util.List;
 import javax.faces.bean.ManagedBean;

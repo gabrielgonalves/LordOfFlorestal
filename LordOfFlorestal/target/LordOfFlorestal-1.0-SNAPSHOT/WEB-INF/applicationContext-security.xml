@@ -8,7 +8,7 @@
                 http://www.springframework.org/schema/security/spring-security.xsd">
     <http auto-config="true">
         <intercept-url pattern="/adm/**" access="ROLE_LORD" />
-        <intercept-url pattern="/jogador/**" access="ROLE_LORD, ROLE_JOGADOR" />
+        <intercept-url pattern="/jogador/**" access="ROLE_LORD, ROLE_ALUNO" />
         <form-login login-page="/login.xhtml" always-use-default-target="true" default-target-url="/jogador/index.xhtml" authentication-failure-url="/login.xhtml?login_error=1" />
         <logout />
         <remember-me />
