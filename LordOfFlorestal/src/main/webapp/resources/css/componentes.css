@@ -1,0 +1,38 @@
+.icone-titulo {
+    float: left; 
+    margin-top: 10px; 
+    margin-right: 10px;
+}
+
+.sem-espacamento {
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.input {
+    margin-top: 8px !important;
+}
+
+.botao-verde {
+    background: #379125 !important;
+    padding: 5px !important;
+    color: white !important;
+}
+
+.botao-vermelho {
+    background: #cc3e30 !important;
+    padding: 5px !important;
+    color: white !important;
+}
+
+.botao-normal {
+    padding: 5px !important;
+}
+
+.dialog {
+    z-index: 1000 !important;
+}

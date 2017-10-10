@@ -1,0 +1,96 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/layout.xhtml">
+
+    <f:metadata>
+        <f:event listener="#{jogadorBean.preRender}" type="preRenderView" />
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:form enctype="multipart/form-data">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12">
+                    <p:messages autoUpdate="true" closable="true" />
+                </div>
+                <div class="ui-g-12">
+                    <p:graphicImage library="icon" name="student.png" class="icone-titulo" />
+                    <h1>Cadastrar jogador</h1>
+                    <p:separator/>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 tira-margem-tabela">
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="Novo jogador" icon="fa fa-plus" action="#{jogadorBean.novo}" class="botao-normal"/>
+                        </f:facet>
+                        <f:facet name="right">
+                            <p:button value="Lista de jogadores" icon="fa fa-list" outcome="/jogador/listar.xhtml" class="botao-normal"/>
+                        </f:facet>
+                    </p:toolbar>
+                </div>
+            </div>
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12 ui-md-12 ui-lg-12 sem-espacamento">
+                    <div class="ui-g-12 ui-md-8  sem-espacamento">
+                        <div class="ui-g-12 ui-md-8">
+                            <p:outputLabel for="nome" value="Nome" class="label"/>
+                            <p:inputText id="nome" value="#{jogadorBean.jogador.nome}" class="input"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:outputLabel for="tipo" value="Tipo" class="label"/>
+                            <p:selectOneMenu id="tipo" value="#{jogadorBean.jogador.tipoJogador}" class="input">
+                                <f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+                                <f:selectItems value="#{jogadorBean.tipoJogador}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:outputLabel for="matricula" value="Matricula" class="label"/>
+                            <p:inputText id="matricula" value="#{jogadorBean.jogador.matricula}" class="input"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-8">
+                            <p:outputLabel for="email" value="E-mail" class="label"/>
+                            <p:inputText id="email" value="#{jogadorBean.jogador.email}" class="input"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:outputLabel for="login" value="Login" class="label"/>
+                            <p:inputText id="login" value="#{jogadorBean.jogador.login}" class="input"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:outputLabel for="senha" value="Senha" class="label"/>
+                            <p:password id="senha" value="#{jogadorBean.jogador.senha}" class="input"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:outputLabel for="confirmarSenha" value="Confirmar Senha" class="label"/>
+                            <p:password id="confirmarSenha" value="#{jogadorBean.confirmarSenha}" class="input" />
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-4 noMargin">
+                        <div class="ui-g-12">
+                            <p:outputLabel for="img" value="Imagem" class="label"/><br />
+                            <p:fileUpload id="img" mode="simple" class="input" value="#{jogadorBean.img}" />
+                        </div>
+                        <div class="ui-g-12">
+                            <center>
+                                <p:graphicImage rendered="#{jogadorBean.jogador.imagem != null}" value="#{imageStreamer.imagemJogador}" width="100%">
+                                    <f:param name="idJogador" value="#{jogadorBean.jogador.matricula}" />
+                                </p:graphicImage>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-8 sem-espacamento">
+                        <div class="ui-g-12 ui-md-2">
+                            <p:commandButton value="Salvar" icon="fa fa-floppy-o" action="#{jogadorBean.salvar}" ajax="false" class="botao-verde"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-2">
+                            <p:button value="Cancelar" icon="fa fa-times" outcome="/jogador/cadastrar.xhtml" class="botao-vermelho"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

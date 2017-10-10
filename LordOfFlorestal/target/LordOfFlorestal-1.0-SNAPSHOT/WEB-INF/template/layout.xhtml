@@ -12,6 +12,7 @@
         <h:outputStylesheet library="css" name="custom.css" />
         <h:outputStylesheet library="css" name="layout.css" />
         <h:outputStylesheet library="css" name="components.css" />
+        <h:outputStylesheet library="css" name="componentes.css" />
 
         <h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />
         <h:outputScript target="body" library="js" name="app.js" />
@@ -42,33 +43,28 @@
                         </sec:ifAnyGranted>
                     </li>
                     <li class="#{menuBean.getItemCssClass('/jogador/perfil.xhtml')}">
-                        <sec:ifAnyGranted roles="ROLE_ALUNO">
+                        <sec:ifAnyGranted roles="ROLE_LORD, ROLE_ALUNO">
                             <h:link outcome="/jogador/perfil.xhtml"><i class="fa  fa-fw  fa-user"></i>Perfil</h:link>
                         </sec:ifAnyGranted>
                     </li>
                     <li class="#{menuBean.getItemCssClass('/jogador/resgate.xhtml')}">
-                        <sec:ifAnyGranted roles="ROLE_ALUNO">
+                        <sec:ifAnyGranted roles="ROLE_LORD, ROLE_ALUNO">
                             <h:link outcome="/jogador/resgate.xhtml"><i class="fa  fa-fw  fa-plus"></i>Resgate</h:link>
                         </sec:ifAnyGranted>
                     </li>
-                    <li class="#{menuBean.getItemCssClass('/administrador/cadastrarCarta.xhtml')}">
+                    <li class="#{menuBean.getItemCssClass('/carta/listar.xhtml')} #{menuBean.getItemCssClass('/carta/cadastrar.xhtml')}">
                         <sec:ifAnyGranted roles="ROLE_LORD">
-                            <h:link outcome="/administrador/cadastrarCarta.xhtml"><i class="fa  fa-fw  fa-square"></i>Carta</h:link>
+                            <h:link outcome="/carta/listar.xhtml"><i class="fa  fa-fw  fa-square"></i>Carta</h:link>
                         </sec:ifAnyGranted>
                     </li>
-                    <li class="#{menuBean.getItemCssClass('/administrador/cadastrarJogador.xhtml')}">
+                    <li class="#{menuBean.getItemCssClass('/jogador/listar.xhtml')} #{menuBean.getItemCssClass('/jogador/cadastrar.xhtml')}">
                         <sec:ifAnyGranted roles="ROLE_LORD">
-                            <h:link outcome="/administrador/cadastrarJogador.xhtml"><i class="fa  fa-fw  fa-user-plus"></i>Jogador</h:link>
+                            <h:link outcome="/jogador/listar.xhtml"><i class="fa  fa-fw  fa-user-plus"></i>Jogador</h:link>
                         </sec:ifAnyGranted>
                     </li>
                     <li class="#{menuBean.getItemCssClass('/administrador/cadastrarValeCarta.xhtml')}">
                         <sec:ifAnyGranted roles="ROLE_LORD">
                             <h:link outcome="/administrador/cadastrarValeCarta.xhtml"><i class="fa  fa-fw  fa-ticket"></i>Vale Carta</h:link>
-                        </sec:ifAnyGranted>
-                    </li>
-                    <li class="#{menuBean.getItemCssClass('/administrador/listagem.xhtml')}">
-                        <sec:ifAnyGranted roles="ROLE_LORD">
-                            <h:link outcome="/administrador/listagem.xhtml"><i class="fa  fa-fw  fa-list"></i>Listagem</h:link>
                         </sec:ifAnyGranted>
                     </li>
                     <li>

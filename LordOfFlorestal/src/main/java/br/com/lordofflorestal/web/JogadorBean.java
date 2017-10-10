@@ -7,10 +7,13 @@ package br.com.lordofflorestal.web;
 
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.TipoJogador;
+import br.com.lordofflorestal.rn.CartaRN;
 import br.com.lordofflorestal.rn.JogadorRN;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -25,10 +28,12 @@ public class JogadorBean {
     private String confirmarSenha;
     
     private UploadedFile img;
+    
+    private HttpServletRequest request;
 
     public String novo() {
         this.jogador = new Jogador();
-        return "/administrador/cadastrarJogador.xhtml";
+        return "/jogador/cadastrar.xhtml?faces-redirect=true";
     }
 
     public String salvar() {
@@ -42,6 +47,22 @@ public class JogadorBean {
         jogadorRN.salvar(jogador);
 
         return novo();
+    }
+    
+    public String excluir(){
+        JogadorRN jogadorRN = new JogadorRN();
+        jogadorRN.excluir(jogador);
+        return null;
+    }
+    
+    public void preRender() {
+        request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        int matricula;
+        if (request.getParameter("matricula") != null) {
+            matricula = Integer.parseInt(request.getParameter("matricula"));
+            JogadorRN jogadorRN = new JogadorRN();
+            jogador = jogadorRN.buscarPorMatricula(matricula);
+        }
     }
 
     public Jogador getJogador() {

@@ -6,7 +6,7 @@
                 template="/WEB-INF/template/layout.xhtml">
 
     <ui:define name="content">
-        <h:form>
+        <h:form enctype="multipart/form-data">
             <div class="ui-g ui-fluid">
                 <div class="ui-g-12" style="padding-top: 10px;">
                     <h1>Perfil</h1>
@@ -71,7 +71,7 @@
                 <div class="ui-g-12 ui-md-8 noMargin">
                     <div class="ui-g-12 ui-md-8"/>
                     <div class="ui-g-12 ui-md-4">
-                        <p:commandButton value="Salvar" action="#{perfilBean.salvar}" update="@all" />
+                        <p:commandButton value="Salvar" action="#{perfilBean.salvar}" ajax="false" update="@all" />
                     </div>
                 </div>
             </div>

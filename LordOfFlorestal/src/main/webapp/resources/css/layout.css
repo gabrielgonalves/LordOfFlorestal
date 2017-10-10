@@ -23,7 +23,7 @@
     left: 0;
     width: 210px;
     margin-left: -211px;
-    z-index: 9998;
+    z-index: 999;
     transition: margin-left 0.5s;
     overflow-y: auto;
 

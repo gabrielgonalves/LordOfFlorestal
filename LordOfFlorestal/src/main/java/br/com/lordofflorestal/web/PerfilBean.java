@@ -8,7 +8,7 @@ package br.com.lordofflorestal.web;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.rn.JogadorRN;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.model.UploadedFile;
 
@@ -17,7 +17,7 @@ import org.primefaces.model.UploadedFile;
  * @author gabriel
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class PerfilBean {
 
     private Jogador jogador;
@@ -35,7 +35,7 @@ public class PerfilBean {
         jogador.setImagem(img.getContents());
         jogadorRN.salvar(jogador);
         
-        return null;
+        return "/jogador/perfil.xhtml";
     }
 
     public Jogador getJogador() {

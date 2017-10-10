@@ -1,0 +1,127 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/layout.xhtml">
+
+    <ui:define name="content">
+        <h:form prependId="false" enctype="multipart/form-data">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12">
+                    <p:messages autoUpdate="true" closable="true" />
+                </div>
+                <div class="ui-g-12">
+                    <p:graphicImage library="icon" name="poker.png" class="icone-titulo" />
+                    <h1>Lista de cartas</h1>
+                    <p:separator/>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="Nova carta" icon="fa fa-plus" action="#{cartaBean.novo}" class="botao-normal"/>
+
+                            <p:commandButton disabled="true" value="Gerar relatório" icon="fa fa-print" class="botao-normal"/>
+                        </f:facet>
+                        <f:facet name="right">
+                            <p:inputText disabled="true" placeholder="Buscar" style="padding: 10px !important"  />
+                        </f:facet>
+                    </p:toolbar>
+                </div>
+            </div>
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12">
+                    <p:dataTable id="cartas" value="#{cartaBean.cartas}" var="carta" reflow="true" emptyMessage="Nenhuma carta foi encontrada."
+                                 paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="15">
+                        <p:column headerText="Id" width="25" style="text-align: center">
+                            <h:outputText value="#{carta.id}" />
+                        </p:column>
+
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{carta.nome}" />
+                        </p:column>
+
+                        <p:column headerText="Tipo Carta" style="text-align: center">
+                            <h:outputText value="#{carta.tipoCarta}" />
+                        </p:column>
+
+                        <p:column headerText="Subtipo Carta" style="text-align: center">
+                            <h:outputText value="#{carta.subtipoCarta}" />
+                        </p:column>
+
+                        <p:column headerText="Valor ataque" width="100" style="text-align: center">
+                            <h:outputText value="#{carta.valorAtaque}" />
+                        </p:column>
+
+                        <p:column headerText="Valor Defesa" width="100" style="text-align: center">
+                            <h:outputText value="#{carta.valorDefesa}" />
+                        </p:column>
+
+                        <p:column>
+                            <div class="ui-g ui-fluid sem-espacamento">
+                                <div class="ui-g-4">
+                                    <p:button icon="fa fa-pencil-square-o" class="botao-verde" outcome="/carta/cadastrar.xhtml?id=#{carta.id}" />
+                                </div>
+                                <div class="ui-g-4">
+                                    <p:commandButton icon="fa fa-trash" class="botao-vermelho" update="cartas" >
+                                        <f:setPropertyActionListener target="#{cartaBean.carta}" value="#{carta}" />
+                                        <p:confirm header="Atenção" message="Deseja realmente excluir a carta #{cartaBean.carta.nome}"/>
+                                    </p:commandButton>
+                                </div>
+                                <div class="ui-g-4">
+                                    <p:commandButton icon="fa fa-eye" class="botao-normal" onclick="PF('info').show()" update="info" >
+                                        <f:setPropertyActionListener target="#{cartaBean.carta}" value="#{carta}" />
+                                    </p:commandButton>
+                                </div>
+                            </div>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+            <p:confirmDialog class="dialogo" global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sim" action="#{cartaBean.excluir}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+            <p:dialog width="50%" header="Detalhes da carta" modal="true" responsive="true" resizable="false" widgetVar="info">
+                <p:outputPanel id="info">
+                    <div class="ui-g">
+                        <div class="ui-g-12 sem-espacamento">
+                            <div class="ui-g-4">
+                                <center>
+                                    <h:outputText value="#{cartaBean.carta.nome}" class="label" />
+                                    <br/><br/>
+                                    <p:graphicImage value="#{imageStreamer.imagemCarta}" width="100%">
+                                        <f:param name="idCarta" value="#{cartaBean.carta.id}" />
+                                    </p:graphicImage>
+                                </center>
+                            </div>
+                            <div class="ui-g-8">
+                                <p:panelGrid columns="1" styleClass="ui-panelgrid-blank" layout="grid">
+                                    <h:outputText value="Descrição" class="label"/>
+                                    <h:outputText value="#{cartaBean.carta.descricao}" />
+
+                                    <h:outputText value="Efeito" rendered="#{cartaBean.carta.efeito != null}" class="label"/>
+                                    <h:outputText value="#{cartaBean.carta.efeito}" rendered="#{cartaBean.carta.efeito != null}" />
+
+                                    <h:outputText value="Tipo Carta" class="label"/>
+                                    <h:outputText value="#{cartaBean.carta.tipoCarta}" />
+
+                                    <h:outputText value="Subtipo Carta" rendered="#{cartaBean.carta.subtipoCarta != null}" class="label"/>
+                                    <h:outputText value="#{cartaBean.carta.subtipoCarta}" rendered="#{cartaBean.carta.subtipoCarta != null}" />
+
+                                    <h:outputText value="Valor Ataque" rendered="#{cartaBean.carta.valorAtaque != 0}" class="label"/>
+                                    <h:outputText value="#{cartaBean.carta.valorAtaque}" rendered="#{cartaBean.carta.valorAtaque != 0}" />
+
+                                    <h:outputText value="Valor Defesa" rendered="#{cartaBean.carta.valorDefesa != 0}" class="label"/>
+                                    <h:outputText value="#{cartaBean.carta.valorDefesa}" rendered="#{cartaBean.carta.valorDefesa != 0}" />
+                                </p:panelGrid>
+                            </div>
+                        </div>
+                    </div>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

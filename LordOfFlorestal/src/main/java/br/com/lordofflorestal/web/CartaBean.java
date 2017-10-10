@@ -12,6 +12,8 @@ import br.com.lordofflorestal.rn.CartaRN;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -25,13 +27,24 @@ public class CartaBean {
     private Carta carta = new Carta();
     private UploadedFile img;
 
+    private HttpServletRequest request;
+
     public CartaBean() {
-        CartaRN cartaRN = new CartaRN();
+    }
+
+    public void preRender() {
+        request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        int id;
+        if (request.getParameter("id") != null) {
+            id = Integer.parseInt(request.getParameter("id"));
+            CartaRN cartaRN = new CartaRN();
+            carta = cartaRN.buscarPorId(id);
+        }
     }
 
     public String novo() {
         this.carta = new Carta();
-        return "/administrador/cadastrarCarta.xhtml";
+        return "/carta/cadastrar.xhtml?faces-redirect=true";
     }
 
     public String salvar() {
@@ -40,6 +53,12 @@ public class CartaBean {
         cartaRN.salvar(carta);
 
         return this.novo();
+    }
+    
+    public String excluir() {
+        CartaRN cartaRN = new CartaRN();
+        cartaRN.excluir(carta);
+        return null;
     }
 
     public Carta getCarta() {

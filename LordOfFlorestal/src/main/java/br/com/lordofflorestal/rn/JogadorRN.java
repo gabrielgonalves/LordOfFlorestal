@@ -25,6 +25,7 @@ public class JogadorRN {
     }
 
     public void salvar(Jogador jogador) {
+        System.out.println(jogador.getMatricula());
         if (buscarPorMatricula(jogador.getMatricula()) == null) {
             if (buscarPorLogin(jogador.getLogin()) == null) {
                 this.jogadorDAO.salvar(jogador);

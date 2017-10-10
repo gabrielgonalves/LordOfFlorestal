@@ -31,7 +31,7 @@ public class JogadorDAOHibernate implements JogadorDAO {
 
     @Override
     public void atualizar(Jogador jogador) {
-        this.session.update(jogador);
+        this.session.merge(jogador);
     }
 
     @Override
