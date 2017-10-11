@@ -7,6 +7,7 @@ br/com/lordofflorestal/util/exception/DAOException.class
 br/com/lordofflorestal/rn/CartaJogoRN.class
 br/com/lordofflorestal/rn/CartaRN.class
 br/com/lordofflorestal/rn/DueloRN.class
+br/com/lordofflorestal/util/EmailUtil.class
 br/com/lordofflorestal/model/Turno.class
 br/com/lordofflorestal/util/HibernateUtil.class
 br/com/lordofflorestal/util/exception/RNException.class
