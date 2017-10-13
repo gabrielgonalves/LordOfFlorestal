@@ -7,6 +7,7 @@ package br.com.lordofflorestal.web;
 
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.rn.JogadorRN;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -18,7 +19,7 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @ViewScoped
-public class PerfilBean {
+public class PerfilBean implements Serializable{
 
     private Jogador jogador;
     

@@ -16,7 +16,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author gabriel
  */
-@FacesConverter(forClass = Carta.class)
+@FacesConverter(forClass = Carta.class, value = "cartaconverter")
 public class CartaConversor implements Converter{
 
     @Override

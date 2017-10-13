@@ -9,8 +9,10 @@ import br.com.lordofflorestal.dao.JogadorDAO;
 import br.com.lordofflorestal.model.EstatisticaJogador;
 import br.com.lordofflorestal.model.Jogador;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -63,6 +65,13 @@ public class JogadorDAOHibernate implements JogadorDAO {
     @Override
     public List<Jogador> listar() {
         return (List<Jogador>) this.session.createCriteria(Jogador.class).list();
+    }
+
+    @Override
+    public List<Jogador> listarExceto(Jogador jogador) {
+        Criteria criteria = this.session.createCriteria(Jogador.class);
+        criteria.add(Restrictions.ne("login", jogador.getLogin()));
+        return (List<Jogador>) criteria.list();
     }
 
 }

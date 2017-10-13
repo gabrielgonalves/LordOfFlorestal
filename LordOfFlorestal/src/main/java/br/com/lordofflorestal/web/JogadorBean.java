@@ -40,8 +40,11 @@ public class JogadorBean {
         if (!senha.equals(confirmarSenha)) {
             return null;
         }
-
-        jogador.setImagem(img.getContents());
+        
+        if(img != null){
+           jogador.setImagem(img.getContents()); 
+        }
+        
         JogadorRN jogadorRN = new JogadorRN();
         jogadorRN.salvar(jogador);
 

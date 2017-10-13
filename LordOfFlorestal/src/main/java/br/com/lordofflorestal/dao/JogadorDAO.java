@@ -26,6 +26,8 @@ public interface JogadorDAO {
     public Jogador buscarPorMatricula(Integer matricula);
     
     public EstatisticaJogador buscarEstatisticaJogador(Integer matricula);
+    
+    public List<Jogador> listarExceto(Jogador jogador);
 
     public List<Jogador> listar();
 }

@@ -82,4 +82,8 @@ public class JogadorRN {
     public List<Jogador> listar() {
         return this.jogadorDAO.listar();
     }
+    
+    public List<Jogador> listarExceto(Jogador jogador) {
+        return this.jogadorDAO.listarExceto(jogador);
+    }
 }

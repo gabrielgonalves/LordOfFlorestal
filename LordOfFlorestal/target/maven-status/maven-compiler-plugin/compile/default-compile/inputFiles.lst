@@ -16,6 +16,7 @@
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/filter/ConexaoHibernateFilter.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/SituacaoDuelo.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/LocalCarta.java
+/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/DueloBean.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/DueloRN.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/MessageUtil.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/EstadoCarta.java
@@ -29,6 +30,7 @@
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/TipoCarta.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/exception/DAOException.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/SubtipoCarta.java
+/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/conversor/JogadorConversor.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/CartaBean.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/dao/DeckDAO.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/hibernate/ValeCartaDAOHibernate.java

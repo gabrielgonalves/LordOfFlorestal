@@ -1,0 +1,110 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/layout.xhtml">
+
+    <ui:define name="content">
+        <style>
+            .ui-wizard-nav-next{
+                background: #379125 !important;
+                padding: 5px !important;
+                color: white !important;
+            }
+            .ui-wizard-nav-back{
+                background: #cc3e30 !important;
+                padding: 5px !important;
+                color: white !important;
+            }
+
+            .ui-state-highlight{
+                background: #cc3e30 !important;
+                color: white !important;
+            }
+            .ui-panel-titlebar{
+                background: #cc3e30 !important;
+                color: white !important;
+            }
+        </style>
+        <h:form>
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:wizard backLabel="Anterior" nextLabel="Próximo">
+                        <p:tab title="Oponente">
+                            <p:panel header="Escolha seu oponente">
+                                <div class="ui-g ui-fluid">
+                                    <div class="ui-g-12 sem-espacamento">
+                                        <p:outputLabel for="oponente" value="Oponente" class="label" />
+                                        <p:selectOneMenu id="oponente" class="input" value="#{dueloBean.oponente}">
+                                            <f:selectItem itemLabel="Selecione um oponente" />
+                                            <f:selectItems value="#{dueloBean.oponentes}" var="oponente" itemLabel="#{oponente.nome}" itemValue="#{oponente}" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="Deck">
+                            <p:panel header="Construa seu deck">
+                                <h:outputText value="Você pode selecionar X cartas" />
+                                <br/><br/>
+                                <p:pickList responsive="true" value="#{dueloBean.cartas}" var="carta" itemLabel="#{carta.nome}" itemValue="#{carta}" 
+                                            showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="cartaconverter">
+
+                                    <f:facet name="sourceCaption">Suas cartas</f:facet>
+                                    <f:facet name="targetCaption">Seu deck</f:facet>
+
+                                    <p:column style="width:10%">
+                                        <p:graphicImage value="#{imageStreamer.imagemCarta}" width="50">
+                                            <f:param name="idCarta" value="#{carta.id}" />
+                                        </p:graphicImage>
+                                    </p:column>
+
+                                    <p:column style="width:90%;">
+                                        <h:outputText value="#{carta.nome}" />
+                                    </p:column>
+                                </p:pickList>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="Confirmação">
+                            <p:panel header="Confirme as informações">
+                                <div class="ui-g ui-fluid">
+                                    <div class="ui-g-12">
+                                        <h:outputText value="Id Duelo" class="label"/><br/>
+                                        <h:outputText value="1" class="input" />
+                                    </div>
+                                    <div class="ui-g-12 ui-md-6">
+                                        <h:outputText value="Jogador" class="label"/><br/>
+                                        <h:outputText value="#{dueloBean.jogador.nome}" class="input" />
+                                    </div>
+                                    <div class="ui-g-12 ui-md-6">
+                                        <h:outputText value="Oponente" class="label"/><br/>
+                                        <h:outputText value="#{dueloBean.oponente.nome}" class="input" />
+                                    </div>
+                                    <div class="ui-g-12">
+                                        <p:carousel circular="true" responsive="true" numVisible="8" headerText="Seu Deck" value="#{dueloBean.cartasSelecionadas}" var="carta">
+                                            <center>
+                                                <p:graphicImage value="#{imageStreamer.imagemCarta}" width="100">
+                                                    <f:param name="idCarta" value="#{carta.id}" />
+                                                </p:graphicImage> 
+                                            </center>
+                                        </p:carousel>
+                                    </div>
+                                    <div class="ui-g-12">
+                                        <h:outputLabel value="*Um email será enviado para seu oponente para que ele possa se juntar ao duelo" style="font-size: 10px;" />
+                                    </div>
+                                    <div class="ui-g-12 ui-md-10" />
+                                    <div class="ui-g-12 ui-md-2">
+                                        <p:commandButton value="Jogar" action="#{dueloBean.jogar}" class="botao-verde" />
+                                    </div>
+                                </div>
+                            </p:panel>
+                        </p:tab>
+                    </p:wizard>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -3,6 +3,7 @@ br/com/lordofflorestal/model/Duelo.class
 br/com/lordofflorestal/web/JogadorBean.class
 br/com/lordofflorestal/model/Carta.class
 br/com/lordofflorestal/hibernate/ValeCartaDAOHibernate.class
+br/com/lordofflorestal/util/conversor/JogadorConversor.class
 br/com/lordofflorestal/util/exception/DAOException.class
 br/com/lordofflorestal/rn/CartaJogoRN.class
 br/com/lordofflorestal/rn/CartaRN.class
@@ -34,6 +35,7 @@ br/com/lordofflorestal/model/EstadoCarta.class
 br/com/lordofflorestal/model/Deck.class
 br/com/lordofflorestal/web/CartaBean.class
 br/com/lordofflorestal/model/EstatisticaJogador.class
+.netbeans_automatic_build
 br/com/lordofflorestal/model/SubtipoCarta.class
 br/com/lordofflorestal/dao/CartaDAO.class
 br/com/lordofflorestal/dao/ValeCartaDAO.class
@@ -46,6 +48,7 @@ br/com/lordofflorestal/util/DAOFactory.class
 br/com/lordofflorestal/web/filter/ConexaoHibernateFilter.class
 br/com/lordofflorestal/hibernate/CartaDAOHibernate.class
 br/com/lordofflorestal/rn/JogadorRN.class
+br/com/lordofflorestal/web/DueloBean.class
 br/com/lordofflorestal/web/ValeCartaBean.class
 br/com/lordofflorestal/util/conversor/CartaConversor.class
 br/com/lordofflorestal/hibernate/CartaJogoDAOHibernate.class

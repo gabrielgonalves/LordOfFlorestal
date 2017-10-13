@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Lord Of Florestal</title>
+
+        <h:outputStylesheet library="css" name="custom.css" />
+        <h:outputStylesheet library="css" name="layout.css" />
+        <h:outputStylesheet library="css" name="components.css" />
+
+        <h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />
+        <h:outputScript target="body" library="js" name="app.js" />
+    </h:head>
+    <style>
+
+        @media (min-width: 640px) {
+            .ui-icon{
+                display: none !important;
+            }
+        }
+
+        .ui-carousel .ui-carousel-dropdown, .ui-carousel .ui-carousel-mobiledropdown {
+            display: none !important;
+        }
+
+        .ui-carousel .ui-carousel-viewport .ui-carousel-items .ui-carousel-item{
+            border: none;
+            padding: 4px;
+        }
+        .ui-carousel .ui-carousel-viewport{
+            margin-top: 5px;
+        }
+
+
+        .ui-carousel{
+            border: none;
+        }
+
+        .ui-carousel .ui-carousel-header{
+            background-color: #cc3e30;
+            color: white;
+        }
+
+        .ui-selectbooleanbutton {
+            color : red !important;
+        }
+
+        .ui-state-active{
+            color: green !important;
+        }
+    </style>
+    <h:body style="background-color: #3b8a33;">
+        <h:form prependId="false"> 
+            <p:growl />
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12 ui-md-10 noMargin">
+                    <div class="ui-g-12 noMargin">
+                        <p:outputPanel id="mesaOponente" autoUpdate="true">
+                            <p:ring id="cartasMesaOponente" value="#{jogoBean.mesa}" var="ca" styleClass="image-ring" easing="easeInOutBack">
+                                <p:panel id="pnl" header="#{ca.carta.id}" style="width: 125px;" >
+                                    <center>
+                                        <p:graphicImage library="img" width="100" name="/cartas/#{ca.carta.id}.jpg" />
+                                    </center>
+                                </p:panel>
+                            </p:ring>
+                            <br/><br/><br/><p:separator style="background-color: #cc3e30"/>
+                        </p:outputPanel>
+
+                        <p:outputPanel id="suaMesa">
+                            <p:outputPanel id="dropArea" autoUpdate="true">
+                                <center>
+                                    <h:outputText value="!!!Jogue suas cartas aqui!!!" rendered="#{empty jogoBean.mesa}" style="color: white; font-size:24px;" />
+                                </center>
+                                <p:ring style="padding: -10px;" id="cartasMesa" value="#{jogoBean.mesa}" var="ca" styleClass="image-ring" easing="easeInOutBack">
+                                    <p:panel id="pnl" header="#{ca.carta.id}" style="width: 125px" >
+                                        <center>
+                                            <p:graphicImage library="img" width="100" name="/cartas/#{ca.carta.id}.jpg" />
+                                        </center>
+                                    </p:panel>
+                                </p:ring>
+                            </p:outputPanel>
+                            <br/><br/><br/><p:separator style="background-color: #cc3e30"/>
+                        </p:outputPanel>
+
+                        <p:outputPanel autoUpdate="true">
+                            <p:ring id="cartasDisponiveis" value="#{dueloBean.duelo.deckJogador1.cartas}" var="ca" styleClass="image-ring" easing="easeInOutBack">
+                                <p:panel id="pnl" header="#{ca.carta.id}" style="width: 125px;" >
+                                    <center>
+                                        <p:graphicImage value="#{imageStreamer.imagemCarta}" width="100">
+                                            <f:param name="idCarta" value="#{ca.carta.id}" />
+                                        </p:graphicImage> 
+                                    </center>
+                                </p:panel>
+                                <p:draggable for="pnl" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
+                            </p:ring>
+                        </p:outputPanel>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-2" >
+                    <p:outputPanel >
+                        <h1 align="center" style="color: white;">Pontuação</h1>
+                    </p:outputPanel>
+                </div>
+            </div>
+            <p:droppable for="suaMesa" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="cartasDisponiveis" onDrop="handleDrop">
+                <p:ajax listener="#{jogoBean.descer}" />
+            </p:droppable>
+        </h:form>
+    </h:body>
+    <script type="text/javascript">
+        function handleDrop(event, ui) {
+            var cs = ui.draggable;
+
+            cs.fadeOut('fast');
+        }
+    </script>
+</html>
+
