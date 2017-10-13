@@ -44,6 +44,7 @@ public class Deck implements Serializable {
 
     public Deck() {
         cartas = new ArrayList();
+        pontosDeterminacao = 20;
     }
 
     public Deck(int id, Jogador jogador, int pontosDeterminacao, List<CartaJogo> cartas, Duelo duelo) {

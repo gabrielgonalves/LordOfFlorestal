@@ -8,6 +8,7 @@
         <title>Lord Of Florestal</title>
     </h:head>
     <h:outputStylesheet library="css" name="login.css" />
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet"/>
     <f:metadata>
         <f:event listener="#{loginBean.preRender}" type="preRenderView" />
     </f:metadata>
@@ -16,24 +17,24 @@
             <div class="ui-g ui-fluid">
                 <div class="ui-lg-4 ui-md-2 ui-g-1"/>
                 <div class="ui-lg-4 ui-md-8 ui-g-10 telaLogin">
-                    <div class="ui-g-12 fundo" style="text-align: center; padding-bottom: 30px;">
-                        <h:outputText value="Lord Of Florestal" class="fundo" style="font-size: 40px; color: #cc3e30"  />
+                    <div class="ui-g-12" style="text-align: center; padding-bottom: 30px;">
+                        <h:outputText value="Lord Of Florestal" style="font-size: 40px; color: #cc3e30;font-family: 'Poiret One', cursive;"  />
                         <p:growl autoUpdate="true" />
                     </div>
-                    <div class="ui-g-12 fundo">
-                        <p:inputText id="j_username" />
+                    <div class="ui-g-12">
+                        <p:inputText id="j_username" placeholder="Login" />
                     </div>
-                    <div class="ui-g-12 fundo">
-                        <p:password id="j_password" />
+                    <div class="ui-g-12">
+                        <p:password id="j_password" placeholder="Senha" />
                     </div>
-                    <div class="ui-g-12 fundo">
+                    <div class="ui-g-12">
                         <input name="_spring_security_remeber_me" type="checkbox" /> Logar automaticamente
                     </div>
-                    <div class="ui-g-12 fundo">
-                        <a href="login.xhtml" class="fundo" style="float: right;">Esqueceu a senha?</a>
+                    <div class="ui-g-12">
+                        <a href="login.xhtml" style="float: right;">Esqueceu a senha?</a>
                     </div>
-                    <div class="ui-g-12 fundo">
-                        <input style="width: 100%; padding: .3em 1em; color: white;" type="submit" value="Entrar" />
+                    <div class="ui-g-12">
+                        <input class="btn" type="submit" value="Entrar" />
                     </div>
                 </div>
                 <div class="ui-lg-4 ui-md-2 ui-g-1"/>

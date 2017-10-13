@@ -1,21 +1,43 @@
-* {
-    margin: 0px;
-    padding: 0px;
-    background-color: #cc3e30;
+body, html {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgb(211, 81, 69), rgb(204, 62, 48));
 }
 
 .telaLogin {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    margin-top: 12%;
-    border-radius: 25px;
-    padding: 30px;
-    background-color: #f0f0cd;
+    max-width: 350px;
+    padding: 40px 40px;
+    background-color: #F7F7F7;
+    /* just in case there no content*/
+    padding: 20px 25px 30px;
+    margin: 0 auto 25px;
+    margin-top: 100px;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
-.ui-button {
-    background: #cc3e30 !important;
+.btn {
+    width: 100%;
+    font-weight: 700  !important;
+    height: 36px  !important;
+    background-color: 	#ba372c;
     color: white;
-    font-size: 15px;
+    font-size: 14px  !important;
+    -moz-border-radius: 3px  !important;
+    -webkit-border-radius: 3px  !important;
+    border-radius: 3px  !important;
+    border: none  !important;
+    -o-transition: all 0.218s  !important;
+    -moz-transition: all 0.218s  !important;
+    -webkit-transition: all 0.218s  !important;
+    transition: all 0.218s  !important;
 }
 
 .fundo{

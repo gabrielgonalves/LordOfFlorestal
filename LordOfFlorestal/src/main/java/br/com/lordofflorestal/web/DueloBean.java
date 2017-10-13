@@ -42,10 +42,6 @@ public class DueloBean {
         jogador = jogadorRN.buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
     }
 
-    public void teste() {
-        System.out.println(cartasSelecionadas.size());
-    }
-
     @PostConstruct
     public void init() {
         cartasDisponiveis = new ArrayList();

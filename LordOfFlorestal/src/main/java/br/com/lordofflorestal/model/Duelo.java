@@ -44,6 +44,7 @@ public class Duelo implements Serializable {
     public Duelo() {
         deckJogador1 = new Deck();
         deckJogador2 = new Deck();
+        situacaoDuelo = SituacaoDuelo.AGUARDANDO;
     }
 
     public Duelo(int id, Deck deckJogador1, Deck deckJogador2, SituacaoDuelo situacaoDuelo, List<Turno> turnos) {
