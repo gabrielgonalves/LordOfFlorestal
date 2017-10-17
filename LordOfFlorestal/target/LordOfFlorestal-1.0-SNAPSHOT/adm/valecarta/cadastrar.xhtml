@@ -37,7 +37,7 @@
                 <div class="ui-g-12 ui-md-12 sem-espacamento">
                     <div class="ui-g-12 ui-md-12">
                         <p:outputLabel for="carta" value="Carta" class="label"/>
-                        <p:selectOneMenu id="carta" value="#{valeCartaBean.carta}" class="input">
+                        <p:selectOneMenu id="carta" value="#{valeCartaBean.carta}" class="input" converter="cartaconverter">
                             <f:selectItem itemLabel="Escolha uma opção" itemValue="" />
                             <f:selectItems value="#{valeCartaBean.cartas}" var="carta" itemLabel="#{carta.nome}" itemValue="#{carta}" />
                         </p:selectOneMenu>

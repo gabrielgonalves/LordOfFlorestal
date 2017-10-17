@@ -35,7 +35,6 @@ br/com/lordofflorestal/model/EstadoCarta.class
 br/com/lordofflorestal/model/Deck.class
 br/com/lordofflorestal/web/CartaBean.class
 br/com/lordofflorestal/model/EstatisticaJogador.class
-.netbeans_automatic_build
 br/com/lordofflorestal/model/SubtipoCarta.class
 br/com/lordofflorestal/dao/CartaDAO.class
 br/com/lordofflorestal/dao/ValeCartaDAO.class

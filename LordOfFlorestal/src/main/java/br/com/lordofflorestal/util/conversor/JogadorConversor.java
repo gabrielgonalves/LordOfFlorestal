@@ -5,7 +5,6 @@
  */
 package br.com.lordofflorestal.util.conversor;
 
-import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.rn.JogadorRN;
 import javax.faces.component.UIComponent;
@@ -27,7 +26,7 @@ public class JogadorConversor implements Converter{
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if(value != null){
+        if(value != null && !"".equals(value)){
             return String.valueOf(((Jogador) value).getLogin());
         }
         return null;

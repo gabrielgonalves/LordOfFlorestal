@@ -23,7 +23,7 @@ public class LoginBean {
         request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String retorno = request.getParameter("login_error");
         if (retorno != null) {
-            MessageUtil.erro("Houve um erro ao realizar o login. Por favor, revise suas informações");
+            MessageUtil.erro("Usuário ou senha errados. Por favor tente outra vez.");
         }
 
     }
