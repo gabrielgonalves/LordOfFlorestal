@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.model.DualListModel;
 
@@ -24,7 +24,7 @@ import org.primefaces.model.DualListModel;
  * @author gabriel
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class DueloBean {
 
     private Duelo duelo;

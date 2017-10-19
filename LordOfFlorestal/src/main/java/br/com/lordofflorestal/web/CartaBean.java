@@ -52,7 +52,8 @@ public class CartaBean {
         CartaRN cartaRN = new CartaRN();
         cartaRN.salvar(carta);
 
-        return this.novo();
+        this.carta = new Carta();
+        return "/adm/carta/cadastrar.xhtml";
     }
     
     public String excluir() {

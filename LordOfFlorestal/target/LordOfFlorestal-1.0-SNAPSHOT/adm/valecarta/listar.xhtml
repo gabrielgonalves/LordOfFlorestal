@@ -60,48 +60,6 @@
                     </p:dataTable>
                 </div>
             </div>
-            <p:confirmDialog class="dialogo" global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Sim" action="#{cartaBean.excluir}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-            </p:confirmDialog>
-            <p:dialog width="50%" header="Detalhes da carta" modal="true" responsive="true" resizable="false" widgetVar="info">
-                <p:outputPanel id="info">
-                    <div class="ui-g">
-                        <div class="ui-g-12 sem-espacamento">
-                            <div class="ui-g-4">
-                                <center>
-                                    <h:outputText value="#{cartaBean.carta.nome}" class="label" />
-                                    <br/><br/>
-                                    <p:graphicImage value="#{imageStreamer.imagemCarta}" width="100%">
-                                        <f:param name="idCarta" value="#{cartaBean.carta.id}" />
-                                    </p:graphicImage>
-                                </center>
-                            </div>
-                            <div class="ui-g-8">
-                                <p:panelGrid columns="1" styleClass="ui-panelgrid-blank" layout="grid">
-                                    <h:outputText value="Descrição" class="label"/>
-                                    <h:outputText value="#{cartaBean.carta.descricao}" />
-
-                                    <h:outputText value="Efeito" rendered="#{cartaBean.carta.efeito != null}" class="label"/>
-                                    <h:outputText value="#{cartaBean.carta.efeito}" rendered="#{cartaBean.carta.efeito != null}" />
-
-                                    <h:outputText value="Tipo Carta" class="label"/>
-                                    <h:outputText value="#{cartaBean.carta.tipoCarta}" />
-
-                                    <h:outputText value="Subtipo Carta" rendered="#{cartaBean.carta.subtipoCarta != null}" class="label"/>
-                                    <h:outputText value="#{cartaBean.carta.subtipoCarta}" rendered="#{cartaBean.carta.subtipoCarta != null}" />
-
-                                    <h:outputText value="Valor Ataque" rendered="#{cartaBean.carta.valorAtaque != 0}" class="label"/>
-                                    <h:outputText value="#{cartaBean.carta.valorAtaque}" rendered="#{cartaBean.carta.valorAtaque != 0}" />
-
-                                    <h:outputText value="Valor Defesa" rendered="#{cartaBean.carta.valorDefesa != 0}" class="label"/>
-                                    <h:outputText value="#{cartaBean.carta.valorDefesa}" rendered="#{cartaBean.carta.valorDefesa != 0}" />
-                                </p:panelGrid>
-                            </div>
-                        </div>
-                    </div>
-                </p:outputPanel>
-            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -88,7 +88,7 @@
                                 <center>
                                     <h:outputText value="#{jogadorBean.jogador.nome}" class="label" />
                                     <br/><br/>
-                                    <p:graphicImage value="#{imageStreamer.imagemJogador}" width="100%">
+                                    <p:graphicImage value="#{imageStreamer.imagemJogador}" rendered="#{jogadorBean.jogador.imagem != null}" width="100%">
                                         <f:param name="idJogador" value="#{jogadorBean.jogador.matricula}" />
                                     </p:graphicImage>
                                 </center>

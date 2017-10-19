@@ -42,7 +42,9 @@ public class ValeCartaBean {
             vales.add(valeCarta);
             valeCarta = new ValeCarta();
         }
-        return novo();
+        
+        this.valeCarta = new ValeCarta();
+        return "/adm/valecarta/cadastrar.xhtml";
     }
 
     public String novo() {

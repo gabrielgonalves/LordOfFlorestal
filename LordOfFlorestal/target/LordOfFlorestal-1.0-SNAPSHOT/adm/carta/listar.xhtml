@@ -92,7 +92,7 @@
                                 <center>
                                     <h:outputText value="#{cartaBean.carta.nome}" class="label" />
                                     <br/><br/>
-                                    <p:graphicImage value="#{imageStreamer.imagemCarta}" width="100%">
+                                    <p:graphicImage value="#{imageStreamer.imagemCarta}" rendered="#{cartaBean.carta.imagem != null}" width="100%">
                                         <f:param name="idCarta" value="#{cartaBean.carta.id}" />
                                     </p:graphicImage>
                                 </center>

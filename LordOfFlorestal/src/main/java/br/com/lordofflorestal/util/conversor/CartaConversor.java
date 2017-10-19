@@ -22,7 +22,6 @@ public class CartaConversor implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         CartaRN cartaRN = new CartaRN();
-        System.out.println(value + "obj");
         if (value != null && !"".equals(value)) {
             return cartaRN.buscarPorId(Integer.parseInt(value));
         }
