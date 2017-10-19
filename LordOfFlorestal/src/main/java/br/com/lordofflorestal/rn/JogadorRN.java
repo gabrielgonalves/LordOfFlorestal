@@ -62,6 +62,7 @@ public class JogadorRN {
                     + "<br/>"
                     + "Para poder acessar o site basta entrar com as seguintes informações:<br/>"
                     + "</div>"
+                    + "<br/>"
                     + "<table>"
                     + "<tr><td><b>Login:</b></td><td>"+jogador.getLogin()+"</td>"
                     + "<tr><td><b>Senha:</b></td><td>"+jogador.getSenha()+"</td>"
