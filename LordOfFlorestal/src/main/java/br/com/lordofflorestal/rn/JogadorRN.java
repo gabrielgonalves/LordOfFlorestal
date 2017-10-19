@@ -53,10 +53,25 @@ public class JogadorRN {
     public void enviarEmail(Jogador jogador) throws RNException {
         try {
             EmailUtil emailUtil = new EmailUtil();
-            emailUtil.enviarEmail(null, jogador.getEmail(), "Cadastro - Lord Of Florestal",
-                    "Olá " + jogador.getNome() + " você acaba de se cadastrar no nosso site.\n"
-                    + "Usuário:" + jogador.getLogin() + "\n"
-                    + "Senha:" + jogador.getSenha());
+            String mensagem = "";
+            mensagem = "<html>"
+                    + "<body>"
+                    + "<h2>Olá "+jogador.getNome()+"</h2>"
+                    + "<div style='font-size: 14px; color: black;'>"
+                    + "Bem-vindo ao site Lord Of Florestal, esperamos que você se engage com o curso de Ciência da Computação e que tenha bons momentos de diversão com o nosso jogo."
+                    + "<br/>"
+                    + "Para poder acessar o site basta entrar com as seguintes informações:<br/>"
+                    + "</div>"
+                    + "<table>"
+                    + "<tr><td><b>Login:</b></td><td>"+jogador.getLogin()+"</td>"
+                    + "<tr><td><b>Senha:</b></td><td>"+jogador.getSenha()+"</td>"
+                    + "</table>"
+                    + "<br/><br/>"
+                    + "Atenciosamente, <br/>"
+                    + "Equipe Lord Of Florestal"
+                    + "</body>"
+                    + "</html>";
+            emailUtil.enviarEmail(null, jogador.getEmail(), "Cadastro - Lord Of Florestal" ,mensagem);
         } catch (UtilException ex) {
             throw new RNException(ex);
         }
@@ -82,7 +97,7 @@ public class JogadorRN {
     public List<Jogador> listar() {
         return this.jogadorDAO.listar();
     }
-    
+
     public List<Jogador> listarExceto(Jogador jogador) {
         return this.jogadorDAO.listarExceto(jogador);
     }
