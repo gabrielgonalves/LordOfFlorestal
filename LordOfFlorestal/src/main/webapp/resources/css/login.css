@@ -3,7 +3,7 @@ body, html {
     margin: 0;
     height: 100%;
     background-repeat: no-repeat;
-    background-image: linear-gradient(rgb(211, 81, 69), rgb(204, 62, 48));
+    background-image: linear-gradient(rgb(242, 195, 65), rgb(247, 164, 30));
 }
 
 .telaLogin {
@@ -27,7 +27,7 @@ body, html {
     width: 100%;
     font-weight: 700  !important;
     height: 36px  !important;
-    background-color: 	#ba372c;
+    background-color: 	#F7A41E;
     color: white;
     font-size: 14px  !important;
     -moz-border-radius: 3px  !important;

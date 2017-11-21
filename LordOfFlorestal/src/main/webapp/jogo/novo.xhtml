@@ -30,8 +30,8 @@
         <h:form>
             <div class="ui-g">
                 <div class="ui-g-12">
-                    <p:wizard backLabel="Anterior" nextLabel="Próximo">
-                        <p:tab title="Oponente">
+                    <p:wizard showNavBar="false" widgetVar="novoDuelo">
+                        <p:tab id="tabOponente" title="Oponente">
                             <p:panel header="Escolha seu oponente">
                                 <div class="ui-g ui-fluid">
                                     <div class="ui-g-12 sem-espacamento">
@@ -41,11 +41,15 @@
                                             <f:selectItems value="#{dueloBean.oponentes}" var="oponente" itemLabel="#{oponente.nome}" itemValue="#{oponente}" />
                                         </p:selectOneMenu>
                                     </div>
+                                    <div class="ui-g-12 ui-md-10 ui-lg-10" />
+                                    <div class="ui-g-12 ui-md-2 sem-espacamento">
+                                        <p:commandButton style="margin-top: 10px !important;" class="botao-verde" value="Próximo" type="button" onclick="PF('novoDuelo').next();"/>
+                                    </div>
                                 </div>
                             </p:panel>
                         </p:tab>
 
-                        <p:tab title="Deck">
+                        <p:tab id="tabDeck" title="Deck">
                             <p:panel header="Construa seu deck">
                                 <h:outputText value="Você pode selecionar X cartas" />
                                 <br/><br/>
@@ -65,6 +69,15 @@
                                         <h:outputText value="#{carta.nome}" />
                                     </p:column>
                                 </p:pickList>
+                                <div class="ui-g ui-fluid">
+                                    <div class="ui-g-12 ui-md-2 sem-espacamento">
+                                        <p:commandButton style="margin-top: 10px !important;" class="botao-vermelho" value="Anterior" type="button" onclick="PF('novoDuelo').back();"/>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-8 ui-lg-8" />
+                                    <div class="ui-g-12 ui-md-2 sem-espacamento">
+                                        <p:commandButton style="margin-top: 10px !important;" action="#{dueloBean.criarDuelo}" class="botao-verde" value="Próximo" onsuccess="PF('novoDuelo').next();"/>
+                                    </div>
+                                </div>
                             </p:panel>
                         </p:tab>
 

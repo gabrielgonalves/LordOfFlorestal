@@ -199,4 +199,9 @@ public class Jogador implements Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Jogador{" + "nome=" + nome + ", tipoJogador=" + tipoJogador + ", matricula=" + matricula + ", email=" + email + ", login=" + login + ", senha=" + senha + ", imagem=" + imagem + ", cartas=" + cartas + ", estatisticaJogador=" + estatisticaJogador + '}';
+    }
+
 }

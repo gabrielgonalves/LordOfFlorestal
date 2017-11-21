@@ -53,6 +53,7 @@ public class JogadorBean {
     }
     
     public String excluir(){
+        System.out.println("Entrou no excluir com o jogador " + jogador.getNome());
         JogadorRN jogadorRN = new JogadorRN();
         jogadorRN.excluir(jogador);
         return null;
@@ -73,6 +74,7 @@ public class JogadorBean {
     }
 
     public void setJogador(Jogador jogador) {
+        System.out.println("Alterou jogador para " + jogador.getNome());
         this.jogador = jogador;
     }
 

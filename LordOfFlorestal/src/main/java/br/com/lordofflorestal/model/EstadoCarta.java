@@ -10,5 +10,5 @@ package br.com.lordofflorestal.model;
  * @author gabriel
  */
 public enum EstadoCarta {
-    ATAQUE, DEFESA;
+    ATAQUE, DEFESA, NEUTRO;
 }

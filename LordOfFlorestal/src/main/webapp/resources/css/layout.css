@@ -7,7 +7,7 @@
     min-height: 50px;
     z-index: 1000;
 
-    background-color: #cc3e30;
+    background-color: #D42125;
 }
 
 .topbar > img {
@@ -27,8 +27,8 @@
     transition: margin-left 0.5s;
     overflow-y: auto;
 
-    background-color: #f0f0cd;
-    border-right: 1px solid #f0f0cd;
+    background-color: #F7F7F7;
+    border-right: 1px solid #F7F7F7;
 }
 
 .sidebar.is-toggled {

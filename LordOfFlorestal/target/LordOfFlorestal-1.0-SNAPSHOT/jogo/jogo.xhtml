@@ -62,7 +62,9 @@
                             <p:ring id="cartasMesaOponente" value="#{jogoBean.mesa}" var="ca" styleClass="image-ring" easing="easeInOutBack">
                                 <p:panel id="pnl" header="#{ca.carta.id}" style="width: 125px;" >
                                     <center>
-                                        <p:graphicImage library="img" width="100" name="/cartas/#{ca.carta.id}.jpg" />
+                                        <p:graphicImage value="#{imageStreamer.imagemCarta}" width="100">
+                                            <f:param name="idCarta" value="#{ca.carta.id}" />
+                                        </p:graphicImage> 
                                     </center>
                                 </p:panel>
                             </p:ring>
@@ -77,7 +79,9 @@
                                 <p:ring style="padding: -10px;" id="cartasMesa" value="#{jogoBean.mesa}" var="ca" styleClass="image-ring" easing="easeInOutBack">
                                     <p:panel id="pnl" header="#{ca.carta.id}" style="width: 125px" >
                                         <center>
-                                            <p:graphicImage library="img" width="100" name="/cartas/#{ca.carta.id}.jpg" />
+                                            <p:graphicImage value="#{imageStreamer.imagemCarta}" width="100">
+                                                <f:param name="idCarta" value="#{ca.carta.id}" />
+                                            </p:graphicImage> 
                                         </center>
                                     </p:panel>
                                 </p:ring>

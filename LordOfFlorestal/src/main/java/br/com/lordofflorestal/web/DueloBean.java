@@ -8,13 +8,19 @@ package br.com.lordofflorestal.web;
 import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.CartaJogo;
 import br.com.lordofflorestal.model.Duelo;
+import br.com.lordofflorestal.model.EstadoCarta;
 import br.com.lordofflorestal.model.Jogador;
+import br.com.lordofflorestal.model.LocalCarta;
 import br.com.lordofflorestal.model.SituacaoDuelo;
+import br.com.lordofflorestal.rn.CartaJogoRN;
+import br.com.lordofflorestal.rn.DeckRN;
+import br.com.lordofflorestal.rn.DueloRN;
 import br.com.lordofflorestal.rn.JogadorRN;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.model.DualListModel;
@@ -24,7 +30,7 @@ import org.primefaces.model.DualListModel;
  * @author gabriel
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class DueloBean {
 
     private Duelo duelo;
@@ -50,20 +56,44 @@ public class DueloBean {
         cartas = new DualListModel(cartasDisponiveis, cartasSelecionadas);
     }
 
+    public String criarDuelo() {
+        duelo.getDeckJogador1().setJogador(jogador);
+
+        List<CartaJogo> cjs = new ArrayList();
+        
+        CartaJogoRN cartaJogoRN = new CartaJogoRN();
+
+        for (Carta carta : cartasSelecionadas) {
+            CartaJogo cj = new CartaJogo(0, carta, LocalCarta.MONTE, EstadoCarta.NEUTRO, duelo.getDeckJogador1(), carta.getValorAtaque(), carta.getValorDefesa());
+            cartaJogoRN.salvar(cj);
+            cjs.add(cj);
+        }
+
+        DueloRN dueloRN = new DueloRN();
+       
+
+        duelo.getDeckJogador1().setCartas(cjs);
+        duelo.getDeckJogador2().setJogador(oponente);
+
+        dueloRN.salvar(duelo);
+        
+        return null;
+    }
+
     public String jogar() {
         duelo.getDeckJogador1().setJogador(jogador);
-        
+
         List<CartaJogo> cartasJogo = new ArrayList();
-        for(Carta c : cartasSelecionadas){
+        for (Carta c : cartasSelecionadas) {
             CartaJogo cj = new CartaJogo();
             cj.setCarta(c);
             cartasJogo.add(cj);
         }
-        
+
         duelo.getDeckJogador1().setCartas(cartasJogo);
         duelo.setSituacaoDuelo(SituacaoDuelo.AGUARDANDO);
         duelo.getDeckJogador1().setPontosDeterminacao(20);
-        
+
         return "/jogo/jogo.xhtml?faces-redirect=true";
     }
 

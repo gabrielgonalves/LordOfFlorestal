@@ -10,5 +10,5 @@ package br.com.lordofflorestal.model;
  * @author gabriel
  */
 public enum LocalCarta {
-    DESCARTE, MAO, MESA;
+    DESCARTE, MAO, MESA, MONTE;
 }
