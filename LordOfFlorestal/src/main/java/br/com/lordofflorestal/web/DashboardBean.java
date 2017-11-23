@@ -30,7 +30,7 @@ public class DashboardBean {
     private ArrayList<String> ranking;
 
     private PieChartModel grafico;
-    
+
     HttpServletRequest request;
 
     @PostConstruct
@@ -49,7 +49,7 @@ public class DashboardBean {
         grafico.set("Perdeu", jogador.getEstatisticaJogador().getNumJogosPerdido());
         grafico.set("Lord", jogador.getEstatisticaJogador().getNumJogosGanhoLord());
 
-        grafico.setTitle("Número de jogos: "+jogador.getEstatisticaJogador().getNumJogos());
+        grafico.setTitle("Número de jogos: " + jogador.getEstatisticaJogador().getNumJogos());
         grafico.setLegendPosition("w");
     }
 
@@ -57,7 +57,7 @@ public class DashboardBean {
         JogadorRN jogadorRN = new JogadorRN();
         String login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
         jogador = jogadorRN.buscarPorLogin(login);
-        
+
         tarefas = new ArrayList();
         ranking = new ArrayList();
         for (int i = 0; i < 3; i++) {

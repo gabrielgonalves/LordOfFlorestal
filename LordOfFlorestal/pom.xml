@@ -123,7 +123,7 @@
                 <version>2.2</version>
                 <configuration>
                     <url>http://danielmb.caf.ufv.br:8080/manager/text</url>
-                    <server>daniel</server>
+                    <server>servidor</server>
                     <path>/LordOfFlorestal</path>
                 </configuration>
             </plugin>
