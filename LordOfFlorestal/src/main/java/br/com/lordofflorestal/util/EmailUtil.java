@@ -14,7 +14,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.ImageHtmlEmail;
-import org.apache.commons.mail.SimpleEmail;
 
 /**
  *

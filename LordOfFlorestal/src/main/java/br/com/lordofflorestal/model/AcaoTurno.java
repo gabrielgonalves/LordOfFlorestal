@@ -10,6 +10,5 @@ package br.com.lordofflorestal.model;
  * @author gabriel
  */
 public enum AcaoTurno {
-    ATACAR, BAIXAR, COMPRAR;
-
+    ATACAR, BAIXAR, COMPRAR, FINALIZAR;
 }

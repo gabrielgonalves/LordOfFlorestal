@@ -20,7 +20,6 @@
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/DueloRN.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/MessageUtil.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/EstadoCarta.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/EfeitoCarta.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/hibernate/JogadorDAOHibernate.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/DeckRN.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Carta.java
@@ -48,6 +47,7 @@
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/ValeCartaBean.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/hibernate/CartaDAOHibernate.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/dao/DueloDAO.java
+/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/EfeitoCartaRN.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/CartaJogo.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/hibernate/DueloDAOHibernate.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/ResgateBean.java
