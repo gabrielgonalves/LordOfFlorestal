@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Lord of Florestal</title>
+        <h:outputStylesheet library="css" name="index.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <h:outputScript library="js" name="index.js" />  
+    </h:head>
+    <h:body>
+        <div class="topnav" id="myTopnav">
+            <a href="#cabecalho" class="active">Inicial</a>
+            <a href="#sobre-jogo">Sobre o jogo</a>
+            <a href="#como-jogar">Como jogar</a>
+            <a href="#ranking">Ranking</a>
+            <a href="#quem-somos">Quem somos</a>
+            <a class="login" href="login.xhtml">Login</a>
+            <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+        </div>
+        <div id="cabecalho" class="cabecalho">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12">
+                    <center>
+                        <p:graphicImage library="img" name="logo.png" class="logo" style="margin-top: 50px;" />
+                    </center>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-12 ui-md-3"></div>
+                    <div class="ui-g-6 ui-md-3">
+                        <p:button href="#sobre-jogo" value="Saiba mais" class="btn" />
+                    </div>
+                    <div class="ui-g-6 ui-md-3">
+                        <p:button outcome="login.xhtml" value="Login" class="btn" />
+                    </div>
+                    <div class="ui-g-12 ui-md-3"></div>
+                </div>
+            </div>
+        </div>
+        <div id="sobre-jogo" class="sobre-jogo">    
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="ui-g-12 card">
+                        <h1>Sobre o jogo</h1>
+                        <div class="ui-g-12 ui-md-9">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam molestie, ex eu porta tincidunt, est urna posuere nisi, sit amet venenatis augue ante ac nisi. Morbi euismod sit amet nisl quis porta. Sed suscipit lacus felis, et interdum nisl dignissim eu. In quis iaculis quam. Maecenas facilisis, metus in tincidunt venenatis, augue nunc maximus enim, vel varius ipsum eros at dui. Aliquam erat volutpat. Fusce molestie eros sapien, interdum congue nisi vulputate id. Curabitur maximus turpis urna, a sodales arcu gravida ac. Quisque dictum vestibulum erat, at rutrum eros efficitur eu. Integer vulputate placerat odio pulvinar tristique. Proin vitae tortor consectetur, auctor tortor nec, rhoncus lorem.</p>
+
+                            <p>Donec neque ante, pretium id sagittis eget, condimentum id felis. Suspendisse sed finibus enim, sit amet sodales sem. Donec sodales porta porta. Praesent et accumsan arcu, eget sodales ex. Mauris euismod orci vehicula purus fermentum, id ullamcorper risus dapibus. Maecenas vel metus ligula. Suspendisse ac sem placerat, efficitur dui at, laoreet odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus venenatis lobortis turpis, eu mattis massa pharetra in. Nulla dignissim, dui non malesuada rutrum, erat velit viverra felis, et consectetur elit magna eu felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris finibus augue ligula, id fermentum lacus euismod id. Praesent lacinia purus non nulla rutrum bibendum. Duis iaculis arcu sed ante fringilla, id cursus arcu egestas. Nulla facilisi. Curabitur semper accumsan sem, a pharetra enim aliquet quis.</p>
+                        </div>
+                        <div class="ui-g-12 ui-md-3">
+                            <center>
+                                <p:graphicImage library="img" name="img1.png" width="100%" />
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="como-jogar" class="como-jogar">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="ui-g-12 card">
+                        <h1>Como jogar</h1>
+                        <div class="ui-g-12 ui-md-8">
+                            <p:graphicImage library="img" name="tela.png" width="100%" />
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam molestie, ex eu porta tincidunt, est urna posuere nisi, sit amet venenatis augue ante ac nisi. Morbi euismod sit amet nisl quis porta. Sed suscipit lacus felis, et interdum nisl dignissim eu. In quis iaculis quam. Maecenas facilisis, metus in tincidunt venenatis, augue nunc maximus enim, vel varius ipsum eros at dui. Aliquam erat volutpat. Fusce molestie eros sapien, interdum congue nisi vulputate id. Curabitur maximus turpis urna, a sodales arcu gravida ac. Quisque dictum vestibulum erat, at rutrum eros efficitur eu. Integer vulputate placerat odio pulvinar tristique. Proin vitae tortor consectetur, auctor tortor nec, rhoncus lorem.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ranking">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="ui-g-12 card">
+                        <div class="ui-g-12 ui-md-7">
+                            <div id="ranking" class="ui-g-12">
+                                <h1>Ranking</h1>
+                                <p:panelGrid columns="2" layout="grid">
+                                    <h:outputText value="Jogador" />
+                                    <h:outputText value="Jogador" />
+                                    <h:outputText value="Jogador" />
+                                    <h:outputText value="Jogador" />
+                                    <h:outputText value="Jogador" />
+                                    <h:outputText value="Jogador" />
+                                    <h:outputText value="Jogador" />
+                                    <h:outputText value="Jogador" />
+                                    <h:outputText value="Jogador" />
+                                    <h:outputText value="Jogador" />
+                                </p:panelGrid>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-5">
+                            <div id="quem-somos" class="ui-g-12">
+                                <h1>Quem somos</h1>
+                                <div class="ui-g-12">
+                                    <center>
+                                        <div class="ui-g-12 ui-md-4">
+                                            <p:graphicImage library="img" name="gabriel.jpg" class="img gabriel"/>
+                                            <br/>
+                                            Gabriel
+                                        </div>
+                                        <div class="ui-g-6 ui-md-4">
+                                            <p:graphicImage library="img" name="rodrigo.jpg" width="100%" class="img"/>
+                                            <br/>
+                                            Rodrigo
+                                        </div>
+                                        <div class="ui-g-6 ui-md-4">
+                                            <p:graphicImage library="img" name="daniel.jpg" width="100%" class="img"/>
+                                            <br/>
+                                            Daniel
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rodape">
+        </div>
+    </h:body>
+</html>
+

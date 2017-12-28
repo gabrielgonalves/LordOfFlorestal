@@ -5,11 +5,10 @@
  */
 package br.com.lordofflorestal.rn;
 
-import br.com.lordofflorestal.dao.CartaDAO;
 import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.SubtipoCarta;
 import br.com.lordofflorestal.model.TipoCarta;
-import br.com.lordofflorestal.util.DAOFactory;
+import br.com.lordofflorestal.mysql.CartaDAOMysql;
 import br.com.lordofflorestal.util.MessageUtil;
 import java.util.List;
 
@@ -19,45 +18,45 @@ import java.util.List;
  */
 public class CartaRN {
 
-    private CartaDAO cartaDAO;
+    private CartaDAOMysql cartaDAOMysql;
 
     public CartaRN() {
-        this.cartaDAO = DAOFactory.criarCartaDAO();
+        this.cartaDAOMysql = new CartaDAOMysql();
     }
 
     public void salvar(Carta carta) {
         Integer id = carta.getId();
-        if (id == null || id == 0) {
-            this.cartaDAO.salvar(carta);
+        if (id == 0) {
+            this.cartaDAOMysql.salvar(carta);
             MessageUtil.info("Carta " + carta.getNome() + " salva com sucesso!");
         } else {
-            this.cartaDAO.atualizar(carta);
+            this.cartaDAOMysql.atualizar(carta);
             MessageUtil.info("Carta " + carta.getNome() + " editada com sucesso!");
         }
     }
 
     public void excluir(Carta carta) {
-        this.cartaDAO.excluir(carta);
+        this.cartaDAOMysql.excluir(carta);
         MessageUtil.info("Carta " + carta.getNome() + " excluida com sucesso!");
     }
 
     public Carta buscarPorId(Integer idCarta) {
-        return this.cartaDAO.buscarPorId(idCarta);
+        return this.cartaDAOMysql.buscarPorId(idCarta);
     }
 
     public Carta buscarPorNome(String nome) {
-        return this.cartaDAO.buscarPorNome(nome);
+        return this.cartaDAOMysql.buscarPorNome(nome);
     }
 
     public List<Carta> buscarPorTipo(TipoCarta tipoCarta) {
-        return this.cartaDAO.buscarPorTipo(tipoCarta);
+        return this.cartaDAOMysql.buscarPorTipo(tipoCarta);
     }
 
     public List<Carta> buscarPorSubTipo(SubtipoCarta subtipoCarta) {
-        return this.cartaDAO.buscarPorSubTipo(subtipoCarta);
+        return this.cartaDAOMysql.buscarPorSubTipo(subtipoCarta);
     }
 
     public List<Carta> listar() {
-        return this.cartaDAO.listar();
+        return this.cartaDAOMysql.listar();
     }
 }

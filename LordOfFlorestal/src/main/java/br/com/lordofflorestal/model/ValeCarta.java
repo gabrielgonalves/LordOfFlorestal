@@ -7,36 +7,27 @@ package br.com.lordofflorestal.model;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import org.hibernate.annotations.NaturalId;
+import java.util.UUID;
 
 /**
  *
  * @author gabriel
  */
-@Entity
-@Table(name = "ValeCarta")
 public class ValeCarta implements Serializable {
 
-    @Id
-    @NaturalId
     private String codigo;
-    @ManyToOne
-    @JoinColumn(name = "id_carta", nullable = false)
-    private Carta carta;
     private boolean valido;
+    private Carta carta;
 
     public ValeCarta() {
+        UUID uuid = UUID.randomUUID();
+        this.codigo = uuid.toString().substring(0, 10);
     }
 
-    public ValeCarta(String codigo, Carta carta, boolean valido) {
+    public ValeCarta(String codigo, boolean valido, Carta carta) {
         this.codigo = codigo;
-        this.carta = carta;
         this.valido = valido;
+        this.carta = carta;
     }
 
     public String getCodigo() {
@@ -47,14 +38,6 @@ public class ValeCarta implements Serializable {
         this.codigo = codigo;
     }
 
-    public Carta getCarta() {
-        return carta;
-    }
-
-    public void setCarta(Carta carta) {
-        this.carta = carta;
-    }
-
     public boolean isValido() {
         return valido;
     }
@@ -63,12 +46,20 @@ public class ValeCarta implements Serializable {
         this.valido = valido;
     }
 
+    public Carta getCarta() {
+        return carta;
+    }
+
+    public void setCarta(Carta carta) {
+        this.carta = carta;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.codigo);
-        hash = 67 * hash + Objects.hashCode(this.carta);
-        hash = 67 * hash + (this.valido ? 1 : 0);
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.codigo);
+        hash = 83 * hash + (this.valido ? 1 : 0);
+        hash = 83 * hash + Objects.hashCode(this.carta);
         return hash;
     }
 

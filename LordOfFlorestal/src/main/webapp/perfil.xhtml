@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template/layout.xhtml">
+
+    <ui:define name="conteudo">    
+        <h:form enctype="multipart/form-data">
+            <div class="ui-fluid">
+                <div class="ui-g-12">
+                    <p:panel class="card" id="perfil">
+                        <p:messages autoUpdate="true" closable="true" />
+                        <div class="ui-g no-margin">
+                            <div class="ui-g-12 ui-md-3">
+                                <center>
+                                    <p:graphicImage library="img" name="#{perfilBean.jogador.imagem}" width="150" class="user-img" />
+                                    <br/>
+                                    <p:fileUpload mode="simple" skinSimple="true" label="Escolher" value="#{perfilBean.img}" />
+                                </center>
+                            </div>
+                            <div class="ui-g-12 ui-md-9 no-margin">
+                                <div class="ui-g-12">
+                                    <p:inplace style="font-size: 25px; font-weight: bold;">
+                                        <p:inputText value="#{perfilBean.jogador.nome}" placeholder="Nome" />
+                                    </p:inplace>
+                                </div>
+                                <div class="ui-g-12">
+                                    <p:inplace>
+                                        <p:inputText value="#{perfilBean.jogador.email}" placeholder="E-mail" />
+                                    </p:inplace>
+                                </div>
+                                <div class="ui-g-12 ui-md-6">
+                                    <p:inplace>
+                                        <p:inputText disabled="true" value="#{perfilBean.jogador.login}" placeholder="Login" />
+                                    </p:inplace>
+                                </div>
+                                <div class="ui-g-12 ui-md-6">
+                                    <p:inplace label="*****">
+                                        <p:password value="#{perfilBean.jogador.senha}" autocomplete="true" placeholder="Senha" required="true" requiredMessage="O campo senha é necessário"/>
+                                    </p:inplace> 
+                                </div>
+                            </div>
+                            <div class="ui-g-12 no-margin">
+                                <div class="ui-g-12 ui-md-8"/>
+                                <div class="ui-g-12 ui-md-4 no-margin">
+                                    <p:commandButton value="Salvar alterações" class="btn" action="#{perfilBean.salvar}" update="perfil" ajax="false" />
+                                </div>
+                            </div>
+                        </div>
+                    </p:panel>
+                </div>
+                <div class="ui-g-12">
+                    <p:carousel numVisible="8" value="#{perfilBean.jogador.cartas}" circular="true"
+                                var="carta" headerText="Suas cartas" responsive="true">
+                        <center>
+                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="80"/>
+                        </center>
+
+                        <f:facet name="footer">
+                            <p:link outcome="resgate.xhtml" value="Resgatar" class="resgatar" />
+                        </f:facet> 
+                    </p:carousel>
+                </div>
+
+                <div class="ui-g-12">
+                    <p:panel class="card">
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-md-6 no-margin">
+                                <p:chart type="pie" model="#{perfilBean.grafico}" responsive="true" />
+                            </div>
+                            <div class="ui-g-12 ui-md-6 no-margin">
+                                <p:carousel headerText="Histórico de jogos" responsive="true" >
+                                    Jogos ganhou perdeu
+                                </p:carousel>
+                            </div>
+                        </div>
+                    </p:panel>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

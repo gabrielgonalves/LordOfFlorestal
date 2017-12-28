@@ -6,62 +6,25 @@
 package br.com.lordofflorestal.model;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
 
 /**
  *
  * @author gabriel
  */
-@Entity
-@Table(name = "Carta")
 public class Carta implements Serializable {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id_carta")
     protected int id;
-    @Column(nullable = false, length = 45)
     protected String nome;
-    @Lob
-    @Column(columnDefinition = "LONGBLOB", nullable = false)
-    protected byte[] imagem;
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "tipo_carta")
-    protected TipoCarta tipoCarta;
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "subtipo_carta")
-    protected SubtipoCarta subtipoCarta;
-    @Column(length = 45)
+    protected String imagem;
     protected String efeito;
-    @Column(nullable = false, length = 45)
     protected String descricao;
-    @Column(name = "valor_ataque")
     protected int valorAtaque;
-    @Column(name = "valor_defesa")
     protected int valorDefesa;
+    protected TipoCarta tipoCarta;
+    protected SubtipoCarta subtipoCarta;
 
     public Carta() {
-    }
-
-    public Carta(int id, String nome, byte[] imagem, TipoCarta tipoCarta, SubtipoCarta subtipoCarta, String efeito, String descricao, int valorAtaque, int valorDefesa) {
-        this.id = id;
-        this.nome = nome;
-        this.imagem = imagem;
-        this.tipoCarta = tipoCarta;
-        this.subtipoCarta = subtipoCarta;
-        this.efeito = efeito;
-        this.descricao = descricao;
-        this.valorAtaque = valorAtaque;
-        this.valorDefesa = valorDefesa;
     }
 
     public int getId() {
@@ -80,28 +43,12 @@ public class Carta implements Serializable {
         this.nome = nome;
     }
 
-    public byte[] getImagem() {
+    public String getImagem() {
         return imagem;
     }
 
-    public void setImagem(byte[] imagem) {
+    public void setImagem(String imagem) {
         this.imagem = imagem;
-    }
-
-    public TipoCarta getTipoCarta() {
-        return tipoCarta;
-    }
-
-    public void setTipoCarta(TipoCarta tipoCarta) {
-        this.tipoCarta = tipoCarta;
-    }
-
-    public SubtipoCarta getSubtipoCarta() {
-        return subtipoCarta;
-    }
-
-    public void setSubtipoCarta(SubtipoCarta subtipoCarta) {
-        this.subtipoCarta = subtipoCarta;
     }
 
     public String getEfeito() {
@@ -136,18 +83,34 @@ public class Carta implements Serializable {
         this.valorDefesa = valorDefesa;
     }
 
+    public TipoCarta getTipoCarta() {
+        return tipoCarta;
+    }
+
+    public void setTipoCarta(TipoCarta tipoCarta) {
+        this.tipoCarta = tipoCarta;
+    }
+
+    public SubtipoCarta getSubtipoCarta() {
+        return subtipoCarta;
+    }
+
+    public void setSubtipoCarta(SubtipoCarta subtipoCarta) {
+        this.subtipoCarta = subtipoCarta;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + this.id;
-        hash = 89 * hash + Objects.hashCode(this.nome);
-        hash = 89 * hash + Arrays.hashCode(this.imagem);
-        hash = 89 * hash + Objects.hashCode(this.tipoCarta);
-        hash = 89 * hash + Objects.hashCode(this.subtipoCarta);
-        hash = 89 * hash + Objects.hashCode(this.efeito);
-        hash = 89 * hash + Objects.hashCode(this.descricao);
-        hash = 89 * hash + this.valorAtaque;
-        hash = 89 * hash + this.valorDefesa;
+        int hash = 7;
+        hash = 79 * hash + this.id;
+        hash = 79 * hash + Objects.hashCode(this.nome);
+        hash = 79 * hash + Objects.hashCode(this.imagem);
+        hash = 79 * hash + Objects.hashCode(this.efeito);
+        hash = 79 * hash + Objects.hashCode(this.descricao);
+        hash = 79 * hash + this.valorAtaque;
+        hash = 79 * hash + this.valorDefesa;
+        hash = 79 * hash + Objects.hashCode(this.tipoCarta);
+        hash = 79 * hash + Objects.hashCode(this.subtipoCarta);
         return hash;
     }
 
@@ -175,13 +138,13 @@ public class Carta implements Serializable {
         if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
+        if (!Objects.equals(this.imagem, other.imagem)) {
+            return false;
+        }
         if (!Objects.equals(this.efeito, other.efeito)) {
             return false;
         }
         if (!Objects.equals(this.descricao, other.descricao)) {
-            return false;
-        }
-        if (!Arrays.equals(this.imagem, other.imagem)) {
             return false;
         }
         if (this.tipoCarta != other.tipoCarta) {

@@ -5,9 +5,8 @@
  */
 package br.com.lordofflorestal.rn;
 
-import br.com.lordofflorestal.dao.ValeCartaDAO;
 import br.com.lordofflorestal.model.ValeCarta;
-import br.com.lordofflorestal.util.DAOFactory;
+import br.com.lordofflorestal.mysql.ValeCartaDAOMysql;
 import br.com.lordofflorestal.util.MessageUtil;
 import java.util.List;
 
@@ -17,10 +16,10 @@ import java.util.List;
  */
 public class ValeCartaRN {
 
-    private ValeCartaDAO valeCartaDAO;
+    private ValeCartaDAOMysql valeCartaDAOMysql;
 
     public ValeCartaRN() {
-        valeCartaDAO = DAOFactory.criarValeCartaDAO();
+        valeCartaDAOMysql = new ValeCartaDAOMysql();
     }
 
     public void salvar(ValeCarta valeCarta) {
@@ -28,33 +27,33 @@ public class ValeCartaRN {
             if (valeCarta.getCarta() == null) {
                 MessageUtil.erro("É obrigatório selecionar uma carta");
             } else {
-                this.valeCartaDAO.salvar(valeCarta);
+                this.valeCartaDAOMysql.salvar(valeCarta);
                 MessageUtil.info("Vale carta " + valeCarta.getCodigo() + " salvo com sucesso!");
             }
         } else {
-            this.valeCartaDAO.atualizar(valeCarta);
+            this.valeCartaDAOMysql.atualizar(valeCarta);
             //MessageUtil.info("Vale carta " + valeCarta.getCodigo() + " editado com sucesso!");
         }
     }
 
     public void excluir(ValeCarta valeCarta) {
-        this.valeCartaDAO.excluir(valeCarta);
+        this.valeCartaDAOMysql.excluir(valeCarta);
         MessageUtil.info("Vale carta " + valeCarta.getCodigo() + " excluido com sucesso!");
     }
 
     public ValeCarta buscarPorCodigo(String codigo) {
-        return this.valeCartaDAO.buscarPorCodigo(codigo);
+        return this.valeCartaDAOMysql.buscarPorCodigo(codigo);
     }
 
     public List<ValeCarta> buscarPorStatus(Boolean status) {
-        return this.valeCartaDAO.buscarPorStatus(status);
+        return this.valeCartaDAOMysql.buscarPorStatus(status);
     }
 
     public List<ValeCarta> buscarPorCarta(Integer idCarta) {
-        return this.valeCartaDAO.buscarPorCarta(idCarta);
+        return this.valeCartaDAOMysql.buscarPorCarta(idCarta);
     }
 
     public List<ValeCarta> listar() {
-        return this.valeCartaDAO.listar();
+        return this.valeCartaDAOMysql.listar();
     }
 }

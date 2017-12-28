@@ -1,56 +1,37 @@
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/ValeCarta.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/ImageStreamer.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/dao/ValeCartaDAO.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/DAOFactory.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/exception/UtilException.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/CartaRN.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/dao/CartaDAO.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/EstatisticaJogador.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/AcaoTurno.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/EmailUtil.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/JogoBean.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/JogadorRN.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/HibernateUtil.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Jogador.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/CartaJogoRN.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/filter/ConexaoHibernateFilter.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/SituacaoDuelo.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/LocalCarta.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/DueloBean.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/DueloRN.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/MessageUtil.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/EstadoCarta.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/hibernate/JogadorDAOHibernate.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/DeckRN.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Carta.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/dao/JogadorDAO.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Turno.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/MenuBean.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/TipoJogador.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/TipoCarta.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/exception/DAOException.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/SubtipoCarta.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/CartaBean.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/conversor/JogadorConversor.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/dao/DeckDAO.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/hibernate/ValeCartaDAOHibernate.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Duelo.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/hibernate/CartaJogoDAOHibernate.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/conversor/CartaConversor.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/hibernate/DeckDAOHibernate.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/ValeCartaRN.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/exception/RNException.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/LoginBean.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/PerfilBean.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/DashboardBean.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/JogadorBean.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/ValeCartaBean.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/hibernate/CartaDAOHibernate.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/dao/DueloDAO.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/EfeitoCartaRN.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/CartaJogo.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/hibernate/DueloDAOHibernate.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/web/ResgateBean.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Deck.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/ItemTurno.java
-/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/dao/CartaJogoDAO.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/EstatisticaJogador.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/LocalCarta.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/conversor/JogadorConversor.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/CartaJogo.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/ResgateBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/MessageUtil.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/mysql/JogadorDAOMysql.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/ConnectionFactory.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/JogadorBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/ValeCarta.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Jogador.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/NovoDueloBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/EstadoCarta.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/ValeCartaRN.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/JogadorRN.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/mysql/ValeCartaDAOMysql.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/DashboardBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Deck.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/SubtipoCarta.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/TipoJogador.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/LoginBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/JuntarDueloBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/FileUploadUtil.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Carta.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/DueloBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Duelo.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/CartaRN.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/ValeCartaBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/conversor/CartaConversor.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/SituacaoDuelo.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/comparator/DueloComparator.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/PerfilBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/MenuBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/control/DueloSingleton.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/CartaBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/TipoCarta.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/mysql/CartaDAOMysql.java

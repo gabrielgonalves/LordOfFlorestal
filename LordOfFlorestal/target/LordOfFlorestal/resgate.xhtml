@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/layout.xhtml">
+
+    <ui:define name="conteudo">
+        <h:form prependId="false">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:panel class="card" header="Resgate">
+                        <p:messages autoUpdate="true" closable="true" />
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-lg-8 ui-md-8 ui-g-12 no-margin">
+                                <div class="ui-g-12">
+                                    <p:outputLabel for="codigo" value="Codigo" class="label" />
+                                    <p:inputText id="codigo" value="#{resgateBean.codigo}" class="input" />
+                                </div>
+                            </div>
+                            <div class="ui-lg-4 ui-md-4 ui-g-12 sem-espacamento">
+                                <center>
+                                    <p:outputPanel id="img">
+                                        <p:graphicImage library="cartas" rendered="#{resgateBean.carta() != null}" name="#{resgateBean.carta()}" width="150"/>
+                                    </p:outputPanel>
+                                </center>
+                            </div>
+                            <div class="ui-g-12 ui-md-8 sem-espacamento">
+                                <div class="ui-g-12 ui-md-2">
+                                    <p:commandButton value="Validar" action="#{resgateBean.validar}" update="img" class="btn-azul"/>
+                                </div>
+                            </div>
+                        </div>
+                    </p:panel>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -9,65 +9,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  *
  * @author gabriel
  */
-@Entity
-@Table(name = "Deck")
 public class Deck implements Serializable {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id_deck")
-    private int id;
-    @ManyToOne
-    @JoinColumn(name = "matricula_jogador", nullable = false)
-    private Jogador jogador;
-    @Column(name = "pontos_determinacao")
     private int pontosDeterminacao;
-    @OneToMany(mappedBy = "deck", fetch = FetchType.LAZY)
     private List<CartaJogo> cartas;
-    @ManyToOne
-    @JoinColumn(name = "id_duelo", nullable = false)
-    private Duelo duelo;
+    private Jogador jogador;
 
     public Deck() {
         cartas = new ArrayList();
         pontosDeterminacao = 20;
     }
 
-    public Deck(int id, Jogador jogador, int pontosDeterminacao, List<CartaJogo> cartas, Duelo duelo) {
-        this.id = id;
-        this.jogador = jogador;
+    public Deck(int pontosDeterminacao, List<CartaJogo> cartas, Jogador jogador) {
         this.pontosDeterminacao = pontosDeterminacao;
         this.cartas = cartas;
-        this.duelo = duelo;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Jogador getJogador() {
-        return jogador;
-    }
-
-    public void setJogador(Jogador jogador) {
         this.jogador = jogador;
     }
 
@@ -87,22 +47,20 @@ public class Deck implements Serializable {
         this.cartas = cartas;
     }
 
-    public Duelo getDuelo() {
-        return duelo;
+    public Jogador getJogador() {
+        return jogador;
     }
 
-    public void setDuelo(Duelo duelo) {
-        this.duelo = duelo;
+    public void setJogador(Jogador jogador) {
+        this.jogador = jogador;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.id;
-        hash = 97 * hash + Objects.hashCode(this.jogador);
+        int hash = 7;
         hash = 97 * hash + this.pontosDeterminacao;
         hash = 97 * hash + Objects.hashCode(this.cartas);
-        hash = 97 * hash + Objects.hashCode(this.duelo);
+        hash = 97 * hash + Objects.hashCode(this.jogador);
         return hash;
     }
 
@@ -118,22 +76,15 @@ public class Deck implements Serializable {
             return false;
         }
         final Deck other = (Deck) obj;
-        if (this.id != other.id) {
-            return false;
-        }
         if (this.pontosDeterminacao != other.pontosDeterminacao) {
-            return false;
-        }
-        if (!Objects.equals(this.jogador, other.jogador)) {
             return false;
         }
         if (!Objects.equals(this.cartas, other.cartas)) {
             return false;
         }
-        if (!Objects.equals(this.duelo, other.duelo)) {
+        if (!Objects.equals(this.jogador, other.jogador)) {
             return false;
         }
         return true;
     }
-
 }

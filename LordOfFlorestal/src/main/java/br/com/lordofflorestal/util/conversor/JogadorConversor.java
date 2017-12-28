@@ -16,7 +16,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author gabriel
  */
-@FacesConverter(forClass = Jogador.class)
+@FacesConverter(forClass = Jogador.class, value = "jogadorconverter")
 public class JogadorConversor implements Converter{
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

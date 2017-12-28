@@ -10,5 +10,5 @@ package br.com.lordofflorestal.model;
  * @author gabriel
  */
 public enum SituacaoDuelo {
-    AGUARDANDO, EM_ANDAMENTO, FINALIZADO;
+    AGUARDANDO, CANCELADO, CRIADO, EM_ANDAMENTO, FINALIZADO;
 }

@@ -7,67 +7,40 @@ package br.com.lordofflorestal.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 /**
  *
  * @author gabriel
  */
-@Entity
-@Table(name = "Jogador")
 public class Jogador implements Serializable {
 
-    @Column(nullable = false)
     private String nome;
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "tipo_jogador", nullable = false)
-    private TipoJogador tipoJogador;
-    @Id
-    @Column(name = "matricula_jogador")
     private int matricula;
-    @Column(nullable = false)
     private String email;
-    @Column(nullable = false)
     private String login;
-    @Column(nullable = false)
     private String senha;
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] imagem;
-    @ManyToMany
-    @JoinTable(name = "Jogador_has_Carta", joinColumns = @JoinColumn(name = "matricula_jogador", referencedColumnName = "matricula_jogador"), inverseJoinColumns = @JoinColumn(name = "id_carta"))
-    private List<Carta> cartas;
-    @Embedded
+    private String imagem;
+    private TipoJogador tipoJogador;
     private EstatisticaJogador estatisticaJogador;
+    private List<Carta> cartas;
 
     public Jogador() {
         cartas = new ArrayList();
         estatisticaJogador = new EstatisticaJogador();
     }
 
-    public Jogador(String nome, TipoJogador tipoJogador, int matricula, String email, String login, String senha, byte[] imagem, List<Carta> cartas, EstatisticaJogador estatisticaJogador) {
+    public Jogador(String nome, int matricula, String email, String login, String senha, String imagem, TipoJogador tipoJogador, EstatisticaJogador estatisticaJogador, List<Carta> cartas) {
         this.nome = nome;
-        this.tipoJogador = tipoJogador;
         this.matricula = matricula;
         this.email = email;
         this.login = login;
         this.senha = senha;
         this.imagem = imagem;
-        this.cartas = cartas;
+        this.tipoJogador = tipoJogador;
         this.estatisticaJogador = estatisticaJogador;
+        this.cartas = cartas;
     }
 
     public String getNome() {
@@ -76,14 +49,6 @@ public class Jogador implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public TipoJogador getTipoJogador() {
-        return tipoJogador;
-    }
-
-    public void setTipoJogador(TipoJogador tipoJogador) {
-        this.tipoJogador = tipoJogador;
     }
 
     public int getMatricula() {
@@ -118,20 +83,20 @@ public class Jogador implements Serializable {
         this.senha = senha;
     }
 
-    public byte[] getImagem() {
+    public String getImagem() {
         return imagem;
     }
 
-    public void setImagem(byte[] imagem) {
+    public void setImagem(String imagem) {
         this.imagem = imagem;
     }
 
-    public List<Carta> getCartas() {
-        return cartas;
+    public TipoJogador getTipoJogador() {
+        return tipoJogador;
     }
 
-    public void setCartas(List<Carta> cartas) {
-        this.cartas = cartas;
+    public void setTipoJogador(TipoJogador tipoJogador) {
+        this.tipoJogador = tipoJogador;
     }
 
     public EstatisticaJogador getEstatisticaJogador() {
@@ -142,18 +107,24 @@ public class Jogador implements Serializable {
         this.estatisticaJogador = estatisticaJogador;
     }
 
+    public List<Carta> getCartas() {
+        return cartas;
+    }
+
+    public void setCartas(List<Carta> cartas) {
+        this.cartas = cartas;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 11 * hash + Objects.hashCode(this.nome);
-        hash = 11 * hash + Objects.hashCode(this.tipoJogador);
-        hash = 11 * hash + this.matricula;
-        hash = 11 * hash + Objects.hashCode(this.email);
-        hash = 11 * hash + Objects.hashCode(this.login);
-        hash = 11 * hash + Objects.hashCode(this.senha);
-        hash = 11 * hash + Arrays.hashCode(this.imagem);
-        hash = 11 * hash + Objects.hashCode(this.cartas);
-        hash = 11 * hash + Objects.hashCode(this.estatisticaJogador);
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.nome);
+        hash = 19 * hash + this.matricula;
+        hash = 19 * hash + Objects.hashCode(this.email);
+        hash = 19 * hash + Objects.hashCode(this.login);
+        hash = 19 * hash + Objects.hashCode(this.senha);
+        hash = 19 * hash + Objects.hashCode(this.imagem);
+        hash = 19 * hash + Objects.hashCode(this.tipoJogador);
         return hash;
     }
 
@@ -184,24 +155,13 @@ public class Jogador implements Serializable {
         if (!Objects.equals(this.senha, other.senha)) {
             return false;
         }
+        if (!Objects.equals(this.imagem, other.imagem)) {
+            return false;
+        }
         if (this.tipoJogador != other.tipoJogador) {
             return false;
         }
-        if (!Arrays.equals(this.imagem, other.imagem)) {
-            return false;
-        }
-        if (!Objects.equals(this.cartas, other.cartas)) {
-            return false;
-        }
-        if (!Objects.equals(this.estatisticaJogador, other.estatisticaJogador)) {
-            return false;
-        }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Jogador{" + "nome=" + nome + ", tipoJogador=" + tipoJogador + ", matricula=" + matricula + ", email=" + email + ", login=" + login + ", senha=" + senha + ", imagem=" + imagem + ", cartas=" + cartas + ", estatisticaJogador=" + estatisticaJogador + '}';
     }
 
 }

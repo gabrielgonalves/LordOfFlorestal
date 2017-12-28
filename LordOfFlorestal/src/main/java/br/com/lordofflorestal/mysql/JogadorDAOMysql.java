@@ -5,73 +5,421 @@
  */
 package br.com.lordofflorestal.mysql;
 
-import br.com.lordofflorestal.dao.JogadorDAO;
+import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.EstatisticaJogador;
 import br.com.lordofflorestal.model.Jogador;
+import br.com.lordofflorestal.model.SubtipoCarta;
+import br.com.lordofflorestal.model.TipoCarta;
+import br.com.lordofflorestal.model.TipoJogador;
+import br.com.lordofflorestal.util.ConnectionFactory;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author gabriel
  */
-public class JogadorDAOMysql implements JogadorDAO {
+public class JogadorDAOMysql {
 
-    private Session session;
+    private Connection connection;
 
-    public void setSession(Session session) {
-        this.session = session;
-    }
-
-    @Override
     public void salvar(Jogador jogador) {
-        this.session.save(jogador);
+        String sql = "INSERT INTO Jogador (nome, email, imagem, matricula, login, senha, id_tipo_jogador) VALUES (?, ?, ?, ?, ?, ?, ?);";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, jogador.getNome());
+            statement.setString(2, jogador.getEmail());
+            statement.setString(3, jogador.getImagem());
+            statement.setInt(4, jogador.getMatricula());
+            statement.setString(5, jogador.getLogin());
+            statement.setString(6, jogador.getSenha());
+            statement.setInt(7, jogador.getTipoJogador().ordinal() + 1);
+
+            statement.executeUpdate();
+            statement.close();
+
+            connection.close();
+            
+            inserirCartasJogador(jogador);
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar operações de inserção. Erro: " + ex.getMessage());
+        }
     }
 
-    @Override
     public void atualizar(Jogador jogador) {
-        this.session.merge(jogador);
+        String sql = "UPDATE Jogador SET nome = ?, email = ?, imagem = ?, login = ?, senha = ?, id_tipo_jogador = ? WHERE matricula = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, jogador.getNome());
+            statement.setString(2, jogador.getEmail());
+            statement.setString(3, jogador.getImagem());
+            statement.setString(4, jogador.getLogin());
+            statement.setString(5, jogador.getSenha());
+            statement.setInt(6, jogador.getTipoJogador().ordinal() + 1);
+            statement.setInt(7, jogador.getMatricula());
+
+            statement.executeUpdate();
+            statement.close();
+
+            connection.close();
+            
+            inserirCartasJogador(jogador);
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar operações de atualização. Erro: " + ex.getMessage());
+        }
     }
 
-    @Override
     public void excluir(Jogador jogador) {
-        this.session.delete(jogador);
+        String sql = "DELETE FROM Jogador WHERE matricula = ?";
+
+        try {
+            excluirCartasJogador(jogador);
+            
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, jogador.getMatricula());
+
+            statement.executeUpdate();
+            statement.close();
+
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar operações de exclusão. Erro: " + ex.getMessage());
+        }
     }
 
-    @Override
     public Jogador buscarPorLogin(String login) {
-        String hql = "select j from Jogador j where j.login = :login";
-        Query consulta = this.session.createQuery(hql);
-        consulta.setString("login", login);
-        return (Jogador) consulta.uniqueResult();
+        String sql = "SELECT * FROM Jogador WHERE login = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, login);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Jogador jogador = new Jogador();
+
+                jogador.setNome(rs.getString("nome"));
+                jogador.setEmail(rs.getString("email"));
+                jogador.setImagem(rs.getString("imagem"));
+                jogador.setMatricula(rs.getInt("matricula"));
+                jogador.setLogin(rs.getString("login"));
+                jogador.setSenha(rs.getString("senha"));
+                jogador.setTipoJogador(TipoJogador.values()[rs.getInt("id_tipo_jogador") - 1]);
+                
+                EstatisticaJogador ej = new EstatisticaJogador();
+                ej.setNumJogos(rs.getInt("num_jogos"));
+                ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
+                ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
+                ej.setNumJogosGanhoLord(rs.getInt("num_jogos_ganho_lord"));
+
+                jogador.setEstatisticaJogador(ej);
+
+                statement.close();
+
+                connection.close();
+                
+                jogador.setCartas(buscarCartasJogador(jogador));
+
+                return jogador;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+        return null;
     }
 
-    @Override
     public Jogador buscarPorMatricula(Integer matricula) {
-        String hql = "select j from Jogador j where j.matricula = :matricula";
-        Query consulta = this.session.createQuery(hql);
-        consulta.setInteger("matricula", matricula);
-        return (Jogador) consulta.uniqueResult();
+        String sql = "SELECT * FROM Jogador WHERE matricula = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, matricula);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Jogador jogador = new Jogador();
+
+                jogador.setNome(rs.getString("nome"));
+                jogador.setEmail(rs.getString("email"));
+                jogador.setImagem(rs.getString("imagem"));
+                jogador.setMatricula(rs.getInt("matricula"));
+                jogador.setLogin(rs.getString("login"));
+                jogador.setSenha(rs.getString("senha"));
+                jogador.setTipoJogador(TipoJogador.values()[rs.getInt("id_tipo_jogador") - 1]);
+
+                EstatisticaJogador ej = new EstatisticaJogador();
+                ej.setNumJogos(rs.getInt("num_jogos"));
+                ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
+                ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
+                ej.setNumJogosGanhoLord(rs.getInt("num_jogos_ganho_lord"));
+
+                jogador.setEstatisticaJogador(ej);
+
+                statement.close();
+
+                connection.close();
+
+                jogador.setCartas(buscarCartasJogador(jogador));
+                
+                return jogador;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public EstatisticaJogador buscarEstatisticaJogador(Integer matricula) {
+        String sql = "SELECT * FROM Jogador WHERE matricula = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, matricula);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                EstatisticaJogador ej = new EstatisticaJogador();
+                ej.setNumJogos(rs.getInt("num_jogos"));
+                ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
+                ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
+                ej.setNumJogosGanhoLord(rs.getInt("num_jogos_ganho_lord"));
+
+                statement.close();
+
+                connection.close();
+
+                return ej;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public List<Jogador> listar() {
+        List<Jogador> lista = new ArrayList();
+
+        String sql = "SELECT * FROM Jogador";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Jogador jogador = new Jogador();
+
+                jogador.setNome(rs.getString("nome"));
+                jogador.setEmail(rs.getString("email"));
+                jogador.setImagem(rs.getString("imagem"));
+                jogador.setMatricula(rs.getInt("matricula"));
+                jogador.setLogin(rs.getString("login"));
+                jogador.setSenha(rs.getString("senha"));
+                jogador.setTipoJogador(TipoJogador.values()[rs.getInt("id_tipo_jogador") - 1]);
+
+                EstatisticaJogador ej = new EstatisticaJogador();
+                ej.setNumJogos(rs.getInt("num_jogos"));
+                ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
+                ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
+                ej.setNumJogosGanhoLord(rs.getInt("num_jogos_ganho_lord"));
+
+                jogador.setEstatisticaJogador(ej);
+
+                lista.add(jogador);
+            }
+
+            statement.close();
+
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+        
+        for(Jogador jogador : lista){
+            jogador.setCartas(buscarCartasJogador(jogador));
+        }
+
+        return lista;
+    }
+
+    public List<Jogador> listarExceto(Jogador jogador) {
+        List<Jogador> lista = new ArrayList();
+
+        String sql = "SELECT * FROM Jogador WHERE matricula != ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, jogador.getMatricula());
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Jogador j = new Jogador();
+
+                j.setNome(rs.getString("nome"));
+                j.setEmail(rs.getString("email"));
+                j.setImagem(rs.getString("imagem"));
+                j.setMatricula(rs.getInt("matricula"));
+                j.setLogin(rs.getString("login"));
+                j.setSenha(rs.getString("senha"));
+                j.setTipoJogador(TipoJogador.values()[rs.getInt("id_tipo_jogador") - 1]);
+                
+                EstatisticaJogador ej = new EstatisticaJogador();
+                ej.setNumJogos(rs.getInt("num_jogos"));
+                ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
+                ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
+                ej.setNumJogosGanhoLord(rs.getInt("num_jogos_ganho_lord"));
+
+                j.setEstatisticaJogador(ej);
+
+                lista.add(j);
+            }
+
+            statement.close();
+
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+
+        for(Jogador j : lista){
+            j.setCartas(buscarCartasJogador(j));
+        }
+        
+        return lista;
+    }
+
+    public void inserirCartasJogador(Jogador jogador) {
+        String sql = "INSERT INTO Jogador_has_Carta (matricula_jogador, id_carta) VALUES (?, ?);";
+
+        try {
+            for (Carta carta : jogador.getCartas()) {
+                connection = ConnectionFactory.getConnection();
+
+                PreparedStatement statement = connection.prepareStatement(sql);
+
+                statement.setInt(1, jogador.getMatricula());
+                statement.setInt(2, carta.getId());
+
+                statement.executeUpdate();
+                statement.close();
+
+                connection.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar operações de inserção. Erro: " + ex.getMessage());
+        }
     }
     
-    @Override
-    public EstatisticaJogador buscarEstatisticaJogador(Integer matricula) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void excluirCartasJogador(Jogador jogador){
+        String sql = "DELETE FROM Jogador_has_Carta WHERE matricula_jogador = ?";
 
-    @Override
-    public List<Jogador> listar() {
-        return (List<Jogador>) this.session.createCriteria(Jogador.class).list();
-    }
+        try {
+            connection = ConnectionFactory.getConnection();
 
-    @Override
-    public List<Jogador> listarExceto(Jogador jogador) {
-        Criteria criteria = this.session.createCriteria(Jogador.class);
-        criteria.add(Restrictions.ne("login", jogador.getLogin()));
-        return (List<Jogador>) criteria.list();
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, jogador.getMatricula());
+
+            statement.executeUpdate();
+            statement.close();
+
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar operações de exclusão. Erro: " + ex.getMessage());
+        }
+    }
+    
+    public List<Carta> buscarCartasJogador(Jogador jogador){
+        List<Carta> lista = new ArrayList();
+
+        String sql = "SELECT * FROM Jogador_has_Carta NATURAL JOIN Carta WHERE matricula_jogador = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            
+            statement.setInt(1, jogador.getMatricula());
+            
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Carta carta = new Carta();
+
+                carta.setId(rs.getInt("id_carta"));
+                carta.setNome(rs.getString("nome"));
+                carta.setImagem(rs.getString("imagem"));
+                carta.setEfeito(rs.getString("efeito"));
+                carta.setDescricao(rs.getString("descricao"));
+                carta.setValorAtaque(rs.getInt("valor_ataque"));
+                carta.setValorDefesa(rs.getInt("valor_defesa"));
+                carta.setTipoCarta(TipoCarta.values()[rs.getInt("id_tipo_carta") - 1]);
+                if (rs.getInt("id_subtipo_carta") != 0) {
+                    carta.setSubtipoCarta(SubtipoCarta.values()[rs.getInt("id_subtipo_carta") - 1]);
+                }
+                
+                lista.add(carta);
+            }
+
+            statement.close();
+
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+
+        return lista;
+    }
+    
+    public String buscaImagemJogador(String login){
+        String sql = "SELECT imagem FROM Jogador WHERE login = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, login);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {                
+                return rs.getString("imagem");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+        return "user.png";
     }
 
 }

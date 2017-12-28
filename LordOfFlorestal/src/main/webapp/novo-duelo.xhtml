@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template/layout.xhtml">
+
+    <ui:define name="conteudo">    
+        <h:form prependId="false">
+            <div class="ui-fluid">
+                <div class="ui-g-12">
+                    <p:panel class="card">
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-md-3">
+                                <p:outputLabel for="tempo" value="Tempo de espera" class="user-txt" />
+                            </div>
+                            <div class="ui-g-12 ui-md-3">
+                                <p:selectOneMenu id="tempo" value="#{novoDueloBean.tempo}">
+                                    <f:selectItem itemLabel="1 minuto" itemValue="1" />
+                                    <f:selectItem itemLabel="3 minutos" itemValue="3" />
+                                    <f:selectItem itemLabel="5 minutos" itemValue="5" />
+                                </p:selectOneMenu>
+                            </div>
+                            <div class="ui-g-12 ui-md-3">
+                                <p:outputLabel for="qt" value="Quantidade de cartas" class="user-txt" />
+                            </div>
+                            <div class="ui-g-12 ui-md-3">
+                                <p:inputText value="#{novoDueloBean.qtCartas}" id="qt" disabled="true" />
+                                <p:slider id="spin" step="1" for="qt" minValue="#{novoDueloBean.cartasSelecionadas.size() lt 10 ? 10 : novoDueloBean.qtCartas}" maxValue="#{novoDueloBean.suasCartas.size() gt 20 ? 20 : novoDueloBean.suasCartas.size() lt 10 ? 10 : novoDueloBean.suasCartas.size()}" >
+                                    <p:ajax event="slideEnd" update="suasCartas qt criar" listener="#{novoDueloBean.onSlideEnd}" />
+                                </p:slider>
+                            </div>
+                            <div class="ui-g-12">
+                                <p:carousel id="suasCartas" headerText="Suas cartas" responsive="true" circular="true" numVisible="6" value="#{novoDueloBean.suasCartas}" var="carta">
+                                    <p:panel>
+                                        <center>
+                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="80" />
+                                            <p:commandButton disabled="#{novoDueloBean.cartasSelecionadas.size() lt novoDueloBean.qtCartas ? false : true}" class="btn-verde" value="Adicionar" action="#{novoDueloBean.adicionarCarta}" update="criar spin qt suasCartas cartasSelecionadas" >
+                                                <f:setPropertyActionListener target="#{novoDueloBean.cartaSelecionada}" value="#{carta}" />
+                                            </p:commandButton>
+                                        </center>
+                                    </p:panel>
+                                </p:carousel>
+                            </div>
+                            <div class="ui-g-12">
+                                <p:carousel footerText="Você já selecionou #{novoDueloBean.cartasSelecionadas.size()} carta(s)" id="cartasSelecionadas" headerText="Cartas selecionadas" responsive="true" circular="true" numVisible="6" value="#{novoDueloBean.cartasSelecionadas}" var="carta">
+                                    <p:panel>
+                                        <center>
+                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="80" />
+                                            <p:commandButton class="btn-vermelho" value="Remover" action="#{novoDueloBean.removerCarta}" update="criar spin qt suasCartas cartasSelecionadas" >
+                                                <f:setPropertyActionListener target="#{novoDueloBean.cartaSelecionada}" value="#{carta}" />
+                                            </p:commandButton>
+                                        </center>
+                                    </p:panel>
+                                </p:carousel>
+                            </div>
+                            <div class="ui-g-12 ui-md-10"/>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:commandButton id="criar" value="Criar" disabled="#{novoDueloBean.cartasSelecionadas.size() lt novoDueloBean.qtCartas ? true : false}" action="#{novoDueloBean.criarDuelo}" class="btn" />
+                            </div>
+                        </div>
+                    </p:panel>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

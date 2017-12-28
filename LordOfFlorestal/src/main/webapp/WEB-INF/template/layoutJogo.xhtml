@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Lord of Florestal - Duelo</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet"/>
+        <h:outputStylesheet library="css" name="estilo.css" />
+        <h:outputStylesheet library="css" name="layout.css" />
+        <h:outputStylesheet library="css" name="components.css" />
+
+        <h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />
+        <h:outputScript target="body" library="js" name="app.js" />
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </h:head>
+
+    <h:body>
+        <header class="topbar">
+            <h:link outcome="/dashboard.xhtml" value="Lord Of Florestal - Duelo" style="color: white; font-size: 30px; padding: 5px; padding-left: 15px; float: left; font-family: 'Poiret One', cursive ; text-decoration: none;" />
+            <a href="#" class="toggle  js-toggle"><i class="fa  fa-bars"></i></a>
+        </header>
+        <aside class="sidebar js-sidebar">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:panel header="Alterar plano de fundo" style="margin-top: 10px;">
+                        <p:outputPanel>
+                            <h:form>
+                                <div class="ui-g">
+                                    <div class="ui-g-4">
+                                        <p:commandButton value="" styleClass="btn-preto" action="#{dueloBean.preto()}" update="corpo" />
+                                    </div>
+                                    <div class="ui-g-4">
+                                        <p:commandButton value="" styleClass="btn-vermelho" action="#{dueloBean.vermelho()}" update="corpo" />
+                                    </div>
+                                    <div class="ui-g-4">
+                                        <p:commandButton value="" styleClass="btn-bege" action="#{dueloBean.bege()}" update="corpo"/>
+                                    </div>
+                                    <div class="ui-g-2"></div>
+                                    <div class="ui-g-4">
+                                        <p:commandButton value="" styleClass="btn-verde" action="#{dueloBean.verde()}" update="corpo"/>
+                                    </div>
+                                    <div class="ui-g-4">
+                                        <p:commandButton value="" styleClass="btn-azul" action="#{dueloBean.azul()}" update="corpo"/>
+                                    </div>
+                                    <div class="ui-g-2"></div>
+                                </div>
+                            </h:form>
+                        </p:outputPanel>
+                    </p:panel>
+                </div>
+                <div class="ui-g-12">
+                    <p:panel header="Pontos de Determinação" style="margin-top: 10px;">
+                        <ui:insert name="pontuacao" />
+                    </p:panel>
+                </div>
+                <div class="ui-g-12">
+                    <p:panel header="Ações" style="margin-top: 10px; top: 360px; bottom: 20px; width: 190px; position: fixed">
+                        <ui:insert name="acoes" />
+                    </p:panel>
+                </div>
+            </div>
+        </aside>
+        <p:outputPanel id="corpo" style="width: auto; height: 100%;#{dueloBean.corFundo}" class="content  js-content">
+            <ui:insert name="content"/>
+        </p:outputPanel>
+    </h:body>
+</html>
+

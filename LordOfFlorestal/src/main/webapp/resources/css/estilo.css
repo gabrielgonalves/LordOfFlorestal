@@ -1,0 +1,104 @@
+body {
+    margin: 0;
+    font-size: 13px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #FFF9DA;
+}
+
+.ui-carousel .ui-carousel-footer {
+    text-align: right !important;
+}
+
+.user-img {
+    border-radius: 50% !important; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 20px;
+}
+
+.resgatar {
+    text-align: right !important;
+    color: #FFFFFF !important;
+}
+
+.user-txt {
+    font-weight: bold;
+}
+
+.btn {
+    float: right !important;    
+    margin-top: 10px !important;
+    background: #F57C17 !important;
+    color: #FFFFFF !important;
+    text-shadow: none !important;
+    padding: 10px !important;
+    border: none !important;
+}
+
+.ui-carousel-header, .ui-carousel-footer, .ui-datatable-header, .ui-panel-titlebar, .ui-toolbar.ui-widget-header {
+    background: #F57C17;
+    color: #FFFFFF !important;
+    text-shadow: none !important;
+}
+
+.ui-carousel, .ui-datatable, .card {
+    border: none !important;  
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.no-margin {
+    padding: 0px !important;
+}
+
+.topo {
+    height: 50px; 
+    background: #F57C17; 
+    margin-bottom: 10px;
+}
+
+.btn-verde {
+    background: #379125 !important;
+    color: #FFFFFF !important;
+    text-shadow: none !important;
+    border: none !important;
+    padding: 10px !important;
+}
+
+.btn-vermelho {
+    background: #F1431B !important;
+    color: #FFFFFF !important;
+    text-shadow: none !important;
+    border: none !important;
+    padding: 10px !important;
+}
+
+.btn-bege {
+    background: #FFF9DA !important;
+    color: #FFFFFF !important;
+    text-shadow: none !important;
+    border: none !important;
+    padding: 10px !important;
+}
+
+.btn-preto {
+    background: #363636 !important;
+    color: #FFFFFF !important;
+    text-shadow: none !important;
+    border: none !important;
+    padding: 10px !important;
+}
+
+.btn-azul {
+    background: #F57C17 !important;
+    color: #FFFFFF !important;
+    text-shadow: none !important;
+    border: none !important;
+    padding: 10px !important;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.input {
+    margin-top: 8px !important;
+}

@@ -5,54 +5,61 @@
  */
 package br.com.lordofflorestal.model;
 
-import java.io.Serializable;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import java.util.UUID;
 
 /**
  *
  * @author gabriel
  */
-@Entity
-@Table(name = "Duelo")
-public class Duelo implements Serializable {
-
-    @Id
-    @GeneratedValue
-    @Column(name = "id_duelo")
+public class Duelo {
+    
     private int id;
-    @Transient
-    private Deck deckJogador1;
-    @Transient
-    private Deck deckJogador2;
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "situacao_duelo", nullable = false)
+    private String uri;
+    private Jogador criadoPor;
+    private Jogador oponente;
+    private Calendar dataCriacao;
     private SituacaoDuelo situacaoDuelo;
-    @OneToMany(mappedBy = "duelo", fetch = FetchType.LAZY)
-    private List<Turno> turnos;
+    private Deck deckJogador1;
+    private Deck deckJogador2;
 
     public Duelo() {
+        UUID uuid = UUID.randomUUID();
+        this.uri = uuid.toString().substring(0, 10);
+        dataCriacao = Calendar.getInstance();
+        situacaoDuelo = SituacaoDuelo.CRIADO;
         deckJogador1 = new Deck();
         deckJogador2 = new Deck();
-        situacaoDuelo = SituacaoDuelo.AGUARDANDO;
+    }
+    
+    public String getDataFormatada(){
+        return new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(dataCriacao.getTime());
     }
 
-    public Duelo(int id, Deck deckJogador1, Deck deckJogador2, SituacaoDuelo situacaoDuelo, List<Turno> turnos) {
-        this.id = id;
-        this.deckJogador1 = deckJogador1;
-        this.deckJogador2 = deckJogador2;
-        this.situacaoDuelo = situacaoDuelo;
-        this.turnos = turnos;
+    public Jogador getCriadoPor() {
+        return criadoPor;
+    }
+
+    public void setCriadoPor(Jogador criadoPor) {
+        this.criadoPor = criadoPor;
+    }
+
+    public Jogador getOponente() {
+        return oponente;
+    }
+
+    public void setOponente(Jogador oponente) {
+        this.oponente = oponente;
+    }
+
+    public Calendar getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Calendar dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
     public int getId() {
@@ -61,6 +68,22 @@ public class Duelo implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public SituacaoDuelo getSituacaoDuelo() {
+        return situacaoDuelo;
+    }
+
+    public void setSituacaoDuelo(SituacaoDuelo situacaoDuelo) {
+        this.situacaoDuelo = situacaoDuelo;
     }
 
     public Deck getDeckJogador1() {
@@ -79,30 +102,10 @@ public class Duelo implements Serializable {
         this.deckJogador2 = deckJogador2;
     }
 
-    public SituacaoDuelo getSituacaoDuelo() {
-        return situacaoDuelo;
-    }
-
-    public void setSituacaoDuelo(SituacaoDuelo situacaoDuelo) {
-        this.situacaoDuelo = situacaoDuelo;
-    }
-
-    public List<Turno> getTurnos() {
-        return turnos;
-    }
-
-    public void setTurnos(List<Turno> turnos) {
-        this.turnos = turnos;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + this.id;
-        hash = 47 * hash + Objects.hashCode(this.deckJogador1);
-        hash = 47 * hash + Objects.hashCode(this.deckJogador2);
-        hash = 47 * hash + Objects.hashCode(this.situacaoDuelo);
-        hash = 47 * hash + Objects.hashCode(this.turnos);
+        int hash = 3;
+        hash = 41 * hash + Objects.hashCode(this.uri);
         return hash;
     }
 
@@ -118,22 +121,10 @@ public class Duelo implements Serializable {
             return false;
         }
         final Duelo other = (Duelo) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (!Objects.equals(this.deckJogador1, other.deckJogador1)) {
-            return false;
-        }
-        if (!Objects.equals(this.deckJogador2, other.deckJogador2)) {
-            return false;
-        }
-        if (this.situacaoDuelo != other.situacaoDuelo) {
-            return false;
-        }
-        if (!Objects.equals(this.turnos, other.turnos)) {
+        if (!Objects.equals(this.uri, other.uri)) {
             return false;
         }
         return true;
     }
-
+    
 }

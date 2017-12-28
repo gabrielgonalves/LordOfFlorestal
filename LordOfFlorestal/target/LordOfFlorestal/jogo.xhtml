@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/layoutJogo.xhtml">
+
+    <ui:define name="pontuacao">
+        <p:outputPanel id="pontuacao">
+            <div class="ui-g">
+                <div class="ui-g-10">
+                    <h:outputText value="#{dueloBean.jogador.login}" style="font-weight: bold" />
+                </div>
+                <div class="ui-g-2">
+                    <h:outputText value="#{dueloBean.seuDeck.pontosDeterminacao}" style="font-weight: bold" />
+                </div>
+                <div class="ui-g-10">
+                    <h:outputText value="#{dueloBean.oponente.login}" style="font-weight: bold" />
+                </div>
+                <div class="ui-g-2">
+                    <h:outputText value="#{dueloBean.deckOponente.pontosDeterminacao}" style="font-weight: bold" />
+                </div>
+            </div>
+        </p:outputPanel>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form prependId="false">
+            <p:poll interval="1" update=":pontuacao mesaOponente" listener="#{dueloBean.atualizarDados}" />
+
+            <p:outputPanel id="mesaOponente" autoUpdate="true" style="padding-top: 20px;">    
+                <p:carousel value="#{dueloBean.mesaOponente}" numVisible="6" var="carta" headerText="Mesa do Oponente" responsive="true">
+                    <center>
+                        <p:panelGrid columns="1" layout="grid">
+                            <p:graphicImage library="cartas" name="#{carta.carta.imagem}" width="80"/>
+                            <h:outputText value="Atk (#{carta.valorAtaque}) / Def (#{carta.valorDefesa})" />
+                        </p:panelGrid>
+                    </center>
+                </p:carousel>
+            </p:outputPanel>
+            <p:outputPanel id="suaMesa" style="padding-top: 20px;">    
+                <p:carousel value="#{dueloBean.suaMesa}" numVisible="6" var="carta" headerText="Sua Mesa" responsive="true">
+                    <center>
+                        <p:panelGrid columns="1" layout="grid">
+                            <p:graphicImage library="cartas" name="#{carta.carta.imagem}" width="80"/>
+                            <p:inputSwitch value="#{carta.posicao}" offLabel="Def (#{carta.valorDefesa})" onLabel="Atk (#{carta.valorAtaque})"/>
+                            <p:commandButton disabled="#{carta.posicao eq true ? false : true}" value="#{carta.posicao eq true ? 'Ataque' : 'Defesa'}" class="#{carta.posicao eq true ? 'btn-vermelho' : 'btn-verde'}" />
+                        </p:panelGrid>
+                    </center>
+                </p:carousel>
+            </p:outputPanel>
+            <p:outputPanel id="suaMao" style="padding-top: 20px;">    
+                <p:carousel value="#{dueloBean.suaMao}" numVisible="6" var="carta" headerText="Sua Mão" responsive="true">
+                    <center>
+                        <p:panelGrid columns="1" layout="grid">
+                            <p:graphicImage library="cartas" name="#{carta.carta.imagem}" width="80"/>
+                            <p:inputSwitch value="#{carta.posicao}" offLabel="Def (#{carta.valorDefesa})" onLabel="Atk (#{carta.valorAtaque})"/>
+                            <p:commandButton value="Descer" class="botao-verde" action="#{dueloBean.descer}" update="suaMao suaMesa" >
+                                <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{carta}" />
+                            </p:commandButton>
+                        </p:panelGrid>
+                    </center>
+
+                    <f:facet name="footer">
+                        <div class="ui-fluid">
+                            <div class="ui-g-8"/>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:commandButton value="Comprar Carta" action="#{dueloBean.comprar}" update="suaMao" />
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:commandButton value="Finalizar Turno"     />
+                            </div>
+                        </div>
+                    </f:facet>
+                </p:carousel>
+            </p:outputPanel>
+        </h:form>
+    </ui:define>
+    <ui:define name="acoes">
+        <p:dataList emptyMessage="Ainda não possui nenhuma ação">
+
+        </p:dataList>
+    </ui:define>
+</ui:composition>
