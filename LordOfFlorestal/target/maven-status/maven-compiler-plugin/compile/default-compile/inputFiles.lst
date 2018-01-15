@@ -1,15 +1,19 @@
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/EstatisticaJogador.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/LocalCarta.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/conversor/JogadorConversor.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Turno.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/CartaJogo.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/ResgateBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/AcaoTurno.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/MessageUtil.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/mysql/JogadorDAOMysql.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/IndexBean.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/ConnectionFactory.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/JogadorBean.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/ValeCarta.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Jogador.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/NovoDueloBean.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/ItemTurno.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/EstadoCarta.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/ValeCartaRN.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/JogadorRN.java
@@ -34,4 +38,5 @@
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/control/DueloSingleton.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/CartaBean.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/TipoCarta.java
+/home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/DueloRN.java
 /home/gabriel/Área de Trabalho/LordOfFlorestal/src/main/java/br/com/lordofflorestal/mysql/CartaDAOMysql.java

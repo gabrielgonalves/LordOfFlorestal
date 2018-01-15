@@ -86,6 +86,7 @@ h1 {
     right: 0;
     overflow: hidden;
     background-color: #F57C19;
+    z-index: 1000;
 }
 
 .topnav a {
@@ -134,6 +135,15 @@ h1 {
     }
 }
 
+.ui-galleria-panel-wrapper{
+    width: 100% !important;
+}
+
+.ui-galleria-panel{
+    width: 100% !important;
+    height: auto !important;
+}
+
 @media screen and (max-width: 700px) {
     .topnav a:not(:first-child) {display: none;}
     .topnav a.icon {
@@ -156,4 +166,15 @@ h1 {
         text-align: left;
     }
     .login{float:none !important}
+}
+
+.msg {
+    font-size: 20px;
+    color: #F57C17;
+    font-weight: bold;
+}
+
+.msg-panel {
+    top: 200px;
+    position: relative;
 }

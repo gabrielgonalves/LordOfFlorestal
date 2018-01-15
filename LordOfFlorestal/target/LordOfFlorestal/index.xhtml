@@ -7,7 +7,6 @@
         <title>Lord of Florestal</title>
         <h:outputStylesheet library="css" name="index.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <h:outputScript library="js" name="index.js" />  
     </h:head>
     <h:body>
@@ -64,7 +63,9 @@
                     <div class="ui-g-12 card">
                         <h1>Como jogar</h1>
                         <div class="ui-g-12 ui-md-8">
-                            <p:graphicImage library="img" name="tela.png" width="100%" />
+                            <p:galleria value="#{indexBean.imagens}" var="image" showCaption="true">
+                                <p:graphicImage width="100%" library="img" name="#{image}" alt="Image Description for #{image}" title="#{image}"/>
+                            </p:galleria>
                         </div>
                         <div class="ui-g-12 ui-md-4">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam molestie, ex eu porta tincidunt, est urna posuere nisi, sit amet venenatis augue ante ac nisi. Morbi euismod sit amet nisl quis porta. Sed suscipit lacus felis, et interdum nisl dignissim eu. In quis iaculis quam. Maecenas facilisis, metus in tincidunt venenatis, augue nunc maximus enim, vel varius ipsum eros at dui. Aliquam erat volutpat. Fusce molestie eros sapien, interdum congue nisi vulputate id. Curabitur maximus turpis urna, a sodales arcu gravida ac. Quisque dictum vestibulum erat, at rutrum eros efficitur eu. Integer vulputate placerat odio pulvinar tristique. Proin vitae tortor consectetur, auctor tortor nec, rhoncus lorem.</p>

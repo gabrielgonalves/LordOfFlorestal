@@ -88,7 +88,7 @@ public class ValeCartaDAOMysql {
     public ValeCarta buscarPorCodigo(String codigo) {
         List<ValeCarta> lista = new ArrayList();
 
-        String sql = "SELECT * FROM ValeCarta WHERE codigo = ?";
+        String sql = "SELECT * FROM ValeCarta NATURAL JOIN Carta WHERE codigo = ?";
 
         try {
             connection = ConnectionFactory.getConnection();

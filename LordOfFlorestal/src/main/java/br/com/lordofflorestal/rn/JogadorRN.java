@@ -5,6 +5,7 @@
  */
 package br.com.lordofflorestal.rn;
 
+import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.EstatisticaJogador;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.mysql.JogadorDAOMysql;
@@ -65,5 +66,9 @@ public class JogadorRN {
     
     public String buscaImagemJogador(String login){
         return this.jogadorDAOMysql.buscaImagemJogador(login);
+    }
+    
+    public void inserirCartaJogador(Carta carta, Jogador jogador) {
+        this.jogadorDAOMysql.inserirCartaJogador(carta, jogador);
     }
 }

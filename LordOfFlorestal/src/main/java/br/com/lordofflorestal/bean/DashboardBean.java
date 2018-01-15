@@ -44,7 +44,7 @@ public class DashboardBean {
             for (int i = 0; i <= duelos.size(); i++) {
                 if (duelos.get(i).getDataCriacao().getTimeInMillis() <= dataAtual.getTimeInMillis()) {
                     if (duelos.get(i).getSituacaoDuelo().equals(SituacaoDuelo.CRIADO)) {
-                        duelos.remove(i);
+                        duelos.get(i).setSituacaoDuelo(SituacaoDuelo.CANCELADO);
                     }
                 } else {
                     break;

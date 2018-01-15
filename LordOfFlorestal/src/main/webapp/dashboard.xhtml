@@ -65,8 +65,8 @@
                                         </div>
                                         <div class="ui-g-12 ui-md-7">
                                             <h:outputText value="Jogador 1: #{duelo.criadoPor.login}" /> <br/>
-                                            <h:outputText value="#{duelo.oponente eq null ? 'Joador 2: Aguardando oponente' : dashboardBean.textoOponente(duelo.oponente)}" /> <br/>
-                                            <h:outputText value="Entre até: #{duelo.dataFormatada}" rendered="#{duelo.oponente eq null ? true : false}"/>
+                                            <h:outputText value="#{duelo.oponente eq null ? 'Jogador 2: Aguardando oponente' : dashboardBean.textoOponente(duelo.oponente)}" /> <br/>
+                                            <h:outputText value="Entre até: #{duelo.dataFormatada}" rendered="#{duelo.oponente eq null ? true : false}"/> <br/>
                                             <h:outputText value="Número de cartas: #{duelo.deckJogador1.cartas.size()}" />
                                         </div>
                                         <div class="ui-g-12 ui-md-2">

@@ -6,7 +6,9 @@
 package br.com.lordofflorestal.model;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -15,7 +17,7 @@ import java.util.UUID;
  * @author gabriel
  */
 public class Duelo {
-    
+
     private int id;
     private String uri;
     private Jogador criadoPor;
@@ -24,6 +26,7 @@ public class Duelo {
     private SituacaoDuelo situacaoDuelo;
     private Deck deckJogador1;
     private Deck deckJogador2;
+    private String vezDe;
 
     public Duelo() {
         UUID uuid = UUID.randomUUID();
@@ -33,8 +36,8 @@ public class Duelo {
         deckJogador1 = new Deck();
         deckJogador2 = new Deck();
     }
-    
-    public String getDataFormatada(){
+
+    public String getDataFormatada() {
         return new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(dataCriacao.getTime());
     }
 
@@ -102,6 +105,14 @@ public class Duelo {
         this.deckJogador2 = deckJogador2;
     }
 
+    public String getVezDe() {
+        return vezDe;
+    }
+
+    public void setVezDe(String vezDe) {
+        this.vezDe = vezDe;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -126,5 +137,5 @@ public class Duelo {
         }
         return true;
     }
-    
+
 }

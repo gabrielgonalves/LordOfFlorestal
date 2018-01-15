@@ -47,8 +47,6 @@ public class JogadorDAOMysql {
             statement.close();
 
             connection.close();
-            
-            inserirCartasJogador(jogador);
         } catch (SQLException ex) {
             System.out.println("Erro ao fechar operações de inserção. Erro: " + ex.getMessage());
         }
@@ -74,8 +72,6 @@ public class JogadorDAOMysql {
             statement.close();
 
             connection.close();
-            
-            inserirCartasJogador(jogador);
         } catch (SQLException ex) {
             System.out.println("Erro ao fechar operações de atualização. Erro: " + ex.getMessage());
         }
@@ -85,8 +81,10 @@ public class JogadorDAOMysql {
         String sql = "DELETE FROM Jogador WHERE matricula = ?";
 
         try {
-            excluirCartasJogador(jogador);
-            
+            for (Carta carta : jogador.getCartas()) {
+                excluirCartaJogador(carta, jogador);
+            }
+
             connection = ConnectionFactory.getConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -124,7 +122,7 @@ public class JogadorDAOMysql {
                 jogador.setLogin(rs.getString("login"));
                 jogador.setSenha(rs.getString("senha"));
                 jogador.setTipoJogador(TipoJogador.values()[rs.getInt("id_tipo_jogador") - 1]);
-                
+
                 EstatisticaJogador ej = new EstatisticaJogador();
                 ej.setNumJogos(rs.getInt("num_jogos"));
                 ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
@@ -136,7 +134,7 @@ public class JogadorDAOMysql {
                 statement.close();
 
                 connection.close();
-                
+
                 jogador.setCartas(buscarCartasJogador(jogador));
 
                 return jogador;
@@ -183,7 +181,7 @@ public class JogadorDAOMysql {
                 connection.close();
 
                 jogador.setCartas(buscarCartasJogador(jogador));
-                
+
                 return jogador;
             }
         } catch (SQLException e) {
@@ -262,8 +260,8 @@ public class JogadorDAOMysql {
         } catch (SQLException e) {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
-        
-        for(Jogador jogador : lista){
+
+        for (Jogador jogador : lista) {
             jogador.setCartas(buscarCartasJogador(jogador));
         }
 
@@ -292,7 +290,7 @@ public class JogadorDAOMysql {
                 j.setLogin(rs.getString("login"));
                 j.setSenha(rs.getString("senha"));
                 j.setTipoJogador(TipoJogador.values()[rs.getInt("id_tipo_jogador") - 1]);
-                
+
                 EstatisticaJogador ej = new EstatisticaJogador();
                 ej.setNumJogos(rs.getInt("num_jogos"));
                 ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
@@ -311,37 +309,15 @@ public class JogadorDAOMysql {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
 
-        for(Jogador j : lista){
+        for (Jogador j : lista) {
             j.setCartas(buscarCartasJogador(j));
         }
-        
+
         return lista;
     }
 
-    public void inserirCartasJogador(Jogador jogador) {
+    public void inserirCartaJogador(Carta carta, Jogador jogador) {
         String sql = "INSERT INTO Jogador_has_Carta (matricula_jogador, id_carta) VALUES (?, ?);";
-
-        try {
-            for (Carta carta : jogador.getCartas()) {
-                connection = ConnectionFactory.getConnection();
-
-                PreparedStatement statement = connection.prepareStatement(sql);
-
-                statement.setInt(1, jogador.getMatricula());
-                statement.setInt(2, carta.getId());
-
-                statement.executeUpdate();
-                statement.close();
-
-                connection.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println("Erro ao fechar operações de inserção. Erro: " + ex.getMessage());
-        }
-    }
-    
-    public void excluirCartasJogador(Jogador jogador){
-        String sql = "DELETE FROM Jogador_has_Carta WHERE matricula_jogador = ?";
 
         try {
             connection = ConnectionFactory.getConnection();
@@ -349,6 +325,27 @@ public class JogadorDAOMysql {
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, jogador.getMatricula());
+            statement.setInt(2, carta.getId());
+
+            statement.executeUpdate();
+            statement.close();
+
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar operações de inserção. Erro: " + ex.getMessage());
+        }
+    }
+
+    public void excluirCartaJogador(Carta carta, Jogador jogador) {
+        String sql = "DELETE FROM Jogador_has_Carta WHERE matricula_jogador = ? AND id_carta = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, jogador.getMatricula());
+            statement.setInt(2, carta.getId());
 
             statement.executeUpdate();
             statement.close();
@@ -358,8 +355,8 @@ public class JogadorDAOMysql {
             System.out.println("Erro ao fechar operações de exclusão. Erro: " + ex.getMessage());
         }
     }
-    
-    public List<Carta> buscarCartasJogador(Jogador jogador){
+
+    public List<Carta> buscarCartasJogador(Jogador jogador) {
         List<Carta> lista = new ArrayList();
 
         String sql = "SELECT * FROM Jogador_has_Carta NATURAL JOIN Carta WHERE matricula_jogador = ?";
@@ -368,9 +365,9 @@ public class JogadorDAOMysql {
             connection = ConnectionFactory.getConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
-            
+
             statement.setInt(1, jogador.getMatricula());
-            
+
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -387,7 +384,7 @@ public class JogadorDAOMysql {
                 if (rs.getInt("id_subtipo_carta") != 0) {
                     carta.setSubtipoCarta(SubtipoCarta.values()[rs.getInt("id_subtipo_carta") - 1]);
                 }
-                
+
                 lista.add(carta);
             }
 
@@ -400,8 +397,8 @@ public class JogadorDAOMysql {
 
         return lista;
     }
-    
-    public String buscaImagemJogador(String login){
+
+    public String buscaImagemJogador(String login) {
         String sql = "SELECT imagem FROM Jogador WHERE login = ?";
 
         try {
@@ -413,7 +410,7 @@ public class JogadorDAOMysql {
 
             ResultSet rs = statement.executeQuery();
 
-            while (rs.next()) {                
+            while (rs.next()) {
                 return rs.getString("imagem");
             }
         } catch (SQLException e) {

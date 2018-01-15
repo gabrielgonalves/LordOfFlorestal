@@ -11,7 +11,6 @@ import br.com.lordofflorestal.rn.CartaRN;
 import br.com.lordofflorestal.rn.ValeCartaRN;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
