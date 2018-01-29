@@ -23,7 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author gabriel
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class DueloBean {
 
     private Duelo duelo;
@@ -96,6 +96,14 @@ public class DueloBean {
         seuMonte.get(1).setLocalCarta(LocalCarta.MAO);
         seuMonte.get(2).setLocalCarta(LocalCarta.MAO);
         separaCartas();
+    }
+    
+    public String atacarDeterminacao() {
+        deckOponente.setPontosDeterminacao(deckOponente.getPontosDeterminacao() - cartaAtaca.getValorAtaque());
+        cartaAtaca.setAtiva(false);
+        cartaAtaca.setTurno(false);
+        podeAtacar = false;
+        return null;
     }
 
     public String selecionar() {
@@ -250,6 +258,7 @@ public class DueloBean {
         dataAtual = Calendar.getInstance();
         if (duelo.getDataCriacao().getTimeInMillis() <= dataAtual.getTimeInMillis() && duelo.getSituacaoDuelo().equals(SituacaoDuelo.CRIADO)) {
             duelo.setSituacaoDuelo(SituacaoDuelo.CANCELADO);
+            new DueloRN().salvar(duelo, 0);
         }
         if (duelo.getCriadoPor().equals(jogador)) {
             seuDeck = duelo.getDeckJogador1();

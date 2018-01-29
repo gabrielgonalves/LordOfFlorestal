@@ -30,10 +30,12 @@
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/PerfilBean.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/ConnectionFactory.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Carta.java
+/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/EfeitoCartaRN.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/MenuBean.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/CartaJogo.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Turno.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Deck.java
+/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/mysql/DueloMysql.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/ItemTurno.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/mysql/ValeCartaDAOMysql.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/LoginBean.java

@@ -5,12 +5,7 @@
  */
 package br.com.lordofflorestal.rn;
 
-import br.com.lordofflorestal.model.AcaoTurno;
 import br.com.lordofflorestal.model.Duelo;
-import br.com.lordofflorestal.model.ItemTurno;
-import br.com.lordofflorestal.model.Jogador;
-import br.com.lordofflorestal.model.Turno;
-import java.util.List;
 
 /**
  *
@@ -18,8 +13,8 @@ import java.util.List;
  */
 public class DueloRN {
     
-    public boolean verificaTurno(Duelo duelo, Jogador jogador){
-        return true;
+    public void salvar(Duelo duelo, int vencedor){
+        new DueloRN().salvar(duelo, vencedor);
     }
     
 }

@@ -6,6 +6,7 @@ br/com/lordofflorestal/model/Jogador.class
 br/com/lordofflorestal/model/Carta.class
 br/com/lordofflorestal/model/ValeCarta.class
 br/com/lordofflorestal/model/TipoCarta.class
+br/com/lordofflorestal/mysql/DueloMysql.class
 br/com/lordofflorestal/model/ItemTurno.class
 br/com/lordofflorestal/bean/JogadorBean.class
 br/com/lordofflorestal/bean/DueloBean$1.class
@@ -30,6 +31,7 @@ br/com/lordofflorestal/util/FileUploadUtil.class
 br/com/lordofflorestal/rn/JogadorRN.class
 br/com/lordofflorestal/bean/MenuBean.class
 br/com/lordofflorestal/util/comparator/DueloComparator.class
+br/com/lordofflorestal/rn/EfeitoCartaRN.class
 br/com/lordofflorestal/util/ConnectionFactory.class
 br/com/lordofflorestal/bean/CartaBean.class
 br/com/lordofflorestal/util/conversor/CartaConversor.class

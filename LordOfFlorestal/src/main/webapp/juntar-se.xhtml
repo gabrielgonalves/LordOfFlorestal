@@ -19,10 +19,10 @@
                                 <h:outputText value="Você pode selecionar #{juntarDueloBean.qtCartas} cartas" class="user-txt" />
                             </div>
                             <div class="ui-g-12">
-                                <p:carousel id="suasCartas" headerText="Suas cartas" responsive="true" circular="true" numVisible="6" value="#{juntarDueloBean.suasCartas}" var="carta">
+                                <p:carousel id="suasCartas" headerText="Suas cartas" responsive="true" circular="true" numVisible="5" value="#{juntarDueloBean.suasCartas}" var="carta">
                                     <p:panel>
                                         <center>
-                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="80" />
+                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="165" />
                                             <p:commandButton disabled="#{juntarDueloBean.cartasSelecionadas.size() lt juntarDueloBean.qtCartas ? false : true}" class="btn-verde" value="Adicionar" action="#{juntarDueloBean.adicionarCarta}" update="criar suasCartas cartasSelecionadas" >
                                                 <f:setPropertyActionListener target="#{juntarDueloBean.cartaSelecionada}" value="#{carta}" />
                                             </p:commandButton>
@@ -31,10 +31,10 @@
                                 </p:carousel>
                             </div>
                             <div class="ui-g-12">
-                                <p:carousel footerText="Você já selecionou #{juntarDueloBean.cartasSelecionadas.size()} carta(s)" id="cartasSelecionadas" headerText="Cartas selecionadas" responsive="true" circular="true" numVisible="6" value="#{juntarDueloBean.cartasSelecionadas}" var="carta">
+                                <p:carousel footerText="Você já selecionou #{juntarDueloBean.cartasSelecionadas.size()} carta(s)" id="cartasSelecionadas" headerText="Cartas selecionadas" responsive="true" circular="true" numVisible="5" value="#{juntarDueloBean.cartasSelecionadas}" var="carta">
                                     <p:panel>
                                         <center>
-                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="80" />
+                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="165" />
                                             <p:commandButton class="btn-vermelho" value="Remover" action="#{juntarDueloBean.removerCarta}" update="criar suasCartas cartasSelecionadas" >
                                                 <f:setPropertyActionListener target="#{juntarDueloBean.cartaSelecionada}" value="#{carta}" />
                                             </p:commandButton>

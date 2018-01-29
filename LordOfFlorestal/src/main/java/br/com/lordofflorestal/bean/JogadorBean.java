@@ -54,7 +54,11 @@ public class JogadorBean {
                 new FileUploadUtil().upload(img, jogador.getLogin() + "." + extensao[extensao.length - 1]);
             }
         }
-
+        
+        if(jogador.getImagem() == null){
+            jogador.setImagem("user.png");
+        }
+        
         JogadorRN jogadorRN = new JogadorRN();
         jogadorRN.salvar(jogador);
 
