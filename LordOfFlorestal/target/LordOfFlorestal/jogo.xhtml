@@ -63,7 +63,7 @@
                                 </f:facet>
                                 <p:graphicImage library="cartas" name="#{carta.carta.imagem}" width="80"/>
                                 <h:outputText value="Atk (#{carta.valorAtaque}) / Def (#{carta.valorDefesa})" />
-                                <p:commandButton action="#{dueloBean.atacar}" disabled="#{dueloBean.podeAtacar}" value="Atacar" class="btn-vermelho" update="mesaOponente suaMesa :pontuacao" >
+                                <p:commandButton action="#{dueloBean.atacar}" disabled="#{dueloBean.podeAtacar and dueloBean.duelo.vezDe eq dueloBean.jogador.login ? false : true}" value="Atacar" class="btn-vermelho" update="mesaOponente suaMesa :pontuacao" >
                                     <f:setPropertyActionListener target="#{dueloBean.cartaAtacada}" value="#{carta}" />
                                 </p:commandButton>
                             </p:panelGrid>
@@ -76,14 +76,14 @@
                         <center>
                             <p:panelGrid columns="1" layout="grid" style="#{cartaMesa.posicao ? 'background: #79C2AA !important;' : 'background: #E85E4A !important;'}">
                                 <f:facet name="header">
-                                        <h:outputText value="#{cartaMesa.posicao ? 'Ataque' : 'Defesa'}" />
+                                    <h:outputText value="#{cartaMesa.posicao ? 'Ataque' : 'Defesa'}" />
                                 </f:facet>
                                 <p:graphicImage library="cartas" name="#{cartaMesa.carta.imagem}" width="80"/>
-                                <p:commandButton value="#{'Atacar('.concat(cartaMesa.valorAtaque).concat(')')}" rendered="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and cartaMesa.ativa and cartaMesa.posicao and !dueloBean.podeComprar ? true : false}" class="btn-verde" update="mesaOponente suaMesa @this" >
-                                    <f:setPropertyActionListener target="#{dueloBean.cartaAtaca}" value="#{cartaMesa}" />
-                                </p:commandButton>
-                                <p:commandButton action="#{dueloBean.alterarPosicaoCarta()}" value="#{cartaMesa.posicao eq false ? 'Defesa ('.concat(cartaMesa.valorDefesa).concat(')') : 'Ataque('.concat(cartaMesa.valorAtaque).concat(')')}" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and cartaMesa.ativa and !dueloBean.podeComprar ? false : true}" class="#{cartaMesa.posicao eq false ? 'btn-vermelho' : 'btn-verde'}" update="mesaOponente suaMesa @this" >
+                                <p:commandButton action="#{dueloBean.alterarPosicaoCarta()}" value="#{cartaMesa.posicao eq false ? 'Defesa ('.concat(cartaMesa.valorDefesa).concat(')') : 'Ataque('.concat(cartaMesa.valorAtaque).concat(')')}" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and cartaMesa.ativa and !dueloBean.podeComprar and !cartaMesa.turno ? false : true}" class="#{cartaMesa.posicao eq false ? 'btn-vermelho' : 'btn-verde'}" update="mesaOponente suaMesa @this" >
                                     <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{cartaMesa}" />
+                                </p:commandButton>
+                                <p:commandButton value="#{'Atacar('.concat(cartaMesa.valorAtaque).concat(')')}" rendered="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and cartaMesa.ativa and cartaMesa.posicao and !dueloBean.podeComprar ? true : false}" class="btn-vermelho" update="mesaOponente suaMesa @this" >
+                                    <f:setPropertyActionListener target="#{dueloBean.cartaAtaca}" value="#{cartaMesa}" />
                                 </p:commandButton>
                             </p:panelGrid>
                         </center>
@@ -93,6 +93,11 @@
                     <p:carousel value="#{dueloBean.suaMao}" numVisible="6" var="cartaMao" headerText="Sua Mão" responsive="true">
                         <center>
                             <p:panelGrid columns="1" layout="grid">
+                                <f:facet name="header">
+                                    <h:outputText value="Nova" rendered="#{cartaMao.nova}" />
+                                    <h:outputText value="Nova" rendered="#{!cartaMao.nova}" style="color: #F5F5F5 !important;" />
+                                </f:facet>
+
                                 <p:graphicImage library="cartas" name="#{cartaMao.carta.imagem}" width="80"/>
                                 <p:commandButton value="Descer" class="btn-verde" action="#{dueloBean.descer}" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeDescer eq true ? false : true}" update="suaMao suaMesa" >
                                     <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{cartaMao}" />

@@ -15,22 +15,24 @@ public class CartaJogo {
 
     private int valorAtaque;
     private int valorDefesa;
-    private int turno;
+    private boolean turno;
     private boolean ativa;
     private boolean posicao; //true ataque false defesa
     private LocalCarta localCarta;
     private EstadoCarta estadoCarta;
     private Carta carta;
+    private boolean nova;
 
     public CartaJogo() {
         this.localCarta = LocalCarta.MONTE;
         this.estadoCarta = EstadoCarta.NEUTRO;
-        this.turno = 0;
+        this.turno = false;
         this.posicao = false;
         this.ativa = false;
+        this.nova = false;
     }
 
-    public CartaJogo(int valorAtaque, int valorDefesa, int turno, boolean ativa, LocalCarta localCarta, EstadoCarta estadoCarta, Carta carta) {
+    public CartaJogo(int valorAtaque, int valorDefesa, boolean turno, boolean ativa, LocalCarta localCarta, EstadoCarta estadoCarta, Carta carta) {
         this.valorAtaque = valorAtaque;
         this.valorDefesa = valorDefesa;
         this.turno = turno;
@@ -46,14 +48,12 @@ public class CartaJogo {
         this.valorDefesa = carta.getValorDefesa();
         this.localCarta = LocalCarta.MONTE;
         this.estadoCarta = EstadoCarta.NEUTRO;
-        this.turno = 0;
+        this.turno = false;
         this.ativa = false;
         this.posicao = false;
-        if(carta.getId() == 71){
-            this.localCarta = LocalCarta.MESA;
-        }
+        this.nova = false;
     }
-    
+
     public int getValorAtaque() {
         return valorAtaque;
     }
@@ -70,11 +70,11 @@ public class CartaJogo {
         this.valorDefesa = valorDefesa;
     }
 
-    public int getTurno() {
+    public boolean isTurno() {
         return turno;
     }
 
-    public void setTurno(int turno) {
+    public void setTurno(boolean turno) {
         this.turno = turno;
     }
 
@@ -117,5 +117,68 @@ public class CartaJogo {
     public void setPosicao(boolean posicao) {
         this.posicao = posicao;
     }
+
+    public boolean isNova() {
+        return nova;
+    }
+
+    public void setNova(boolean nova) {
+        this.nova = nova;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + this.valorAtaque;
+        hash = 19 * hash + this.valorDefesa;
+        hash = 19 * hash + (this.turno ? 1 : 0);
+        hash = 19 * hash + (this.ativa ? 1 : 0);
+        hash = 19 * hash + (this.posicao ? 1 : 0);
+        hash = 19 * hash + Objects.hashCode(this.localCarta);
+        hash = 19 * hash + Objects.hashCode(this.estadoCarta);
+        hash = 19 * hash + Objects.hashCode(this.carta);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CartaJogo other = (CartaJogo) obj;
+        if (this.valorAtaque != other.valorAtaque) {
+            return false;
+        }
+        if (this.valorDefesa != other.valorDefesa) {
+            return false;
+        }
+        if (this.turno != other.turno) {
+            return false;
+        }
+        if (this.ativa != other.ativa) {
+            return false;
+        }
+        if (this.posicao != other.posicao) {
+            return false;
+        }
+        if (this.localCarta != other.localCarta) {
+            return false;
+        }
+        if (this.estadoCarta != other.estadoCarta) {
+            return false;
+        }
+        if (!Objects.equals(this.carta, other.carta)) {
+            return false;
+        }
+        return true;
+    }
+
+    
 
 }
