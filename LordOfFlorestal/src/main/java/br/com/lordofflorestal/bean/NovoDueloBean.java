@@ -10,8 +10,6 @@ import br.com.lordofflorestal.model.CartaJogo;
 import br.com.lordofflorestal.model.Duelo;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.control.DueloSingleton;
-import br.com.lordofflorestal.model.LocalCarta;
-import br.com.lordofflorestal.rn.CartaRN;
 import br.com.lordofflorestal.rn.JogadorRN;
 import java.util.ArrayList;
 import java.util.Calendar;

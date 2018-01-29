@@ -13,7 +13,9 @@ import br.com.lordofflorestal.model.EstadoCarta;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.LocalCarta;
 import br.com.lordofflorestal.model.SituacaoDuelo;
+import br.com.lordofflorestal.model.TipoCarta;
 import br.com.lordofflorestal.rn.DueloRN;
+import br.com.lordofflorestal.rn.EfeitoCartaRN;
 import br.com.lordofflorestal.rn.JogadorRN;
 import br.com.lordofflorestal.util.MessageUtil;
 import java.util.ArrayList;
@@ -64,7 +66,12 @@ public class DueloBean {
     private boolean podeDescer;
     private boolean podeComprar;
 
+    private boolean especial;
+    private boolean especialOponente;
+
     public DueloBean() {
+        especial = false;
+        especialOponente = false;
         podeAtacar = false;
         podeDescer = false;
         podeFinalizar = false;
@@ -91,6 +98,32 @@ public class DueloBean {
         separaCartas();
     }
 
+    public String selecionar() {
+        switch (cartaSelecionada.getCarta().getId()) {
+            case 50:
+                EfeitoCartaRN.carta50(cartaAtacada);
+                break;
+            case 52:
+                EfeitoCartaRN.carta52(cartaAtaca);
+                break;
+            case 54:
+                EfeitoCartaRN.carta54(cartaAtaca);
+                break;
+            case 60:
+                EfeitoCartaRN.carta60(seuDeck, cartaAtacada);
+                break;
+            case 64:
+                EfeitoCartaRN.carta64(cartaAtaca);
+                break;
+            case 69:
+                EfeitoCartaRN.carta69(cartaAtacada);
+                break;
+        }
+        especial = false;
+        especialOponente = false;
+        return null;
+    }
+
     public String atacar() {
         cartaAtaca.setAtiva(false);
         cartaAtaca.setTurno(false);
@@ -106,24 +139,12 @@ public class DueloBean {
             }
             //EFEITO CARTA 4
             if (cartaAtacada.getCarta().getId() == 4) {
-                deckOponente.setPontosDeterminacao(deckOponente.getPontosDeterminacao() - 2);
+                EfeitoCartaRN.carta4(seuDeck);
             }
-            //FIM EFEITO CARTA 4
             //EFEITO CARTA 19
             if (cartaAtacada.getCarta().getId() == 19) {
-                List<CartaJogo> cj = new ArrayList();
-                cj.addAll(suaMao);
-                cj.addAll(suaMesa);
-                CartaJogo maior = new CartaJogo();
-                for(CartaJogo c : cj){
-                    if(c.getValorAtaque() > maior.getValorAtaque()){
-                        maior = c;
-                    }
-                }
-                suaMao.remove(maior);
-                suaMesa.remove(maior);
+                EfeitoCartaRN.carta19(seuDeck);
             }
-            //FIM EFEITO CARTA 19
         } else if (va == vd) { //AMBAS AS CARTAS SÃO DESTRUIDAS
             mesaOponente.remove(cartaAtacada);
             suaMesa.remove(cartaAtaca);
@@ -131,30 +152,32 @@ public class DueloBean {
             cartaAtaca.setLocalCarta(LocalCarta.DESCARTE);
             //EFEITO CARTA 4
             if (cartaAtacada.getCarta().getId() == 4) {
-                deckOponente.setPontosDeterminacao(deckOponente.getPontosDeterminacao() - 2);
+                EfeitoCartaRN.carta4(seuDeck);
             }
-            //FIM EFEITO CARTA 4
+            if (cartaAtaca.getCarta().getId() == 4) {
+                EfeitoCartaRN.carta4(deckOponente);
+            }
             //EFEITO CARTA 19
             if (cartaAtacada.getCarta().getId() == 19) {
-                List<CartaJogo> cj = new ArrayList();
-                cj.addAll(suaMao);
-                cj.addAll(suaMesa);
-                CartaJogo maior = new CartaJogo();
-                for(CartaJogo c : cj){
-                    if(c.getValorAtaque() > maior.getValorAtaque()){
-                        maior = c;
-                    }
-                }
-                suaMao.remove(maior);
-                suaMesa.remove(maior);
+                EfeitoCartaRN.carta19(seuDeck);
             }
-            //FIM EFEITO CARTA 19
+            if (cartaAtaca.getCarta().getId() == 19) {
+                EfeitoCartaRN.carta19(deckOponente);
+            }
         } else { //SUA CARTA É DESTRUIDA
             suaMesa.remove(cartaAtaca);
             cartaAtaca.setLocalCarta(LocalCarta.DESCARTE);
             cartaAtacada.setValorDefesa(vd - va);
+            //EFEITO CARTA 4
+            if (cartaAtaca.getCarta().getId() == 4) {
+                EfeitoCartaRN.carta4(deckOponente);
+            }
+            //EFEITO CARTA 19
+            if (cartaAtaca.getCarta().getId() == 19) {
+                EfeitoCartaRN.carta19(deckOponente);
+            }
         }
-        podeAtacar = true;
+        podeAtacar = false;
         return null;
     }
 
@@ -207,6 +230,8 @@ public class DueloBean {
         podeDescer = false;
         podeComprar = true;
         podeAtacar = false;
+        especial = false;
+        especialOponente = false;
         duelo.setVezDe(oponente.getLogin());
         return null;
     }
@@ -250,19 +275,11 @@ public class DueloBean {
 
     public String comprar() {
         for (int i = 0; i < suaMesa.size(); i++) {
-            //EFEITO CARTA 1
             if (suaMesa.get(i).getCarta().getId() == 1) {
-                if (suaMesa.get(i).isTurno()) {
-                    suaMesa.get(i).setTurno(false);
-                }
-                if (!suaMesa.get(i).isPosicao() && suaMesa.get(i).isAtiva()) {
-                    suaMesa.get(i).setPosicao(true);
-                    suaMesa.get(i).setEstadoCarta(EstadoCarta.ATAQUE);
-                    suaMesa.get(i).setTurno(true);
+                if (EfeitoCartaRN.carta1(suaMesa.get(i))) {
                     continue;
                 }
             }
-            //FIM EFEITO CARTA 1
             suaMesa.get(i).setAtiva(true);
         }
         podeFinalizar = true;
@@ -346,9 +363,58 @@ public class DueloBean {
 
     public String descer() {
         suaMao.remove(cartaSelecionada);
-        cartaSelecionada.setEstadoCarta(EstadoCarta.DEFESA);
-        cartaSelecionada.setLocalCarta(LocalCarta.MESA);
-        suaMesa.add(cartaSelecionada);
+        if (!cartaSelecionada.getCarta().getTipoCarta().equals(TipoCarta.ESPECIAL)) {
+            cartaSelecionada.setEstadoCarta(EstadoCarta.DEFESA);
+            cartaSelecionada.setLocalCarta(LocalCarta.MESA);
+            suaMesa.add(cartaSelecionada);
+        } else {
+            //EFEITOS CARTAS ESPECIAIS
+            switch (cartaSelecionada.getCarta().getId()) {
+                case 46:
+                    EfeitoCartaRN.carta46(deckOponente);
+                    break;
+                case 47:
+                    break;
+                case 48:
+                    EfeitoCartaRN.carta48(seuDeck);
+                    break;
+                case 49:
+                    EfeitoCartaRN.carta49(seuDeck, deckOponente);
+                    break;
+                case 50:
+                    especialOponente = true;
+                    break;
+                case 51:
+                    break;
+                case 52:
+                    especial = true;
+                    break;
+                case 53:
+                    break;
+                case 54:
+                    especial = true;
+                    break;
+                case 55:
+                    break;
+                case 56:
+                    EfeitoCartaRN.carta56(seuDeck);
+                    break;
+                case 60:
+                    especialOponente = true;
+                    break;
+                case 61:
+                    EfeitoCartaRN.carta61(seuDeck, deckOponente);
+                    break;
+                case 64:
+                    especial = true;
+                    break;
+                case 69:
+                    especialOponente = true;
+                    break;
+            }
+            cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
+            seuDescarte.add(cartaSelecionada);
+        }
         return null;
     }
 
@@ -529,6 +595,22 @@ public class DueloBean {
 
     public void setPodeDescer(boolean podeDescer) {
         this.podeDescer = podeDescer;
+    }
+
+    public boolean isEspecial() {
+        return especial;
+    }
+
+    public void setEspecial(boolean especial) {
+        this.especial = especial;
+    }
+
+    public boolean isEspecialOponente() {
+        return especialOponente;
+    }
+
+    public void setEspecialOponente(boolean especialOponente) {
+        this.especialOponente = especialOponente;
     }
 
 }
