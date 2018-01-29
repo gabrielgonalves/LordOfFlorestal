@@ -6,12 +6,15 @@
 package br.com.lordofflorestal.bean;
 
 import br.com.lordofflorestal.control.DueloSingleton;
+import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.CartaJogo;
 import br.com.lordofflorestal.model.Deck;
 import br.com.lordofflorestal.model.Duelo;
+import br.com.lordofflorestal.model.EstadoCarta;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.LocalCarta;
 import br.com.lordofflorestal.model.SituacaoDuelo;
+import br.com.lordofflorestal.rn.CartaRN;
 import br.com.lordofflorestal.rn.DueloRN;
 import br.com.lordofflorestal.rn.JogadorRN;
 import br.com.lordofflorestal.util.MessageUtil;
@@ -20,7 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,42 +32,45 @@ import javax.servlet.http.HttpServletRequest;
  * @author gabriel
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class DueloBean {
-
+    
     private Duelo duelo;
-
+    
     private HttpServletRequest request;
-
+    
     private CartaJogo cartaSelecionada;
-
+    
     private Jogador jogador;
     private Jogador oponente;
     private Jogador ganhador;
-
+    
     private Deck seuDeck;
     private Deck deckOponente;
-
+    
     private List<CartaJogo> suaMao;
     private List<CartaJogo> seuMonte;
     private List<CartaJogo> suaMesa;
     private List<CartaJogo> seuDescarte;
     private List<CartaJogo> mesaOponente;
-
+    
     private String corFundo;
-
+    
     private Calendar dataAtual;
-
+    
     private CartaJogo cartaAtaca;
     private CartaJogo cartaAtacada;
     private boolean podeAtacar;
-
+    
     private boolean podeFinalizar;
+    private boolean podeDescer;
     private boolean podeComprar;
-
+    
     public DueloBean() {
         podeAtacar = true;
+        podeDescer = false;
         podeFinalizar = false;
+        podeComprar = true;
         DueloRN dueloRN = new DueloRN();
         this.jogador = new JogadorRN().buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
         request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -81,23 +87,33 @@ public class DueloBean {
         }
         separaCartas();
         embaralhar();
+        seuMonte.get(0).setLocalCarta(LocalCarta.MAO);
+        seuMonte.get(1).setLocalCarta(LocalCarta.MAO);
+        seuMonte.get(2).setLocalCarta(LocalCarta.MAO);
+        separaCartas();
     }
-
+    
     public String atacar() {
+        cartaAtaca.setAtiva(false);
         int va = cartaAtaca.getValorAtaque();
         int vd = cartaAtacada.getValorDefesa();
-        if (va >= vd) {
-            deckOponente.setPontosDeterminacao(deckOponente.getPontosDeterminacao() - (va - vd));
+        if (va > vd) {
+            if (cartaAtacada.getEstadoCarta().equals(EstadoCarta.ATAQUE)) {
+                deckOponente.setPontosDeterminacao(deckOponente.getPontosDeterminacao() - (va - vd));
+            }
             cartaAtacada.setLocalCarta(LocalCarta.DESCARTE);
             cartaAtaca.setValorAtaque(cartaAtaca.getValorAtaque() - vd);
-        } else {
-            cartaAtacada.setValorDefesa(cartaAtacada.getValorDefesa() - va);
+        } else if(va == vd) {
+            cartaAtacada.setLocalCarta(LocalCarta.DESCARTE);
             cartaAtaca.setLocalCarta(LocalCarta.DESCARTE);
+        } else {
+            cartaAtaca.setLocalCarta(LocalCarta.DESCARTE);
+            cartaAtacada.setValorDefesa(vd - va);
         }
         podeAtacar = true;
         return null;
     }
-
+    
     private void separaCartas() {
         suaMesa = new ArrayList();
         suaMao = new ArrayList();
@@ -128,23 +144,25 @@ public class DueloBean {
             }
         }
     }
-
+    
     private void embaralhar() {
         List<CartaJogo> novoMonte = new ArrayList();
-        for (int i = seuMonte.size()-1; i >= 0 ; i--) {
+        for (int i = seuMonte.size() - 1; i >= 0; i--) {
             int num = new Random().nextInt(seuMonte.size());
             novoMonte.add(seuMonte.get(num));
-            seuMonte.remove(i);
+            seuMonte.remove(num);
         }
         seuMonte = novoMonte;
     }
-
+    
     public String finalizarTurno() {
         podeFinalizar = false;
+        podeDescer = false;
+        podeComprar = true;
         duelo.setVezDe(oponente.getLogin());
         return null;
     }
-
+    
     private void verificaPontosDeterminacao() {
         if (seuDeck.getPontosDeterminacao() <= 0) {
             duelo.setSituacaoDuelo(SituacaoDuelo.FINALIZADO);
@@ -154,7 +172,7 @@ public class DueloBean {
             ganhador = jogador;
         }
     }
-
+    
     public void atualizarDados() {
         dataAtual = Calendar.getInstance();
         if (duelo.getDataCriacao().getTimeInMillis() <= dataAtual.getTimeInMillis() && duelo.getSituacaoDuelo().equals(SituacaoDuelo.CRIADO)) {
@@ -180,184 +198,269 @@ public class DueloBean {
             }
         }
     }
-
+    
     public String comprar() {
-        if (!seuMonte.isEmpty()) {
-            duelo.setVezDe(jogador.getLogin() + "a");
-            podeFinalizar = true;
-            cartaSelecionada = seuMonte.get(0);
-            cartaSelecionada.setLocalCarta(LocalCarta.MAO);
-            suaMao.add(cartaSelecionada);
-            seuMonte.remove(0);
-        } else {
-            MessageUtil.aviso("Você não possui mais cartas no monte");
-            duelo.setVezDe(jogador.getLogin() + "a");
+        for (int i = 0; i < suaMesa.size(); i++) {
+            suaMesa.get(i).setAtiva(true);
         }
+        podeFinalizar = true;
+        podeDescer = true;
+        podeComprar = false;
+        if (!seuMonte.isEmpty()) {
+            if (suaMao.size() < 6) {
+                int qt = 3 - suaMao.size();
+                if (qt > 0) {
+                    if (seuMonte.size() >= qt) {
+                        while (qt != 0) {
+                            seuMonte.get(0).setLocalCarta(LocalCarta.MAO);
+                            suaMao.add(seuMonte.get(0));
+                            seuMonte.remove(0);
+                            qt--;
+                        }
+                    } else {
+                        int pd = qt - seuMonte.size();
+                        while (seuMonte.size() != 0) {
+                            seuMonte.get(0).setLocalCarta(LocalCarta.MAO);
+                            suaMao.add(seuMonte.get(0));
+                            seuMonte.remove(0);
+                        }
+                        seuDeck.setPontosDeterminacao(seuDeck.getPontosDeterminacao() - pd);
+                    }
+                } else {
+                    seuMonte.get(0).setLocalCarta(LocalCarta.MAO);
+                    suaMao.add(seuMonte.get(0));
+                    seuMonte.remove(0);
+                }
+                if (suaMao.size() == 6) {
+                    MessageUtil.aviso("Se você não descer uma carta, a próxima que for comprada será descartada.");
+                }
+            } else {
+                seuMonte.get(0).setLocalCarta(LocalCarta.DESCARTE);
+                seuDescarte.add(seuMonte.get(0));
+                seuMonte.remove(0);
+                MessageUtil.aviso("Você não pode ter mais que 6 cartas na mão, logo, sua carta foi direto para o descarte");
+            }
+        } else {
+            seuDeck.setPontosDeterminacao(seuDeck.getPontosDeterminacao() - 1);
+            MessageUtil.aviso("Você não possui mais cartas no monte");
+        }
+//        if (!seuMonte.isEmpty()) {
+//            if (suaMao.size() < 3) {
+//                int qt = 3 - suaMao.size();
+//                if (seuMonte.size() >= qt) {
+//                    podeFinalizar = true;
+//                    while (qt != 0) {
+//                        cartaSelecionada = seuMonte.get(0);
+//                        cartaSelecionada.setLocalCarta(LocalCarta.MAO);
+//                        suaMao.add(cartaSelecionada);
+//                        seuMonte.remove(0);
+//                        qt--;
+//                    }
+//                } else {
+//                    podeFinalizar = true;
+//                    cartaSelecionada = seuMonte.get(0);
+//                    cartaSelecionada.setLocalCarta(LocalCarta.MAO);
+//                    suaMao.add(cartaSelecionada);
+//                    seuMonte.remove(0);
+//                }
+//            } else {
+//                podeFinalizar = true;
+//                cartaSelecionada = seuMonte.get(0);
+//                cartaSelecionada.setLocalCarta(LocalCarta.MAO);
+//                suaMao.add(cartaSelecionada);
+//                seuMonte.remove(0);
+//            }
+//        } else {
+//            podeFinalizar = true;
+//            seuDeck.setPontosDeterminacao(seuDeck.getPontosDeterminacao() - 1);
+//            MessageUtil.aviso("Você não possui mais cartas no monte");
+//        }
         return null;
     }
-
+    
     public String descer() {
         suaMao.remove(cartaSelecionada);
+        cartaSelecionada.setEstadoCarta(EstadoCarta.DEFESA);
         cartaSelecionada.setLocalCarta(LocalCarta.MESA);
         suaMesa.add(cartaSelecionada);
         return null;
     }
-
+    
+    public void alterarPosicaoCarta() {
+        if (cartaSelecionada.getEstadoCarta().equals(EstadoCarta.ATAQUE)) {
+            cartaSelecionada.setEstadoCarta(EstadoCarta.DEFESA);
+            cartaSelecionada.setPosicao(false);
+            cartaSelecionada.setAtiva(true);
+        } else {
+            cartaSelecionada.setEstadoCarta(EstadoCarta.ATAQUE);
+            cartaSelecionada.setPosicao(true);
+            cartaSelecionada.setAtiva(true);
+        }
+    }
+    
     public void preto() {
         corFundo = "background-color: #363636";
     }
-
+    
     public void vermelho() {
         corFundo = "background-color: #E85E4A";
     }
-
+    
     public void bege() {
         corFundo = "background-color: #FFF9DA";
     }
-
+    
     public void verde() {
         corFundo = "background-color: #79C2AA";
     }
-
+    
     public void azul() {
         corFundo = "background-color: #608096";
     }
-
+    
     public String getCorFundo() {
         return corFundo;
     }
-
+    
     public Jogador getJogador() {
         return jogador;
     }
-
+    
     public Jogador getOponente() {
         return oponente;
     }
-
+    
     public Duelo getDuelo() {
         return duelo;
     }
-
+    
     public void setDuelo(Duelo duelo) {
         this.duelo = duelo;
     }
-
+    
     public CartaJogo getCartaSelecionada() {
         return cartaSelecionada;
     }
-
+    
     public void setCartaSelecionada(CartaJogo cartaSelecionada) {
         this.cartaSelecionada = cartaSelecionada;
     }
-
+    
     public List<CartaJogo> getSuaMao() {
         return suaMao;
     }
-
+    
     public void setSuaMao(List<CartaJogo> suaMao) {
         this.suaMao = suaMao;
     }
-
+    
     public List<CartaJogo> getSeuMonte() {
         return seuMonte;
     }
-
+    
     public void setSeuMonte(List<CartaJogo> seuMonte) {
         this.seuMonte = seuMonte;
     }
-
+    
     public List<CartaJogo> getSuaMesa() {
         return suaMesa;
     }
-
+    
     public void setSuaMesa(List<CartaJogo> suaMesa) {
         this.suaMesa = suaMesa;
     }
-
+    
     public List<CartaJogo> getSeuDescarte() {
         return seuDescarte;
     }
-
+    
     public void setSeuDescarte(List<CartaJogo> seuDescarte) {
         this.seuDescarte = seuDescarte;
     }
-
+    
     public List<CartaJogo> getMesaOponente() {
         return mesaOponente;
     }
-
+    
     public void setMesaOponente(List<CartaJogo> mesaOponente) {
         this.mesaOponente = mesaOponente;
     }
-
+    
     public Deck getSeuDeck() {
         return seuDeck;
     }
-
+    
     public void setSeuDeck(Deck seuDeck) {
         this.seuDeck = seuDeck;
     }
-
+    
     public Deck getDeckOponente() {
         return deckOponente;
     }
-
+    
     public void setDeckOponente(Deck deckOponente) {
         this.deckOponente = deckOponente;
     }
-
+    
     public Calendar getDataAtual() {
         return dataAtual;
     }
-
+    
     public CartaJogo getCartaAtaca() {
         return cartaAtaca;
     }
-
+    
     public void setCartaAtaca(CartaJogo cartaAtaca) {
         podeAtacar = false;
         this.cartaAtaca = cartaAtaca;
     }
-
+    
     public CartaJogo getCartaAtacada() {
         return cartaAtacada;
     }
-
+    
     public void setCartaAtacada(CartaJogo cartaAtacada) {
         this.cartaAtacada = cartaAtacada;
     }
-
+    
     public boolean isPodeAtacar() {
         return podeAtacar;
     }
-
+    
     public void setPodeAtacar(boolean podeAtacar) {
         this.podeAtacar = podeAtacar;
     }
-
+    
     public Jogador getGanhador() {
         return ganhador;
     }
-
+    
     public void setGanhador(Jogador ganhador) {
         this.ganhador = ganhador;
     }
-
+    
     public boolean isPodeFinalizar() {
         return podeFinalizar;
     }
-
+    
     public void setPodeFinalizar(boolean podeFinalizar) {
         this.podeFinalizar = podeFinalizar;
     }
-
+    
     public boolean isPodeComprar() {
         return podeComprar;
     }
-
+    
     public void setPodeComprar(boolean podeComprar) {
         this.podeComprar = podeComprar;
     }
-
+    
+    public boolean isPodeDescer() {
+        return podeDescer;
+    }
+    
+    public void setPodeDescer(boolean podeDescer) {
+        this.podeDescer = podeDescer;
+    }
+    
 }

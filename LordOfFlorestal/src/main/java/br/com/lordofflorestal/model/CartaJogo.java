@@ -26,8 +26,8 @@ public class CartaJogo {
         this.localCarta = LocalCarta.MONTE;
         this.estadoCarta = EstadoCarta.NEUTRO;
         this.turno = 0;
-        this.posicao = true;
-        this.ativa = true;
+        this.posicao = false;
+        this.ativa = false;
     }
 
     public CartaJogo(int valorAtaque, int valorDefesa, int turno, boolean ativa, LocalCarta localCarta, EstadoCarta estadoCarta, Carta carta) {
@@ -47,8 +47,11 @@ public class CartaJogo {
         this.localCarta = LocalCarta.MONTE;
         this.estadoCarta = EstadoCarta.NEUTRO;
         this.turno = 0;
-        this.ativa = true;
-        this.posicao = true;
+        this.ativa = false;
+        this.posicao = false;
+        if(carta.getId() == 71){
+            this.localCarta = LocalCarta.MESA;
+        }
     }
     
     public int getValorAtaque() {
@@ -113,55 +116,6 @@ public class CartaJogo {
 
     public void setPosicao(boolean posicao) {
         this.posicao = posicao;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + this.valorAtaque;
-        hash = 67 * hash + this.valorDefesa;
-        hash = 67 * hash + this.turno;
-        hash = 67 * hash + (this.ativa ? 1 : 0);
-        hash = 67 * hash + Objects.hashCode(this.localCarta);
-        hash = 67 * hash + Objects.hashCode(this.estadoCarta);
-        hash = 67 * hash + Objects.hashCode(this.carta);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final CartaJogo other = (CartaJogo) obj;
-        if (this.valorAtaque != other.valorAtaque) {
-            return false;
-        }
-        if (this.valorDefesa != other.valorDefesa) {
-            return false;
-        }
-        if (this.turno != other.turno) {
-            return false;
-        }
-        if (this.ativa != other.ativa) {
-            return false;
-        }
-        if (this.localCarta != other.localCarta) {
-            return false;
-        }
-        if (this.estadoCarta != other.estadoCarta) {
-            return false;
-        }
-        if (!Objects.equals(this.carta, other.carta)) {
-            return false;
-        }
-        return true;
     }
 
 }
