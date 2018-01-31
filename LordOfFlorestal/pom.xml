@@ -95,7 +95,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <url>http://35.226.121.180/manager/text</url>
+                    <url>http://35.225.9.248/manager/text</url>
                     <server>servidor</server>
                     <path>/LordOfFlorestal</path>
                 </configuration>

@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Random;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -70,6 +69,8 @@ public class DueloBean {
     private boolean especialOponente;
 
     private String mensagem;
+    
+    private boolean som;
 
     public DueloBean() {
         cria();
@@ -88,6 +89,7 @@ public class DueloBean {
     }
     
     private void cria() {
+        som = true;
         especial = false;
         especialOponente = false;
         podeAtacar = false;
@@ -252,6 +254,7 @@ public class DueloBean {
             seuMonte.remove(num);
         }
         seuMonte = novoMonte;
+        seuDeck.setCartas(novoMonte);
     }
 
     public String finalizarTurno() {
@@ -490,7 +493,7 @@ public class DueloBean {
     }
 
     public void azul() {
-        corFundo = "background-color: #608096";
+        corFundo = "background-color: #F57C17";
     }
 
     public String getCorFundo() {
@@ -660,6 +663,14 @@ public class DueloBean {
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+
+    public boolean isSom() {
+        return som;
+    }
+
+    public void setSom(boolean som) {
+        this.som = som;
     }
 
 }
