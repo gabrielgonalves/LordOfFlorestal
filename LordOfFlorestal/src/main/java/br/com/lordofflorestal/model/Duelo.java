@@ -27,6 +27,7 @@ public class Duelo {
     private Deck deckJogador1;
     private Deck deckJogador2;
     private String vezDe;
+    private String batePapo;
 
     public Duelo() {
         UUID uuid = UUID.randomUUID();
@@ -35,6 +36,7 @@ public class Duelo {
         situacaoDuelo = SituacaoDuelo.CRIADO;
         deckJogador1 = new Deck();
         deckJogador2 = new Deck();
+        batePapo = "";
     }
 
     public String getDataFormatada() {
@@ -111,6 +113,14 @@ public class Duelo {
 
     public void setVezDe(String vezDe) {
         this.vezDe = vezDe;
+    }
+
+    public String getBatePapo() {
+        return batePapo;
+    }
+
+    public void setBatePapo(String batePapo) {
+        this.batePapo = batePapo;
     }
 
     @Override

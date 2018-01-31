@@ -14,7 +14,6 @@ import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.LocalCarta;
 import br.com.lordofflorestal.model.SituacaoDuelo;
 import br.com.lordofflorestal.model.TipoCarta;
-import br.com.lordofflorestal.rn.DueloRN;
 import br.com.lordofflorestal.rn.EfeitoCartaRN;
 import br.com.lordofflorestal.rn.JogadorRN;
 import br.com.lordofflorestal.util.MessageUtil;
@@ -23,6 +22,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author gabriel
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class DueloBean {
 
     private Duelo duelo;
@@ -69,14 +69,31 @@ public class DueloBean {
     private boolean especial;
     private boolean especialOponente;
 
+    private String mensagem;
+
     public DueloBean() {
+        cria();
+    }
+    
+    public void preRender(){
+        request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String uri;
+        if (request.getParameter("duelo") != null) {
+            uri = (request.getParameter("duelo"));
+            if(!uri.equals(duelo.getUri())){
+                duelo.setSituacaoDuelo(SituacaoDuelo.CANCELADO);
+                cria();
+            }
+        }
+    }
+    
+    private void cria() {
         especial = false;
         especialOponente = false;
         podeAtacar = false;
         podeDescer = false;
         podeFinalizar = false;
         podeComprar = true;
-        DueloRN dueloRN = new DueloRN();
         this.jogador = new JogadorRN().buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
         request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String uri = request.getParameter("duelo");
@@ -92,16 +109,23 @@ public class DueloBean {
         }
         separaCartas();
         embaralhar();
-        seuMonte.get(0).setLocalCarta(LocalCarta.MAO);
-        seuMonte.get(1).setLocalCarta(LocalCarta.MAO);
-        seuMonte.get(2).setLocalCarta(LocalCarta.MAO);
-        separaCartas();
+        if (suaMao.isEmpty()) {
+            seuMonte.get(0).setLocalCarta(LocalCarta.MAO);
+            seuMonte.get(1).setLocalCarta(LocalCarta.MAO);
+            seuMonte.get(2).setLocalCarta(LocalCarta.MAO);
+            separaCartas();
+        }
     }
-    
+
     public String atacarDeterminacao() {
-        deckOponente.setPontosDeterminacao(deckOponente.getPontosDeterminacao() - cartaAtaca.getValorAtaque());
+        int pd = deckOponente.getPontosDeterminacao();
+        deckOponente.setPontosDeterminacao(pd - cartaAtaca.getValorAtaque());
         cartaAtaca.setAtiva(false);
         cartaAtaca.setTurno(false);
+        cartaAtaca.setValorAtaque(cartaAtaca.getValorAtaque() - pd);
+        if (cartaAtaca.getValorAtaque() <= 0) {
+            cartaAtaca.setLocalCarta(LocalCarta.DESCARTE);
+        }
         podeAtacar = false;
         return null;
     }
@@ -254,24 +278,7 @@ public class DueloBean {
         }
     }
 
-    public void atualizarDados() {
-        dataAtual = Calendar.getInstance();
-        if (duelo.getDataCriacao().getTimeInMillis() <= dataAtual.getTimeInMillis() && duelo.getSituacaoDuelo().equals(SituacaoDuelo.CRIADO)) {
-            duelo.setSituacaoDuelo(SituacaoDuelo.CANCELADO);
-            new DueloRN().salvar(duelo, 0);
-        }
-        if (duelo.getCriadoPor().equals(jogador)) {
-            seuDeck = duelo.getDeckJogador1();
-            deckOponente = duelo.getDeckJogador2();
-            oponente = duelo.getOponente();
-            verificaPontosDeterminacao();
-        } else {
-            seuDeck = duelo.getDeckJogador2();
-            deckOponente = duelo.getDeckJogador1();
-            oponente = duelo.getCriadoPor();
-            verificaPontosDeterminacao();
-        }
-        separaCartas();
+    public void atualizaMesaOponente() {
         mesaOponente = new ArrayList();
         for (CartaJogo carta : deckOponente.getCartas()) {
             switch (carta.getLocalCarta()) {
@@ -280,6 +287,25 @@ public class DueloBean {
                     break;
             }
         }
+    }
+
+    public void atualizarDados() {
+        dataAtual = Calendar.getInstance();
+        if (duelo.getDataCriacao().getTimeInMillis() <= dataAtual.getTimeInMillis() && duelo.getSituacaoDuelo().equals(SituacaoDuelo.CRIADO)) {
+            duelo.setSituacaoDuelo(SituacaoDuelo.CANCELADO);
+        }
+        if (duelo.getCriadoPor().equals(jogador)) {
+            seuDeck = duelo.getDeckJogador1();
+            deckOponente = duelo.getDeckJogador2();
+            oponente = duelo.getOponente();
+        } else {
+            seuDeck = duelo.getDeckJogador2();
+            deckOponente = duelo.getDeckJogador1();
+            oponente = duelo.getCriadoPor();
+        }
+        verificaPontosDeterminacao();
+        separaCartas();
+        atualizaMesaOponente();
     }
 
     public String comprar() {
@@ -439,6 +465,12 @@ public class DueloBean {
             cartaSelecionada.setAtiva(true);
             podeAtacar = false;
         }
+    }
+
+    public String enviarMensagem() {
+        duelo.setBatePapo(jogador.getLogin() + ": " + mensagem + "\n" + duelo.getBatePapo());
+        mensagem = "";
+        return null;
     }
 
     public void preto() {
@@ -620,6 +652,14 @@ public class DueloBean {
 
     public void setEspecialOponente(boolean especialOponente) {
         this.especialOponente = especialOponente;
+    }
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
     }
 
 }

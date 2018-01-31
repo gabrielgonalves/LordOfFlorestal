@@ -5,6 +5,10 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template/layoutJogo.xhtml">
 
+    <f:metadata>
+        <f:event listener="#{dueloBean.preRender}" type="preRenderView" />
+    </f:metadata>
+    
     <ui:define name="pontuacao">
         <p:outputPanel id="pontuacao">
             <div class="ui-g">
@@ -27,7 +31,7 @@
     <ui:define name="content">
         <h:form prependId="false">
             <p:growl autoUpdate="true" />
-            <p:poll interval="1" update=":pontuacao @form" listener="#{dueloBean.atualizarDados}" />
+            <p:poll interval="1" widgetVar="poll" update=":pontuacao @form :batepapo" listener="#{dueloBean.atualizarDados}" />
 
             <p:outputPanel autoUpdate="true" rendered="#{dueloBean.duelo.situacaoDuelo eq 'CRIADO' or dueloBean.duelo.situacaoDuelo eq 'AGUARDANDO' or dueloBean.duelo.situacaoDuelo eq 'CANCELADO' or dueloBean.duelo.situacaoDuelo eq 'FINALIZADO' ? true : false}">
                 <center>
@@ -57,8 +61,8 @@
             </p:outputPanel>
             <p:outputPanel autoUpdate="true" rendered="#{dueloBean.duelo.situacaoDuelo eq 'EM_ANDAMENTO' ? true : false}">
                 <p:outputPanel id="mesaOponente" autoUpdate="true" style="padding-top: 20px;">    
-                    <p:carousel value="#{dueloBean.mesaOponente}" numVisible="5" var="carta" headerText="Mesa do Oponente" responsive="true">
-                        <center>
+                    <p:carousel value="#{dueloBean.mesaOponente}" numVisible="5" var="carta" headerText="Mesa do Oponente" responsive="true" vertical="false" circular="true">
+                        <center> 
                             <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank">
                                 <f:facet name="header">
                                     <h:outputText value="#{carta.posicao ? 'Ataque' : 'Defesa'}" />
@@ -75,17 +79,17 @@
                         </center>
                     </p:carousel>
                     <p:panel>
-                            <center>
-                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" rendered="#{dueloBean.mesaOponente.size() eq 0}">
+                        <center>
+                            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" rendered="#{dueloBean.mesaOponente.size() eq 0}">
                                 <h:outputText value="Pontos de Determinação" />
                                 <h:outputText value="#{dueloBean.deckOponente.pontosDeterminacao}"/> 
                                 <p:commandButton action="#{dueloBean.atacarDeterminacao}" disabled="#{dueloBean.podeAtacar and dueloBean.duelo.vezDe eq dueloBean.jogador.login ? false : true}" value="Atacar" class="btn-vermelho" update="mesaOponente suaMesa :pontuacao" />
-                        </p:panelGrid>
-                            </center>
+                            </p:panelGrid>
+                        </center>
                     </p:panel>
                 </p:outputPanel>
                 <p:outputPanel id="suaMesa" autoUpdate="true" style="padding-top: 20px;">    
-                    <p:carousel value="#{dueloBean.suaMesa}" numVisible="5" var="cartaMesa" headerText="Sua Mesa" responsive="true">
+                    <p:carousel value="#{dueloBean.suaMesa}" numVisible="5" var="cartaMesa" headerText="Sua Mesa" responsive="true" vertical="false" circular="true">
                         <center>
                             <p:panelGrid columns="1" layout="grid" style="#{cartaMesa.posicao ? 'background: #79C2AA !important;' : 'background: #E85E4A !important;'}">
                                 <f:facet name="header">
@@ -106,7 +110,7 @@
                     </p:carousel>
                 </p:outputPanel>
                 <p:outputPanel id="suaMao" autoUpdate="true" style="padding-top: 20px;">    
-                    <p:carousel value="#{dueloBean.suaMao}" numVisible="5" var="cartaMao" headerText="Sua Mão" responsive="true">
+                    <p:carousel value="#{dueloBean.suaMao}" numVisible="5" var="cartaMao" headerText="Sua Mão" responsive="true" vertical="false" circular="true">
                         <center>
                             <p:panelGrid columns="1" layout="grid">
                                 <f:facet name="header">
@@ -115,7 +119,7 @@
                                 </f:facet>
 
                                 <p:graphicImage library="cartas" name="#{cartaMao.carta.imagem}" width="165"/>
-                                <p:commandButton value="Descer" class="btn-verde" action="#{dueloBean.descer}" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeDescer eq true ? false : true}" update="suaMao suaMesa" >
+                                <p:commandButton value="Descer" class="btn-verde" action="#{dueloBean.descer}" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeDescer eq true ? false : true}" >
                                     <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{cartaMao}" />
                                 </p:commandButton>
                             </p:panelGrid>
@@ -125,18 +129,25 @@
                 <div class="ui-fluid">
                     <div class="ui-g-8"/>
                     <div class="ui-g-12 ui-md-2">
-                        <p:commandButton id="comprar" value="Comprar Carta" action="#{dueloBean.comprar}" update="suaMao suaMesa @this finalizar" class="btn-verde" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeComprar eq true ? false : true}" />
+                        <p:commandButton id="comprar" onsuccess="PF('poll').stop()" value="Comprar Carta" action="#{dueloBean.comprar}" update="suaMao suaMesa @this finalizar" class="btn-verde" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeComprar eq true ? false : true}" />
                     </div>
                     <div class="ui-g-12 ui-md-2">
-                        <p:commandButton id="finalizar" value="Finalizar Turno" action="#{dueloBean.finalizarTurno}" disabled="#{!dueloBean.podeFinalizar}" class="btn-vermelho" />
+                        <p:commandButton id="finalizar" onsuccess="PF('poll').start()" value="Finalizar Turno" action="#{dueloBean.finalizarTurno}" disabled="#{!dueloBean.podeFinalizar}" class="btn-vermelho" />
                     </div>
                 </div>
             </p:outputPanel>
         </h:form>
     </ui:define>
     <ui:define name="acoes">
-        <p:dataList emptyMessage="Ainda não possui nenhuma ação">
-
-        </p:dataList>
+        <h:form prependId="false">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12">
+                    <p:inputTextarea autoResize="false" id="batepapo" disabled="true" value="#{dueloBean.duelo.batePapo}" rows="6"  />
+                    <p:inputText id="msg" value="#{dueloBean.mensagem}" />
+                    <p:commandButton value="Enviar" action="#{dueloBean.enviarMensagem}" update="batepapo msg" />
+                </div>
+            </div>
+        </h:form>
     </ui:define>
+    <p:dialog />
 </ui:composition>

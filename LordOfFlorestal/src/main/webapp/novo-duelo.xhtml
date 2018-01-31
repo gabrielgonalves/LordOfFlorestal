@@ -33,7 +33,7 @@
                                 </p:slider>
                             </div>
                             <div class="ui-g-12">
-                                <p:carousel id="suasCartas" headerText="Suas cartas" responsive="true" circular="true" numVisible="5" value="#{novoDueloBean.suasCartas}" var="carta">
+                                <p:carousel vertical="false" id="suasCartas" headerText="Suas cartas" responsive="true" circular="true" numVisible="5" value="#{novoDueloBean.suasCartas}" var="carta">
                                     <p:panel>
                                         <center>
                                             <p:graphicImage library="cartas" name="#{carta.imagem}" width="165" />
@@ -45,7 +45,7 @@
                                 </p:carousel>
                             </div>
                             <div class="ui-g-12">
-                                <p:carousel footerText="Você já selecionou #{novoDueloBean.cartasSelecionadas.size()} carta(s)" id="cartasSelecionadas" headerText="Cartas selecionadas" responsive="true" circular="true" numVisible="5" value="#{novoDueloBean.cartasSelecionadas}" var="carta">
+                                <p:carousel vertical="false" footerText="Você já selecionou #{novoDueloBean.cartasSelecionadas.size()} carta(s)" id="cartasSelecionadas" headerText="Cartas selecionadas" responsive="true" circular="true" numVisible="5" value="#{novoDueloBean.cartasSelecionadas}" var="carta">
                                     <p:panel>
                                         <center>
                                             <p:graphicImage library="cartas" name="#{carta.imagem}" width="165" />
