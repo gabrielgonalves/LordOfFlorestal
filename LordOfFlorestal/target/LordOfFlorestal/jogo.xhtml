@@ -23,7 +23,7 @@
                     <h:outputText value="#{dueloBean.oponente.login}" style="font-weight: bold" />
                 </div>
                 <div class="ui-g-2">
-                    <h:outputText value="#{dueloBean.deckOponente.pontosDeterminacao}" style="font-weight: bold" />
+                    <h:outputText value="#{dueloBean.oponente eq null ? '' : dueloBean.deckOponente.pontosDeterminacao}" style="font-weight: bold" />
                 </div>
             </div>
         </p:outputPanel>
@@ -79,9 +79,9 @@
                             </p:panelGrid>
                         </center>
                     </p:carousel>
-                    <p:panel>
+                    <p:panel rendered="#{dueloBean.mesaOponente.size() eq 0 or dueloBean.possuiDefesa eq false ? true : false}">
                         <center>
-                            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" rendered="#{dueloBean.mesaOponente.size() eq 0}">
+                            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank">
                                 <h:outputText value="Pontos de Determinação" />
                                 <h:outputText value="#{dueloBean.deckOponente.pontosDeterminacao}"/> 
                                 <p:commandButton action="#{dueloBean.atacarDeterminacao}" disabled="#{dueloBean.podeAtacar and dueloBean.duelo.vezDe eq dueloBean.jogador.login ? false : true}" value="Atacar" class="btn-vermelho" update="mesaOponente suaMesa :pontuacao" />
@@ -146,10 +146,10 @@
                     function tocar() {
                         var s = document.getElementById('audio');
                         var b = #{dueloBean.som};
-                        if(b){
+                        if (b) {
                             #{dueloBean.som = false};
                         }
-                    }
+                    };
                 </script>
             </p:outputPanel>
         </h:form>

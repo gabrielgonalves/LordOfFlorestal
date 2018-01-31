@@ -69,26 +69,29 @@ public class DueloBean {
     private boolean especialOponente;
 
     private String mensagem;
-    
+
     private boolean som;
+
+    private boolean possuiDefesa;
 
     public DueloBean() {
         cria();
     }
-    
-    public void preRender(){
+
+    public void preRender() {
         request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String uri;
         if (request.getParameter("duelo") != null) {
             uri = (request.getParameter("duelo"));
-            if(!uri.equals(duelo.getUri())){
+            if (!uri.equals(duelo.getUri())) {
                 duelo.setSituacaoDuelo(SituacaoDuelo.CANCELADO);
                 cria();
             }
         }
     }
-    
+
     private void cria() {
+        possuiDefesa = true;
         som = true;
         especial = false;
         especialOponente = false;
@@ -211,6 +214,17 @@ public class DueloBean {
                 EfeitoCartaRN.carta19(deckOponente);
             }
         }
+
+        if (cartaAtaca.getValorAtaque() == 0 || cartaAtaca.getValorDefesa() == 0) {
+            suaMesa.remove(cartaAtaca);
+            cartaAtaca.setLocalCarta(LocalCarta.DESCARTE);
+        }
+
+        if (cartaAtacada.getValorAtaque() == 0 || cartaAtacada.getValorDefesa() == 0) {
+            mesaOponente.remove(cartaAtacada);
+            cartaAtacada.setLocalCarta(LocalCarta.DESCARTE);
+        }
+
         podeAtacar = false;
         return null;
     }
@@ -258,6 +272,7 @@ public class DueloBean {
     }
 
     public String finalizarTurno() {
+        som = true;
         for (int i = 0; i < suaMao.size(); i++) {
             suaMao.get(i).setNova(false);
         }
@@ -282,13 +297,22 @@ public class DueloBean {
     }
 
     public void atualizaMesaOponente() {
+        boolean atk = false;
         mesaOponente = new ArrayList();
         for (CartaJogo carta : deckOponente.getCartas()) {
             switch (carta.getLocalCarta()) {
                 case MESA:
+                    if (carta.getEstadoCarta().equals(EstadoCarta.DEFESA)) {
+                        atk = true;
+                    }
                     mesaOponente.add(carta);
                     break;
             }
+        }
+        if(atk){
+            possuiDefesa = true;
+        } else {
+            possuiDefesa = false;
         }
     }
 
@@ -671,6 +695,14 @@ public class DueloBean {
 
     public void setSom(boolean som) {
         this.som = som;
+    }
+
+    public boolean isPossuiDefesa() {
+        return possuiDefesa;
+    }
+
+    public void setPossuiDefesa(boolean possuiDefesa) {
+        this.possuiDefesa = possuiDefesa;
     }
 
 }
