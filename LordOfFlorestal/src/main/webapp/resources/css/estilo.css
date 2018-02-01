@@ -15,6 +15,25 @@ body {
     margin-bottom: 20px;
 }
 
+.user-img-pb {
+    border-radius: 50% !important; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 20px;
+    filter: grayscale(100%);
+    border-color: #F1431B !important;
+    border-width: 4px !important;
+    border-style: solid !important;
+}
+
+.user-img-g {
+    border-radius: 50% !important; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 20px;
+    border-color: #379125 !important;
+    border-width: 4px !important;
+    border-style: solid !important;
+}
+
 .resgatar {
     text-align: right !important;
     color: #FFFFFF !important;

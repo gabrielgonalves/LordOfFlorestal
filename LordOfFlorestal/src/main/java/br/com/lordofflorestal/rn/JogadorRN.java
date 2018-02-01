@@ -6,6 +6,7 @@
 package br.com.lordofflorestal.rn;
 
 import br.com.lordofflorestal.model.Carta;
+import br.com.lordofflorestal.model.DuelosJogador;
 import br.com.lordofflorestal.model.EstatisticaJogador;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.mysql.JogadorDAOMysql;
@@ -17,18 +18,18 @@ import java.util.List;
  * @author gabriel
  */
 public class JogadorRN {
-
+    
     private JogadorDAOMysql jogadorDAOMysql;
-
+    
     public JogadorRN() {
         this.jogadorDAOMysql = new JogadorDAOMysql();
     }
-
+    
     public void salvar(Jogador jogador) {
         if (buscarPorMatricula(jogador.getMatricula()) == null) {
             if (buscarPorLogin(jogador.getLogin()) == null) {
                 this.jogadorDAOMysql.salvar(jogador);
-
+                
                 MessageUtil.info("Jogador " + jogador.getNome() + " salvo com sucesso!");
             } else {
                 MessageUtil.erro("O login informado já esta em uso!");
@@ -38,33 +39,43 @@ public class JogadorRN {
             MessageUtil.info("Jogador " + jogador.getNome() + " editado com sucesso!");
         }
     }
-
+    
+    public void atualizarPontos(Jogador jogador) {
+        if (buscarPorMatricula(jogador.getMatricula()).getEstatisticaJogador().getNumJogos() != jogador.getEstatisticaJogador().getNumJogos()) {
+            this.jogadorDAOMysql.atualizarPontuacao(jogador);
+        }
+    }
+    
     public void excluir(Jogador jogador) {
         this.jogadorDAOMysql.excluir(jogador);
         MessageUtil.info("Jogador " + jogador.getNome() + " excluido com sucesso!");
     }
-
+    
+    public List<DuelosJogador> buscaDuelosJogador(int matricula){
+        return this.jogadorDAOMysql.buscaDuelosJogador(matricula);
+    }
+    
     public Jogador buscarPorLogin(String login) {
         return this.jogadorDAOMysql.buscarPorLogin(login);
     }
-
+    
     public Jogador buscarPorMatricula(Integer matricula) {
         return this.jogadorDAOMysql.buscarPorMatricula(matricula);
     }
-
+    
     public EstatisticaJogador buscarEstatisticaJogador(Integer matricula) {
         return this.jogadorDAOMysql.buscarEstatisticaJogador(matricula);
     }
-
+    
     public List<Jogador> listar() {
         return this.jogadorDAOMysql.listar();
     }
-
+    
     public List<Jogador> listarExceto(Jogador jogador) {
         return this.jogadorDAOMysql.listarExceto(jogador);
     }
     
-    public String buscaImagemJogador(String login){
+    public String buscaImagemJogador(String login) {
         return this.jogadorDAOMysql.buscaImagemJogador(login);
     }
     

@@ -53,10 +53,10 @@
                     </p:panel>
                 </div>
                 <div class="ui-g-12">
-                    <p:carousel numVisible="8" value="#{perfilBean.jogador.cartas}" circular="true"
+                    <p:carousel numVisible="5" value="#{perfilBean.jogador.cartas}" circular="true"
                                 var="carta" headerText="Suas cartas" responsive="true" vertical="false">
                         <center>
-                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="80"/>
+                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="165"/>
                         </center>
 
                         <f:facet name="footer">
@@ -72,8 +72,26 @@
                                 <p:chart type="pie" model="#{perfilBean.grafico}" responsive="true" />
                             </div>
                             <div class="ui-g-12 ui-md-6 no-margin">
-                                <p:carousel headerText="Histórico de jogos" responsive="true" >
-                                    Jogos ganhou perdeu
+                                <p:carousel numVisible="1" value="#{perfilBean.duelosJogadores}" var="dj" circular="true" vertical="false" headerText="Histórico de jogos" responsive="true" >
+                                    <p:panel>
+                                        <div class="ui-g">
+                                            <div class="ui-g-12 ui-md-12">
+                                                <center>
+                                                    <p:graphicImage library="img" name="#{dj.imgJogador}" width="100" rendered="#{dj.situacaoDuelo eq 'FINALIZADO' or dj.matriculaJogador eq perfilBean.jogador.matricula ? true : false}" class="#{dj.matriculaJogador eq dj.matriculaVencedor ? 'user-img-g' : 'user-img-pb'}" />
+                                                    <p:graphicImage library="img" name="#{dj.imgOponente}" width="100" rendered="#{dj.situacaoDuelo eq 'FINALIZADO' or dj.matriculaOponente eq perfilBean.jogador.matricula ? true : false}" class="#{dj.matriculaOponente eq dj.matriculaVencedor ? 'user-img-g' : 'user-img-pb'}" />
+                                                </center>
+                                            </div>
+                                            <div class="ui-g-12 ui-md-12">
+                                                <center>
+                                                    <h:outputText style="font-weight: bold;" value="#{dj.situacaoDuelo eq 'FINALIZADO' ? dj.jogador.concat(' vs ').concat(dj.oponente) : dj.jogador}" /> <br/><br/>
+                                                    <h:outputText value="#{dj.situacaoDuelo}" /> <br/><br/>
+                                                    <h:outputText value="#{dj.dataCriacao}" >
+                                                        <f:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" />
+                                                    </h:outputText>
+                                                </center>    
+                                            </div>
+                                        </div>
+                                    </p:panel>
                                 </p:carousel>
                             </div>
                         </div>

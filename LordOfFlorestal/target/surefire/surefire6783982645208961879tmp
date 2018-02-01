@@ -1,0 +1,6 @@
+#surefire
+#Thu Feb 01 03:32:19 BRST 2018
+maven.ext.class.path=/home/gabriel/netbeans-8.2/java/maven-nblib/netbeans-eventspy.jar
+user.dir=/home/gabriel/LordOfFlorestal/LordOfFlorestal
+localRepository=/home/gabriel/.m2/repository
+basedir=/home/gabriel/LordOfFlorestal/LordOfFlorestal

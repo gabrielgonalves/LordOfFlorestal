@@ -60,4 +60,41 @@ public class EstatisticaJogador implements Serializable {
         this.numJogosGanhoLord = numJogosGanhoLord;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + this.numJogos;
+        hash = 47 * hash + this.numJogosGanho;
+        hash = 47 * hash + this.numJogosPerdido;
+        hash = 47 * hash + this.numJogosGanhoLord;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EstatisticaJogador other = (EstatisticaJogador) obj;
+        if (this.numJogos != other.numJogos) {
+            return false;
+        }
+        if (this.numJogosGanho != other.numJogosGanho) {
+            return false;
+        }
+        if (this.numJogosPerdido != other.numJogosPerdido) {
+            return false;
+        }
+        if (this.numJogosGanhoLord != other.numJogosGanhoLord) {
+            return false;
+        }
+        return true;
+    }
+
 }

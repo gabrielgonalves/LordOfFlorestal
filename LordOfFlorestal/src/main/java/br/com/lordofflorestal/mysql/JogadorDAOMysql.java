@@ -8,6 +8,8 @@ package br.com.lordofflorestal.mysql;
 import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.EstatisticaJogador;
 import br.com.lordofflorestal.model.Jogador;
+import br.com.lordofflorestal.model.DuelosJogador;
+import br.com.lordofflorestal.model.SituacaoDuelo;
 import br.com.lordofflorestal.model.SubtipoCarta;
 import br.com.lordofflorestal.model.TipoCarta;
 import br.com.lordofflorestal.model.TipoJogador;
@@ -16,8 +18,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -67,6 +74,29 @@ public class JogadorDAOMysql {
             statement.setString(5, jogador.getSenha());
             statement.setInt(6, jogador.getTipoJogador().ordinal() + 1);
             statement.setInt(7, jogador.getMatricula());
+
+            statement.executeUpdate();
+            statement.close();
+
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar operações de atualização. Erro: " + ex.getMessage());
+        }
+    }
+
+    public void atualizarPontuacao(Jogador jogador) {
+        String sql = "UPDATE Jogador SET num_jogos = ?, num_jogos_ganho = ?, num_jogos_perdido = ?, num_jogos_ganho_lord = ? WHERE matricula = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, jogador.getEstatisticaJogador().getNumJogos());
+            statement.setInt(2, jogador.getEstatisticaJogador().getNumJogosGanho());
+            statement.setInt(3, jogador.getEstatisticaJogador().getNumJogosPerdido());
+            statement.setInt(4, jogador.getEstatisticaJogador().getNumJogosGanhoLord());
+            statement.setInt(5, jogador.getMatricula());
 
             statement.executeUpdate();
             statement.close();
@@ -143,6 +173,114 @@ public class JogadorDAOMysql {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
         return null;
+    }
+
+    public String buscaImagemJogadorPorMatricula(int matricula) {
+        String sql = "SELECT imagem FROM Jogador WHERE matricula = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, matricula);
+
+            ResultSet rs = statement.executeQuery();
+
+            String imagem = "";
+
+            while (rs.next()) {
+                imagem = rs.getString("imagem");
+            }
+
+            statement.close();
+
+            connection.close();
+
+            return imagem;
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+        return "";
+    }
+
+    public String buscaLoginJogadorPorMatricula(int matricula) {
+        String sql = "SELECT login FROM Jogador WHERE matricula = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, matricula);
+
+            ResultSet rs = statement.executeQuery();
+
+            String login = "";
+
+            while (rs.next()) {
+                login = rs.getString("login");
+            }
+
+            statement.close();
+
+            connection.close();
+            
+            return login;
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+        return "";
+    }
+
+    public List<DuelosJogador> buscaDuelosJogador(int matricula) {
+        List<DuelosJogador> duelos = new ArrayList();
+
+        String sql = "SELECT * FROM Duelo WHERE criador = ? OR oponente = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, matricula);
+            statement.setInt(2, matricula);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                DuelosJogador dj = new DuelosJogador();
+                dj.setMatriculaJogador(rs.getInt("criador"));
+                dj.setMatriculaOponente(rs.getInt("oponente"));
+                dj.setMatriculaVencedor(rs.getInt("vencedor"));
+                String data = rs.getString("data_criacao");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                try {
+                    dj.setDataCriacao(sdf.parse(data));
+                } catch (ParseException ex) {
+                    Logger.getLogger(JogadorDAOMysql.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dj.setSituacaoDuelo(SituacaoDuelo.values()[rs.getInt("id_situacao_duelo") - 1]);
+
+                duelos.add(dj);
+            }
+
+            statement.close();
+
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+
+        for (DuelosJogador dj : duelos) {
+            dj.setImgJogador(buscaImagemJogadorPorMatricula(dj.getMatriculaJogador()));
+            dj.setImgOponente(buscaImagemJogadorPorMatricula(dj.getMatriculaOponente()));
+            dj.setJogador(buscaLoginJogadorPorMatricula(dj.getMatriculaJogador()));
+            dj.setOponente(buscaLoginJogadorPorMatricula(dj.getMatriculaOponente()));
+        }
+
+        return duelos;
     }
 
     public Jogador buscarPorMatricula(Integer matricula) {

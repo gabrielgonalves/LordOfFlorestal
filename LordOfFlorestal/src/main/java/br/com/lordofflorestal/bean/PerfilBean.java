@@ -5,10 +5,13 @@
  */
 package br.com.lordofflorestal.bean;
 
+import br.com.lordofflorestal.model.DuelosJogador;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.rn.JogadorRN;
 import br.com.lordofflorestal.util.FileUploadUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -30,11 +33,15 @@ public class PerfilBean implements Serializable {
 
     private PieChartModel grafico;
 
+    private List<DuelosJogador> duelosJogadores;
+
     public PerfilBean() {
+        duelosJogadores = new ArrayList();
         JogadorRN jogadorRN = new JogadorRN();
         String login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
         if (login != null) {
             jogador = jogadorRN.buscarPorLogin(login);
+            duelosJogadores = jogadorRN.buscaDuelosJogador(jogador.getMatricula());
         }
     }
 
@@ -90,5 +97,13 @@ public class PerfilBean implements Serializable {
 
     public void setGrafico(PieChartModel grafico) {
         this.grafico = grafico;
+    }
+
+    public List<DuelosJogador> getDuelosJogadores() {
+        return duelosJogadores;
+    }
+
+    public void setDuelosJogadores(List<DuelosJogador> duelosJogadores) {
+        this.duelosJogadores = duelosJogadores;
     }
 }
