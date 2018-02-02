@@ -9,6 +9,7 @@
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/rn/CartaRN.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/DueloBean.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Duelo.java
+/home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/Ranking.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/util/conversor/CartaConversor.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/bean/JogadorBean.java
 /home/gabriel/LordOfFlorestal/LordOfFlorestal/src/main/java/br/com/lordofflorestal/model/EstatisticaJogador.java

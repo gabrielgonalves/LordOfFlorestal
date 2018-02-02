@@ -12,7 +12,6 @@ import br.com.lordofflorestal.model.EstadoCarta;
 import br.com.lordofflorestal.model.LocalCarta;
 import br.com.lordofflorestal.model.SubtipoCarta;
 import br.com.lordofflorestal.model.TipoCarta;
-import java.util.List;
 
 /**
  *
@@ -190,12 +189,12 @@ public class EfeitoCartaRN {
     //Nota muito abaixo da média
     public static void carta61(Deck deck, Deck deckOponente) {
         for (CartaJogo carta : deckOponente.getCartas()) {
-            if (carta.getLocalCarta().equals(LocalCarta.MESA) && carta.getCarta().getSubtipoCarta().equals(SubtipoCarta.ALUNO)) {
+            if (LocalCarta.MESA.equals(carta.getLocalCarta()) && SubtipoCarta.ALUNO.equals(carta.getCarta().getSubtipoCarta())) {
                 carta.setLocalCarta(LocalCarta.DESCARTE);
             }
         }
         for (CartaJogo carta : deck.getCartas()) {
-            if (carta.getLocalCarta().equals(LocalCarta.MESA) && carta.getCarta().getSubtipoCarta().equals(SubtipoCarta.ALUNO)) {
+            if (LocalCarta.MESA.equals(carta.getLocalCarta()) && SubtipoCarta.ALUNO.equals(carta.getCarta().getSubtipoCarta())) {
                 carta.setLocalCarta(LocalCarta.DESCARTE);
             }
         }
@@ -251,7 +250,7 @@ public class EfeitoCartaRN {
 
     //Prova inesperada
     public static void carta69(CartaJogo cartaOponente) {
-        if (cartaOponente.getEstadoCarta().equals(EstadoCarta.ATAQUE)) {
+        if (EstadoCarta.ATAQUE.equals(cartaOponente.getEstadoCarta())) {
             cartaOponente.setEstadoCarta(EstadoCarta.DEFESA);
         } else {
             cartaOponente.setEstadoCarta(EstadoCarta.ATAQUE);

@@ -189,6 +189,9 @@ public class DueloBean {
                 EfeitoCartaRN.carta69(cartaAtacada);
                 break;
         }
+        suaMao.remove(cartaSelecionada);
+        cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
+        seuDescarte.add(cartaSelecionada);
         especial = false;
         especialOponente = false;
         return null;
@@ -382,7 +385,7 @@ public class DueloBean {
         dataAtual = Calendar.getInstance();
         if (duelo.getDataCriacao().getTimeInMillis() <= dataAtual.getTimeInMillis() && duelo.getSituacaoDuelo().equals(SituacaoDuelo.CRIADO)) {
             duelo.setSituacaoDuelo(SituacaoDuelo.CANCELADO);
-            new DueloRN().salvar(duelo, 0); 
+            new DueloRN().salvar(duelo, 0);
         }
         if (duelo.getCriadoPor().equals(jogador)) {
             seuDeck = duelo.getDeckJogador1();
@@ -487,8 +490,8 @@ public class DueloBean {
     }
 
     public String descer() {
-        suaMao.remove(cartaSelecionada);
         if (!cartaSelecionada.getCarta().getTipoCarta().equals(TipoCarta.ESPECIAL)) {
+            suaMao.remove(cartaSelecionada);
             cartaSelecionada.setEstadoCarta(EstadoCarta.DEFESA);
             cartaSelecionada.setLocalCarta(LocalCarta.MESA);
             suaMesa.add(cartaSelecionada);
@@ -497,48 +500,67 @@ public class DueloBean {
             switch (cartaSelecionada.getCarta().getId()) {
                 case 46:
                     EfeitoCartaRN.carta46(deckOponente);
+                    suaMao.remove(cartaSelecionada);
+                    cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
+                    seuDescarte.add(cartaSelecionada);
                     break;
                 case 47:
                     break;
                 case 48:
                     EfeitoCartaRN.carta48(seuDeck);
+                    suaMao.remove(cartaSelecionada);
+                    cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
+                    seuDescarte.add(cartaSelecionada);
                     break;
                 case 49:
                     EfeitoCartaRN.carta49(seuDeck, deckOponente);
+                    suaMao.remove(cartaSelecionada);
+                    cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
+                    seuDescarte.add(cartaSelecionada);
                     break;
                 case 50:
+                    MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
                     especialOponente = true;
                     break;
                 case 51:
                     break;
                 case 52:
+                    MessageUtil.aviso("Selecione uma carta da sua mesa");
                     especial = true;
                     break;
                 case 53:
                     break;
                 case 54:
+                    MessageUtil.aviso("Selecione uma carta da sua mesa");
                     especial = true;
                     break;
                 case 55:
                     break;
                 case 56:
                     EfeitoCartaRN.carta56(seuDeck);
+                    suaMao.remove(cartaSelecionada);
+                    cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
+                    seuDescarte.add(cartaSelecionada);
                     break;
                 case 60:
+                    MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
                     especialOponente = true;
                     break;
                 case 61:
                     EfeitoCartaRN.carta61(seuDeck, deckOponente);
+                    suaMao.remove(cartaSelecionada);
+                    cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
+                    seuDescarte.add(cartaSelecionada);
                     break;
                 case 64:
+                    MessageUtil.aviso("Selecione uma carta da sua mesa");
                     especial = true;
                     break;
                 case 69:
+                    MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
                     especialOponente = true;
                     break;
             }
-            cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
-            seuDescarte.add(cartaSelecionada);
         }
         return null;
     }
@@ -558,7 +580,9 @@ public class DueloBean {
     }
 
     public String enviarMensagem() {
-        duelo.setBatePapo(jogador.getLogin() + ": " + mensagem + "\n" + duelo.getBatePapo());
+        if (!mensagem.isEmpty()) {
+            duelo.setBatePapo(jogador.getLogin() + ": " + mensagem + "\n" + duelo.getBatePapo());
+        }
         mensagem = "";
         return null;
     }

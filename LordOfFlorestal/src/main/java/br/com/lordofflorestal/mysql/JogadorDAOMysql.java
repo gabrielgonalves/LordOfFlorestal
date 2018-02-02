@@ -9,6 +9,7 @@ import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.EstatisticaJogador;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.DuelosJogador;
+import br.com.lordofflorestal.model.Ranking;
 import br.com.lordofflorestal.model.SituacaoDuelo;
 import br.com.lordofflorestal.model.SubtipoCarta;
 import br.com.lordofflorestal.model.TipoCarta;
@@ -21,7 +22,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -203,6 +203,39 @@ public class JogadorDAOMysql {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
         return "";
+    }
+    
+    public List<Ranking> ranking(){
+        List<Ranking> ranking = new ArrayList();
+
+        String sql = "SELECT login, (num_jogos_ganho + num_jogos_ganho_lord )/(num_jogos) * 100 as media, num_jogos_ganho, num_jogos_ganho_lord, num_jogos_perdido FROM LordOfFlorestal.Jogador order by media desc, num_jogos_ganho_lord desc limit 10;";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Ranking r = new Ranking();
+                r.setLogin(rs.getString("login"));
+                r.setMedia(rs.getInt("media"));
+                r.setJogosGanho(rs.getInt("num_jogos_ganho"));
+                r.setJogosGanhoLord(rs.getInt("num_jogos_ganho_lord"));
+                r.setJogosPerdido(rs.getInt("num_jogos_perdido"));
+
+                ranking.add(r);
+            }
+
+            statement.close();
+
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+
+        return ranking;
     }
 
     public String buscaLoginJogadorPorMatricula(int matricula) {

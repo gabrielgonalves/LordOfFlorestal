@@ -9,6 +9,7 @@ import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.DuelosJogador;
 import br.com.lordofflorestal.model.EstatisticaJogador;
 import br.com.lordofflorestal.model.Jogador;
+import br.com.lordofflorestal.model.Ranking;
 import br.com.lordofflorestal.mysql.JogadorDAOMysql;
 import br.com.lordofflorestal.util.MessageUtil;
 import java.util.List;
@@ -49,6 +50,10 @@ public class JogadorRN {
     public void excluir(Jogador jogador) {
         this.jogadorDAOMysql.excluir(jogador);
         MessageUtil.info("Jogador " + jogador.getNome() + " excluido com sucesso!");
+    }
+    
+    public List<Ranking> ranking(){
+        return this.jogadorDAOMysql.ranking();
     }
     
     public List<DuelosJogador> buscaDuelosJogador(int matricula){

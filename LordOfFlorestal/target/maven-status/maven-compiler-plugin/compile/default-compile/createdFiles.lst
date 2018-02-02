@@ -23,6 +23,7 @@ br/com/lordofflorestal/model/EstatisticaJogador.class
 br/com/lordofflorestal/rn/CartaRN.class
 br/com/lordofflorestal/bean/IndexBean.class
 br/com/lordofflorestal/model/SubtipoCarta.class
+br/com/lordofflorestal/model/Ranking.class
 br/com/lordofflorestal/model/TipoJogador.class
 br/com/lordofflorestal/rn/ValeCartaRN.class
 br/com/lordofflorestal/bean/PerfilBean.class

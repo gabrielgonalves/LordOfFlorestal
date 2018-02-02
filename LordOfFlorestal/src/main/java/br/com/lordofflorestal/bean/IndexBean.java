@@ -5,6 +5,8 @@
  */
 package br.com.lordofflorestal.bean;
 
+import br.com.lordofflorestal.model.Ranking;
+import br.com.lordofflorestal.rn.JogadorRN;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
@@ -17,20 +19,33 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 @ApplicationScoped
 public class IndexBean {
-    private List<String> imagens;
+
+    private List<Ranking> ranking;
 
     public IndexBean() {
-        imagens = new ArrayList();
-        imagens.add("tela.png");
-        imagens.add("tela2.png");
-        imagens.add("tela3.png");
-        imagens.add("tela4.png");
-        imagens.add("tela5.png");
-        imagens.add("tela6.png");
-        imagens.add("tela7.png");
     }
 
-    public List<String> getImagens() {
-        return imagens;
+    public List<Ranking> getRanking() {
+        return ranking;
+    }
+
+    public List<Ranking> getRanking5() {
+        ranking = new JogadorRN().ranking();
+        List<Ranking> lista = new ArrayList();
+        for (int i = 0; i < 5; i++) {
+            ranking.get(i).setLogin(i + 1 + ".   " + ranking.get(i).getLogin());
+            lista.add(ranking.get(i));
+        }
+        return lista;
+    }
+
+    public List<Ranking> getRanking10() {
+        ranking = new JogadorRN().ranking();
+        List<Ranking> lista = new ArrayList();
+        for (int i = 5; i < 10; i++) {
+            ranking.get(i).setLogin(i + 1 + ".   " + ranking.get(i).getLogin());
+            lista.add(ranking.get(i));
+        }
+        return lista;
     }
 }

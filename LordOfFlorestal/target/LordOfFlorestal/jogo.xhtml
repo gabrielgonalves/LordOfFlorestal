@@ -73,7 +73,7 @@
                                 <p:commandButton onblur="PF('poll').stop();" onclick="PF('poll').start();" action="#{dueloBean.atacar}" rendered="#{!dueloBean.especialOponente}" disabled="#{dueloBean.podeAtacar and dueloBean.duelo.vezDe eq dueloBean.jogador.login ? false : true}" value="Atacar" class="btn-vermelho" update="mesaOponente suaMesa :pontuacao" >
                                     <f:setPropertyActionListener target="#{dueloBean.cartaAtacada}" value="#{carta}" />
                                 </p:commandButton>
-                                <p:commandButton onblur="PF('poll').stop();" onclick="PF('poll').start();" action="#{dueloBean.selecionar}" rendered="#{dueloBean.especialOponente}" disabled="#{dueloBean.especialOponente and dueloBean.duelo.vezDe eq dueloBean.jogador.login ? false : true}" value="Selecionar" class="btn-verde" update="mesaOponente suaMesa :pontuacao" >
+                                <p:commandButton onblur="PF('poll').stop();" onclick="PF('poll').start();" action="#{dueloBean.selecionar}" rendered="#{dueloBean.especialOponente}" disabled="#{dueloBean.especialOponente and dueloBean.duelo.vezDe eq dueloBean.jogador.login and carta.carta.id ne 23 ? false : true}" value="Selecionar" class="btn-verde" update="mesaOponente suaMesa :pontuacao" >
                                     <f:setPropertyActionListener target="#{dueloBean.cartaAtacada}" value="#{carta}" />
                                 </p:commandButton>
                             </p:panelGrid>
@@ -90,7 +90,7 @@
                     </p:panel>
                 </p:outputPanel>
                 <p:outputPanel id="suaMesa" autoUpdate="true" style="padding-top: 20px;">    
-                    <p:carousel value="#{dueloBean.suaMesa}" numVisible="5" var="cartaMesa" headerText="Sua Mesa" responsive="true" vertical="false" circular="true">
+                    <p:carousel widgetVar="sm" value="#{dueloBean.suaMesa}" numVisible="5" var="cartaMesa" headerText="Sua Mesa" responsive="true" vertical="false" circular="true">
                         <center>
                             <p:panelGrid columns="1" layout="grid" style="#{cartaMesa.posicao ? 'background: #79C2AA !important;' : 'background: #E85E4A !important;'}">
                                 <f:facet name="header">

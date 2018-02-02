@@ -18,6 +18,16 @@ body {
     background-color: #F57C17;
 }
 
+.ui-widget-content {
+    border: none !important;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.img-pb{
+    filter: grayscale(100%);
+}
+
 .cabecalho {
     margin-top: 50px;
 }
@@ -177,4 +187,28 @@ h1 {
 .msg-panel {
     top: 200px;
     position: relative;
+}
+
+p {
+    font-size: 18px;
+}
+
+#como-jogar p, #sobre-jogo p {
+    text-indent : 3em;
+}
+
+h2 {
+    text-align: center;
+}
+
+h2 i {
+    margin-right: 20px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.subitem {
+    margin-left : 6em !important;
 }
