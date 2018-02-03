@@ -252,8 +252,10 @@ public class EfeitoCartaRN {
     public static void carta69(CartaJogo cartaOponente) {
         if (EstadoCarta.ATAQUE.equals(cartaOponente.getEstadoCarta())) {
             cartaOponente.setEstadoCarta(EstadoCarta.DEFESA);
+            cartaOponente.setPosicao(false);
         } else {
             cartaOponente.setEstadoCarta(EstadoCarta.ATAQUE);
+            cartaOponente.setPosicao(true);
         }
     }
 

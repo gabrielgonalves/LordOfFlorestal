@@ -165,7 +165,7 @@ public class DueloBean {
                 new JogadorRN().atualizarPontos(oponente);
             }
         }
-        return null;
+        return "jogo.xhtml?duelo=" + duelo.getUri() + "faces-redirect=true";
     }
 
     public String selecionar() {
@@ -194,7 +194,7 @@ public class DueloBean {
         seuDescarte.add(cartaSelecionada);
         especial = false;
         especialOponente = false;
-        return null;
+        return "jogo.xhtml?duelo=" + duelo.getUri() + "faces-redirect=true";
     }
 
     public String atacar() {
@@ -270,7 +270,7 @@ public class DueloBean {
                 if (jogador.getTipoJogador().equals(TipoJogador.LORD)) {
                     oponente.getEstatisticaJogador().setNumJogosGanhoLord(oponente.getEstatisticaJogador().getNumJogosGanhoLord() + 1);
                 } else {
-                    oponente.getEstatisticaJogador().setNumJogos(oponente.getEstatisticaJogador().getNumJogos() + 1);
+                    oponente.getEstatisticaJogador().setNumJogosGanho(oponente.getEstatisticaJogador().getNumJogos() + 1);
                 }
                 jogador.getEstatisticaJogador().setNumJogos(jogador.getEstatisticaJogador().getNumJogos() + 1);
                 jogador.getEstatisticaJogador().setNumJogosPerdido(jogador.getEstatisticaJogador().getNumJogosPerdido() + 1);
@@ -282,7 +282,7 @@ public class DueloBean {
                 if (oponente.getTipoJogador().equals(TipoJogador.LORD)) {
                     jogador.getEstatisticaJogador().setNumJogosGanhoLord(jogador.getEstatisticaJogador().getNumJogosGanhoLord() + 1);
                 } else {
-                    jogador.getEstatisticaJogador().setNumJogos(jogador.getEstatisticaJogador().getNumJogos() + 1);
+                    jogador.getEstatisticaJogador().setNumJogosGanho(jogador.getEstatisticaJogador().getNumJogos() + 1);
                 }
                 oponente.getEstatisticaJogador().setNumJogos(oponente.getEstatisticaJogador().getNumJogos() + 1);
                 oponente.getEstatisticaJogador().setNumJogosPerdido(oponente.getEstatisticaJogador().getNumJogosPerdido() + 1);
@@ -291,7 +291,7 @@ public class DueloBean {
                 new JogadorRN().atualizarPontos(oponente);
             }
         }
-        return null;
+        return "jogo.xhtml?duelo=" + duelo.getUri() + "faces-redirect=true";
     }
 
     private void separaCartas() {
@@ -379,6 +379,11 @@ public class DueloBean {
         } else {
             possuiDefesa = false;
         }
+    }
+    
+    public String ativaPodeAtacar() {
+        podeAtacar = true;
+        return null;
     }
 
     public void atualizarDados() {
@@ -503,6 +508,7 @@ public class DueloBean {
                     suaMao.remove(cartaSelecionada);
                     cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
                     seuDescarte.add(cartaSelecionada);
+                    atualizaMesaOponente();
                     break;
                 case 47:
                     break;
@@ -700,7 +706,6 @@ public class DueloBean {
     }
 
     public void setCartaAtaca(CartaJogo cartaAtaca) {
-        podeAtacar = true;
         this.cartaAtaca = cartaAtaca;
     }
 

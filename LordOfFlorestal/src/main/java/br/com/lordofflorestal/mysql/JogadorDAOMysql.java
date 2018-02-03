@@ -208,7 +208,7 @@ public class JogadorDAOMysql {
     public List<Ranking> ranking(){
         List<Ranking> ranking = new ArrayList();
 
-        String sql = "SELECT login, (num_jogos_ganho + num_jogos_ganho_lord )/(num_jogos) * 100 as media, num_jogos_ganho, num_jogos_ganho_lord, num_jogos_perdido FROM LordOfFlorestal.Jogador order by media desc, num_jogos_ganho_lord desc limit 10;";
+        String sql = "SELECT login, (num_jogos_ganho + num_jogos_ganho_lord )/(num_jogos) * 100 as media, num_jogos_ganho, num_jogos_ganho_lord, num_jogos_perdido FROM LordOfFlorestal.Jogador WHERE id_tipo_jogador = 1 AND matricula != 0 order by media desc, num_jogos_ganho_lord desc limit 10;";
 
         try {
             connection = ConnectionFactory.getConnection();
