@@ -19,16 +19,22 @@ public class Deck implements Serializable {
     private int pontosDeterminacao;
     private List<CartaJogo> cartas;
     private Jogador jogador;
+    private boolean podeUsarEspecial;
+    private boolean podeAtacar;
 
     public Deck() {
         cartas = new ArrayList();
         pontosDeterminacao = 20;
+        podeUsarEspecial = true;
+        podeAtacar = true;
     }
 
     public Deck(int pontosDeterminacao, List<CartaJogo> cartas, Jogador jogador) {
         this.pontosDeterminacao = pontosDeterminacao;
         this.cartas = cartas;
         this.jogador = jogador;
+        podeUsarEspecial = true;
+        podeAtacar = true;
     }
 
     public int getPontosDeterminacao() {
@@ -53,6 +59,22 @@ public class Deck implements Serializable {
 
     public void setJogador(Jogador jogador) {
         this.jogador = jogador;
+    }
+
+    public boolean isPodeUsarEspecial() {
+        return podeUsarEspecial;
+    }
+
+    public void setPodeUsarEspecial(boolean podeUsarEspecial) {
+        this.podeUsarEspecial = podeUsarEspecial;
+    }
+
+    public boolean isPodeAtacar() {
+        return podeAtacar;
+    }
+
+    public void setPodeAtacar(boolean podeAtacar) {
+        this.podeAtacar = podeAtacar;
     }
 
     @Override

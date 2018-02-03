@@ -81,17 +81,29 @@ public class EfeitoCartaRN {
     //Ano novo
     public static void carta47(Deck deck, Deck deckOponente) {
         for (CartaJogo carta : deckOponente.getCartas()) {
-            carta.setLocalCarta(LocalCarta.MESA);
+            if (carta.getLocalCarta().equals(LocalCarta.MAO)) {
+                if (carta.getCarta().getTipoCarta().equals(TipoCarta.DESAFIO)) {
+                    carta.setLocalCarta(LocalCarta.MESA);
+                } else {
+                    carta.setLocalCarta(LocalCarta.DESCARTE);
+                }
+            }
         }
         for (CartaJogo carta : deck.getCartas()) {
-            carta.setLocalCarta(LocalCarta.MESA);
+            if (carta.getLocalCarta().equals(LocalCarta.MAO)) {
+                if (carta.getCarta().getTipoCarta().equals(TipoCarta.DESAFIO)) {
+                    carta.setLocalCarta(LocalCarta.MESA);
+                } else {
+                    carta.setLocalCarta(LocalCarta.DESCARTE);
+                }
+            }
         }
     }
 
     //Café do carlinhos
     public static void carta48(Deck deck) {
         for (CartaJogo carta : deck.getCartas()) {
-            if (carta.getLocalCarta().equals(LocalCarta.MESA) && carta.getCarta().getSubtipoCarta().equals(SubtipoCarta.ALUNO)) {
+            if (carta.getLocalCarta().equals(LocalCarta.MESA) && SubtipoCarta.ALUNO.equals(carta.getCarta().getSubtipoCarta())) {
                 int valorAtaque = carta.getValorAtaque() + 1;
                 int valorDefesa = carta.getValorDefesa() + 1;
                 carta.setValorAtaque(valorAtaque);
@@ -132,8 +144,8 @@ public class EfeitoCartaRN {
     }
 
     //Desmotivação induzida pela nota da prova
-    public static void carta51() {
-
+    public static void carta51(Deck deckOponente) {
+        deckOponente.setPodeUsarEspecial(false);
     }
 
     //Erro de cálculo conveniente
@@ -143,8 +155,9 @@ public class EfeitoCartaRN {
     }
 
     //Erro de física conveniente
-    public static void carta53() {
-
+    public static void carta53(CartaJogo carta, CartaJogo cartaSelecionada) {
+        carta.setValorAtaque(cartaSelecionada.getValorAtaque());
+        carta.setValorDefesa(cartaSelecionada.getValorDefesa());
     }
 
     //Erro lógico conveniente
@@ -222,8 +235,8 @@ public class EfeitoCartaRN {
     }
 
     //Procrastinação fora de controle
-    public static void carta65() {
-
+    public static void carta65(Deck deckOponente) {
+        deckOponente.setPodeAtacar(false);
     }
 
     //Professor substituto

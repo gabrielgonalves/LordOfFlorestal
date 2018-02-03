@@ -165,36 +165,57 @@ public class DueloBean {
                 new JogadorRN().atualizarPontos(oponente);
             }
         }
-        return "jogo.xhtml?duelo=" + duelo.getUri() + "faces-redirect=true";
+        return null;
+    }
+    
+    private void colocaMesa(){
+        suaMao.remove(cartaSelecionada);
+        cartaSelecionada.setLocalCarta(LocalCarta.MESA);
+        suaMesa.add(cartaSelecionada);
+    }
+    
+    private void colocaDescarte(){
+        suaMao.remove(cartaSelecionada);
+        cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
+        seuDescarte.add(cartaSelecionada);
     }
 
     public String selecionar() {
         switch (cartaSelecionada.getCarta().getId()) {
             case 50:
                 EfeitoCartaRN.carta50(cartaAtacada);
+                atualizaMesaOponente();
+                colocaDescarte();
                 break;
             case 52:
                 EfeitoCartaRN.carta52(cartaAtaca);
+                colocaDescarte();
+                break;
+            case 53:
+                EfeitoCartaRN.carta53(cartaSelecionada, cartaAtaca);
+                colocaMesa();
                 break;
             case 54:
                 EfeitoCartaRN.carta54(cartaAtaca);
+                colocaDescarte();
                 break;
             case 60:
                 EfeitoCartaRN.carta60(seuDeck, cartaAtacada);
+                atualizaMesaOponente();
+                colocaDescarte();
                 break;
             case 64:
                 EfeitoCartaRN.carta64(cartaAtaca);
+                colocaDescarte();
                 break;
             case 69:
                 EfeitoCartaRN.carta69(cartaAtacada);
+                colocaDescarte();
                 break;
         }
-        suaMao.remove(cartaSelecionada);
-        cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
-        seuDescarte.add(cartaSelecionada);
         especial = false;
         especialOponente = false;
-        return "jogo.xhtml?duelo=" + duelo.getUri() + "faces-redirect=true";
+        return null;
     }
 
     public String atacar() {
@@ -270,7 +291,7 @@ public class DueloBean {
                 if (jogador.getTipoJogador().equals(TipoJogador.LORD)) {
                     oponente.getEstatisticaJogador().setNumJogosGanhoLord(oponente.getEstatisticaJogador().getNumJogosGanhoLord() + 1);
                 } else {
-                    oponente.getEstatisticaJogador().setNumJogosGanho(oponente.getEstatisticaJogador().getNumJogosGanho()+ 1);
+                    oponente.getEstatisticaJogador().setNumJogosGanho(oponente.getEstatisticaJogador().getNumJogosGanho() + 1);
                 }
                 jogador.getEstatisticaJogador().setNumJogos(jogador.getEstatisticaJogador().getNumJogos() + 1);
                 jogador.getEstatisticaJogador().setNumJogosPerdido(jogador.getEstatisticaJogador().getNumJogosPerdido() + 1);
@@ -282,7 +303,7 @@ public class DueloBean {
                 if (oponente.getTipoJogador().equals(TipoJogador.LORD)) {
                     jogador.getEstatisticaJogador().setNumJogosGanhoLord(jogador.getEstatisticaJogador().getNumJogosGanhoLord() + 1);
                 } else {
-                    jogador.getEstatisticaJogador().setNumJogosGanho(jogador.getEstatisticaJogador().getNumJogosGanho()+ 1);
+                    jogador.getEstatisticaJogador().setNumJogosGanho(jogador.getEstatisticaJogador().getNumJogosGanho() + 1);
                 }
                 oponente.getEstatisticaJogador().setNumJogos(oponente.getEstatisticaJogador().getNumJogos() + 1);
                 oponente.getEstatisticaJogador().setNumJogosPerdido(oponente.getEstatisticaJogador().getNumJogosPerdido() + 1);
@@ -291,7 +312,7 @@ public class DueloBean {
                 new JogadorRN().atualizarPontos(oponente);
             }
         }
-        return "jogo.xhtml?duelo=" + duelo.getUri() + "faces-redirect=true";
+        return null;
     }
 
     private void separaCartas() {
@@ -341,6 +362,8 @@ public class DueloBean {
         for (int i = 0; i < suaMao.size(); i++) {
             suaMao.get(i).setNova(false);
         }
+        seuDeck.setPodeUsarEspecial(true);
+        seuDeck.setPodeAtacar(true);
         podeFinalizar = false;
         podeDescer = false;
         podeComprar = true;
@@ -380,7 +403,7 @@ public class DueloBean {
             possuiDefesa = false;
         }
     }
-    
+
     public String ativaPodeAtacar() {
         podeAtacar = true;
         return null;
@@ -505,36 +528,38 @@ public class DueloBean {
             switch (cartaSelecionada.getCarta().getId()) {
                 case 46:
                     EfeitoCartaRN.carta46(deckOponente);
-                    suaMao.remove(cartaSelecionada);
-                    cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
-                    seuDescarte.add(cartaSelecionada);
+                    colocaDescarte();
                     atualizaMesaOponente();
                     break;
                 case 47:
+                    MessageUtil.aviso("Seu oponente não poderá utilizar carta especial no próximo turno.");
+                    EfeitoCartaRN.carta47(seuDeck, deckOponente);
+                    atualizaMesaOponente();
+                    separaCartas();
                     break;
                 case 48:
                     EfeitoCartaRN.carta48(seuDeck);
-                    suaMao.remove(cartaSelecionada);
-                    cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
-                    seuDescarte.add(cartaSelecionada);
+                    colocaDescarte();
                     break;
                 case 49:
                     EfeitoCartaRN.carta49(seuDeck, deckOponente);
-                    suaMao.remove(cartaSelecionada);
-                    cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
-                    seuDescarte.add(cartaSelecionada);
+                    colocaDescarte();
                     break;
                 case 50:
                     MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
                     especialOponente = true;
                     break;
                 case 51:
+                    EfeitoCartaRN.carta51(deckOponente);
+                    colocaDescarte();
                     break;
                 case 52:
                     MessageUtil.aviso("Selecione uma carta da sua mesa");
                     especial = true;
                     break;
                 case 53:
+                    MessageUtil.aviso("Selecione uma carta da sua mesa");
+                    especial = true;
                     break;
                 case 54:
                     MessageUtil.aviso("Selecione uma carta da sua mesa");
@@ -544,9 +569,7 @@ public class DueloBean {
                     break;
                 case 56:
                     EfeitoCartaRN.carta56(seuDeck);
-                    suaMao.remove(cartaSelecionada);
-                    cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
-                    seuDescarte.add(cartaSelecionada);
+                    colocaDescarte();
                     break;
                 case 60:
                     MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
@@ -554,13 +577,16 @@ public class DueloBean {
                     break;
                 case 61:
                     EfeitoCartaRN.carta61(seuDeck, deckOponente);
-                    suaMao.remove(cartaSelecionada);
-                    cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
-                    seuDescarte.add(cartaSelecionada);
+                    colocaDescarte();
                     break;
                 case 64:
                     MessageUtil.aviso("Selecione uma carta da sua mesa");
                     especial = true;
+                    break;
+                case 65:
+                    MessageUtil.aviso("Seu oponente não poderá atacar no próximo turno");
+                    EfeitoCartaRN.carta65(deckOponente);
+                    colocaDescarte();
                     break;
                 case 69:
                     MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
