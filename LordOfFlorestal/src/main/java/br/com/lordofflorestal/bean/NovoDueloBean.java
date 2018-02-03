@@ -69,6 +69,8 @@ public class NovoDueloBean {
         }
         duelo.getDeckJogador1().setCartas(cartas);
         duelo.setVezDe(duelo.getCriadoPor().getLogin());
+        
+        duelo.setBatePapo(jogador.getLogin()+" criou o duelo");
 
         DueloSingleton.getInstance().adicionar(duelo);
 

@@ -25,7 +25,7 @@
                                     <p:carousel numVisible="8" value="#{dashboardBean.jogador.cartas}" circular="true"
                                                 var="carta" headerText="Suas cartas" responsive="true" vertical="false">
                                         <center>
-                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="80"/>
+                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="80" title="#{carta.efeito ne '' ? 'Efeito: '.concat(carta.efeito).concat('&#013;') : ''}Descrição: #{carta.descricao}"/>
                                         </center>
 
                                         <f:facet name="footer">

@@ -28,45 +28,18 @@
         <aside class="sidebar js-sidebar">
             <div class="ui-g">
                 <div class="ui-g-12">
-                    <p:panel header="Alterar plano de fundo" style="margin-top: 10px;">
-                        <p:outputPanel>
-                            <h:form>
-                                <div class="ui-g">
-                                    <div class="ui-g-4">
-                                        <p:commandButton value="" styleClass="btn-preto" action="#{dueloBean.preto()}" update="corpo" />
-                                    </div>
-                                    <div class="ui-g-4">
-                                        <p:commandButton value="" styleClass="btn-vermelho" action="#{dueloBean.vermelho()}" update="corpo" />
-                                    </div>
-                                    <div class="ui-g-4">
-                                        <p:commandButton value="" styleClass="btn-bege" action="#{dueloBean.bege()}" update="corpo"/>
-                                    </div>
-                                    <div class="ui-g-2"></div>
-                                    <div class="ui-g-4">
-                                        <p:commandButton value="" styleClass="btn-verde" action="#{dueloBean.verde()}" update="corpo"/>
-                                    </div>
-                                    <div class="ui-g-4">
-                                        <p:commandButton value="" styleClass="btn-azul" action="#{dueloBean.azul()}" update="corpo"/>
-                                    </div>
-                                    <div class="ui-g-2"></div>
-                                </div>
-                            </h:form>
-                        </p:outputPanel>
-                    </p:panel>
-                </div>
-                <div class="ui-g-12">
                     <p:panel header="Pontos de Determinação" style="margin-top: 10px;">
                         <ui:insert name="pontuacao" />
                     </p:panel>
                 </div>
                 <div class="ui-g-12">
-                    <p:panel header="Chat" style="margin-top: 10px; top: 360px; bottom: 20px; width: 190px; position: fixed">
+                    <p:panel header="Ações e Chat" style="margin-top: 10px; top: 360px; bottom: 20px; top: 160px; width: 190px; position: fixed">
                         <ui:insert name="acoes" />
                     </p:panel>
                 </div>
             </div>
         </aside>
-        <p:outputPanel id="corpo" style="width: auto; height: 100%;#{dueloBean.corFundo}" class="content  js-content">
+        <p:outputPanel id="corpo" style="width: auto; height: 100%;" class="content  js-content">
             <ui:insert name="content"/>
         </p:outputPanel>
     </h:body>

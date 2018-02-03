@@ -55,8 +55,6 @@ public class DueloBean {
     private List<CartaJogo> seuDescarte;
     private List<CartaJogo> mesaOponente;
 
-    private String corFundo;
-
     private Calendar dataAtual;
 
     private CartaJogo cartaAtaca;
@@ -125,6 +123,7 @@ public class DueloBean {
     }
 
     public String atacarDeterminacao() {
+        duelo.setBatePapo(jogador.getLogin() + " atacou os pontos de determinação de " + oponente.getLogin() + " tirando " + cartaAtaca.getValorAtaque() + " pontos.\n\n" + duelo.getBatePapo());
         int pd = deckOponente.getPontosDeterminacao();
         deckOponente.setPontosDeterminacao(pd - cartaAtaca.getValorAtaque());
         cartaAtaca.setAtiva(false);
@@ -139,45 +138,52 @@ public class DueloBean {
         verificaPontosDeterminacao();
         if (duelo.getSituacaoDuelo().equals(SituacaoDuelo.FINALIZADO)) {
             new DueloRN().salvar(duelo, ganhador.getMatricula());
-            if (ganhador.equals(oponente)) {
-                oponente.getEstatisticaJogador().setNumJogos(oponente.getEstatisticaJogador().getNumJogos() + 1);
-                if (jogador.getTipoJogador().equals(TipoJogador.LORD)) {
-                    oponente.getEstatisticaJogador().setNumJogosGanhoLord(oponente.getEstatisticaJogador().getNumJogosGanhoLord() + 1);
-                } else {
-                    oponente.getEstatisticaJogador().setNumJogos(oponente.getEstatisticaJogador().getNumJogos() + 1);
-                }
-                jogador.getEstatisticaJogador().setNumJogos(jogador.getEstatisticaJogador().getNumJogos() + 1);
-                jogador.getEstatisticaJogador().setNumJogosPerdido(jogador.getEstatisticaJogador().getNumJogosPerdido() + 1);
-
-                new JogadorRN().atualizarPontos(jogador);
-                new JogadorRN().atualizarPontos(oponente);
-            } else {
-                jogador.getEstatisticaJogador().setNumJogos(jogador.getEstatisticaJogador().getNumJogos() + 1);
-                if (oponente.getTipoJogador().equals(TipoJogador.LORD)) {
-                    jogador.getEstatisticaJogador().setNumJogosGanhoLord(jogador.getEstatisticaJogador().getNumJogosGanhoLord() + 1);
-                } else {
-                    jogador.getEstatisticaJogador().setNumJogos(jogador.getEstatisticaJogador().getNumJogos() + 1);
-                }
-                oponente.getEstatisticaJogador().setNumJogos(oponente.getEstatisticaJogador().getNumJogos() + 1);
-                oponente.getEstatisticaJogador().setNumJogosPerdido(oponente.getEstatisticaJogador().getNumJogosPerdido() + 1);
-
-                new JogadorRN().atualizarPontos(jogador);
-                new JogadorRN().atualizarPontos(oponente);
-            }
+            atualizaEstatistica();
         }
         return null;
     }
-    
-    private void colocaMesa(){
+
+    private void atualizaEstatistica() {
+        if (ganhador.equals(oponente)) {
+            oponente.getEstatisticaJogador().setNumJogos(oponente.getEstatisticaJogador().getNumJogos() + 1);
+            if (jogador.getTipoJogador().equals(TipoJogador.LORD)) {
+                oponente.getEstatisticaJogador().setNumJogosGanhoLord(oponente.getEstatisticaJogador().getNumJogosGanhoLord() + 1);
+            } else {
+                oponente.getEstatisticaJogador().setNumJogosGanho(oponente.getEstatisticaJogador().getNumJogosGanho()+ 1);
+            }
+            jogador.getEstatisticaJogador().setNumJogos(jogador.getEstatisticaJogador().getNumJogos() + 1);
+            jogador.getEstatisticaJogador().setNumJogosPerdido(jogador.getEstatisticaJogador().getNumJogosPerdido() + 1);
+
+            new JogadorRN().atualizarPontos(jogador);
+            new JogadorRN().atualizarPontos(oponente);
+        } else {
+            jogador.getEstatisticaJogador().setNumJogos(jogador.getEstatisticaJogador().getNumJogos() + 1);
+            if (oponente.getTipoJogador().equals(TipoJogador.LORD)) {
+                jogador.getEstatisticaJogador().setNumJogosGanhoLord(jogador.getEstatisticaJogador().getNumJogosGanhoLord() + 1);
+            } else {
+                jogador.getEstatisticaJogador().setNumJogosGanho(jogador.getEstatisticaJogador().getNumJogosGanho()+ 1);
+            }
+            oponente.getEstatisticaJogador().setNumJogos(oponente.getEstatisticaJogador().getNumJogos() + 1);
+            oponente.getEstatisticaJogador().setNumJogosPerdido(oponente.getEstatisticaJogador().getNumJogosPerdido() + 1);
+
+            new JogadorRN().atualizarPontos(jogador);
+            new JogadorRN().atualizarPontos(oponente);
+        }
+        duelo.setBatePapo(ganhador.getLogin() + " foi o ganhador deste duelo. \n\n" + duelo.getBatePapo());
+    }
+
+    private void colocaMesa() {
         suaMao.remove(cartaSelecionada);
         cartaSelecionada.setLocalCarta(LocalCarta.MESA);
         suaMesa.add(cartaSelecionada);
+        duelo.setBatePapo(jogador.getLogin() + " desceu a carta especial " + cartaSelecionada.getCarta().getNome() + "\n\n" + duelo.getBatePapo());
     }
-    
-    private void colocaDescarte(){
+
+    private void colocaDescarte() {
         suaMao.remove(cartaSelecionada);
         cartaSelecionada.setLocalCarta(LocalCarta.DESCARTE);
         seuDescarte.add(cartaSelecionada);
+        duelo.setBatePapo(jogador.getLogin() + " desceu a carta especial " + cartaSelecionada.getCarta().getNome() + "\n\n" + duelo.getBatePapo());
     }
 
     public String selecionar() {
@@ -186,31 +192,38 @@ public class DueloBean {
                 EfeitoCartaRN.carta50(cartaAtacada);
                 atualizaMesaOponente();
                 colocaDescarte();
+                duelo.setBatePapo(jogador.getLogin() + " aplicou efeito da carta " + cartaSelecionada.getCarta().getNome() + " em " + cartaAtacada.getCarta().getNome() + "\n\n" + duelo.getBatePapo());
                 break;
             case 52:
                 EfeitoCartaRN.carta52(cartaAtaca);
                 colocaDescarte();
+                duelo.setBatePapo(jogador.getLogin() + " aplicou efeito da carta " + cartaSelecionada.getCarta().getNome() + " em " + cartaAtaca.getCarta().getNome() + "\n\n" + duelo.getBatePapo());
                 break;
             case 53:
                 EfeitoCartaRN.carta53(cartaSelecionada, cartaAtaca);
                 colocaMesa();
+                duelo.setBatePapo(jogador.getLogin() + " aplicou efeito da carta " + cartaSelecionada.getCarta().getNome() + " em " + cartaAtaca.getCarta().getNome() + "\n\n" + duelo.getBatePapo());
                 break;
             case 54:
                 EfeitoCartaRN.carta54(cartaAtaca);
                 colocaDescarte();
+                duelo.setBatePapo(jogador.getLogin() + " aplicou efeito da carta " + cartaSelecionada.getCarta().getNome() + " em " + cartaAtaca.getCarta().getNome() + "\n\n" + duelo.getBatePapo());
                 break;
             case 60:
                 EfeitoCartaRN.carta60(seuDeck, cartaAtacada);
                 atualizaMesaOponente();
                 colocaDescarte();
+                duelo.setBatePapo(jogador.getLogin() + " aplicou efeito da carta " + cartaSelecionada.getCarta().getNome() + " em " + cartaAtacada.getCarta().getNome() + "\n\n" + duelo.getBatePapo());
                 break;
             case 64:
                 EfeitoCartaRN.carta64(cartaAtaca);
                 colocaDescarte();
+                duelo.setBatePapo(jogador.getLogin() + " aplicou efeito da carta " + cartaSelecionada.getCarta().getNome() + " em " + cartaAtaca.getCarta().getNome() + "\n\n" + duelo.getBatePapo());
                 break;
             case 69:
                 EfeitoCartaRN.carta69(cartaAtacada);
                 colocaDescarte();
+                duelo.setBatePapo(jogador.getLogin() + " aplicou efeito da carta " + cartaSelecionada.getCarta().getNome() + " em " + cartaAtacada.getCarta().getNome() + "\n\n" + duelo.getBatePapo());
                 break;
         }
         especial = false;
@@ -223,6 +236,7 @@ public class DueloBean {
         cartaAtaca.setTurno(false);
         int va = cartaAtaca.getValorAtaque();
         int vd = cartaAtacada.getValorDefesa();
+        duelo.setBatePapo(jogador.getLogin() + " atacou " + cartaAtacada.getCarta().getNome() + " com a carta " + cartaAtaca.getCarta().getNome() + "\n\n" + duelo.getBatePapo());
         if (va > vd) { //CARTA OPONENTE É DESTUIDA
             mesaOponente.remove(cartaAtacada);
             cartaAtacada.setLocalCarta(LocalCarta.DESCARTE);
@@ -286,31 +300,7 @@ public class DueloBean {
         verificaPontosDeterminacao();
         if (duelo.getSituacaoDuelo().equals(SituacaoDuelo.FINALIZADO)) {
             new DueloRN().salvar(duelo, ganhador.getMatricula());
-            if (ganhador.equals(oponente)) {
-                oponente.getEstatisticaJogador().setNumJogos(oponente.getEstatisticaJogador().getNumJogos() + 1);
-                if (jogador.getTipoJogador().equals(TipoJogador.LORD)) {
-                    oponente.getEstatisticaJogador().setNumJogosGanhoLord(oponente.getEstatisticaJogador().getNumJogosGanhoLord() + 1);
-                } else {
-                    oponente.getEstatisticaJogador().setNumJogosGanho(oponente.getEstatisticaJogador().getNumJogosGanho() + 1);
-                }
-                jogador.getEstatisticaJogador().setNumJogos(jogador.getEstatisticaJogador().getNumJogos() + 1);
-                jogador.getEstatisticaJogador().setNumJogosPerdido(jogador.getEstatisticaJogador().getNumJogosPerdido() + 1);
-
-                new JogadorRN().atualizarPontos(jogador);
-                new JogadorRN().atualizarPontos(oponente);
-            } else {
-                jogador.getEstatisticaJogador().setNumJogos(jogador.getEstatisticaJogador().getNumJogos() + 1);
-                if (oponente.getTipoJogador().equals(TipoJogador.LORD)) {
-                    jogador.getEstatisticaJogador().setNumJogosGanhoLord(jogador.getEstatisticaJogador().getNumJogosGanhoLord() + 1);
-                } else {
-                    jogador.getEstatisticaJogador().setNumJogosGanho(jogador.getEstatisticaJogador().getNumJogosGanho() + 1);
-                }
-                oponente.getEstatisticaJogador().setNumJogos(oponente.getEstatisticaJogador().getNumJogos() + 1);
-                oponente.getEstatisticaJogador().setNumJogosPerdido(oponente.getEstatisticaJogador().getNumJogosPerdido() + 1);
-
-                new JogadorRN().atualizarPontos(jogador);
-                new JogadorRN().atualizarPontos(oponente);
-            }
+            atualizaEstatistica();
         }
         return null;
     }
@@ -358,6 +348,7 @@ public class DueloBean {
     }
 
     public String finalizarTurno() {
+        duelo.setBatePapo(jogador.getLogin() + " finalizou o turno " + "\n\n" + duelo.getBatePapo());
         som = true;
         for (int i = 0; i < suaMao.size(); i++) {
             suaMao.get(i).setNova(false);
@@ -443,6 +434,7 @@ public class DueloBean {
         podeComprar = false;
         podeAtacar = false;
         if (!seuMonte.isEmpty()) {
+            duelo.setBatePapo(jogador.getLogin() + " comprou\n\n" + duelo.getBatePapo());
             if (suaMao.size() < 6) {
                 int qt = 3 - suaMao.size();
                 if (qt > 0) {
@@ -480,40 +472,10 @@ public class DueloBean {
                 MessageUtil.aviso("Você não pode ter mais que 6 cartas na mão, logo, sua carta foi direto para o descarte");
             }
         } else {
+            duelo.setBatePapo(jogador.getLogin() + " não tem mais cartas para comprar\n\n" + duelo.getBatePapo());
             seuDeck.setPontosDeterminacao(seuDeck.getPontosDeterminacao() - 1);
             MessageUtil.aviso("Você não possui mais cartas no monte");
         }
-//        if (!seuMonte.isEmpty()) {
-//            if (suaMao.size() < 3) {
-//                int qt = 3 - suaMao.size();
-//                if (seuMonte.size() >= qt) {
-//                    podeFinalizar = true;
-//                    while (qt != 0) {
-//                        cartaSelecionada = seuMonte.get(0);
-//                        cartaSelecionada.setLocalCarta(LocalCarta.MAO);
-//                        suaMao.add(cartaSelecionada);
-//                        seuMonte.remove(0);
-//                        qt--;
-//                    }
-//                } else {
-//                    podeFinalizar = true;
-//                    cartaSelecionada = seuMonte.get(0);
-//                    cartaSelecionada.setLocalCarta(LocalCarta.MAO);
-//                    suaMao.add(cartaSelecionada);
-//                    seuMonte.remove(0);
-//                }
-//            } else {
-//                podeFinalizar = true;
-//                cartaSelecionada = seuMonte.get(0);
-//                cartaSelecionada.setLocalCarta(LocalCarta.MAO);
-//                suaMao.add(cartaSelecionada);
-//                seuMonte.remove(0);
-//            }
-//        } else {
-//            podeFinalizar = true;
-//            seuDeck.setPontosDeterminacao(seuDeck.getPontosDeterminacao() - 1);
-//            MessageUtil.aviso("Você não possui mais cartas no monte");
-//        }
         return null;
     }
 
@@ -523,6 +485,7 @@ public class DueloBean {
             cartaSelecionada.setEstadoCarta(EstadoCarta.DEFESA);
             cartaSelecionada.setLocalCarta(LocalCarta.MESA);
             suaMesa.add(cartaSelecionada);
+            duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + "\n\n" + duelo.getBatePapo());
         } else {
             //EFEITOS CARTAS ESPECIAIS
             switch (cartaSelecionada.getCarta().getId()) {
@@ -533,6 +496,7 @@ public class DueloBean {
                     break;
                 case 47:
                     MessageUtil.aviso("Seu oponente não poderá utilizar carta especial no próximo turno.");
+                    colocaDescarte();
                     EfeitoCartaRN.carta47(seuDeck, deckOponente);
                     atualizaMesaOponente();
                     separaCartas();
@@ -599,11 +563,13 @@ public class DueloBean {
 
     public void alterarPosicaoCarta() {
         if (cartaSelecionada.getEstadoCarta().equals(EstadoCarta.ATAQUE)) {
+            duelo.setBatePapo(jogador.getLogin() + " alterou a posição da carta " + cartaSelecionada.getCarta().getNome() + " para modo de defesa " + "\n\n" + duelo.getBatePapo());
             cartaSelecionada.setEstadoCarta(EstadoCarta.DEFESA);
             cartaSelecionada.setPosicao(false);
             cartaSelecionada.setAtiva(true);
             podeAtacar = false;
         } else {
+            duelo.setBatePapo(jogador.getLogin() + " alterou a posição da carta " + cartaSelecionada.getCarta().getNome() + " para modo de ataque " + "\n\n" + duelo.getBatePapo());
             cartaSelecionada.setEstadoCarta(EstadoCarta.ATAQUE);
             cartaSelecionada.setPosicao(true);
             cartaSelecionada.setAtiva(true);
@@ -613,34 +579,10 @@ public class DueloBean {
 
     public String enviarMensagem() {
         if (!mensagem.isEmpty()) {
-            duelo.setBatePapo(jogador.getLogin() + ": " + mensagem + "\n" + duelo.getBatePapo());
+            duelo.setBatePapo(jogador.getLogin() + ": " + mensagem + "\n\n" + duelo.getBatePapo());
         }
         mensagem = "";
         return null;
-    }
-
-    public void preto() {
-        corFundo = "background-color: #363636";
-    }
-
-    public void vermelho() {
-        corFundo = "background-color: #E85E4A";
-    }
-
-    public void bege() {
-        corFundo = "background-color: #FFF9DA";
-    }
-
-    public void verde() {
-        corFundo = "background-color: #79C2AA";
-    }
-
-    public void azul() {
-        corFundo = "background-color: #F57C17";
-    }
-
-    public String getCorFundo() {
-        return corFundo;
     }
 
     public Jogador getJogador() {

@@ -65,6 +65,7 @@ public class JuntarDueloBean {
         }
         duelo.getDeckJogador2().setCartas(cartas);
         duelo.setSituacaoDuelo(SituacaoDuelo.EM_ANDAMENTO);
+        duelo.setBatePapo(duelo.getOponente().getLogin() + " juntou-se ao duelo.\n\n" + duelo.getBatePapo());
         return "jogo.xhtml?duelo=" + duelo.getUri() + "&faces-redirect=true";
     }
 

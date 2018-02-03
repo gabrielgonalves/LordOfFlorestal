@@ -36,7 +36,7 @@
                                 <p:carousel vertical="false" id="suasCartas" headerText="Suas cartas" responsive="true" circular="true" numVisible="5" value="#{novoDueloBean.suasCartas}" var="carta">
                                     <p:panel>
                                         <center>
-                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="165" />
+                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="165" title="#{carta.efeito ne '' ? 'Efeito: '.concat(carta.efeito).concat('&#013;') : ''}Descrição: #{carta.descricao}" />
                                             <p:commandButton disabled="#{novoDueloBean.cartasSelecionadas.size() lt novoDueloBean.qtCartas ? false : true}" class="btn-verde" value="Adicionar" action="#{novoDueloBean.adicionarCarta}" update="criar spin qt suasCartas cartasSelecionadas" >
                                                 <f:setPropertyActionListener target="#{novoDueloBean.cartaSelecionada}" value="#{carta}" />
                                             </p:commandButton>
@@ -48,7 +48,7 @@
                                 <p:carousel vertical="false" footerText="Você já selecionou #{novoDueloBean.cartasSelecionadas.size()} carta(s)" id="cartasSelecionadas" headerText="Cartas selecionadas" responsive="true" circular="true" numVisible="5" value="#{novoDueloBean.cartasSelecionadas}" var="carta">
                                     <p:panel>
                                         <center>
-                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="165" />
+                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="165" title="#{carta.efeito ne '' ? 'Efeito: '.concat(carta.efeito).concat('&#013;') : ''}Descrição: #{carta.descricao}" /> 
                                             <p:commandButton class="btn-vermelho" value="Remover" action="#{novoDueloBean.removerCarta}" update="criar spin qt suasCartas cartasSelecionadas" >
                                                 <f:setPropertyActionListener target="#{novoDueloBean.cartaSelecionada}" value="#{carta}" />
                                             </p:commandButton>

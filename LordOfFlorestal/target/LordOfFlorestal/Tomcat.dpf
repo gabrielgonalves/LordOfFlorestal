@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Context path="/LordOfFlorestal">
-  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxWait="-1" maxldle="10" name="jdbc/LordOfFlorestal" password="c.2jVpkP" type="javax.sql.DataSource" url="jdbc:mysql://35.225.102.80:3306/LordOfFlorestal" username="root"/>
-</Context>
