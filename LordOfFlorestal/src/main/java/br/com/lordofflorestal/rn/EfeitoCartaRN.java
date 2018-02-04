@@ -45,7 +45,7 @@ public class EfeitoCartaRN {
     }
 
     //Isacc newton
-    public static void carta19(Deck seuDeck) {
+    public static CartaJogo carta19(Deck seuDeck) {
         CartaJogo forte = new CartaJogo();
         for (CartaJogo carta : seuDeck.getCartas()) {
             if (carta.getLocalCarta().equals(LocalCarta.MESA)) {
@@ -59,6 +59,7 @@ public class EfeitoCartaRN {
             }
         }
         forte.setLocalCarta(LocalCarta.DESCARTE);
+        return forte;
     }
 
 //Margaret hamilton
@@ -70,12 +71,16 @@ public class EfeitoCartaRN {
     }
 
     //Absurdo matemático conveniente
-    public static void carta46(Deck deckOponente) {
+    public static CartaJogo carta46(Deck deckOponente) {
         for (CartaJogo carta : deckOponente.getCartas()) {
             if (carta.getLocalCarta().equals(LocalCarta.MESA) && carta.getCarta().getId() == 1) {
-                carta.setLocalCarta(LocalCarta.DESCARTE);
+                if (carta.getValorDefesa() == 100) {
+                    carta.setLocalCarta(LocalCarta.DESCARTE);
+                    return carta;
+                }
             }
         }
+        return null;
     }
 
     //Ano novo
@@ -136,6 +141,9 @@ public class EfeitoCartaRN {
     public static void carta50(CartaJogo cartaOponente) {
         int valorAtaque = cartaOponente.getValorAtaque() - 1;
         int valorDefesa = cartaOponente.getValorDefesa() - 1;
+        if(cartaOponente.getValorDefesa() == 100){
+            valorDefesa = 100;
+        }
         cartaOponente.setValorAtaque(valorAtaque);
         cartaOponente.setValorDefesa(valorDefesa);
         if (cartaOponente.getValorAtaque() <= 0 || cartaOponente.getValorDefesa() <= 0) {
