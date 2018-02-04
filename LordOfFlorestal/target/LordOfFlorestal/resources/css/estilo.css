@@ -18,6 +18,15 @@ body {
     object-fit:cover;
 }
 
+.user-img-duelo {
+    border-radius: 50% !important; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 20px;
+    width: 100px !important;
+    height: 100px !important;
+    object-fit:cover;
+}
+
 .user-img-pb {
     border-radius: 50% !important; 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -26,6 +35,9 @@ body {
     border-color: #F1431B !important;
     border-width: 4px !important;
     border-style: solid !important;
+    width: 150px !important;
+    height: 150px !important;
+    object-fit:cover;
 }
 
 .user-img-g {
@@ -35,6 +47,13 @@ body {
     border-color: #379125 !important;
     border-width: 4px !important;
     border-style: solid !important;
+    width: 150px !important;
+    height: 150px !important;
+    object-fit:cover;
+}
+
+.img-moeda-pb {
+    filter: grayscale(100%);
 }
 
 .resgatar {

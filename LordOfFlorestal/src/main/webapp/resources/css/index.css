@@ -59,7 +59,7 @@ body {
 
 .btn {
     background: #F57C17 !important;
-    padding: 15px !important;
+    padding: 10px !important;
     text-shadow: none !important;
     border: none !important;
     color: #FFFFFF !important;
@@ -128,7 +128,8 @@ h1 {
 }
 
 .logo {
-    width: 60%;
+    width: 40%;
+    margin-bottom: 40px;
 }
 
 .gabriel {

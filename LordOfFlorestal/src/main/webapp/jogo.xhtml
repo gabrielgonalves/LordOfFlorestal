@@ -121,7 +121,10 @@
                                 </f:facet>
 
                                 <p:graphicImage library="cartas" name="#{cartaMao.carta.imagem}" width="165" title="#{cartaMao.carta.efeito ne '' ? 'Efeito: '.concat(cartaMao.carta.efeito).concat('&#013;') : ''}Descrição: #{cartaMao.carta.descricao}"/>
-                                <p:commandButton value="Descer" onsuccess="PF('poll').stop()" class="btn-verde" action="#{dueloBean.descer}" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeDescer eq true ? false : true}" update=":pontuacao :batepapo" >
+                                <p:commandButton rendered="#{cartaMao.carta.id ne 55 and cartaMao.carta.id ne 58 and cartaMao.carta.id ne 59 and cartaMao.carta.id ne 62 and cartaMao.carta.id ne 63 and cartaMao.carta.id ne 66 and cartaMao.carta.id ne 67 and cartaMao.carta.id ne 68 and cartaMao.carta.id ne 70}" value="Descer" onsuccess="PF('poll').stop()" class="btn-verde" action="#{dueloBean.descer}" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeDescer eq true ? false : true}" update=":pontuacao :batepapo" >
+                                    <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{cartaMao}" />
+                                </p:commandButton>
+                                <p:commandButton onclick="PF('carta55').show();" rendered="#{cartaMao.carta.id eq 55}" value="Descer" onsuccess="PF('poll').stop()" class="btn-verde" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeDescer eq true ? false : true}" update=":pontuacao :batepapo" >
                                     <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{cartaMao}" />
                                 </p:commandButton>
                             </p:panelGrid>
@@ -153,6 +156,33 @@
                     ;
                 </script>
             </p:outputPanel>
+            <p:dialog responsive="true" resizable="false" widgetVar="carta55" modal="true" closable="true" maximizable="false" minimizable="false">
+                <p:panel>
+                    <div class="ui-g ui-fluid">
+                        <div class="ui-g-12">
+                            <center>
+                                <h1>Cara ou coroa</h1>
+                            </center>
+                            <p:messages for="caracoroamsg" autoUpdate="true" closable="true" />
+                            <p:outputLabel value="Escolha uma opção" for="caracoroa" />
+                            <p:selectOneMenu id="caracoroa" style="margin-top: 10px;" value="#{dueloBean.caracora}" >
+                                <f:converter converterId="javax.faces.Boolean" />
+                                <f:selectItem itemLabel="Cara" itemValue="true" />
+                                <f:selectItem itemLabel="Coroa" itemValue="false" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="ui-g-12">
+                            <p:commandButton class="btn-azul" value="Jogar" action="#{dueloBean.jogarCaraOuCoroa}" disabled="#{!dueloBean.podeJogarCaraCoroa}" update="resultado-caracoroa img-caracoroa @this :batepapo" />
+                        </div>
+                        <div class="ui-g-12">
+                            <center>
+                                <p:graphicImage class="#{dueloBean.podeJogarCaraCoroa ? 'moeda-pb' : ''}" id="img-caracoroa" library="img" name="#{dueloBean.caracoraResultado ? 'cara.jpg' : 'coroa.jpg'}" width="100" /><br/>
+                                <h:outputText value="#{dueloBean.caracoraResultado ? 'Cara' : 'Coroa'}" id="resultado-caracoroa" />
+                            </center>
+                        </div>
+                    </div>
+                </p:panel>
+            </p:dialog>
         </h:form>
     </ui:define>
     <ui:define name="acoes">

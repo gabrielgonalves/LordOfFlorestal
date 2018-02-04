@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -74,6 +75,10 @@ public class DueloBean {
 
     private boolean possuiDefesa;
 
+    private boolean caracora;
+    private boolean caracoraResultado;
+    private boolean podeJogarCaraCoroa;
+
     public DueloBean() {
         cria();
     }
@@ -91,6 +96,9 @@ public class DueloBean {
     }
 
     private void cria() {
+        caracora = true;
+        podeJogarCaraCoroa = true;
+        caracoraResultado = true;
         possuiDefesa = true;
         som = true;
         especial = false;
@@ -608,6 +616,29 @@ public class DueloBean {
         }
     }
 
+    public String jogarCaraOuCoroa() {
+        colocaDescarte();
+        int num = new Random().nextInt();
+        if (num % 2 == 0) {
+            caracoraResultado = true; //cara
+        } else {
+            caracoraResultado = false; //coroa
+        }
+        if (caracora = caracoraResultado) {
+            EfeitoCartaRN.carta55(seuDeck, deckOponente, true);
+            FacesContext.getCurrentInstance().addMessage("caracoroamsg", new FacesMessage("Você ganhou", ""));
+            duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e ganhou no Cara ou Coroa. Com isso, as cartas da mesa do jogador "+ oponente.getLogin()+" foram descartas\n\n" + duelo.getBatePapo());
+        } else {
+            EfeitoCartaRN.carta55(seuDeck, deckOponente, false);
+            FacesContext.getCurrentInstance().addMessage("caracoroamsg", new FacesMessage("Você perdeu", ""));
+            duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e perdeu no Cara ou Coroa. Com isso, suas cartas da mesa foram descartas\n\n" + duelo.getBatePapo());
+        }
+        separaCartas();
+        atualizaMesaOponente();
+        podeJogarCaraCoroa = false;
+        return null;
+    }
+
     public String enviarMensagem() {
         if (!mensagem.isEmpty()) {
             duelo.setBatePapo(jogador.getLogin() + ": " + mensagem + "\n\n" + duelo.getBatePapo());
@@ -794,6 +825,30 @@ public class DueloBean {
 
     public void setPossuiDefesa(boolean possuiDefesa) {
         this.possuiDefesa = possuiDefesa;
+    }
+
+    public boolean isCaracora() {
+        return caracora;
+    }
+
+    public void setCaracora(boolean caracora) {
+        this.caracora = caracora;
+    }
+
+    public boolean isCaracoraResultado() {
+        return caracoraResultado;
+    }
+
+    public void setCaracoraResultado(boolean caracoraResultado) {
+        this.caracoraResultado = caracoraResultado;
+    }
+
+    public boolean isPodeJogarCaraCoroa() {
+        return podeJogarCaraCoroa;
+    }
+
+    public void setPodeJogarCaraCoroa(boolean podeJogarCaraCoroa) {
+        this.podeJogarCaraCoroa = podeJogarCaraCoroa;
     }
 
 }

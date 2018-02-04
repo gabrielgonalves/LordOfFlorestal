@@ -8,6 +8,8 @@
         <h:outputStylesheet library="css" name="index.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <h:outputScript library="js" name="index.js" />  
+        <link rel="icon" href="resources/img/icon.ico" type="image/x-icon"/>
+        <link rel="shortcut icon" href="resources/img/icon.ico" type="image/x-icon"/>
     </h:head>
     <h:body>
         <div class="topnav" id="myTopnav">
@@ -17,7 +19,7 @@
             <a href="#ranking">Ranking</a>
             <a href="#quem-somos">Quem somos</a>
             <a class="login" href="login.xhtml">Login</a>
-            <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+            <a href="javascript:void(0);" style="font-size:16px;" class="icon" onclick="myFunction()">&#9776;</a>
         </div>
         <div id="cabecalho" class="cabecalho">
             <div class="ui-g ui-fluid">
@@ -39,7 +41,10 @@
             <div class="ui-g">
                 <div class="ui-g-12">
                     <div class="ui-g-12 card">
-                        <h1>Sobre o jogo</h1>
+                        <center>
+                            <p:graphicImage library="img" name="sobre-o-jogo.png" style="height: 70px; margin-top: 20px;"/><br/>
+                            <p:graphicImage library="img" name="separador.png" style="width: 300px; margin-top: -30px;" />
+                        </center>
                         <div class="ui-g-12 ui-md-9">
                             <p>Lord of Florestal é um jogo de cartas competitivo, que tem como princípio técnicas de gamificação e game studies, no qual todas as partidas são formadas por batalhas entre dois jogadores. Duele contra seus oponentes e torne-se digno para receber o título de Lord desta imensa cidade!</p>
 
@@ -80,7 +85,10 @@
             <div class="ui-g">
                 <div class="ui-g-12">
                     <div class="ui-g-12 card">
-                        <h1>Como jogar</h1>
+                        <center>
+                            <p:graphicImage library="img" name="como-jogar.png" style="height: 70px; margin-top: 20px;"/><br/>
+                            <p:graphicImage library="img" name="separador.png" style="width: 300px; margin-top: -30px;" />
+                        </center>
                         <div class="ui-g-12 ui-md-12">
                             <h2>Coletando suas cartas</h2>
                             <p>Para montar um deck de Lord of Florestal, você deve realizar missões na universidade. A boa notícia é que estas missões não precisam ser trabalhos práticos.</p>
@@ -234,7 +242,10 @@
                     <div class="ui-g-12 card">
                         <div class="ui-g-12 ui-md-7">
                             <div id="ranking" class="ui-g-12">
-                                <h1>Ranking</h1>
+                                <center>
+                                    <p:graphicImage library="img" name="ranking.png" style="height: 70px; margin-top: 20px;"/><br/>
+                                    <p:graphicImage library="img" name="separador.png" style="width: 300px; margin-top: -30px;" />
+                                </center>
                                 <p:panelGrid columns="2" layout="grid">
                                     <p:dataList itemStyleClass="teste" value="#{indexBean.ranking5}" first="0" var="user" type="definition" >
                                         <div class="ui-g">
@@ -261,7 +272,10 @@
                         </div>
                         <div class="ui-g-12 ui-md-5">
                             <div id="quem-somos" class="ui-g-12">
-                                <h1>Quem somos</h1>
+                                <center>
+                                    <p:graphicImage library="img" name="quem-somos.png" style="height: 70px; margin-top: 20px;"/><br/>
+                                    <p:graphicImage library="img" name="separador.png" style="width: 300px; margin-top: -30px;" />
+                                </center>
                                 <div class="ui-g-12">
                                     <center>
                                         <div class="ui-g-12 ui-md-4">

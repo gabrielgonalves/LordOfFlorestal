@@ -175,8 +175,21 @@ public class EfeitoCartaRN {
     }
 
     //Estudo de última hora
-    public static void carta55() {
-
+    public static void carta55(Deck seuDeck, Deck deckOponente, boolean resultado) {
+        if(resultado){
+            for(CartaJogo carta : deckOponente.getCartas()){
+                if(carta.getLocalCarta().equals(LocalCarta.MESA)){
+                    carta.setLocalCarta(LocalCarta.DESCARTE);
+                }
+            }
+        } else {
+            for(CartaJogo carta : seuDeck.getCartas()){
+                if(carta.getLocalCarta().equals(LocalCarta.MESA)){
+                    carta.setLocalCarta(LocalCarta.DESCARTE);
+                }
+            }
+            seuDeck.setPontosDeterminacao(seuDeck.getPontosDeterminacao() - 2);
+        }
     }
 
     //Feriado quase no fim do semestre
