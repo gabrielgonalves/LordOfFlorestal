@@ -13,6 +13,7 @@ import br.com.lordofflorestal.model.EstadoCarta;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.LocalCarta;
 import br.com.lordofflorestal.model.SituacaoDuelo;
+import br.com.lordofflorestal.model.SubtipoCarta;
 import br.com.lordofflorestal.model.TipoCarta;
 import br.com.lordofflorestal.model.TipoJogador;
 import br.com.lordofflorestal.rn.DueloRN;
@@ -79,7 +80,10 @@ public class DueloBean {
     private boolean caracoraResultado;
     private boolean podeJogarCaraCoroa;
 
+    private List<CartaJogo> listaCartaEfeito;
+
     public DueloBean() {
+        listaCartaEfeito = new ArrayList();
         cria();
     }
 
@@ -215,6 +219,12 @@ public class DueloBean {
                 duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou a carta " + cartaAtaca.getCarta().getNome() + " para receber +3/0\n\n" + duelo.getBatePapo());
                 colocaDescarte();
                 break;
+            case 59:
+                EfeitoCartaRN.carta59(cartaAtacada);
+                duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou a carta " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " para ser descartada\n\n" + duelo.getBatePapo());
+                colocaDescarte();
+                atualizaMesaOponente();
+                break;
             case 60:
                 EfeitoCartaRN.carta60(seuDeck, cartaAtacada);
                 duelo.setBatePapo(jogador.getLogin() + " perdeu 2 pontos de determinação por descer a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou a carta " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " para ser descartada\n\n" + duelo.getBatePapo());
@@ -224,6 +234,24 @@ public class DueloBean {
             case 64:
                 EfeitoCartaRN.carta64(cartaAtaca);
                 duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou a carta " + cartaAtaca.getCarta().getNome() + " para receber 0/+1\n\n" + duelo.getBatePapo());
+                colocaDescarte();
+                break;
+            case 66:
+                duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou a carta " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " que foi substituida pela carta Professor Substituto\n\n" + duelo.getBatePapo());
+                EfeitoCartaRN.carta66(cartaAtacada);
+                colocaDescarte();
+                atualizaMesaOponente();
+                break;
+            case 67:
+                EfeitoCartaRN.carta67(cartaAtacada);
+                duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou uma carta do tipo Especial do seu descarte para voltar para sua mão\n\n" + duelo.getBatePapo());
+                separaCartas();
+                colocaDescarte();
+                break;
+            case 68:
+                EfeitoCartaRN.carta68(cartaAtacada);
+                duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou uma carta do tipo Desafio do seu descarte para voltar para sua mão\n\n" + duelo.getBatePapo());
+                separaCartas();
                 colocaDescarte();
                 break;
             case 69:
@@ -627,7 +655,7 @@ public class DueloBean {
         if (caracora = caracoraResultado) {
             EfeitoCartaRN.carta55(seuDeck, deckOponente, true);
             FacesContext.getCurrentInstance().addMessage("caracoroamsg", new FacesMessage("Você ganhou", ""));
-            duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e ganhou no Cara ou Coroa. Com isso, as cartas da mesa do jogador "+ oponente.getLogin()+" foram descartas\n\n" + duelo.getBatePapo());
+            duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e ganhou no Cara ou Coroa. Com isso, as cartas da mesa do jogador " + oponente.getLogin() + " foram descartas\n\n" + duelo.getBatePapo());
         } else {
             EfeitoCartaRN.carta55(seuDeck, deckOponente, false);
             FacesContext.getCurrentInstance().addMessage("caracoroamsg", new FacesMessage("Você perdeu", ""));
@@ -644,6 +672,59 @@ public class DueloBean {
             duelo.setBatePapo(jogador.getLogin() + ": " + mensagem + "\n\n" + duelo.getBatePapo());
         }
         mensagem = "";
+        return null;
+    }
+
+    public String atualizaListaCarta59() {
+        List<CartaJogo> lista = new ArrayList();
+        for (CartaJogo carta : deckOponente.getCartas()) {
+            if (carta.getLocalCarta().equals(LocalCarta.MAO)) {
+                lista.add(carta);
+            }
+        }
+        for (CartaJogo carta : deckOponente.getCartas()) {
+            if (carta.getLocalCarta().equals(LocalCarta.MESA)) {
+                lista.add(carta);
+            }
+        }
+
+        listaCartaEfeito = lista;
+        return null;
+    }
+    
+    public String atualizaListaCarta66() {
+        List<CartaJogo> lista = new ArrayList();
+        for (CartaJogo carta : deckOponente.getCartas()) {
+            if (carta.getLocalCarta().equals(LocalCarta.MESA) && SubtipoCarta.PROFESSOR.equals(carta.getCarta().getSubtipoCarta())) {
+                lista.add(carta);
+            }
+        }
+
+        listaCartaEfeito = lista;
+        return null;
+    }
+    
+    public String atualizaListaCarta67() {
+        List<CartaJogo> lista = new ArrayList();
+        for (CartaJogo carta : seuDescarte) {
+            if (carta.getCarta().getTipoCarta().equals(TipoCarta.ESPECIAL)) {
+                lista.add(carta);
+            }
+        }
+
+        listaCartaEfeito = lista;
+        return null;
+    }
+    
+    public String atualizaListaCarta68() {
+        List<CartaJogo> lista = new ArrayList();
+        for (CartaJogo carta : seuDescarte) {
+            if (carta.getCarta().getTipoCarta().equals(TipoCarta.DESAFIO)) {
+                lista.add(carta);
+            }
+        }
+
+        listaCartaEfeito = lista;
         return null;
     }
 
@@ -849,6 +930,14 @@ public class DueloBean {
 
     public void setPodeJogarCaraCoroa(boolean podeJogarCaraCoroa) {
         this.podeJogarCaraCoroa = podeJogarCaraCoroa;
+    }
+
+    public List<CartaJogo> getListaCartaEfeito() {
+        return listaCartaEfeito;
+    }
+
+    public void setListaCartaEfeito(List<CartaJogo> listaCartaEfeito) {
+        this.listaCartaEfeito = listaCartaEfeito;
     }
 
 }

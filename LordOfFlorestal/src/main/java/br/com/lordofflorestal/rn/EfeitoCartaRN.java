@@ -199,8 +199,9 @@ public class EfeitoCartaRN {
     }
 
     //Inspiração espontanêa
-    public static void carta57() {
-
+    public static void carta57(CartaJogo carta) {
+        carta.setValorAtaque(carta.getValorAtaque() + 1);
+        carta.setTurno(true);
     }
 
     //Interpretação popular dos objetivos do curso
@@ -264,22 +265,22 @@ public class EfeitoCartaRN {
     public static void carta66(CartaJogo cartaOponente) {
         CartaRN cartaRN = new CartaRN();
         Carta carta = cartaRN.buscarPorId(66);
-        CartaJogo cartaJogo = new CartaJogo();
-        cartaJogo.setCarta(carta);
-        cartaJogo.setValorAtaque(carta.getValorAtaque());
-        cartaJogo.setValorDefesa(carta.getValorDefesa());
-        cartaJogo.setLocalCarta(LocalCarta.MESA);
-        cartaJogo.setEstadoCarta(cartaOponente.getEstadoCarta());
+        cartaOponente.setCarta(carta);
+        cartaOponente.setValorAtaque(carta.getValorAtaque());
+        cartaOponente.setValorDefesa(carta.getValorDefesa());
+        cartaOponente.setLocalCarta(LocalCarta.MESA);
     }
 
     //Prova de consulta
     public static void carta67(CartaJogo carta) {
         carta.setLocalCarta(LocalCarta.MAO);
+        carta.setNova(true);
     }
 
     //Prova em dupla
     public static void carta68(CartaJogo carta) {
         carta.setLocalCarta(LocalCarta.MAO);
+        carta.setNova(true);
     }
 
     //Prova inesperada
