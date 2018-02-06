@@ -81,8 +81,10 @@ public class DueloBean {
     private boolean podeJogarCaraCoroa;
 
     private List<CartaJogo> listaCartaEfeito;
+    private List<CartaJogo> ordemMonte;
 
     public DueloBean() {
+        ordemMonte = new ArrayList();
         listaCartaEfeito = new ArrayList();
         cria();
     }
@@ -135,9 +137,11 @@ public class DueloBean {
     }
 
     public String atacarDeterminacao() {
-        duelo.setBatePapo(jogador.getLogin() + " atacou os pontos de determinação de " + oponente.getLogin() + " tirando " + cartaAtaca.getValorAtaque() + " pontos.\n\n" + duelo.getBatePapo());
         int pd = deckOponente.getPontosDeterminacao();
-        deckOponente.setPontosDeterminacao(pd - cartaAtaca.getValorAtaque());
+        if (cartaAtaca.isPodeVencerDuelo()) {
+            duelo.setBatePapo(jogador.getLogin() + " atacou os pontos de determinação de " + oponente.getLogin() + " tirando " + cartaAtaca.getValorAtaque() + " pontos.\n\n" + duelo.getBatePapo());
+            deckOponente.setPontosDeterminacao(pd - cartaAtaca.getValorAtaque());
+        }
         cartaAtaca.setAtiva(false);
         cartaAtaca.setTurno(false);
         cartaAtaca.setValorAtaque(cartaAtaca.getValorAtaque() - pd);
@@ -219,6 +223,11 @@ public class DueloBean {
                 duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou a carta " + cartaAtaca.getCarta().getNome() + " para receber +3/0\n\n" + duelo.getBatePapo());
                 colocaDescarte();
                 break;
+            case 57:
+                EfeitoCartaRN.carta57(cartaAtaca);
+                duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou a carta " + cartaAtaca.getCarta().getNome() + " para receber +1/0\n\n" + duelo.getBatePapo());
+                colocaDescarte();
+                break;
             case 59:
                 EfeitoCartaRN.carta59(cartaAtacada);
                 duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou a carta " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " para ser descartada\n\n" + duelo.getBatePapo());
@@ -229,6 +238,16 @@ public class DueloBean {
                 EfeitoCartaRN.carta60(seuDeck, cartaAtacada);
                 duelo.setBatePapo(jogador.getLogin() + " perdeu 2 pontos de determinação por descer a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou a carta " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " para ser descartada\n\n" + duelo.getBatePapo());
                 atualizaMesaOponente();
+                colocaDescarte();
+                break;
+            case 62:
+                EfeitoCartaRN.carta62(seuDeck, ordemMonte);
+                duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e reorganizou as 5 primeiras cartas do seu monte\n\n" + duelo.getBatePapo());
+                colocaDescarte();
+                break;
+            case 63:
+                EfeitoCartaRN.carta63(cartaAtaca);
+                duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou a carta " + cartaAtaca.getCarta().getNome() + " para receber +2/0\n\n" + duelo.getBatePapo());
                 colocaDescarte();
                 break;
             case 64:
@@ -259,6 +278,11 @@ public class DueloBean {
                 duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou a carta " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " para alterar seu modo (de ataque ou de defesa)\n\n" + duelo.getBatePapo());
                 colocaDescarte();
                 break;
+            case 70:
+                EfeitoCartaRN.carta70(cartaAtacada);
+                duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e selecionou a carta " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " para não poder mais vencer um duelo\n\n" + duelo.getBatePapo());
+                colocaDescarte();
+                break;
         }
         especial = false;
         especialOponente = false;
@@ -271,9 +295,11 @@ public class DueloBean {
         int va = cartaAtaca.getValorAtaque();
         int vd = cartaAtacada.getValorDefesa();
         if (va > vd) { //CARTA OPONENTE É DESTUIDA
-            duelo.setBatePapo(jogador.getLogin() + " destruiu " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " com a carta " + cartaAtaca.getCarta().getNome() + " que perdeu " + vd + " de ataque\n\n" + duelo.getBatePapo());
-            mesaOponente.remove(cartaAtacada);
-            cartaAtacada.setLocalCarta(LocalCarta.DESCARTE);
+            if (cartaAtaca.isPodeVencerDuelo()) {
+                duelo.setBatePapo(jogador.getLogin() + " destruiu " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " com a carta " + cartaAtaca.getCarta().getNome() + " que perdeu " + vd + " de ataque\n\n" + duelo.getBatePapo());
+                mesaOponente.remove(cartaAtacada);
+                cartaAtacada.setLocalCarta(LocalCarta.DESCARTE);
+            }
             if (cartaAtaca.getValorAtaque() != 100) {
                 cartaAtaca.setValorAtaque(cartaAtaca.getValorAtaque() - vd);
             }
@@ -294,10 +320,12 @@ public class DueloBean {
             }
         } else if (va == vd) { //AMBAS AS CARTAS SÃO DESTRUIDAS
             duelo.setBatePapo(jogador.getLogin() + " atacou " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " com a carta " + cartaAtaca.getCarta().getNome() + " e ambas foram destruidas\n\n" + duelo.getBatePapo());
-            mesaOponente.remove(cartaAtacada);
             suaMesa.remove(cartaAtaca);
-            cartaAtacada.setLocalCarta(LocalCarta.DESCARTE);
             cartaAtaca.setLocalCarta(LocalCarta.DESCARTE);
+            if (cartaAtaca.isPodeVencerDuelo()) {
+                mesaOponente.remove(cartaAtacada);
+                cartaAtacada.setLocalCarta(LocalCarta.DESCARTE);
+            }
             //EFEITO CARTA 4
             if (cartaAtacada.getCarta().getId() == 4) {
                 duelo.setBatePapo("A carta " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " foi destruida. Com isso o jogador " + jogador.getLogin() + " perdeu 2 pontos de determinação\n\n" + duelo.getBatePapo());
@@ -324,8 +352,10 @@ public class DueloBean {
                 duelo.setBatePapo(jogador.getLogin() + " atacou " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " com a carta " + cartaAtaca.getCarta().getNome() + " que foi destruída\n\n" + duelo.getBatePapo());
                 cartaAtacada.setValorDefesa(100);
             } else {
-                duelo.setBatePapo(jogador.getLogin() + " atacou " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " que perdeu " + va + " de defesa com a carta " + cartaAtaca.getCarta().getNome() + " que foi destruída\n\n" + duelo.getBatePapo());
-                cartaAtacada.setValorDefesa(vd - va);
+                if (cartaAtaca.isPodeVencerDuelo()) {
+                    duelo.setBatePapo(jogador.getLogin() + " atacou " + cartaAtacada.getCarta().getNome() + " do jogador " + oponente.getLogin() + " que perdeu " + va + " de defesa com a carta " + cartaAtaca.getCarta().getNome() + " que foi destruída\n\n" + duelo.getBatePapo());
+                    cartaAtacada.setValorDefesa(vd - va);
+                }
             }
 
             //EFEITO CARTA 4
@@ -402,6 +432,9 @@ public class DueloBean {
     }
 
     public String finalizarTurno() {
+        for (int i = 0; i < suaMesa.size(); i++) {
+            suaMesa.get(i).setValorAtaque(suaMesa.get(i).getValorAtaque() - suaMesa.get(i).getAumentouAtaque());
+        }
         duelo.setBatePapo(jogador.getLogin() + " finalizou o turno " + "\n\n" + duelo.getBatePapo());
         som = true;
         for (int i = 0; i < suaMao.size(); i++) {
@@ -600,6 +633,10 @@ public class DueloBean {
                     duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e ganhou 2 pontos de determinação\n\n" + duelo.getBatePapo());
                     colocaDescarte();
                     break;
+                case 57:
+                    MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
+                    especial = true;
+                    break;
                 case 60:
                     MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
                     especialOponente = true;
@@ -608,6 +645,13 @@ public class DueloBean {
                     EfeitoCartaRN.carta61(seuDeck, deckOponente);
                     duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " e todas as cartas do tipo Aluno foram descartadas\n\n" + duelo.getBatePapo());
                     colocaDescarte();
+                    break;
+                case 62:
+                    ordemMonte = new ArrayList();
+                    break;
+                case 63:
+                    MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
+                    especial = true;
                     break;
                 case 64:
                     MessageUtil.aviso("Selecione uma carta da sua mesa");
@@ -619,7 +663,15 @@ public class DueloBean {
                     duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + cartaSelecionada.getCarta().getNome() + " com isso, o jogador " + oponente.getLogin() + " não poderá realizar nenhum tipo de ataque no próximo turno\n\n" + duelo.getBatePapo());
                     colocaDescarte();
                     break;
+                case 66:
+                    MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
+                    especialOponente = true;
+                    break;
                 case 69:
+                    MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
+                    especialOponente = true;
+                    break;
+                case 70:
                     MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
                     especialOponente = true;
                     break;
@@ -692,10 +744,22 @@ public class DueloBean {
         return null;
     }
     
-    public String atualizaListaCarta66() {
+    public String adicionar62(){
+        ordemMonte.add(cartaAtacada);
+        listaCartaEfeito.remove(cartaAtacada);
+        return null;
+    }
+    
+    public String remover62(){
+        ordemMonte.remove(cartaAtacada);
+        listaCartaEfeito.add(cartaAtacada);
+        return null;
+    }
+    
+    public String atualizaListaCarta62() {
         List<CartaJogo> lista = new ArrayList();
-        for (CartaJogo carta : deckOponente.getCartas()) {
-            if (carta.getLocalCarta().equals(LocalCarta.MESA) && SubtipoCarta.PROFESSOR.equals(carta.getCarta().getSubtipoCarta())) {
+        for (CartaJogo carta : seuMonte) {
+            if (lista.size() < 5) {
                 lista.add(carta);
             }
         }
@@ -715,7 +779,7 @@ public class DueloBean {
         listaCartaEfeito = lista;
         return null;
     }
-    
+
     public String atualizaListaCarta68() {
         List<CartaJogo> lista = new ArrayList();
         for (CartaJogo carta : seuDescarte) {
@@ -938,6 +1002,14 @@ public class DueloBean {
 
     public void setListaCartaEfeito(List<CartaJogo> listaCartaEfeito) {
         this.listaCartaEfeito = listaCartaEfeito;
+    }
+
+    public List<CartaJogo> getOrdemMonte() {
+        return ordemMonte;
+    }
+
+    public void setOrdemMonte(List<CartaJogo> ordemMonte) {
+        this.ordemMonte = ordemMonte;
     }
 
 }

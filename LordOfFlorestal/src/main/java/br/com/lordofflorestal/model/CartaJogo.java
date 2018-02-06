@@ -22,6 +22,8 @@ public class CartaJogo {
     private EstadoCarta estadoCarta;
     private Carta carta;
     private boolean nova;
+    private boolean podeVencerDuelo;
+    private int aumentouAtaque;
 
     public CartaJogo() {
         this.localCarta = LocalCarta.MONTE;
@@ -30,6 +32,8 @@ public class CartaJogo {
         this.posicao = false;
         this.ativa = false;
         this.nova = false;
+        this.podeVencerDuelo = true;
+        this.aumentouAtaque = 0;
     }
 
     public CartaJogo(int valorAtaque, int valorDefesa, boolean turno, boolean ativa, LocalCarta localCarta, EstadoCarta estadoCarta, Carta carta) {
@@ -40,6 +44,7 @@ public class CartaJogo {
         this.localCarta = localCarta;
         this.estadoCarta = estadoCarta;
         this.carta = carta;
+        this.podeVencerDuelo = true;
     }
 
     public CartaJogo(Carta carta) {
@@ -52,6 +57,8 @@ public class CartaJogo {
         this.ativa = false;
         this.posicao = false;
         this.nova = false;
+        this.podeVencerDuelo = true;
+        this.aumentouAtaque = 0;
     }
 
     public int getValorAtaque() {
@@ -124,6 +131,22 @@ public class CartaJogo {
 
     public void setNova(boolean nova) {
         this.nova = nova;
+    }
+
+    public boolean isPodeVencerDuelo() {
+        return podeVencerDuelo;
+    }
+
+    public void setPodeVencerDuelo(boolean podeVencerDuelo) {
+        this.podeVencerDuelo = podeVencerDuelo;
+    }
+
+    public int getAumentouAtaque() {
+        return aumentouAtaque;
+    }
+
+    public void setAumentouAtaque(int aumentouAtaque) {
+        this.aumentouAtaque = aumentouAtaque;
     }
 
     @Override

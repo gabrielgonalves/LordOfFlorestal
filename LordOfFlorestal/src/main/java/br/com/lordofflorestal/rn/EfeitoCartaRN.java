@@ -12,6 +12,7 @@ import br.com.lordofflorestal.model.EstadoCarta;
 import br.com.lordofflorestal.model.LocalCarta;
 import br.com.lordofflorestal.model.SubtipoCarta;
 import br.com.lordofflorestal.model.TipoCarta;
+import java.util.List;
 
 /**
  *
@@ -201,7 +202,7 @@ public class EfeitoCartaRN {
     //Inspiração espontanêa
     public static void carta57(CartaJogo carta) {
         carta.setValorAtaque(carta.getValorAtaque() + 1);
-        carta.setTurno(true);
+        carta.setAumentouAtaque(1);
     }
 
     //Interpretação popular dos objetivos do curso
@@ -236,18 +237,20 @@ public class EfeitoCartaRN {
     }
 
     //Organização utópica esperada pelos professores
-    public static void carta62(Deck deck) {
-//        List<CartaJogo> monte = new ArrayList();
-//        for(CartaJogo carta : deck.getCartas()){
-//            if(carta.getLocalCarta().equals(LocalCarta.MONTE)){
-//                monte.add(carta);
-//            }
-//        }
+    public static void carta62(Deck deck, List<CartaJogo> lista) {
+        for(CartaJogo carta : lista){
+            deck.getCartas().remove(carta);
+        }
+        for(CartaJogo carta : deck.getCartas()){
+            lista.add(carta);
+        }
+        deck.setCartas(lista);
     }
 
     //Pânico induzido pelo prazo de entrega
-    public static void carta63() {
-
+    public static void carta63(CartaJogo carta) {
+        carta.setValorAtaque(carta.getValorAtaque() + 2);
+        carta.setAumentouAtaque(2);
     }
 
     //Ponto extra inesperado
@@ -295,7 +298,7 @@ public class EfeitoCartaRN {
     }
 
     //Reprovação em cálculo 1
-    public static void carta70() {
-
+    public static void carta70(CartaJogo carta) {
+        carta.setPodeVencerDuelo(false);
     }
 }
