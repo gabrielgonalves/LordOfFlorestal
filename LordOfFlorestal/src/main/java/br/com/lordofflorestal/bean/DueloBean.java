@@ -92,13 +92,17 @@ public class DueloBean {
     }
 
     public String atacarDeterminacao() {
-        dueloRN.atacarDeterminacao(cartasAtacam);
+        if (dueloRN.atacarDeterminacao(cartasAtacam)) {
+            return "jogo.xhtml?duelo=" + uri + "faces-redirect=true";
+        }
         cartasAtacam = new ArrayList();
         return null;
     }
 
     public String atacar() {
-        dueloRN.atacar(cartasAtacam, cartaAtacada);
+        if (dueloRN.atacar(cartasAtacam, cartaAtacada)) {
+            return "jogo.xhtml?duelo=" + uri + "faces-redirect=true";
+        }
         cartasAtacam = new ArrayList();
         return null;
     }

@@ -77,7 +77,7 @@ public class DueloRN {
         }
     }
 
-    public void atacar(List<CartaJogo> cartaAtaca, CartaJogo cartaAtacada) {
+    public boolean atacar(List<CartaJogo> cartaAtaca, CartaJogo cartaAtacada) {
         int va = 0;
         String nomeCartas = "";
         for (int i = 0; i < cartaAtaca.size(); i++) {
@@ -164,15 +164,16 @@ public class DueloRN {
         }
 
         podeAtacar = false;
-        verificaPontosDeterminacao();
 
         if (duelo.getSituacaoDuelo().equals(SituacaoDuelo.FINALIZADO)) {
             salvar(duelo, ganhador.getMatricula());
             atualizaEstatistica();
         }
+        
+        return verificaPontosDeterminacao();
     }
 
-    public void atacarDeterminacao(List<CartaJogo> cartaAtaca) {
+    public boolean atacarDeterminacao(List<CartaJogo> cartaAtaca) {
         String nomeCartas = "";
         int pontosDeterminacao = deckOponente.getPontosDeterminacao();
         int ataque = 0;
@@ -187,12 +188,13 @@ public class DueloRN {
         diminuiPontosDeterminacao(deckOponente, ataque);
 
         podeAtacar = false;
-        verificaPontosDeterminacao();
 
         if (duelo.getSituacaoDuelo().equals(SituacaoDuelo.FINALIZADO)) {
             salvar(duelo, ganhador.getMatricula());
             atualizaEstatistica();
         }
+        
+        return verificaPontosDeterminacao();
     }
 
     public void atualizaEstatistica() {
@@ -695,14 +697,17 @@ public class DueloRN {
         }
     }
 
-    public void verificaPontosDeterminacao() {
+    public boolean verificaPontosDeterminacao() {
         if (deck.getPontosDeterminacao() <= 0) {
             duelo.setSituacaoDuelo(SituacaoDuelo.FINALIZADO);
             ganhador = oponente;
+            return true;
         } else if (deckOponente.getPontosDeterminacao() <= 0) {
             duelo.setSituacaoDuelo(SituacaoDuelo.FINALIZADO);
             ganhador = jogador;
+            return true;
         }
+        return false;
     }
 
     //GETTERS E SETTERS
