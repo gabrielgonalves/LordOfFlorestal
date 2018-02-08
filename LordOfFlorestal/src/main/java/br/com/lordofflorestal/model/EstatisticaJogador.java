@@ -17,15 +17,17 @@ public class EstatisticaJogador implements Serializable {
     private int numJogosGanho;
     private int numJogosPerdido;
     private int numJogosGanhoLord;
+    private int numJogosPerdeuLord;
 
     public EstatisticaJogador() {
     }
 
-    public EstatisticaJogador(int numJogos, int numJogosGanho, int numJogosPerdido, int numJogosGanhoLord) {
+    public EstatisticaJogador(int numJogos, int numJogosGanho, int numJogosPerdido, int numJogosGanhoLord, int numJogosPerdeuLord) {
         this.numJogos = numJogos;
         this.numJogosGanho = numJogosGanho;
         this.numJogosPerdido = numJogosPerdido;
         this.numJogosGanhoLord = numJogosGanhoLord;
+        this.numJogosPerdeuLord = numJogosPerdeuLord;
     }
 
     public int getNumJogos() {
@@ -60,13 +62,22 @@ public class EstatisticaJogador implements Serializable {
         this.numJogosGanhoLord = numJogosGanhoLord;
     }
 
+    public int getNumJogosPerdeuLord() {
+        return numJogosPerdeuLord;
+    }
+
+    public void setNumJogosPerdeuLord(int numJogosPerdeuLord) {
+        this.numJogosPerdeuLord = numJogosPerdeuLord;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + this.numJogos;
-        hash = 47 * hash + this.numJogosGanho;
-        hash = 47 * hash + this.numJogosPerdido;
-        hash = 47 * hash + this.numJogosGanhoLord;
+        int hash = 3;
+        hash = 67 * hash + this.numJogos;
+        hash = 67 * hash + this.numJogosGanho;
+        hash = 67 * hash + this.numJogosPerdido;
+        hash = 67 * hash + this.numJogosGanhoLord;
+        hash = 67 * hash + this.numJogosPerdeuLord;
         return hash;
     }
 
@@ -92,6 +103,9 @@ public class EstatisticaJogador implements Serializable {
             return false;
         }
         if (this.numJogosGanhoLord != other.numJogosGanhoLord) {
+            return false;
+        }
+        if (this.numJogosPerdeuLord != other.numJogosPerdeuLord) {
             return false;
         }
         return true;

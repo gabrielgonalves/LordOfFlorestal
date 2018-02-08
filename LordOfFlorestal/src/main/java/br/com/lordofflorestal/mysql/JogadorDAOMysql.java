@@ -85,7 +85,7 @@ public class JogadorDAOMysql {
     }
 
     public void atualizarPontuacao(Jogador jogador) {
-        String sql = "UPDATE Jogador SET num_jogos = ?, num_jogos_ganho = ?, num_jogos_perdido = ?, num_jogos_ganho_lord = ? WHERE matricula = ?";
+        String sql = "UPDATE Jogador SET num_jogos = ?, num_jogos_ganho = ?, num_jogos_perdido = ?, num_jogos_ganho_lord = ?, num_jogos_perdeu_lord = ? WHERE matricula = ?";
 
         try {
             connection = ConnectionFactory.getConnection();
@@ -96,7 +96,8 @@ public class JogadorDAOMysql {
             statement.setInt(2, jogador.getEstatisticaJogador().getNumJogosGanho());
             statement.setInt(3, jogador.getEstatisticaJogador().getNumJogosPerdido());
             statement.setInt(4, jogador.getEstatisticaJogador().getNumJogosGanhoLord());
-            statement.setInt(5, jogador.getMatricula());
+            statement.setInt(5, jogador.getEstatisticaJogador().getNumJogosPerdeuLord());
+            statement.setInt(6, jogador.getMatricula());
 
             statement.executeUpdate();
             statement.close();
@@ -158,6 +159,7 @@ public class JogadorDAOMysql {
                 ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
                 ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
                 ej.setNumJogosGanhoLord(rs.getInt("num_jogos_ganho_lord"));
+                ej.setNumJogosPerdeuLord(rs.getInt("num_jogos_perdeu_lord"));
 
                 jogador.setEstatisticaJogador(ej);
 
@@ -344,6 +346,7 @@ public class JogadorDAOMysql {
                 ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
                 ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
                 ej.setNumJogosGanhoLord(rs.getInt("num_jogos_ganho_lord"));
+                ej.setNumJogosPerdeuLord(rs.getInt("num_jogos_perdeu_lord"));
 
                 jogador.setEstatisticaJogador(ej);
 
@@ -379,6 +382,7 @@ public class JogadorDAOMysql {
                 ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
                 ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
                 ej.setNumJogosGanhoLord(rs.getInt("num_jogos_ganho_lord"));
+                ej.setNumJogosPerdeuLord(rs.getInt("num_jogos_perdeu_lord"));
 
                 statement.close();
 
@@ -419,6 +423,7 @@ public class JogadorDAOMysql {
                 ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
                 ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
                 ej.setNumJogosGanhoLord(rs.getInt("num_jogos_ganho_lord"));
+                ej.setNumJogosPerdeuLord(rs.getInt("num_jogos_perdeu_lord"));
 
                 jogador.setEstatisticaJogador(ej);
 
@@ -467,6 +472,7 @@ public class JogadorDAOMysql {
                 ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
                 ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
                 ej.setNumJogosGanhoLord(rs.getInt("num_jogos_ganho_lord"));
+                ej.setNumJogosPerdeuLord(rs.getInt("num_jogos_perdeu_lord"));
 
                 j.setEstatisticaJogador(ej);
 

@@ -203,8 +203,12 @@ public class DueloRN {
             } else {
                 oponente.getEstatisticaJogador().setNumJogosGanho(oponente.getEstatisticaJogador().getNumJogosGanho() + 1);
             }
+            if (oponente.getTipoJogador().equals(TipoJogador.LORD)) {
+                jogador.getEstatisticaJogador().setNumJogosPerdeuLord(jogador.getEstatisticaJogador().getNumJogosPerdeuLord() + 1);
+            } else {
+                jogador.getEstatisticaJogador().setNumJogosPerdido(jogador.getEstatisticaJogador().getNumJogosPerdido() + 1);
+            }
             jogador.getEstatisticaJogador().setNumJogos(jogador.getEstatisticaJogador().getNumJogos() + 1);
-            jogador.getEstatisticaJogador().setNumJogosPerdido(jogador.getEstatisticaJogador().getNumJogosPerdido() + 1);
 
             new JogadorRN().atualizarPontos(jogador);
             new JogadorRN().atualizarPontos(oponente);
@@ -215,8 +219,12 @@ public class DueloRN {
             } else {
                 jogador.getEstatisticaJogador().setNumJogosGanho(jogador.getEstatisticaJogador().getNumJogosGanho() + 1);
             }
+            if (jogador.getTipoJogador().equals(TipoJogador.LORD)) {
+                oponente.getEstatisticaJogador().setNumJogosPerdeuLord(oponente.getEstatisticaJogador().getNumJogosPerdeuLord() + 1);
+            } else {
+                oponente.getEstatisticaJogador().setNumJogosPerdido(oponente.getEstatisticaJogador().getNumJogosPerdido() + 1);
+            }
             oponente.getEstatisticaJogador().setNumJogos(oponente.getEstatisticaJogador().getNumJogos() + 1);
-            oponente.getEstatisticaJogador().setNumJogosPerdido(oponente.getEstatisticaJogador().getNumJogosPerdido() + 1);
 
             new JogadorRN().atualizarPontos(jogador);
             new JogadorRN().atualizarPontos(oponente);
@@ -315,7 +323,7 @@ public class DueloRN {
                     carta = monte.get(0);
                     monte.remove(carta);
                     colocaCartaMao(carta);
-                    if(mao.size() == 6){
+                    if (mao.size() == 6) {
                         MessageUtil.aviso("Se você não descer nenhuma carta, a próxima comprada irá direto para o descarte");
                     }
                 } else {
