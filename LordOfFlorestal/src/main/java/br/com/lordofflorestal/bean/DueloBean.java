@@ -57,6 +57,8 @@ public class DueloBean {
         this.login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
         this.dueloRN = new DueloRN(uri, login);
         this.cartasAtacam = new ArrayList();
+        this.listaCartaEfeito = new ArrayList();
+        this.ordemMonte = new ArrayList();
     }
 
     public void preRender() {
@@ -183,18 +185,19 @@ public class DueloBean {
     }
 
     public String adicionar62() {
-        ordemMonte.add(cartaAtacada);
-        listaCartaEfeito.remove(cartaAtacada);
+        ordemMonte.add(cartaSelecionada);
+        listaCartaEfeito.remove(cartaSelecionada);
         return null;
     }
 
     public String remover62() {
-        ordemMonte.remove(cartaAtacada);
-        listaCartaEfeito.add(cartaAtacada);
+        ordemMonte.remove(cartaSelecionada);
+        listaCartaEfeito.add(cartaSelecionada);
         return null;
     }
 
     public String atualizaListaCarta62() {
+        ordemMonte = new ArrayList();
         List<CartaJogo> lista = new ArrayList();
         for (CartaJogo carta : dueloRN.getMonte()) {
             if (lista.size() < 5) {
