@@ -56,9 +56,15 @@ body {
     filter: grayscale(100%);
 }
 
-.resgatar {
+.ui-panel .ui-panel-footer{
     text-align: right !important;
-    color: #FFFFFF !important;
+    background: #F57C17;
+    color: #FFF9DA !important;
+    font-weight: bold;
+}
+
+.resgatar {
+    color: #FFF9DA !important;
 }
 
 .user-txt {

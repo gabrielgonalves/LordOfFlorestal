@@ -53,16 +53,22 @@
                     </p:panel>
                 </div>
                 <div class="ui-g-12">
-                    <p:carousel numVisible="5" value="#{perfilBean.jogador.cartas}" circular="true"
-                                var="carta" headerText="Suas cartas" responsive="true" vertical="false">
-                        <center>
-                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="165" title="#{carta.efeito ne '' ? 'Efeito: '.concat(carta.efeito).concat('&#013;') : ''}Descrição: #{carta.descricao}"/>
-                        </center>
-
+                    <p:panel id="cartasSelecionadas" header="Suas cartas" >
+                        <div class="scroll">
+                            <p:outputPanel autoUpdate="true">
+                                <ui:repeat var="carta" value="#{perfilBean.jogador.cartas}">
+                                    <p:panel class="item">
+                                        <center>
+                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="165" title="#{carta.efeito ne '' ? 'Efeito: '.concat(carta.efeito).concat('&#013;') : ''}Descrição: #{carta.descricao}"/>
+                                        </center>
+                                    </p:panel>
+                                </ui:repeat>
+                            </p:outputPanel>
+                        </div>
                         <f:facet name="footer">
                             <p:link outcome="resgate.xhtml" value="Resgatar" class="resgatar" />
-                        </f:facet> 
-                    </p:carousel>
+                        </f:facet>
+                    </p:panel>
                 </div>
 
                 <div class="ui-g-12">
