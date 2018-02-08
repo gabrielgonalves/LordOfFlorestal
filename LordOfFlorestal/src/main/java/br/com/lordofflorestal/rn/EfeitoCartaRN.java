@@ -21,17 +21,16 @@ import java.util.List;
 public class EfeitoCartaRN {
 
     //A carta mais forte do jogo
-    public static boolean carta1(CartaJogo carta) {
-        if (carta.isTurno()) {
-            carta.setTurno(false);
-        }
-        if (!carta.isPosicao() && carta.isAtiva()) {
-            carta.setPosicao(true);
+    public static void carta1(CartaJogo carta) {
+        if (carta.getEspecial() == 0) {
+            carta.setEspecial(1);
+        } else if (carta.getEspecial() == 1 && carta.getEstadoCarta().equals(EstadoCarta.DEFESA) ) {
             carta.setEstadoCarta(EstadoCarta.ATAQUE);
-            carta.setTurno(true);
-            return true;
+            carta.setEspecial(2);
+        } else {
+            carta.setEspecial(0);
         }
-        return false;
+
     }
 
     //Alan turing de verdade
@@ -142,7 +141,7 @@ public class EfeitoCartaRN {
     public static void carta50(CartaJogo cartaOponente) {
         int valorAtaque = cartaOponente.getValorAtaque() - 1;
         int valorDefesa = cartaOponente.getValorDefesa() - 1;
-        if(cartaOponente.getValorDefesa() == 100){
+        if (cartaOponente.getValorDefesa() == 100) {
             valorDefesa = 100;
         }
         cartaOponente.setValorAtaque(valorAtaque);
@@ -177,15 +176,15 @@ public class EfeitoCartaRN {
 
     //Estudo de última hora
     public static void carta55(Deck seuDeck, Deck deckOponente, boolean resultado) {
-        if(resultado){
-            for(CartaJogo carta : deckOponente.getCartas()){
-                if(carta.getLocalCarta().equals(LocalCarta.MESA)){
+        if (resultado) {
+            for (CartaJogo carta : deckOponente.getCartas()) {
+                if (carta.getLocalCarta().equals(LocalCarta.MESA)) {
                     carta.setLocalCarta(LocalCarta.DESCARTE);
                 }
             }
         } else {
-            for(CartaJogo carta : seuDeck.getCartas()){
-                if(carta.getLocalCarta().equals(LocalCarta.MESA)){
+            for (CartaJogo carta : seuDeck.getCartas()) {
+                if (carta.getLocalCarta().equals(LocalCarta.MESA)) {
                     carta.setLocalCarta(LocalCarta.DESCARTE);
                 }
             }
@@ -202,7 +201,7 @@ public class EfeitoCartaRN {
     //Inspiração espontanêa
     public static void carta57(CartaJogo carta) {
         carta.setValorAtaque(carta.getValorAtaque() + 1);
-        carta.setAumentouAtaque(1);
+        carta.setEspecial(57);
     }
 
     //Interpretação popular dos objetivos do curso
@@ -238,10 +237,10 @@ public class EfeitoCartaRN {
 
     //Organização utópica esperada pelos professores
     public static void carta62(Deck deck, List<CartaJogo> lista) {
-        for(CartaJogo carta : lista){
+        for (CartaJogo carta : lista) {
             deck.getCartas().remove(carta);
         }
-        for(CartaJogo carta : deck.getCartas()){
+        for (CartaJogo carta : deck.getCartas()) {
             lista.add(carta);
         }
         deck.setCartas(lista);
@@ -250,7 +249,7 @@ public class EfeitoCartaRN {
     //Pânico induzido pelo prazo de entrega
     public static void carta63(CartaJogo carta) {
         carta.setValorAtaque(carta.getValorAtaque() + 2);
-        carta.setAumentouAtaque(2);
+        carta.setEspecial(63);
     }
 
     //Ponto extra inesperado
@@ -290,15 +289,13 @@ public class EfeitoCartaRN {
     public static void carta69(CartaJogo cartaOponente) {
         if (EstadoCarta.ATAQUE.equals(cartaOponente.getEstadoCarta())) {
             cartaOponente.setEstadoCarta(EstadoCarta.DEFESA);
-            cartaOponente.setPosicao(false);
         } else {
             cartaOponente.setEstadoCarta(EstadoCarta.ATAQUE);
-            cartaOponente.setPosicao(true);
         }
     }
 
     //Reprovação em cálculo 1
     public static void carta70(CartaJogo carta) {
-        carta.setPodeVencerDuelo(false);
+        carta.setEspecial(70);
     }
 }

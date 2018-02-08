@@ -14,16 +14,16 @@
         <p:outputPanel id="pontuacao">
             <div class="ui-g">
                 <div class="ui-g-10">
-                    <h:outputText value="#{dueloBean.jogador.login}" style="font-weight: bold" />
+                    <h:outputText value="#{dueloBean.dueloRN.jogador.login}" style="font-weight: bold" />
                 </div>
                 <div class="ui-g-2">
-                    <h:outputText value="#{dueloBean.seuDeck.pontosDeterminacao}" style="font-weight: bold" />
+                    <h:outputText value="#{dueloBean.dueloRN.deck.pontosDeterminacao}" style="font-weight: bold" />
                 </div>
                 <div class="ui-g-10">
-                    <h:outputText value="#{dueloBean.oponente.login}" style="font-weight: bold" />
+                    <h:outputText value="#{dueloBean.dueloRN.oponente.login}" style="font-weight: bold" />
                 </div>
                 <div class="ui-g-2">
-                    <h:outputText value="#{dueloBean.oponente eq null ? '' : dueloBean.deckOponente.pontosDeterminacao}" style="font-weight: bold" />
+                    <h:outputText value="#{dueloBean.dueloRN.oponente eq null ? '' : dueloBean.dueloRN.deckOponente.pontosDeterminacao}" style="font-weight: bold" />
                 </div>
             </div>
         </p:outputPanel>
@@ -32,93 +32,93 @@
     <ui:define name="content">
         <h:form prependId="false">
             <p:growl autoUpdate="true" />
-            <p:poll interval="1" widgetVar="poll" update=":pontuacao @form :batepapo" listener="#{dueloBean.atualizarDados}" />
+            <p:poll interval="1" widgetVar="poll" update=":pontuacao @form :batepapo" listener="#{dueloBean.atualizarDados()}" />
 
-            <p:outputPanel autoUpdate="true" rendered="#{dueloBean.duelo.situacaoDuelo eq 'CRIADO' or dueloBean.duelo.situacaoDuelo eq 'AGUARDANDO' or dueloBean.duelo.situacaoDuelo eq 'CANCELADO' or dueloBean.duelo.situacaoDuelo eq 'FINALIZADO' ? true : false}">
+            <p:outputPanel autoUpdate="true" rendered="#{dueloBean.dueloRN.duelo.situacaoDuelo ne 'EM_ANDAMENTO' ? true : false}">
                 <center>
-                    <p:outputPanel class="msg-panel" rendered="#{dueloBean.duelo.situacaoDuelo eq 'CRIADO' ? true : false}">
+                    <p:outputPanel class="msg-panel" rendered="#{dueloBean.dueloRN.duelo.situacaoDuelo eq 'CRIADO' ? true : false}">
                         <p:graphicImage library="img" name="carregando.gif" width="165"/>
                         <br/><br/>
                         <h:outputText value="Aguardando oponente" class="msg" />
                     </p:outputPanel>
-                    <p:outputPanel class="msg-panel" rendered="#{dueloBean.duelo.situacaoDuelo eq 'AGUARDANDO' ? true : false}">
-                        <p:graphicImage library="img" name="#{dueloBean.oponente.imagem}" class="img" width="165"/>
+                    <p:outputPanel class="msg-panel" rendered="#{dueloBean.dueloRN.duelo.situacaoDuelo eq 'AGUARDANDO' ? true : false}">
+                        <p:graphicImage library="img" name="#{dueloBean.dueloRN.oponente.imagem}" class="img" width="165"/>
                         <br/><br/>
-                        <h:outputText class="msg" value="#{dueloBean.oponente.login} está montando o deck para duelar com você" />
+                        <h:outputText class="msg" value="#{dueloBean.dueloRN.oponente.login} está montando o deck para duelar com você" />
                     </p:outputPanel>
-                    <p:outputPanel class="msg-panel" rendered="#{dueloBean.duelo.situacaoDuelo eq 'CANCELADO' ? true : false}">
+                    <p:outputPanel class="msg-panel" rendered="#{dueloBean.dueloRN.duelo.situacaoDuelo eq 'CANCELADO' ? true : false}">
                         <h:outputText class="msg" value="Seu duelo foi cancelado" />
                         <br/><br/>
                         <p:button class="btn-azul" outcome="dashboard.xhtml" value="Volte para a página inicial"/>
                     </p:outputPanel>
-                    <p:outputPanel class="msg-panel" rendered="#{dueloBean.duelo.situacaoDuelo eq 'FINALIZADO' ? true : false}">
-                        <p:graphicImage library="img" name="#{dueloBean.ganhador.imagem}" class="img" width="165"/>
+                    <p:outputPanel class="msg-panel" rendered="#{dueloBean.dueloRN.duelo.situacaoDuelo eq 'FINALIZADO' ? true : false}">
+                        <p:graphicImage library="img" name="#{dueloBean.dueloRN.ganhador.imagem}" class="img" width="165"/>
                         <br/><br/>
-                        <h:outputText class="msg" value="#{dueloBean.ganhador.login} foi o grande vencedor deste duelo" />
+                        <h:outputText class="msg" value="#{dueloBean.dueloRN.ganhador.login} foi o grande vencedor deste duelo" />
                         <br/><br/>
                         <p:button class="btn-azul" outcome="dashboard.xhtml" value="Volte para a página inicial"/>
                     </p:outputPanel>
                 </center>
             </p:outputPanel>
-            <p:outputPanel autoUpdate="true" rendered="#{dueloBean.duelo.situacaoDuelo eq 'EM_ANDAMENTO' ? true : false}">
+            <p:outputPanel autoUpdate="true" rendered="#{dueloBean.dueloRN.duelo.situacaoDuelo eq 'EM_ANDAMENTO' ? true : false}">
                 <p:outputPanel id="mesaOponente" autoUpdate="true" style="padding-top: 20px;">    
-                    <p:carousel value="#{dueloBean.mesaOponente}" numVisible="5" var="carta" headerText="Mesa do Oponente" responsive="true" vertical="false" circular="true">
+                    <p:carousel value="#{dueloBean.dueloRN.mesaOponente}" numVisible="5" var="carta" headerText="Mesa do Oponente" responsive="true" vertical="false" circular="true">
                         <center> 
                             <p:panelGrid columns="1" layout="grid">
                                 <f:facet name="header">
-                                    <h:outputText value="#{carta.posicao ? 'Ataque' : 'Defesa'}" />
+                                    <h:outputText value="#{carta.estadoCarta eq 'ATAQUE' ? 'Ataque' : 'Defesa'}" />
                                 </f:facet>
                                 <p:graphicImage library="cartas" name="#{carta.carta.imagem}" width="165" title="#{carta.carta.efeito ne '' ? 'Efeito: '.concat(carta.carta.efeito).concat('&#013;') : ''}Descrição: #{carta.carta.descricao}"/>
                                 <h:outputText value="Atk (#{carta.valorAtaque}) / Def (#{carta.valorDefesa})" />
-                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.atacar}" rendered="#{!dueloBean.especialOponente}" disabled="#{dueloBean.podeAtacar and dueloBean.duelo.vezDe eq dueloBean.jogador.login ? false : true}" value="Atacar" class="btn-vermelho" update="mesaOponente suaMesa :pontuacao :batepapo" >
+                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.atacar}" rendered="#{!dueloBean.dueloRN.especialMesaOponete}" disabled="#{dueloBean.dueloRN.podeAtacar and dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login ? false : true}" value="Atacar" class="btn-vermelho" update="mesaOponente suaMesa :pontuacao :batepapo determinacao" >
                                     <f:setPropertyActionListener target="#{dueloBean.cartaAtacada}" value="#{carta}" />
                                 </p:commandButton>
-                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.selecionar}" rendered="#{dueloBean.especialOponente and dueloBean.cartaSelecionada.carta.id ne 66}" disabled="#{dueloBean.especialOponente and dueloBean.duelo.vezDe eq dueloBean.jogador.login and carta.carta.id ne 23 ? false : true}" value="Selecionar" class="btn-verde" update="mesaOponente suaMesa :pontuacao :batepapo" >
-                                    <f:setPropertyActionListener target="#{dueloBean.cartaAtacada}" value="#{carta}" />
+                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.selecionar}" rendered="#{dueloBean.dueloRN.especialMesaOponete and dueloBean.cartaDescer.carta.id ne 66}" disabled="#{dueloBean.dueloRN.especialMesaOponete and dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and carta.carta.id ne 23 ? false : true}" value="Selecionar" class="btn-verde" update="mesaOponente suaMesa :pontuacao :batepapo" >
+                                    <f:setPropertyActionListener target="#{dueloBean.cartaSelecionadaMesaOponente}" value="#{carta}" />
                                 </p:commandButton>
-                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.selecionar}" rendered="#{dueloBean.especialOponente and dueloBean.cartaSelecionada.carta.id eq 66}" disabled="#{dueloBean.especialOponente and dueloBean.duelo.vezDe eq dueloBean.jogador.login and carta.carta.id ne 23 and carta.carta.subtipoCarta eq 'PROFESSOR' ? false : true}" value="Selecionar" class="btn-verde" update="mesaOponente suaMesa :pontuacao :batepapo" >
-                                    <f:setPropertyActionListener target="#{dueloBean.cartaAtacada}" value="#{carta}" />
+                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.selecionar}" rendered="#{dueloBean.dueloRN.especialMesaOponete and dueloBean.cartaDescer.carta.id eq 66}" disabled="#{dueloBean.dueloRN.especialMesaOponete and dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and carta.carta.id ne 23 and carta.carta.subtipoCarta eq 'PROFESSOR' ? false : true}" value="Selecionar" class="btn-verde" update="mesaOponente suaMesa :pontuacao :batepapo" >
+                                    <f:setPropertyActionListener target="#{dueloBean.cartaSelecionadaMesaOponente}" value="#{carta}" />
                                 </p:commandButton>
                             </p:panelGrid>
                         </center>
                     </p:carousel>
-                    <p:panel rendered="#{dueloBean.mesaOponente.size() eq 0 or dueloBean.possuiDefesa eq false ? true : false}">
+                    <p:panel id="determinacao" rendered="#{dueloBean.dueloRN.mesaOponente.size() eq 0 || dueloBean.dueloRN.podeAtacarDeterminacao}">
                         <center>
                             <p:panelGrid columns="1" layout="grid">
                                 <h:outputText value="Pontos de Determinação" />
-                                <h:outputText value="#{dueloBean.deckOponente.pontosDeterminacao}"/> 
-                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.atacarDeterminacao}" disabled="#{dueloBean.podeAtacar and dueloBean.duelo.vezDe eq dueloBean.jogador.login ? false : true}" value="Atacar" class="btn-vermelho" update="mesaOponente suaMesa :pontuacao :batepapo" />
+                                <h:outputText value="#{dueloBean.dueloRN.deckOponente.pontosDeterminacao}"/> 
+                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.atacarDeterminacao}" disabled="#{dueloBean.dueloRN.podeAtacar and dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login ? false : true}" value="Atacar" class="btn-vermelho" update=":pontuacao :batepapo" />
                             </p:panelGrid>
                         </center>
                     </p:panel>
                 </p:outputPanel>
                 <p:outputPanel id="suaMesa" autoUpdate="true" style="padding-top: 20px;">    
-                    <p:carousel widgetVar="sm" value="#{dueloBean.suaMesa}" numVisible="5" var="cartaMesa" headerText="Sua Mesa" responsive="true" vertical="false" circular="true">
+                    <p:carousel widgetVar="sm" value="#{dueloBean.dueloRN.mesa}" numVisible="5" var="cartaMesa" headerText="Sua Mesa" responsive="true" vertical="false" circular="true">
                         <center>
-                            <p:panelGrid columns="1" layout="grid" style="#{cartaMesa.posicao ? 'background: #79C2AA !important;' : 'background: #E85E4A !important;'}">
+                            <p:panelGrid columns="1" layout="grid" style="#{cartaMesa.estadoCarta eq 'ATAQUE' ? 'background: #79C2AA !important;' : 'background: #E85E4A !important;'}">
                                 <f:facet name="header">
-                                    <h:outputText value="#{cartaMesa.posicao ? 'Ataque' : 'Defesa'}" />
+                                    <h:outputText value="#{cartaMesa.estadoCarta eq 'ATAQUE' ? 'Ataque' : 'Defesa'}" />
                                 </f:facet>
                                 <p:graphicImage library="cartas" name="#{cartaMesa.carta.imagem}" width="165" title="#{cartaMesa.carta.efeito ne '' ? 'Efeito: '.concat(cartaMesa.carta.efeito).concat('&#013;') : ''}Descrição: #{cartaMesa.carta.descricao}"/>
                                 <h:outputText value="Atk (#{cartaMesa.valorAtaque}) / Def (#{cartaMesa.valorDefesa})" />
-                                <p:commandButton onsuccess="PF('poll').stop()" rendered="#{!dueloBean.especial}" action="#{dueloBean.alterarPosicaoCarta()}" value="Alterar" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and cartaMesa.ativa and !dueloBean.podeComprar and !cartaMesa.turno ? false : true}" class="#{cartaMesa.posicao eq false ? 'btn-vermelho' : 'btn-verde'}" update="mesaOponente suaMesa @this :batepapo" >
+                                <p:commandButton onsuccess="PF('poll').stop()" rendered="#{!dueloBean.dueloRN.especialMesa}" action="#{dueloBean.alterarPosicaoCarta}" value="Alterar" disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and cartaMesa.ativa and !dueloBean.dueloRN.podeComprar and cartaMesa.especial ne 2  ? false : true}" class="#{cartaMesa.estadoCarta eq 'DEFESA' ? 'btn-vermelho' : 'btn-verde'}" update="mesaOponente suaMesa @this :batepapo" >
                                     <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{cartaMesa}" />
                                 </p:commandButton>
-                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.ativaPodeAtacar}" value="#{'Atacar('.concat(cartaMesa.valorAtaque).concat(')')}" disabled="#{dueloBean.seuDeck.podeAtacar ? false : true}" rendered="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and cartaMesa.ativa and cartaMesa.posicao and !dueloBean.podeComprar and !dueloBean.especial ? true : false}" class="btn-vermelho" update="mesaOponente suaMesa @this :batepapo" >
+                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.selecionaAtacar}" value="#{'Atacar('.concat(cartaMesa.valorAtaque).concat(')')}" disabled="#{dueloBean.dueloRN.deck.podeAtacar and !dueloBean.cartasAtacam.contains(cartaMesa) ? false : true}" rendered="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and cartaMesa.ativa and cartaMesa.estadoCarta eq 'ATAQUE' and !dueloBean.dueloRN.podeComprar and !dueloBean.dueloRN.especialMesa ? true : false}" class="btn-vermelho" update="suaMesa :batepapo" >
                                     <f:setPropertyActionListener target="#{dueloBean.cartaAtaca}" value="#{cartaMesa}" />
                                 </p:commandButton>
-                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.selecionar}" rendered="#{dueloBean.especial and dueloBean.cartaSelecionada.carta.id ne 63}" value="Selecionar" class="btn-verde" update="mesaOponente suaMesa @this :batepapo" >
-                                    <f:setPropertyActionListener target="#{dueloBean.cartaAtaca}" value="#{cartaMesa}" />
+                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.selecionar}" rendered="#{dueloBean.dueloRN.especialMesa and dueloBean.cartaDescer.carta.id ne 63}" value="Selecionar" class="btn-verde" update="mesaOponente suaMesa @this :batepapo" >
+                                    <f:setPropertyActionListener target="#{dueloBean.cartaSelecionadaMesa}" value="#{cartaMesa}" />
                                 </p:commandButton>
-                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.selecionar}" rendered="#{dueloBean.especial and dueloBean.cartaSelecionada.carta.id eq 63}" disabled="#{cartaMesa.carta.subtipoCarta ne 'ALUNO'}" value="Selecionar" class="btn-verde" update="mesaOponente suaMesa @this :batepapo" >
-                                    <f:setPropertyActionListener target="#{dueloBean.cartaAtaca}" value="#{cartaMesa}" />
+                                <p:commandButton onsuccess="PF('poll').stop()" action="#{dueloBean.selecionar}" rendered="#{dueloBean.dueloRN.especialMesa and dueloBean.cartaDescer.carta.id eq 63}" disabled="#{cartaMesa.carta.subtipoCarta ne 'ALUNO'}" value="Selecionar" class="btn-verde" update="mesaOponente suaMesa @this :batepapo" >
+                                    <f:setPropertyActionListener target="#{dueloBean.cartaSelecionadaMesa}" value="#{cartaMesa}" />
                                 </p:commandButton>
                             </p:panelGrid>
                         </center>
                     </p:carousel>
                 </p:outputPanel>
                 <p:outputPanel id="suaMao" autoUpdate="true" style="padding-top: 20px;">    
-                    <p:carousel value="#{dueloBean.suaMao}" numVisible="5" var="cartaMao" headerText="Sua Mão" responsive="true" vertical="false" circular="true" footerText="Você possui #{dueloBean.seuMonte.size()} carta(s) no monte.">
+                    <p:carousel value="#{dueloBean.dueloRN.mao}" numVisible="5" var="cartaMao" headerText="Sua Mão" responsive="true" vertical="false" circular="true" footerText="Você possui #{dueloBean.dueloRN.monte.size()} carta(s) no monte.">
                         <center>
                             <p:panelGrid columns="1" layout="grid">
                                 <f:facet name="header">
@@ -127,23 +127,23 @@
                                 </f:facet>
 
                                 <p:graphicImage library="cartas" name="#{cartaMao.carta.imagem}" width="165" title="#{cartaMao.carta.efeito ne '' ? 'Efeito: '.concat(cartaMao.carta.efeito).concat('&#013;') : ''}Descrição: #{cartaMao.carta.descricao}"/>
-                                <p:commandButton rendered="#{cartaMao.carta.id ne 55 and cartaMao.carta.id ne 58 and cartaMao.carta.id ne 59 and cartaMao.carta.id ne 62 and cartaMao.carta.id ne 67 and cartaMao.carta.id ne 68}" value="Descer" onsuccess="PF('poll').stop()" class="btn-verde" action="#{dueloBean.descer}" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeDescer eq true ? false : true}" update=":pontuacao :batepapo" >
-                                    <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{cartaMao}" />
+                                <p:commandButton rendered="#{cartaMao.carta.id ne 55 and cartaMao.carta.id ne 58 and cartaMao.carta.id ne 59 and cartaMao.carta.id ne 62 and cartaMao.carta.id ne 67 and cartaMao.carta.id ne 68}" value="Descer" onsuccess="PF('poll').stop()" class="btn-verde" action="#{dueloBean.descer}" disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.login and dueloBean.dueloRN.podeDescer eq true ? false : true}" update=":pontuacao :batepapo" >
+                                    <f:setPropertyActionListener target="#{dueloBean.cartaDescer}" value="#{cartaMao}" />
                                 </p:commandButton>
-                                <p:commandButton onclick="PF('poll').stop();PF('carta55').show();" rendered="#{cartaMao.carta.id eq 55}" value="Descer" class="btn-verde" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeDescer eq true ? false : true}" update=":pontuacao :batepapo" >
-                                    <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{cartaMao}" />
+                                <p:commandButton onclick="PF('poll').stop();PF('carta55').show();" rendered="#{cartaMao.carta.id eq 55}" value="Descer" class="btn-verde" disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and dueloBean.dueloRN.podeDescer eq true ? false : true}" update=":pontuacao :batepapo" >
+                                    <f:setPropertyActionListener target="#{dueloBean.cartaDescer}" value="#{cartaMao}" />
                                 </p:commandButton>
-                                <p:commandButton onclick="PF('poll').stop();PF('carta59').show();" rendered="#{cartaMao.carta.id eq 59}" value="Descer" action="#{dueloBean.atualizaListaCarta59}" class="btn-verde" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeDescer eq true ? false : true}" update=":pontuacao :batepapo c59" >
-                                    <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{cartaMao}" />
+                                <p:commandButton onclick="PF('poll').stop();PF('carta59').show();" rendered="#{cartaMao.carta.id eq 59}" value="Descer" action="#{dueloBean.atualizaListaCarta59}" class="btn-verde" disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and dueloBean.dueloRN.podeDescer eq true ? false : true}" update=":pontuacao :batepapo c59" >
+                                    <f:setPropertyActionListener target="#{dueloBean.cartaDescer}" value="#{cartaMao}" />
                                 </p:commandButton>
-                                <p:commandButton onclick="PF('poll').stop();PF('carta62').show();" rendered="#{cartaMao.carta.id eq 62}" value="Descer" action="#{dueloBean.atualizaListaCarta62}" class="btn-verde" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeDescer eq true ? false : true}" update=":pontuacao :batepapo c62" >
-                                    <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{cartaMao}" />
+                                <p:commandButton onclick="PF('poll').stop();PF('carta62').show();" rendered="#{cartaMao.carta.id eq 62}" value="Descer" action="#{dueloBean.atualizaListaCarta62}" class="btn-verde" disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and dueloBean.dueloRN.podeDescer eq true ? false : true}" update=":pontuacao :batepapo c62" >
+                                    <f:setPropertyActionListener target="#{dueloBean.cartaDescer}" value="#{cartaMao}" />
                                 </p:commandButton>
-                                <p:commandButton onclick="PF('poll').stop();PF('carta67').show();" rendered="#{cartaMao.carta.id eq 67}" value="Descer" action="#{dueloBean.atualizaListaCarta67}" class="btn-verde" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeDescer eq true ? false : true}" update=":pontuacao :batepapo c67" >
-                                    <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{cartaMao}" />
+                                <p:commandButton onclick="PF('poll').stop();PF('carta67').show();" rendered="#{cartaMao.carta.id eq 67}" value="Descer" action="#{dueloBean.atualizaListaCarta67}" class="btn-verde" disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and dueloBean.dueloRN.podeDescer eq true ? false : true}" update=":pontuacao :batepapo c67" >
+                                    <f:setPropertyActionListener target="#{dueloBean.cartaDescer}" value="#{cartaMao}" />
                                 </p:commandButton>
-                                <p:commandButton onclick="PF('poll').stop();PF('carta68').show();" rendered="#{cartaMao.carta.id eq 68}" value="Descer" action="#{dueloBean.atualizaListaCarta68}" class="btn-verde" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeDescer eq true ? false : true}" update=":pontuacao :batepapo c68" >
-                                    <f:setPropertyActionListener target="#{dueloBean.cartaSelecionada}" value="#{cartaMao}" />
+                                <p:commandButton onclick="PF('poll').stop();PF('carta68').show();" rendered="#{cartaMao.carta.id eq 68}" value="Descer" action="#{dueloBean.atualizaListaCarta68}" class="btn-verde" disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and dueloBean.dueloRN.podeDescer eq true ? false : true}" update=":pontuacao :batepapo c68" >
+                                    <f:setPropertyActionListener target="#{dueloBean.cartaDescer}" value="#{cartaMao}" />
                                 </p:commandButton>
                             </p:panelGrid>
                         </center>
@@ -152,23 +152,23 @@
                 <div class="ui-fluid">
                     <div class="ui-g-8"/>
                     <div class="ui-g-12 ui-md-2">
-                        <p:commandButton id="comprar" onsuccess="PF('poll').stop()" value="Comprar Carta" action="#{dueloBean.comprar}" update="suaMao suaMesa @this finalizar :msg :btnmsg :pontuacao :batepapo" class="btn-verde" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeComprar eq true ? false : true}" />
+                        <p:commandButton id="comprar" onsuccess="PF('poll').stop()" value="Comprar Carta" action="#{dueloBean.comprar}" update="suaMao @this finalizar :batepapo" class="btn-verde" disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.login and dueloBean.dueloRN.podeComprar eq true ? false : true}" />
                     </div>
                     <div class="ui-g-12 ui-md-2">
-                        <p:commandButton id="finalizar" onsuccess="PF('poll').start()" value="Finalizar Turno" action="#{dueloBean.finalizarTurno}" disabled="#{!dueloBean.podeFinalizar}" update=":msg :btnmsg :batepapo" class="btn-vermelho" />
+                        <p:commandButton id="finalizar" onsuccess="PF('poll').start()" value="Finalizar Turno" action="#{dueloBean.finalizar}" disabled="#{!dueloBean.dueloRN.podeFinalizar}" update=":batepapo @this" class="btn-vermelho" />
                     </div>
                 </div>
             </p:outputPanel>
-            <p:outputPanel autoUpdate="true" rendered="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeComprar eq true and dueloBean.duelo.situacaoDuelo eq 'EM_ANDAMENTO' and dueloBean.som ? true : false}" >
-                <audio id="audio" autoplay="#{dueloBean.som}" onplay="tocar();">
+            <p:outputPanel autoUpdate="true" rendered="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and dueloBean.dueloRN.podeComprar eq true and dueloBean.dueloRN.duelo.situacaoDuelo eq 'EM_ANDAMENTO' and dueloBean.dueloRN.som ? true : false}" >
+                <audio id="audio" autoplay="#{dueloBean.dueloRN.som}" onplay="tocar();">
                     <source src="resources/mp3/som.mp3" type="audio/mp3" />
                 </audio>   
                 <script>
                     function tocar() {
                         var s = document.getElementById('audio');
-                        var b = #{dueloBean.som};
+                        var b = #{dueloBean.dueloRN.som};
                         if (b) {
-                    #{dueloBean.som = false};
+                    #{dueloBean.dueloRN.som = false};
                         }
                     }
                     ;
@@ -183,7 +183,7 @@
                             </center>
                             <p:messages for="caracoroamsg" autoUpdate="true" closable="true" />
                             <p:outputLabel value="Escolha uma opção" for="caracoroa" />
-                            <p:selectOneMenu disabled="#{!dueloBean.podeJogarCaraCoroa}" id="caracoroa" style="margin-top: 10px;" value="#{dueloBean.caracora}" >
+                            <p:selectOneMenu disabled="#{!dueloBean.podeJogarCaraCoroa}" id="caracoroa" style="margin-top: 10px;" value="#{dueloBean.caracoroa}" >
                                 <f:converter converterId="javax.faces.Boolean" />
                                 <f:selectItem itemLabel="Cara" itemValue="true" />
                                 <f:selectItem itemLabel="Coroa" itemValue="false" />
@@ -194,8 +194,8 @@
                         </div>
                         <div class="ui-g-12">
                             <center>
-                                <p:graphicImage class="#{dueloBean.podeJogarCaraCoroa ? 'moeda-pb' : ''}" id="img-caracoroa" library="img" name="#{dueloBean.caracoraResultado ? 'cara.jpg' : 'coroa.jpg'}" width="100" /><br/>
-                                <h:outputText value="#{dueloBean.caracoraResultado ? 'Cara' : 'Coroa'}" id="resultado-caracoroa" />
+                                <p:graphicImage class="#{dueloBean.podeJogarCaraCoroa ? 'moeda-pb' : ''}" id="img-caracoroa" library="img" name="#{dueloBean.caracoroaResultado ? 'cara.jpg' : 'coroa.jpg'}" width="100" /><br/>
+                                <h:outputText value="#{dueloBean.caracoroaResultado ? 'Cara' : 'Coroa'}" id="resultado-caracoroa" />
                             </center>
                         </div>
                     </div>
@@ -232,7 +232,7 @@
                     <p:outputPanel autoUpdate="true" id="carta622">
                         <p:carousel responsive="true" style="width: 100%;" value="#{dueloBean.ordemMonte}" numVisible="5" var="carta62o" headerText="Selecione uma carta para ser descartada" vertical="false" circular="true">
                             <center> 
-                                <p:panelGrid columns="1" layout="grid">
+                                <p:panelGrid columns="1" layout="grid" style="min-height: 200px;">
                                     <p:graphicImage library="cartas" name="#{carta62o.carta.imagem}" width="165" title="#{carta62o.carta.efeito ne '' ? 'Efeito: '.concat(carta62o.carta.efeito).concat('&#013;') : ''}Descrição: #{carta62o.carta.descricao}" />
                                     <p:commandButton onsuccess="PF('poll').stop();" action="#{dueloBean.remover62}" value="Remover" class="btn-vermelho" update="mesaOponente suaMesa :pontuacao :batepapo salvar62 carta621 carta622" >
                                         <f:setPropertyActionListener target="#{dueloBean.cartaAtacada}" value="#{carta62o}" />
@@ -282,9 +282,9 @@
         <h:form prependId="false">
             <div class="ui-g ui-fluid">
                 <div class="ui-g-12 no-margin">
-                    <p:inputText id="msg" value="#{dueloBean.mensagem}" placeholder="Digite sua mensagem" disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeFinalizar eq true ? false : true}"/>
-                    <p:commandButton id="btnmsg" value="Enviar" class="btn-azul" style="margin-top: 3px !important;" action="#{dueloBean.enviarMensagem}" update="batepapo msg"  disabled="#{dueloBean.duelo.vezDe eq dueloBean.jogador.login and dueloBean.podeFinalizar eq true ? false : true}" />
-                    <p:inputTextarea autoResize="true" id="batepapo" disabled="true" value="#{dueloBean.duelo.batePapo}" style="max-height: 300px; margin-top: 3px;" />
+                    <p:inputText id="msg" value="#{dueloBean.mensagem}" placeholder="Digite sua mensagem" disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and dueloBean.dueloRN.podeFinalizar eq true ? false : true}"/>
+                    <p:commandButton id="btnmsg" value="Enviar" class="btn-azul" style="margin-top: 3px !important;" action="#{dueloBean.enviarMensagem}" update="batepapo msg"  disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and dueloBean.dueloRN.podeFinalizar eq true ? false : true}" />
+                    <p:inputTextarea autoResize="true" id="batepapo" disabled="true" value="#{dueloBean.dueloRN.duelo.batePapo}" style="max-height: 300px; margin-top: 3px;" />
                 </div>
             </div>
         </h:form>

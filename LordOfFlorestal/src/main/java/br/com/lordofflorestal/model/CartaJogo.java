@@ -15,36 +15,29 @@ public class CartaJogo {
 
     private int valorAtaque;
     private int valorDefesa;
-    private boolean turno;
-    private boolean ativa;
-    private boolean posicao; //true ataque false defesa
     private LocalCarta localCarta;
     private EstadoCarta estadoCarta;
+    private boolean ativa; //Se a carta pode mudar estado de ataque e defesa
+    private boolean nova; //Se carta é nova na mão do jogador
+    private int especial; //Id da carta especial que afetou esta carta jogo
     private Carta carta;
-    private boolean nova;
-    private boolean podeVencerDuelo;
-    private int aumentouAtaque;
 
     public CartaJogo() {
         this.localCarta = LocalCarta.MONTE;
         this.estadoCarta = EstadoCarta.NEUTRO;
-        this.turno = false;
-        this.posicao = false;
         this.ativa = false;
-        this.nova = false;
-        this.podeVencerDuelo = true;
-        this.aumentouAtaque = 0;
+        this.nova = true;
+        this.especial = 0;
     }
 
-    public CartaJogo(int valorAtaque, int valorDefesa, boolean turno, boolean ativa, LocalCarta localCarta, EstadoCarta estadoCarta, Carta carta) {
+    public CartaJogo(int valorAtaque, int valorDefesa, LocalCarta localCarta, EstadoCarta estadoCarta, Carta carta) {
         this.valorAtaque = valorAtaque;
         this.valorDefesa = valorDefesa;
-        this.turno = turno;
-        this.ativa = ativa;
         this.localCarta = localCarta;
         this.estadoCarta = estadoCarta;
         this.carta = carta;
-        this.podeVencerDuelo = true;
+        this.ativa = false;
+        this.nova = true;
     }
 
     public CartaJogo(Carta carta) {
@@ -53,12 +46,9 @@ public class CartaJogo {
         this.valorDefesa = carta.getValorDefesa();
         this.localCarta = LocalCarta.MONTE;
         this.estadoCarta = EstadoCarta.NEUTRO;
-        this.turno = false;
         this.ativa = false;
-        this.posicao = false;
-        this.nova = false;
-        this.podeVencerDuelo = true;
-        this.aumentouAtaque = 0;
+        this.nova = true;
+        this.especial = 0;
     }
 
     public int getValorAtaque() {
@@ -77,22 +67,6 @@ public class CartaJogo {
         this.valorDefesa = valorDefesa;
     }
 
-    public boolean isTurno() {
-        return turno;
-    }
-
-    public void setTurno(boolean turno) {
-        this.turno = turno;
-    }
-
-    public boolean isAtiva() {
-        return ativa;
-    }
-
-    public void setAtiva(boolean ativa) {
-        this.ativa = ativa;
-    }
-
     public LocalCarta getLocalCarta() {
         return localCarta;
     }
@@ -109,20 +83,12 @@ public class CartaJogo {
         this.estadoCarta = estadoCarta;
     }
 
-    public Carta getCarta() {
-        return carta;
+    public boolean isAtiva() {
+        return ativa;
     }
 
-    public void setCarta(Carta carta) {
-        this.carta = carta;
-    }
-
-    public boolean isPosicao() {
-        return posicao;
-    }
-
-    public void setPosicao(boolean posicao) {
-        this.posicao = posicao;
+    public void setAtiva(boolean ativa) {
+        this.ativa = ativa;
     }
 
     public boolean isNova() {
@@ -133,33 +99,26 @@ public class CartaJogo {
         this.nova = nova;
     }
 
-    public boolean isPodeVencerDuelo() {
-        return podeVencerDuelo;
+    public int getEspecial() {
+        return especial;
     }
 
-    public void setPodeVencerDuelo(boolean podeVencerDuelo) {
-        this.podeVencerDuelo = podeVencerDuelo;
+    public void setEspecial(int especial) {
+        this.especial = especial;
     }
 
-    public int getAumentouAtaque() {
-        return aumentouAtaque;
+    public Carta getCarta() {
+        return carta;
     }
 
-    public void setAumentouAtaque(int aumentouAtaque) {
-        this.aumentouAtaque = aumentouAtaque;
+    public void setCarta(Carta carta) {
+        this.carta = carta;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 19 * hash + this.valorAtaque;
-        hash = 19 * hash + this.valorDefesa;
-        hash = 19 * hash + (this.turno ? 1 : 0);
-        hash = 19 * hash + (this.ativa ? 1 : 0);
-        hash = 19 * hash + (this.posicao ? 1 : 0);
-        hash = 19 * hash + Objects.hashCode(this.localCarta);
-        hash = 19 * hash + Objects.hashCode(this.estadoCarta);
-        hash = 19 * hash + Objects.hashCode(this.carta);
+        hash = 79 * hash + Objects.hashCode(this.carta);
         return hash;
     }
 
@@ -175,33 +134,10 @@ public class CartaJogo {
             return false;
         }
         final CartaJogo other = (CartaJogo) obj;
-        if (this.valorAtaque != other.valorAtaque) {
-            return false;
-        }
-        if (this.valorDefesa != other.valorDefesa) {
-            return false;
-        }
-        if (this.turno != other.turno) {
-            return false;
-        }
-        if (this.ativa != other.ativa) {
-            return false;
-        }
-        if (this.posicao != other.posicao) {
-            return false;
-        }
-        if (this.localCarta != other.localCarta) {
-            return false;
-        }
-        if (this.estadoCarta != other.estadoCarta) {
-            return false;
-        }
         if (!Objects.equals(this.carta, other.carta)) {
             return false;
         }
         return true;
     }
-
-    
 
 }

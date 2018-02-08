@@ -19,8 +19,8 @@ public class Deck implements Serializable {
     private int pontosDeterminacao;
     private List<CartaJogo> cartas;
     private Jogador jogador;
-    private boolean podeUsarEspecial;
-    private boolean podeAtacar;
+    private boolean podeUsarEspecial;  //Efeito da carta Desmotivação Induzida Pela Nota da Prova
+    private boolean podeAtacar; //Efeito da carta Procrastinação Fora de Controle
 
     public Deck() {
         cartas = new ArrayList();
