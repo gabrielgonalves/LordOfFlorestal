@@ -343,7 +343,6 @@ public class DueloRN {
 
     public void colocaCartaDescarte(CartaJogo carta) {
         carta.setLocalCarta(LocalCarta.DESCARTE);
-        descarte.add(carta);
     }
 
     public void colocaCartaMao(CartaJogo carta) {
