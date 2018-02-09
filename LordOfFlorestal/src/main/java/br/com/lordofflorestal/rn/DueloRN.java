@@ -164,13 +164,15 @@ public class DueloRN {
         }
 
         podeAtacar = false;
+        
+        boolean retorno = verificaPontosDeterminacao();
 
         if (duelo.getSituacaoDuelo().equals(SituacaoDuelo.FINALIZADO)) {
             salvar(duelo, ganhador.getMatricula());
             atualizaEstatistica();
         }
         
-        return verificaPontosDeterminacao();
+        return retorno;
     }
 
     public boolean atacarDeterminacao(List<CartaJogo> cartaAtaca) {
@@ -188,13 +190,15 @@ public class DueloRN {
         diminuiPontosDeterminacao(deckOponente, ataque);
 
         podeAtacar = false;
+        
+        boolean retorno = verificaPontosDeterminacao();
 
         if (duelo.getSituacaoDuelo().equals(SituacaoDuelo.FINALIZADO)) {
             salvar(duelo, ganhador.getMatricula());
             atualizaEstatistica();
         }
         
-        return verificaPontosDeterminacao();
+        return retorno;
     }
 
     public void atualizaEstatistica() {

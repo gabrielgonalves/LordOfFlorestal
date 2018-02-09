@@ -36,7 +36,10 @@
                         <h:link outcome="/perfil.xhtml"><i class="fa  fa-fw  fa-user"></i>Perfil</h:link>
                     </li>
                     <li class="#{menuBean.getItemCssClass('/resgate.xhtml')}">
-                        <h:link outcome="/resgate.xhtml"><i class="fa  fa-fw  fa-plus"></i>Resgate</h:link>
+                        <h:link outcome="/resgate.xhtml"><i class="fa fa-retweet"></i>Resgate</h:link>
+                    </li>
+                    <li class="#{menuBean.getItemCssClass('/suporte.xhtml')}">
+                        <h:link outcome="/suporte.xhtml"><i class="fa fa-comments"></i>Suporte</h:link>
                     </li>
                     <h:panelGroup rendered="#{perfilBean.jogador.tipoJogador eq 'LORD' ? true : false}">
                         <p:separator />

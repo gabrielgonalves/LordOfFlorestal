@@ -28,7 +28,7 @@
                                                 <ui:repeat var="carta" value="#{dashboardBean.jogador.cartas}">
                                                     <p:panel class="item">
                                                         <center>
-                                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="80" title="#{carta.efeito ne '' ? 'Efeito: '.concat(carta.efeito).concat('&#013;') : ''}Descrição: #{carta.descricao}"/>
+                                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="100" title="#{carta.efeito ne '' ? 'Efeito: '.concat(carta.efeito).concat('&#013;') : ''}Descrição: #{carta.descricao}"/>
                                                         </center>
                                                     </p:panel>
                                                 </ui:repeat>
