@@ -25,7 +25,7 @@
                                             <ui:repeat var="carta" value="#{juntarDueloBean.suasCartas}">
                                                 <p:panel class="item">
                                                     <center>
-                                                        <p:graphicImage library="cartas" name="#{carta.imagem}" width="165" title="#{carta.efeito ne '' ? 'Efeito: '.concat(carta.efeito).concat('&#013;') : ''}Descrição: #{carta.descricao}" />
+                                                        <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="165" />
                                                         <br/>
                                                         <p:commandButton disabled="#{juntarDueloBean.cartasSelecionadas.size() lt juntarDueloBean.qtCartas ? false : true}" class="btn-verde" value="Adicionar" action="#{juntarDueloBean.adicionarCarta}" update="criar cartasSelecionadas" >
                                                             <f:setPropertyActionListener target="#{juntarDueloBean.cartaSelecionada}" value="#{carta}" />
@@ -44,7 +44,7 @@
                                             <ui:repeat var="carta" value="#{juntarDueloBean.cartasSelecionadas}">
                                                 <p:panel class="item">
                                                     <center>
-                                                        <p:graphicImage library="cartas" name="#{carta.imagem}" width="165" title="#{carta.efeito ne '' ? 'Efeito: '.concat(carta.efeito).concat('&#013;') : ''}Descrição: #{carta.descricao}" /> 
+                                                        <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="165" /> 
                                                         <br />
                                                         <p:commandButton class="btn-vermelho" value="Remover" action="#{juntarDueloBean.removerCarta}" update="criar" >
                                                             <f:setPropertyActionListener target="#{juntarDueloBean.cartaSelecionada}" value="#{carta}" />

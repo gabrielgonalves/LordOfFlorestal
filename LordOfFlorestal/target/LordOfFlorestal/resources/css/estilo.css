@@ -149,3 +149,19 @@ body {
 .input {
     margin-top: 8px !important;
 }
+
+#cartahover {
+    visibility: hidden;
+    z-index: 9999;
+    position: fixed; 
+    bottom: 20px; 
+    left: 0;
+}
+
+.visible {
+    visibility: visible !important;
+}
+
+.defesa {
+    transform: rotate(-90deg) !important;
+}

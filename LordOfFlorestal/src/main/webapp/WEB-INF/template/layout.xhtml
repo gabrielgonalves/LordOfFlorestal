@@ -15,10 +15,12 @@
 
         <h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />
         <h:outputScript target="body" library="js" name="app.js" />
+        <h:outputScript target="body" library="js" name="cartaHover.js" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </h:head>
     <h:body>
+        <p:graphicImage id="cartahover" width="210" />
         <header class="topbar">
             <h:link outcome="/dashboard.xhtml" value="Lord Of Florestal" style="color: white; font-size: 30px; padding: 5px; padding-left: 15px; float: left; font-family: 'Poiret One', cursive ; text-decoration: none;" />
             <a href="#" class="toggle  js-toggle"><i class="fa  fa-bars"></i></a>

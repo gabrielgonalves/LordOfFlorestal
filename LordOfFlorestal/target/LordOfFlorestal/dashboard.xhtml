@@ -8,7 +8,7 @@
                 template="/WEB-INF/template/layout.xhtml">
 
     <ui:define name="conteudo">    
-        <h:form>
+        <h:form prependId="false">
             <div class="ui-g">
                 <div class="ui-g-12">
                     <p:panel class="card">
@@ -28,7 +28,7 @@
                                                 <ui:repeat var="carta" value="#{dashboardBean.jogador.cartas}">
                                                     <p:panel class="item">
                                                         <center>
-                                                            <p:graphicImage library="cartas" name="#{carta.imagem}" width="100" title="#{carta.efeito ne '' ? 'Efeito: '.concat(carta.efeito).concat('&#013;') : ''}Descrição: #{carta.descricao}"/>
+                                                            <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="100" />
                                                         </center>
                                                     </p:panel>
                                                 </ui:repeat>
