@@ -240,6 +240,7 @@ public class DueloRN {
 
     public void atualizarDados(String login) {
         if (duelo != null) {
+            verificaHoraDuelo();
             if (duelo.getCriadoPor().getLogin().equals(login)) {
                 deck = duelo.getDeckJogador1();
                 jogador = duelo.getCriadoPor();
