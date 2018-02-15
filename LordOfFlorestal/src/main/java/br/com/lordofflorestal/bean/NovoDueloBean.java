@@ -50,9 +50,6 @@ public class NovoDueloBean {
     public String removerCarta() {
         cartasSelecionadas.remove(cartaSelecionada);
         suasCartas.add(cartaSelecionada);
-        if (qtCartas > 10) {
-            qtCartas = cartasSelecionadas.size();
-        }
         return null;
     }
 

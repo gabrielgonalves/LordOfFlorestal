@@ -135,6 +135,7 @@ public class DueloBean {
 
     public String enviarMensagem() {
         dueloRN.enviarMensagem(mensagem);
+        mensagem = "";
         return null;
     }
 

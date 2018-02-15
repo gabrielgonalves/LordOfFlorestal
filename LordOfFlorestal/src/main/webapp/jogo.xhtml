@@ -132,7 +132,7 @@
                     </p:panel>
                 </p:outputPanel>
                 <p:outputPanel id="suaMao" autoUpdate="true" style="padding-top: 20px;">  
-                    <p:panel header="Sua Mão" >
+                    <p:panel header="Sua Mão" footer="Você possui #{dueloBean.dueloRN.monte.size()} carta(s) no monte" >
                         <div class="scroll">
                             <p:outputPanel autoUpdate="true">
                                 <ui:repeat var="cartaMao" value="#{dueloBean.dueloRN.mao}">

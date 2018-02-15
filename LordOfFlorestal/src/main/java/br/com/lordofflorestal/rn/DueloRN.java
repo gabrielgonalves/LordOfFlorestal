@@ -489,7 +489,6 @@ public class DueloRN {
         if (!mensagem.isEmpty()) {
             duelo.setBatePapo(jogador.getLogin() + ": " + mensagem + "\n\n" + duelo.getBatePapo());
         }
-        mensagem = "";
     }
 
     public void finalizar() {
