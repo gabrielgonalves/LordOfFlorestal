@@ -24,7 +24,7 @@ public class EfeitoCartaRN {
     public static void carta1(CartaJogo carta) {
         if (carta.getEspecial() == 0) {
             carta.setEspecial(1);
-        } else if (carta.getEspecial() == 1 && carta.getEstadoCarta().equals(EstadoCarta.DEFESA) ) {
+        } else if (carta.getEspecial() == 1 && carta.getEstadoCarta().equals(EstadoCarta.DEFESA)) {
             carta.setEstadoCarta(EstadoCarta.ATAQUE);
             carta.setEspecial(2);
         } else {
@@ -86,19 +86,15 @@ public class EfeitoCartaRN {
     //Ano novo
     public static void carta47(Deck deck, Deck deckOponente) {
         for (CartaJogo carta : deckOponente.getCartas()) {
-            if (carta.getLocalCarta().equals(LocalCarta.MAO)) {
-                if (carta.getCarta().getTipoCarta().equals(TipoCarta.DESAFIO)) {
-                    carta.setLocalCarta(LocalCarta.MESA);
-                } else {
+            if (carta.getLocalCarta().equals(LocalCarta.MESA)) {
+                if (carta.getCarta().getId() != 23) {
                     carta.setLocalCarta(LocalCarta.DESCARTE);
                 }
             }
         }
         for (CartaJogo carta : deck.getCartas()) {
-            if (carta.getLocalCarta().equals(LocalCarta.MAO)) {
-                if (carta.getCarta().getTipoCarta().equals(TipoCarta.DESAFIO)) {
-                    carta.setLocalCarta(LocalCarta.MESA);
-                } else {
+            if (carta.getLocalCarta().equals(LocalCarta.MESA)) {
+                if (carta.getCarta().getId() != 23) {
                     carta.setLocalCarta(LocalCarta.DESCARTE);
                 }
             }
@@ -164,6 +160,7 @@ public class EfeitoCartaRN {
 
     //Erro de física conveniente
     public static void carta53(CartaJogo carta, CartaJogo cartaSelecionada) {
+        carta.getCarta().setTipoCarta(cartaSelecionada.getCarta().getTipoCarta());
         carta.setValorAtaque(cartaSelecionada.getValorAtaque());
         carta.setValorDefesa(cartaSelecionada.getValorDefesa());
     }

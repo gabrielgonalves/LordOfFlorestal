@@ -400,7 +400,7 @@ public class DueloRN {
                 case 47:
                     colocaCartaDescarte(carta);
                     EfeitoCartaRN.carta47(deck, deckOponente);
-                    duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + carta.getCarta().getNome() + " e todas as cartas da mão foram jogadas na mesa\n\n" + duelo.getBatePapo());
+                    duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + carta.getCarta().getNome() + " e todas as cartas da mesa foram descartadas\n\n" + duelo.getBatePapo());
                     break;
                 case 48:
                     EfeitoCartaRN.carta48(deck);
