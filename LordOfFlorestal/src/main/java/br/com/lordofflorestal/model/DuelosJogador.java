@@ -23,6 +23,8 @@ public class DuelosJogador implements Serializable {
     private String oponente;
     private String imgJogador;
     private String imgOponente;
+    private int pontosGanhador;
+    private int pontosPerdedor;
 
     public DuelosJogador() {
     }
@@ -98,5 +100,21 @@ public class DuelosJogador implements Serializable {
     public void setImgOponente(String imgOponente) {
         this.imgOponente = imgOponente;
     }    
+
+    public int getPontosGanhador() {
+        return pontosGanhador;
+    }
+
+    public void setPontosGanhador(int pontosGanhador) {
+        this.pontosGanhador = pontosGanhador;
+    }
+
+    public int getPontosPerdedor() {
+        return pontosPerdedor;
+    }
+
+    public void setPontosPerdedor(int pontosPerdedor) {
+        this.pontosPerdedor = pontosPerdedor;
+    }
 
 }

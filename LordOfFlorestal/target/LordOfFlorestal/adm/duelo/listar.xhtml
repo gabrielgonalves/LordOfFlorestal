@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/layout.xhtml">
+
+    <ui:define name="conteudo">
+        <h:form prependId="false" enctype="multipart/form-data">  
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="Excluir Finalizados" icon="fa fa-trash" action="#{dueloSingletonBean.excluirFinalizado}" update="duelos" class="btn-azul"/>
+                            <p:commandButton value="Excluir Cancelados" icon="fa fa-trash" action="#{dueloSingletonBean.excluirCancelado}" update="duelos" class="btn-azul"/>
+                        </f:facet>
+                    </p:toolbar>
+                </div>
+            </div>
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:panel class="card">
+                        <p:messages autoUpdate="true" closable="true" />
+
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-g-12">
+                                <p:dataTable id="duelos" value="#{dueloSingletonBean.duelos}" var="duelo" reflow="true" emptyMessage="Nenhum duelo foi encontrado."
+                                             paginator="true" widgetVar="duelos" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="15">
+                                    <f:facet name="header">
+                                        Lista de duelos
+                                    </f:facet>
+
+                                    <p:column headerText="Uri" width="100" style="text-align: center">
+                                        <h:outputText value="#{duelo.uri}" />
+                                    </p:column>
+
+                                    <p:column headerText="Data de Criação">
+                                        <h:outputText value="#{duelo.dataCriacao.time}" >
+                                            <f:convertDateTime timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy HH:mm" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Situação" filterBy="#{duelo.situacaoDuelo}">
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('duelos').filter()">
+                                                <f:selectItem itemLabel="Selecione" />
+                                                <f:selectItems value="#{dueloSingletonBean.situacao}" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                        <h:outputText value="#{duelo.situacaoDuelo}" />
+                                    </p:column>
+
+                                    <p:column headerText="Criador" filterBy="#{duelo.criadoPor.login}">
+                                        <h:outputText value="#{duelo.criadoPor.login}" />
+                                    </p:column>
+
+                                    <p:column headerText="Oponente" filterBy="#{duelo.oponente.login}">
+                                        <h:outputText value="#{duelo.oponente.login}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </p:panel>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -10,7 +10,11 @@ import br.com.lordofflorestal.model.CartaJogo;
 import br.com.lordofflorestal.model.Duelo;
 import br.com.lordofflorestal.model.SituacaoDuelo;
 import br.com.lordofflorestal.control.DueloSingleton;
+import br.com.lordofflorestal.model.DeckJogador;
+import br.com.lordofflorestal.model.Jogador;
+import br.com.lordofflorestal.rn.DeckJogadorRN;
 import br.com.lordofflorestal.rn.JogadorRN;
+import br.com.lordofflorestal.util.MessageUtil;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -37,6 +41,9 @@ public class JuntarDueloBean {
 
     private int qtCartas;
 
+    private List<DeckJogador> decks;
+    private DeckJogador deckSelecionado;
+
     public JuntarDueloBean() {
         request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String uri = request.getParameter("duelo");
@@ -49,12 +56,27 @@ public class JuntarDueloBean {
     public String adicionarCarta() {
         cartasSelecionadas.add(cartaSelecionada);
         suasCartas.remove(cartaSelecionada);
+        deckSelecionado = null;
         return null;
     }
 
     public String removerCarta() {
         cartasSelecionadas.remove(cartaSelecionada);
         suasCartas.add(cartaSelecionada);
+        deckSelecionado = null;
+        return null;
+    }
+
+    public String selecionarDeck() {
+        cartasSelecionadas = deckSelecionado.getCartas();
+        for (Carta carta : cartasSelecionadas) {
+            suasCartas.remove(carta);
+        }
+        if (cartasSelecionadas.size() < qtCartas) {
+            MessageUtil.info("Deck " + deckSelecionado.getNome() + " selecionado com sucesso. Você ainda precisa selecionar mais " + (qtCartas - cartasSelecionadas.size()) + " carta(s).");
+        } else {
+            MessageUtil.info("Deck " + deckSelecionado.getNome() + " selecionado com sucesso.");
+        }
         return null;
     }
 
@@ -99,6 +121,26 @@ public class JuntarDueloBean {
 
     public void setCartaSelecionada(Carta cartaSelecionada) {
         this.cartaSelecionada = cartaSelecionada;
+    }
+
+    public DeckJogador getDeckSelecionado() {
+        return deckSelecionado;
+    }
+
+    public void setDeckSelecionado(DeckJogador deckSelecionado) {
+        this.deckSelecionado = deckSelecionado;
+    }
+
+    public List<DeckJogador> getDecks() {
+        Jogador jogador = new JogadorRN().buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
+        decks = new DeckJogadorRN().buscaPorJogador(jogador.getMatricula());
+        List<DeckJogador> lista = new ArrayList();
+        for (DeckJogador deck : decks) {
+            if (deck.getCartas().size() <= qtCartas) {
+                lista.add(deck);
+            }
+        }
+        return lista;
     }
 
 }

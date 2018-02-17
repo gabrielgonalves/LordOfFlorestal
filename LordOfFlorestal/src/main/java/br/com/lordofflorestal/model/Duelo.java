@@ -6,10 +6,9 @@
 package br.com.lordofflorestal.model;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Objects;
+import java.util.TimeZone;
 import java.util.UUID;
 
 /**
@@ -32,15 +31,11 @@ public class Duelo {
     public Duelo() {
         UUID uuid = UUID.randomUUID();
         this.uri = uuid.toString().substring(0, 10);
-        dataCriacao = Calendar.getInstance();
+        dataCriacao = Calendar.getInstance(TimeZone.getTimeZone("America/Sao_Paulo"));
         situacaoDuelo = SituacaoDuelo.CRIADO;
         deckJogador1 = new Deck();
         deckJogador2 = new Deck();
         batePapo = "";
-    }
-
-    public String getDataFormatada() {
-        return new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(dataCriacao.getTime());
     }
 
     public Jogador getCriadoPor() {

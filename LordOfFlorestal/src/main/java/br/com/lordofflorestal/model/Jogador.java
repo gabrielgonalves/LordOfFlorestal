@@ -23,6 +23,7 @@ public class Jogador implements Serializable {
     private String senha;
     private String imagem;
     private TipoJogador tipoJogador;
+    private int anoAdmissao;
     private EstatisticaJogador estatisticaJogador;
     private List<Carta> cartas;
 
@@ -31,7 +32,7 @@ public class Jogador implements Serializable {
         estatisticaJogador = new EstatisticaJogador();
     }
 
-    public Jogador(String nome, int matricula, String email, String login, String senha, String imagem, TipoJogador tipoJogador, EstatisticaJogador estatisticaJogador, List<Carta> cartas) {
+    public Jogador(String nome, int matricula, String email, String login, String senha, String imagem, TipoJogador tipoJogador, int anoAdmissao, EstatisticaJogador estatisticaJogador, List<Carta> cartas) {
         this.nome = nome;
         this.matricula = matricula;
         this.email = email;
@@ -39,6 +40,7 @@ public class Jogador implements Serializable {
         this.senha = senha;
         this.imagem = imagem;
         this.tipoJogador = tipoJogador;
+        this.anoAdmissao = anoAdmissao;
         this.estatisticaJogador = estatisticaJogador;
         this.cartas = cartas;
     }
@@ -99,6 +101,14 @@ public class Jogador implements Serializable {
         this.tipoJogador = tipoJogador;
     }
 
+    public int getAnoAdmissao() {
+        return anoAdmissao;
+    }
+
+    public void setAnoAdmissao(int anoAdmissao) {
+        this.anoAdmissao = anoAdmissao;
+    }
+
     public EstatisticaJogador getEstatisticaJogador() {
         return estatisticaJogador;
     }
@@ -117,14 +127,15 @@ public class Jogador implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 19 * hash + Objects.hashCode(this.nome);
-        hash = 19 * hash + this.matricula;
-        hash = 19 * hash + Objects.hashCode(this.email);
-        hash = 19 * hash + Objects.hashCode(this.login);
-        hash = 19 * hash + Objects.hashCode(this.senha);
-        hash = 19 * hash + Objects.hashCode(this.imagem);
-        hash = 19 * hash + Objects.hashCode(this.tipoJogador);
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.nome);
+        hash = 79 * hash + this.matricula;
+        hash = 79 * hash + Objects.hashCode(this.email);
+        hash = 79 * hash + Objects.hashCode(this.login);
+        hash = 79 * hash + Objects.hashCode(this.senha);
+        hash = 79 * hash + Objects.hashCode(this.imagem);
+        hash = 79 * hash + Objects.hashCode(this.tipoJogador);
+        hash = 79 * hash + this.anoAdmissao;
         return hash;
     }
 
@@ -141,6 +152,9 @@ public class Jogador implements Serializable {
         }
         final Jogador other = (Jogador) obj;
         if (this.matricula != other.matricula) {
+            return false;
+        }
+        if (this.anoAdmissao != other.anoAdmissao) {
             return false;
         }
         if (!Objects.equals(this.nome, other.nome)) {
@@ -163,5 +177,5 @@ public class Jogador implements Serializable {
         }
         return true;
     }
-
+    
 }

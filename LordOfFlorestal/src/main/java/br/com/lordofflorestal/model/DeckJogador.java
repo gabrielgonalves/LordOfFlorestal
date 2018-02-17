@@ -14,20 +14,29 @@ import java.util.Objects;
  *
  * @author gabriel
  */
-public class Turno implements Serializable {
+public class DeckJogador implements Serializable {
 
     private int id;
-    private List<ItemTurno> itensTurno;
+    private String nome;
     private Jogador jogador;
+    private List<Carta> cartas;
 
-    public Turno() {
-        itensTurno = new ArrayList();
+    public DeckJogador() {
+        cartas = new ArrayList();
+    }
+    
+    public DeckJogador(DeckJogador deckJogador){
+        this.id = deckJogador.getId();
+        this.nome = deckJogador.getNome();
+        this.jogador = deckJogador.getJogador();
+        this.cartas = deckJogador.getCartas();
     }
 
-    public Turno(int id, List<ItemTurno> itensTurno, Jogador jogador) {
+    public DeckJogador(int id, String nome, Jogador jogador, List<Carta> cartas) {
         this.id = id;
-        this.itensTurno = itensTurno;
+        this.nome = nome;
         this.jogador = jogador;
+        this.cartas = cartas;
     }
 
     public int getId() {
@@ -38,12 +47,12 @@ public class Turno implements Serializable {
         this.id = id;
     }
 
-    public List<ItemTurno> getItensTurno() {
-        return itensTurno;
+    public String getNome() {
+        return nome;
     }
 
-    public void setItensTurno(List<ItemTurno> itensTurno) {
-        this.itensTurno = itensTurno;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Jogador getJogador() {
@@ -54,12 +63,21 @@ public class Turno implements Serializable {
         this.jogador = jogador;
     }
 
+    public List<Carta> getCartas() {
+        return cartas;
+    }
+
+    public void setCartas(List<Carta> cartas) {
+        this.cartas = cartas;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 61 * hash + this.id;
-        hash = 61 * hash + Objects.hashCode(this.itensTurno);
+        hash = 61 * hash + Objects.hashCode(this.nome);
         hash = 61 * hash + Objects.hashCode(this.jogador);
+        hash = 61 * hash + Objects.hashCode(this.cartas);
         return hash;
     }
 
@@ -74,17 +92,19 @@ public class Turno implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Turno other = (Turno) obj;
+        final DeckJogador other = (DeckJogador) obj;
         if (this.id != other.id) {
             return false;
         }
-        if (!Objects.equals(this.itensTurno, other.itensTurno)) {
+        if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
         if (!Objects.equals(this.jogador, other.jogador)) {
             return false;
         }
+        if (!Objects.equals(this.cartas, other.cartas)) {
+            return false;
+        }
         return true;
     }
-
 }

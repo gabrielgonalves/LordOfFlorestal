@@ -103,14 +103,6 @@ public class Carta implements Serializable {
     public int hashCode() {
         int hash = 7;
         hash = 79 * hash + this.id;
-        hash = 79 * hash + Objects.hashCode(this.nome);
-        hash = 79 * hash + Objects.hashCode(this.imagem);
-        hash = 79 * hash + Objects.hashCode(this.efeito);
-        hash = 79 * hash + Objects.hashCode(this.descricao);
-        hash = 79 * hash + this.valorAtaque;
-        hash = 79 * hash + this.valorDefesa;
-        hash = 79 * hash + Objects.hashCode(this.tipoCarta);
-        hash = 79 * hash + Objects.hashCode(this.subtipoCarta);
         return hash;
     }
 
@@ -127,30 +119,6 @@ public class Carta implements Serializable {
         }
         final Carta other = (Carta) obj;
         if (this.id != other.id) {
-            return false;
-        }
-        if (this.valorAtaque != other.valorAtaque) {
-            return false;
-        }
-        if (this.valorDefesa != other.valorDefesa) {
-            return false;
-        }
-        if (!Objects.equals(this.nome, other.nome)) {
-            return false;
-        }
-        if (!Objects.equals(this.imagem, other.imagem)) {
-            return false;
-        }
-        if (!Objects.equals(this.efeito, other.efeito)) {
-            return false;
-        }
-        if (!Objects.equals(this.descricao, other.descricao)) {
-            return false;
-        }
-        if (this.tipoCarta != other.tipoCarta) {
-            return false;
-        }
-        if (this.subtipoCarta != other.subtipoCarta) {
             return false;
         }
         return true;

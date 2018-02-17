@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template/layout.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="conteudo">
+        <h:form prependId="false" enctype="multipart/form-data">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="Novo deck" icon="fa fa-plus" action="#{deckBean.novo}" class="btn-azul"/>
+                        </f:facet>
+                    </p:toolbar>
+                </div>
+            </div>
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:panel class="card">
+                        <p:messages autoUpdate="true" closable="true" />
+
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-g-12">
+                                <p:dataTable id="decks" value="#{deckBean.decks}" var="deck" reflow="true" emptyMessage="Nenhum deck foi encontrado."
+                                             paginator="true" widgetVar="decks" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="15">
+                                    <f:facet name="header">
+                                        Seus decks
+                                    </f:facet>
+
+                                    <p:column headerText="Nome" width="250" filterBy="#{deck.nome}" filterMatchMode="contains">
+                                        <h:outputText value="#{deck.nome}" />
+                                    </p:column>
+
+                                    <p:column headerText="Qt de Cartas" width="100" style="text-align: center" filterBy="#{deck.cartas.size()}">
+                                        <h:outputText value="#{deck.cartas.size()}" />
+                                    </p:column>
+
+                                    <p:column headerText="Cartas">
+                                        <p:panel>
+                                            <div class="scroll">
+                                                <p:outputPanel autoUpdate="true">
+                                                    <ui:repeat var="carta" value="#{deck.cartas}">
+                                                        <p:panel class="item">
+                                                            <center>
+                                                                <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="100" />
+                                                            </center>
+                                                        </p:panel>
+                                                    </ui:repeat>
+                                                </p:outputPanel>
+                                            </div>
+                                        </p:panel>
+                                    </p:column>
+
+                                    <p:column width="100">
+                                        <div class="ui-g ui-fluid no-margin">
+                                            <div class="ui-g-6">
+                                                <p:button icon="fa fa-pencil-square-o" class="btn-verde" outcome="/novo-deck.xhtml?id=#{deck.id}" />
+                                            </div>
+                                            <div class="ui-g-6">
+                                                <p:commandButton onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="decks excluir" >
+                                                    <f:setPropertyActionListener target="#{deckBean.deckJogador}" value="#{deck}" />
+                                                </p:commandButton>
+                                            </div>
+                                        </div>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </p:panel>
+                </div>
+            </div>
+            <p:dialog modal="true" widgetVar="excluir" resizable="false" header="Atenção" showEffect="fade" hideEffect="fade">
+                <p:panel id="excluir" style="border: none !important">
+                    <div class="ui-g ui-fluid">
+                        <div class="ui-g-12">
+                            <h:outputText value="Deseja realmente excluir o deck #{deckBean.deckJogador.nome}" />
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <p:commandButton class="btn-verde" value="Sim" action="#{deckBean.excluir}" onsuccess="PF('excluir').hide();" update="decks" icon="fa fa-check" />
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <p:commandButton class="btn-vermelho" value="Não" onclick="PF('excluir').hide();" icon="fa fa-close" />
+                        </div>
+                    </div>
+                </p:panel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

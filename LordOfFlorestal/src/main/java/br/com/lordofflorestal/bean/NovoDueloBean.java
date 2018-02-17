@@ -10,7 +10,10 @@ import br.com.lordofflorestal.model.CartaJogo;
 import br.com.lordofflorestal.model.Duelo;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.control.DueloSingleton;
+import br.com.lordofflorestal.model.DeckJogador;
+import br.com.lordofflorestal.rn.DeckJogadorRN;
 import br.com.lordofflorestal.rn.JogadorRN;
+import br.com.lordofflorestal.util.MessageUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -35,21 +38,41 @@ public class NovoDueloBean {
     private int tempo;
     private int qtCartas;
 
+    private List<DeckJogador> decks;
+    private DeckJogador deckSelecionado;
+
     public NovoDueloBean() {
         qtCartas = 10;
         cartasSelecionadas = new ArrayList();
         suasCartas = new JogadorRN().buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser()).getCartas();
+        Jogador jogador = new JogadorRN().buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
+        decks = new DeckJogadorRN().buscaPorJogador(jogador.getMatricula());
     }
 
     public String adicionarCarta() {
         cartasSelecionadas.add(cartaSelecionada);
         suasCartas.remove(cartaSelecionada);
+        deckSelecionado = null;
         return null;
     }
 
     public String removerCarta() {
         cartasSelecionadas.remove(cartaSelecionada);
         suasCartas.add(cartaSelecionada);
+        deckSelecionado = null;
+        return null;
+    }
+
+    public String selecionarDeck() {
+        cartasSelecionadas = deckSelecionado.getCartas();
+        for (Carta carta : cartasSelecionadas) {
+            suasCartas.remove(carta);
+        }
+        if (cartasSelecionadas.size() < qtCartas) {
+            MessageUtil.info("Deck " + deckSelecionado.getNome() + " selecionado com sucesso. Você ainda precisa selecionar mais " + (qtCartas - cartasSelecionadas.size()) + " carta(s).");
+        } else {
+            MessageUtil.info("Deck " + deckSelecionado.getNome() + " selecionado com sucesso.");
+        }
         return null;
     }
 
@@ -66,8 +89,8 @@ public class NovoDueloBean {
         }
         duelo.getDeckJogador1().setCartas(cartas);
         duelo.setVezDe(duelo.getCriadoPor().getLogin());
-        
-        duelo.setBatePapo(jogador.getLogin()+" criou o duelo");
+
+        duelo.setBatePapo(jogador.getLogin() + " criou o duelo");
 
         DueloSingleton.getInstance().adicionar(duelo);
 
@@ -114,8 +137,34 @@ public class NovoDueloBean {
         this.qtCartas = qtCartas;
     }
 
+    public DeckJogador getDeckSelecionado() {
+        return deckSelecionado;
+    }
+
+    public void setDeckSelecionado(DeckJogador deckSelecionado) {
+        this.deckSelecionado = deckSelecionado;
+    }
+
     public void onSlideEnd(SlideEndEvent event) {
         qtCartas = event.getValue();
+        if (qtCartas < cartasSelecionadas.size()) {
+            MessageUtil.aviso("Você precisa remover " + (cartasSelecionadas.size() - qtCartas) + " carta(s) para criar um novo duelo com essa quantidade de cartas.");
+        }
+        if (cartasSelecionadas.size() != 0 && qtCartas > cartasSelecionadas.size()) {
+            MessageUtil.aviso("Você precisa selecionar " + (qtCartas - cartasSelecionadas.size()) + " carta(s) para criar um novo duelo com essa quantidade de cartas.");
+        }
+    }
+
+    public List<DeckJogador> getDecks() {
+        Jogador jogador = new JogadorRN().buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
+        decks = new DeckJogadorRN().buscaPorJogador(jogador.getMatricula());
+        List<DeckJogador> lista = new ArrayList();
+        for (DeckJogador deck : decks) {
+            if (deck.getCartas().size() <= qtCartas) {
+                lista.add(deck);
+            }
+        }
+        return lista;
     }
 
 }

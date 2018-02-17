@@ -47,6 +47,11 @@ public class ValeCartaBean {
         this.valeCarta = new ValeCarta();
         return "/adm/valecarta/cadastrar.xhtml?faces-redirect=true";
     }
+    
+    public String excluir() {
+        new ValeCartaRN().excluir(valeCarta);
+        return null;
+    }
 
     public int getQt() {
         return qt;

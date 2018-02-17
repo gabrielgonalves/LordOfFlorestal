@@ -8,6 +8,7 @@
                 template="/WEB-INF/template/layout.xhtml">
     <ui:define name="conteudo">    
         <h:form prependId="false">
+            <p:growl autoUpdate="true" />
             <div class="ui-fluid">
                 <div class="ui-g-12">
                     <p:panel class="card">
@@ -19,6 +20,48 @@
                                 <h:outputText value="Você pode selecionar #{juntarDueloBean.qtCartas} cartas" class="user-txt" />
                             </div>
                             <div class="ui-g-12">
+                                <p:dataTable style="box-shadow: none !important;" id="decks" value="#{juntarDueloBean.decks}" var="deck" reflow="true" emptyMessage="Nenhum deck foi encontrado."
+                                             paginator="true" widgetVar="decks" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="15">
+                                    <f:facet name="header">
+                                        Seus decks
+                                    </f:facet>
+
+                                    <p:column headerText="Nome" width="250" filterBy="#{deck.nome}">
+                                        <h:outputText value="#{deck.nome}" />
+                                    </p:column>
+
+                                    <p:column headerText="Qt de Cartas" width="100" style="text-align: center" filterBy="#{deck.cartas.size()}">
+                                        <h:outputText value="#{deck.cartas.size()}" />
+                                    </p:column>
+
+                                    <p:column headerText="Cartas">
+                                        <p:panel>
+                                            <div class="scroll">
+                                                <p:outputPanel autoUpdate="true">
+                                                    <ui:repeat var="carta" value="#{deck.cartas}">
+                                                        <p:panel class="item">
+                                                            <center>
+                                                                <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="100" />
+                                                            </center>
+                                                        </p:panel>
+                                                    </ui:repeat>
+                                                </p:outputPanel>
+                                            </div>
+                                        </p:panel>
+                                    </p:column>
+
+                                    <p:column width="150">
+                                        <div class="ui-g ui-fluid no-margin">
+                                            <div class="ui-g-12">
+                                                <p:commandButton class="btn-verde" disabled="#{juntarDueloBean.deckSelecionado eq deck}" value="Selecionar" update="criar suasCartas cartasSelecionadas @this" action="#{juntarDueloBean.selecionarDeck}" >
+                                                    <f:setPropertyActionListener target="#{juntarDueloBean.deckSelecionado}" value="#{deck}" />
+                                                </p:commandButton>
+                                            </div>
+                                        </div>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                            <div class="ui-g-12">
                                 <p:panel id="suasCartas" header="Suas cartas">
                                     <div class="scroll">
                                         <p:outputPanel autoUpdate="true">
@@ -27,7 +70,7 @@
                                                     <center>
                                                         <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="165" />
                                                         <br/>
-                                                        <p:commandButton disabled="#{juntarDueloBean.cartasSelecionadas.size() lt juntarDueloBean.qtCartas ? false : true}" class="btn-verde" value="Adicionar" action="#{juntarDueloBean.adicionarCarta}" update="criar cartasSelecionadas" >
+                                                        <p:commandButton disabled="#{juntarDueloBean.cartasSelecionadas.size() lt juntarDueloBean.qtCartas ? false : true}" class="btn-verde" value="Adicionar" action="#{juntarDueloBean.adicionarCarta}" update="criar cartasSelecionadas suasCartas decks" >
                                                             <f:setPropertyActionListener target="#{juntarDueloBean.cartaSelecionada}" value="#{carta}" />
                                                         </p:commandButton>
                                                     </center>
@@ -46,7 +89,7 @@
                                                     <center>
                                                         <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="165" /> 
                                                         <br />
-                                                        <p:commandButton class="btn-vermelho" value="Remover" action="#{juntarDueloBean.removerCarta}" update="criar" >
+                                                        <p:commandButton class="btn-vermelho" value="Remover" action="#{juntarDueloBean.removerCarta}" update="criar cartasSelecionadas suasCartas decks" >
                                                             <f:setPropertyActionListener target="#{juntarDueloBean.cartaSelecionada}" value="#{carta}" />
                                                         </p:commandButton>
                                                     </center>
@@ -58,7 +101,7 @@
                             </div>
                             <div class="ui-g-12 ui-md-10"/>
                             <div class="ui-g-12 ui-md-2">
-                                <p:commandButton id="criar" value="Jogar" disabled="#{juntarDueloBean.cartasSelecionadas.size() lt juntarDueloBean.qtCartas ? true : false}" action="#{juntarDueloBean.entrarDuelo}" class="btn" />
+                                <p:commandButton id="criar" value="Jogar" disabled="#{juntarDueloBean.cartasSelecionadas.size() ne juntarDueloBean.qtCartas ? true : false}" action="#{juntarDueloBean.entrarDuelo}" class="btn" />
                             </div>
                         </div>
                     </p:panel>

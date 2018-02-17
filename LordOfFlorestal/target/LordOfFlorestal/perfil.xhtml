@@ -90,9 +90,10 @@
                                             <div class="ui-g-12 ui-md-12">
                                                 <center>
                                                     <h:outputText style="font-weight: bold;" value="#{dj.situacaoDuelo eq 'FINALIZADO' ? dj.jogador.concat(' vs ').concat(dj.oponente) : dj.jogador}" /> <br/><br/>
+                                                    <h:outputText style="font-weight: bold;" rendered="#{dj.situacaoDuelo eq 'FINALIZADO'}" value="#{dj.matriculaJogador eq dj.matriculaVencedor ? ''.concat(dj.pontosGanhador).concat(' vs ').concat(dj.pontosPerdedor) : ''.concat(dj.pontosPerdedor).concat(' vs ').concat(dj.pontosGanhador)}" /> <br/><br/>
                                                     <h:outputText value="#{dj.situacaoDuelo}" /> <br/><br/>
                                                     <h:outputText value="#{dj.dataCriacao}" >
-                                                        <f:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" />
+                                                        <f:convertDateTime timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy HH:mm" />
                                                     </h:outputText>
                                                 </center>    
                                             </div>

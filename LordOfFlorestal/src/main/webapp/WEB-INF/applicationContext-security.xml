@@ -11,6 +11,8 @@
         <intercept-url pattern="/dashboard.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>
         <intercept-url pattern="/jogo.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>
         <intercept-url pattern="/juntar-se.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>
+        <intercept-url pattern="/lista-deck.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>
+        <intercept-url pattern="/novo-deck.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>
         <intercept-url pattern="/novo-duelo.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>
         <intercept-url pattern="/perfil.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>
         <intercept-url pattern="/resgate.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>

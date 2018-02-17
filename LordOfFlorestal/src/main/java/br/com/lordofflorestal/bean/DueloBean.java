@@ -374,5 +374,5 @@ public class DueloBean {
     public void setCaracoroaResultado(boolean caracoroaResultado) {
         this.caracoroaResultado = caracoroaResultado;
     }
-
+    
 }

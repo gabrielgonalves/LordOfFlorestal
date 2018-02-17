@@ -167,3 +167,11 @@ body {
 .defesa {
     transform: rotate(-90deg) !important;
 }
+
+#ranking1_content, #ranking2_content {
+    border: none !important;
+}
+
+.img-pb{
+    filter: grayscale(100%);
+}

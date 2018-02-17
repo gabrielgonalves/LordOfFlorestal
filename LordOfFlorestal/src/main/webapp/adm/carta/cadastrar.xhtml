@@ -15,7 +15,7 @@
                 <div class="ui-g-12 tira-margem-tabela">
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton value="Nova carta" icon="fa fa-plus" action="#{cartaBean.novo}" class="btn-azul"/>
+                            <p:commandButton value="Nova carta" icon="fa fa-plus" action="#{cartaBean.novo}" class="btn-azul" process="@this"/>
                         </f:facet>
                         <f:facet name="right">
                             <p:button value="Lista de cartas" icon="fa fa-list" outcome="/adm/carta/listar.xhtml" class="btn-azul"/>

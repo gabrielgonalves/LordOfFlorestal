@@ -1,0 +1,120 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/layout.xhtml">
+
+    <ui:define name="conteudo">
+        <h:form prependId="false" enctype="multipart/form-data">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="Nova missão" icon="fa fa-plus" action="#{missaoBean.novo}" class="btn-azul"/>
+                        </f:facet>
+                    </p:toolbar>
+                </div>
+            </div>
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:panel class="card">
+                        <p:messages autoUpdate="true" closable="true" />
+
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-g-12">
+                                <p:dataTable id="missoes" value="#{missaoBean.missoes}" var="missao" reflow="true" emptyMessage="Nenhuma missão foi encontrada."
+                                             paginator="true" widgetVar="missoes" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="15">
+                                    <f:facet name="header">
+                                        Lista de missões
+                                    </f:facet>
+
+                                    <p:column headerText="Id" width="50" filterBy="#{missao.id}">
+                                        <h:outputText value="#{missao.id}" />
+                                    </p:column>
+
+                                    <p:column headerText="Descrição">
+                                        <h:outputText value="#{missao.descricao}" />
+                                    </p:column>
+
+                                    <p:column headerText="Carta" filterBy="#{missao.carta.nome}">
+                                        <h:outputText value="#{missao.carta.nome}" />
+                                    </p:column>
+
+                                    <p:column headerText="Ativa" filterBy="#{missao.ativa}" filterMatchMode="equals" style="text-align: center;">
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('missoes').filter()">
+                                                <f:converter converterId="javax.faces.Boolean" />
+                                                <f:selectItem itemValue="" itemLabel="Todas" />
+                                                <f:selectItem itemValue="true" itemLabel="Ativa" />
+                                                <f:selectItem itemValue="false" itemLabel="Inativa" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                        <p:graphicImage library="icon" name="#{missao.ativa == true ?'like.png' : 'dislike.png'}" />
+                                    </p:column>
+
+                                    <p:column width="150">
+                                        <div class="ui-g ui-fluid no-margin">
+                                            <div class="ui-g-4">
+                                                <p:button icon="fa fa-pencil-square-o" class="btn-verde" outcome="/adm/missao/cadastrar.xhtml?id=#{missao.id}" />
+                                            </div>
+                                            <div class="ui-g-4">
+                                                <p:commandButton onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="missoes excluir" >
+                                                    <f:setPropertyActionListener target="#{missaoBean.missao}" value="#{missao}" />
+                                                </p:commandButton>
+                                            </div>
+                                            <div class="ui-g-4">
+                                                <p:commandButton icon="fa fa-eye" class="btn-azul" onclick="PF('info').show()" update="info" >
+                                                    <f:setPropertyActionListener target="#{missaoBean.missao}" value="#{missao}" />
+                                                </p:commandButton>
+                                            </div>
+                                        </div>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </p:panel>
+                </div>
+            </div>
+            <p:dialog modal="true" widgetVar="excluir" resizable="false" header="Atenção" showEffect="fade" hideEffect="fade">
+                <p:panel id="excluir" style="border: none !important">
+                    <div class="ui-g ui-fluid">
+                        <div class="ui-g-12">
+                            <h:outputText value="Deseja realmente excluir a missão #{missaoBean.missao.id}" />
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <p:commandButton class="btn-verde" value="Sim" action="#{missaoBean.excluir}" onsuccess="PF('excluir').hide();" update="missoes" icon="fa fa-check" />
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <p:commandButton class="btn-vermelho" value="Não" onclick="PF('excluir').hide();" icon="fa fa-close" />
+                        </div>
+                    </div>
+                </p:panel>
+            </p:dialog>
+            <p:dialog width="50%" position="center center" style="min-height: 400px;" showEffect="fade" hideEffect="fade" dynamic="true" header="Detalhes da missão" modal="true" responsive="true" resizable="false" widgetVar="info">
+                <p:outputPanel id="info">
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <div class="ui-g-8">
+                                <p:panelGrid columns="1" styleClass="ui-panelgrid-blank" layout="grid">
+                                    <h:outputText value="Id" class="label"/>
+                                    <h:outputText value="#{missaoBean.missao.id}" />
+
+                                    <h:outputText value="Descrição" class="label"/>
+                                    <h:outputText value="#{missaoBean.missao.descricao}" />
+                                </p:panelGrid>
+                            </div>
+                            <div class="ui-g-4">
+                                <p:panelGrid columns="1" styleClass="ui-panelgrid-blank" layout="grid">
+                                    <h:outputText value="Carta de Recompensa" class="label"/>
+                                    <p:graphicImage width="100%" library="cartas" rendered="#{missaoBean.missao.carta != null}" name="#{missaoBean.missao.carta.imagem}" />
+                                </p:panelGrid>
+                            </div>
+                        </div>
+                    </div>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

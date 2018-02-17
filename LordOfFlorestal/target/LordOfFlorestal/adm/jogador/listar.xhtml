@@ -12,8 +12,6 @@
                     <p:toolbar>
                         <f:facet name="left">
                             <p:commandButton value="Novo jogador" icon="fa fa-plus" action="#{jogadorBean.novo}" class="btn-azul"/>
-
-                            <p:commandButton disabled="true" value="Gerar relatório" icon="fa fa-print" class="btn-azul"/>
                         </f:facet>
                     </p:toolbar>
                 </div>
@@ -58,10 +56,9 @@
                                                 <p:button icon="fa fa-pencil-square-o" class="btn-verde" outcome="/adm/jogador/cadastrar.xhtml?matricula=#{jogador.matricula}" />
                                             </div>
                                             <div class="ui-g-4">
-                                                <p:commandButton icon="fa fa-trash" class="btn-vermelho" update="jogadores" >
+                                                <p:commandButton onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="jogadores excluir" >
                                                     <f:setPropertyActionListener target="#{jogadorBean.jogador}" value="#{jogador}" />
-                                                    <p:confirm header="Atenção" message="Deseja realmente excluir o jogador #{jogadorBean.jogador.nome}"/>
-                                                </p:commandButton>
+                                                  </p:commandButton>
                                             </div>
                                             <div class="ui-g-4">
                                                 <p:commandButton icon="fa fa-eye" class="btn-azul" onclick="PF('info').show()" update="info" >
@@ -76,11 +73,22 @@
                     </p:panel>
                 </div>
             </div>
-            <p:confirmDialog class="dialogo" global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Sim" action="#{jogadorBean.excluir}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-            </p:confirmDialog>
-            <p:dialog width="50%" header="Detalhes do jogador" modal="true" responsive="true" resizable="false" widgetVar="info">
+            <p:dialog modal="true" widgetVar="excluir" resizable="false" header="Atenção" showEffect="fade" hideEffect="fade">
+                <p:panel id="excluir" style="border: none !important">
+                    <div class="ui-g ui-fluid">
+                        <div class="ui-g-12">
+                            <h:outputText value="Deseja realmente excluir o jogador #{jogadorBean.jogador.login}" />
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <p:commandButton class="btn-verde" value="Sim" action="#{jogadorBean.excluir}" onsuccess="PF('excluir').hide();" update="jogadores" icon="fa fa-check" />
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <p:commandButton class="btn-vermelho" value="Não" onclick="PF('excluir').hide();" icon="fa fa-close" />
+                        </div>
+                    </div>
+                </p:panel>
+            </p:dialog>
+            <p:dialog width="50%" position="center center" style="min-height: 400px;" showEffect="fade" hideEffect="fade" header="Detalhes do jogador" modal="true" responsive="true" resizable="false" widgetVar="info">
                 <p:outputPanel id="info">
                     <div class="ui-g">
                         <div class="ui-g-12 no-margin">
@@ -112,7 +120,7 @@
                                     <h:outputText value="#{jogadorBean.jogador.estatisticaJogador.numJogosPerdido}" />
 
                                     <h:outputText value="Número de Jogos Ganho do Lord" class="label"/>
-                                    <h:outputText value="#{jogadorBean.jogador.estatisticaJogador.numJogosGanhoLord}" />
+                                    <h:outputText value="#{jogadorBean.jogador.estatisticaJogador.numJogosGanhouLord}" />
                                 </p:panelGrid>
                             </div>
                         </div>

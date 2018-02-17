@@ -69,7 +69,7 @@ public class PerfilBean implements Serializable {
 
         grafico.set("Ganhou", jogador.getEstatisticaJogador().getNumJogosGanho());
         grafico.set("Perdeu", jogador.getEstatisticaJogador().getNumJogosPerdido());
-        grafico.set("Ganhou Lord", jogador.getEstatisticaJogador().getNumJogosGanhoLord());
+        grafico.set("Ganhou Lord", jogador.getEstatisticaJogador().getNumJogosGanhouLord());
         grafico.set("Perdeu Lord", jogador.getEstatisticaJogador().getNumJogosPerdeuLord());
 
         grafico.setTitle("Total de jogos: " + jogador.getEstatisticaJogador().getNumJogos());

@@ -31,6 +31,9 @@
                     <li class="#{menuBean.getItemCssClass('/dashboard.xhtml')}">
                         <h:link outcome="/dashboard.xhtml"><i class="fa  fa-fw  fa-home"></i>Dashboard</h:link>
                     </li>
+                    <li class="#{menuBean.getItemCssClass('/lista-deck.xhtml')} #{menuBean.getItemCssClass('/novo-deck.xhtml')}">
+                        <h:link outcome="/lista-deck.xhtml"><i class="fa fa-puzzle-piece"></i>Deck</h:link>
+                    </li>
                     <li class="#{menuBean.getItemCssClass('/novo-duelo.xhtml')}">
                         <h:link outcome="/novo-duelo.xhtml"><i class="fa fa-gamepad"></i>Novo Duelo</h:link>
                     </li>
@@ -39,9 +42,6 @@
                     </li>
                     <li class="#{menuBean.getItemCssClass('/resgate.xhtml')}">
                         <h:link outcome="/resgate.xhtml"><i class="fa fa-retweet"></i>Resgate</h:link>
-                    </li>
-                    <li class="#{menuBean.getItemCssClass('/suporte.xhtml')}">
-                        <h:link outcome="/suporte.xhtml"><i class="fa fa-comments"></i>Suporte</h:link>
                     </li>
                     <h:panelGroup rendered="#{perfilBean.jogador.tipoJogador eq 'LORD' ? true : false}">
                         <p:separator />
@@ -53,6 +53,12 @@
                         </li>
                         <li class="#{menuBean.getItemCssClass('/adm/valecarta/listar.xhtml')} #{menuBean.getItemCssClass('/adm/valecarta/cadastrar.xhtml')}">
                             <h:link outcome="/adm/valecarta/listar.xhtml"><i class="fa  fa-fw  fa-ticket"></i>Vale Carta</h:link>
+                        </li>
+                        <li class="#{menuBean.getItemCssClass('/adm/missao/listar.xhtml')} #{menuBean.getItemCssClass('/adm/missao/cadastrar.xhtml')}">
+                            <h:link outcome="/adm/missao/listar.xhtml"><i class="fa fa-fw fa-thumb-tack"></i>Missão</h:link>
+                        </li>
+                        <li class="#{menuBean.getItemCssClass('/adm/duelo/listar.xhtml')}">
+                            <h:link outcome="/adm/duelo/listar.xhtml"><i class="fa fa-fw fa-globe"></i>Duelos</h:link>
                         </li>
                         <p:separator />
                     </h:panelGroup>

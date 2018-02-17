@@ -6,6 +6,7 @@
 package br.com.lordofflorestal.mysql;
 
 import br.com.lordofflorestal.model.Duelo;
+import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,8 +22,8 @@ public class DueloDAOMysql {
 
     private Connection connection;
 
-    public void salvar(Duelo duelo, int vencedor) {
-        String sql = "INSERT INTO Duelo (uri, criador, oponente, data_criacao, id_situacao_duelo, vencedor) VALUES (?, ?, ?, ?, ?, ?);";
+    public void salvar(Duelo duelo, Jogador vencedor, int pontos_ganhador, int pontos_perdedor) {
+        String sql = "INSERT INTO Duelo (uri, criador, oponente, vencedor, id_situacao_duelo, data_criacao, pontos_determinacao_vencedor, pontos_determinacao_perdedor) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
         try {
             connection = ConnectionFactory.getConnection();
@@ -34,12 +35,19 @@ public class DueloDAOMysql {
             if (duelo.getOponente() != null) {
                 statement.setInt(3, duelo.getOponente().getMatricula());
             } else {
-                statement.setInt(3, 0);
+                statement.setObject(3, null);
             }
-            SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            statement.setString(4, sdf.format(duelo.getDataCriacao().getTime()));
+            if(vencedor != null){
+                statement.setInt(4, vencedor.getMatricula());
+            } else {
+                statement.setObject(4, null);
+            }
+            
             statement.setInt(5, duelo.getSituacaoDuelo().ordinal() + 1);
-            statement.setInt(6, vencedor);
+            SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            statement.setString(6, sdf.format(duelo.getDataCriacao().getTime()));
+            statement.setInt(7, pontos_ganhador);
+            statement.setInt(8, pontos_perdedor);
 
             statement.executeUpdate();
             statement.close();

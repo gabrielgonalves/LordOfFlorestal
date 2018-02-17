@@ -12,13 +12,11 @@
                     <p:toolbar>
                         <f:facet name="left">
                             <p:commandButton value="Nova carta" icon="fa fa-plus" action="#{cartaBean.novo}" class="btn-azul"/>
-
-                            <p:commandButton disabled="true" value="Gerar relatório" icon="fa fa-print" class="btn-azul"/>
                         </f:facet>
                     </p:toolbar>
                 </div>
             </div>
-            
+
             <div class="ui-g">
                 <div class="ui-g-12">
                     <p:panel class="card">
@@ -31,7 +29,7 @@
                                     <f:facet name="header">
                                         Lista de cartas
                                     </f:facet>
-                                    
+
                                     <p:column headerText="Id" width="25" style="text-align: center">
                                         <h:outputText value="#{carta.id}" />
                                     </p:column>
@@ -74,9 +72,8 @@
                                                 <p:button icon="fa fa-pencil-square-o" class="btn-verde" outcome="/adm/carta/cadastrar.xhtml?id=#{carta.id}" />
                                             </div>
                                             <div class="ui-g-4">
-                                                <p:commandButton icon="fa fa-trash" class="btn-vermelho" update="cartas" >
+                                                <p:commandButton onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="cartas excluir" >
                                                     <f:setPropertyActionListener target="#{cartaBean.carta}" value="#{carta}" />
-                                                    <p:confirm header="Atenção" message="Deseja realmente excluir a carta #{cartaBean.carta.nome}"/>
                                                 </p:commandButton>
                                             </div>
                                             <div class="ui-g-4">
@@ -92,11 +89,22 @@
                     </p:panel>
                 </div>
             </div>
-            <p:confirmDialog class="dialogo" global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Sim" action="#{cartaBean.excluir}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-            </p:confirmDialog>
-            <p:dialog width="50%" header="Detalhes da carta" modal="true" responsive="true" resizable="false" widgetVar="info">
+            <p:dialog modal="true" widgetVar="excluir" resizable="false" header="Atenção" showEffect="fade" hideEffect="fade">
+                <p:panel id="excluir" style="border: none !important">
+                    <div class="ui-g ui-fluid">
+                        <div class="ui-g-12">
+                            <h:outputText value="Deseja realmente excluir a carta #{cartaBean.carta.nome}" />
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <p:commandButton class="btn-verde" value="Sim" action="#{cartaBean.excluir}" onsuccess="PF('excluir').hide();" update="cartas" icon="fa fa-check" />
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <p:commandButton class="btn-vermelho" value="Não" onclick="PF('excluir').hide();" icon="fa fa-close" />
+                        </div>
+                    </div>
+                </p:panel>
+            </p:dialog>
+            <p:dialog showEffect="fade" hideEffect="fade" width="50%" style="min-height: 400px;" position="center center" header="Detalhes da carta" modal="true" responsive="true" resizable="false" widgetVar="info">
                 <p:outputPanel id="info">
                     <div class="ui-g">
                         <div class="ui-g-12 no-margin">

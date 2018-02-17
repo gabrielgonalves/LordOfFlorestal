@@ -168,7 +168,16 @@ public class DueloRN {
         boolean retorno = verificaPontosDeterminacao();
 
         if (duelo.getSituacaoDuelo().equals(SituacaoDuelo.FINALIZADO)) {
-            salvar(duelo, ganhador.getMatricula());
+            int pontosGanhador;
+            int pontosPerdedor;
+            if(duelo.getDeckJogador1().getJogador().equals(ganhador)){
+                pontosGanhador = duelo.getDeckJogador1().getPontosDeterminacao();
+                pontosPerdedor = duelo.getDeckJogador2().getPontosDeterminacao();
+            } else {
+                pontosGanhador = duelo.getDeckJogador2().getPontosDeterminacao();
+                pontosPerdedor = duelo.getDeckJogador1().getPontosDeterminacao();
+            }
+            salvar(duelo, ganhador, pontosGanhador, pontosPerdedor);
             atualizaEstatistica();
         }
         
@@ -194,7 +203,16 @@ public class DueloRN {
         boolean retorno = verificaPontosDeterminacao();
 
         if (duelo.getSituacaoDuelo().equals(SituacaoDuelo.FINALIZADO)) {
-            salvar(duelo, ganhador.getMatricula());
+            int pontosGanhador;
+            int pontosPerdedor;
+            if(duelo.getDeckJogador1().getJogador().equals(ganhador)){
+                pontosGanhador = duelo.getDeckJogador1().getPontosDeterminacao();
+                pontosPerdedor = duelo.getDeckJogador2().getPontosDeterminacao();
+            } else {
+                pontosGanhador = duelo.getDeckJogador2().getPontosDeterminacao();
+                pontosPerdedor = duelo.getDeckJogador1().getPontosDeterminacao();
+            }
+            salvar(duelo, ganhador, pontosGanhador, pontosPerdedor);
             atualizaEstatistica();
         }
         
@@ -205,7 +223,7 @@ public class DueloRN {
         if (ganhador.equals(oponente)) {
             oponente.getEstatisticaJogador().setNumJogos(oponente.getEstatisticaJogador().getNumJogos() + 1);
             if (jogador.getTipoJogador().equals(TipoJogador.LORD)) {
-                oponente.getEstatisticaJogador().setNumJogosGanhoLord(oponente.getEstatisticaJogador().getNumJogosGanhoLord() + 1);
+                oponente.getEstatisticaJogador().setNumJogosGanhouLord(oponente.getEstatisticaJogador().getNumJogosGanhouLord() + 1);
             } else {
                 oponente.getEstatisticaJogador().setNumJogosGanho(oponente.getEstatisticaJogador().getNumJogosGanho() + 1);
             }
@@ -221,7 +239,7 @@ public class DueloRN {
         } else {
             jogador.getEstatisticaJogador().setNumJogos(jogador.getEstatisticaJogador().getNumJogos() + 1);
             if (oponente.getTipoJogador().equals(TipoJogador.LORD)) {
-                jogador.getEstatisticaJogador().setNumJogosGanhoLord(jogador.getEstatisticaJogador().getNumJogosGanhoLord() + 1);
+                jogador.getEstatisticaJogador().setNumJogosGanhouLord(jogador.getEstatisticaJogador().getNumJogosGanhouLord() + 1);
             } else {
                 jogador.getEstatisticaJogador().setNumJogosGanho(jogador.getEstatisticaJogador().getNumJogosGanho() + 1);
             }
@@ -595,9 +613,9 @@ public class DueloRN {
         }
     }
 
-    public void salvar(Duelo duelo, int vencedor) {
+    public void salvar(Duelo duelo, Jogador vencedor, int pontos_ganhador, int pontos_perdedor) {
         if (!dueloDAOMysql.jaInserido(duelo)) {
-            this.dueloDAOMysql.salvar(duelo, vencedor);
+            this.dueloDAOMysql.salvar(duelo, vencedor, pontos_ganhador, pontos_perdedor);
         }
     }
 
@@ -689,7 +707,7 @@ public class DueloRN {
         Calendar dataAtual = Calendar.getInstance();
         if (duelo.getDataCriacao().getTimeInMillis() <= dataAtual.getTimeInMillis() && duelo.getSituacaoDuelo().equals(SituacaoDuelo.CRIADO)) {
             duelo.setSituacaoDuelo(SituacaoDuelo.CANCELADO);
-            salvar(duelo, 0);
+            salvar(duelo, null, 0, 0);
         }
     }
 

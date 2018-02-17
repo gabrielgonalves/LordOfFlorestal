@@ -26,7 +26,6 @@ import org.primefaces.model.UploadedFile;
 public class JogadorBean {
 
     private Jogador jogador = new Jogador();
-    private String confirmarSenha;
 
     private UploadedFile img;
 
@@ -43,9 +42,6 @@ public class JogadorBean {
 
     public String salvar() {
         String senha = this.jogador.getSenha();
-        if (!senha.equals(confirmarSenha)) {
-            return null;
-        }
 
         if (img != null) {
             if (img.getSize() != 0) {
@@ -67,7 +63,6 @@ public class JogadorBean {
     }
 
     public String excluir() {
-        System.out.println("Entrou no excluir com o jogador " + jogador.getNome());
         JogadorRN jogadorRN = new JogadorRN();
         jogadorRN.excluir(jogador);
         return null;
@@ -88,16 +83,7 @@ public class JogadorBean {
     }
 
     public void setJogador(Jogador jogador) {
-        System.out.println("Alterou jogador para " + jogador.getNome());
         this.jogador = jogador;
-    }
-
-    public String getConfirmarSenha() {
-        return confirmarSenha;
-    }
-
-    public void setConfirmarSenha(String confirmarSenha) {
-        this.confirmarSenha = confirmarSenha;
     }
 
     public TipoJogador[] getTipoJogador() {

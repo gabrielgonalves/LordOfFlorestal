@@ -37,8 +37,12 @@ public class DueloSingleton {
         Collections.sort(duelos, new DueloComparator());
     }
     
-    public void remover(Duelo duelo){
-        duelos.remove(duelo);
+    public void remover(SituacaoDuelo situacaoDuelo){
+        for(int i=0; i<duelos.size(); i++){
+            if(duelos.get(i).getSituacaoDuelo().equals(situacaoDuelo)){
+                duelos.remove(duelos.get(i));
+            }
+        }
     }
     
     public Duelo buscaPorURI(String uri){
