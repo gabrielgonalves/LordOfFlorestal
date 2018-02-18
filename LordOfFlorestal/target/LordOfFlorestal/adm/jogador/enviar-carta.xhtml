@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/template/layout.xhtml">
+
+    <f:metadata>
+        <f:event listener="#{jogadorBean.preRender}" type="preRenderView" />
+    </f:metadata>
+
+    <ui:define name="conteudo">    
+        <h:form prependId="false">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:panel class="card" header="Jogador">
+                        <p:growl autoUpdate="true" />
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-g-12 ui-md-12 ui-lg-12 no-margin">
+                                <div class="ui-g-12 ui-md-8  no-margin">
+                                    <div class="ui-g-12 ui-md-8">
+                                        <p:outputLabel for="nome" value="Nome" class="label"/>
+                                        <p:inputText disabled="true" id="nome" value="#{jogadorBean.jogador.nome}" class="input" required="true"/>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-4">
+                                        <p:outputLabel for="tipo" value="Tipo" class="label"/>
+                                        <p:selectOneMenu disabled="true" id="tipo" value="#{jogadorBean.jogador.tipoJogador}" class="input" required="true">
+                                            <f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+                                            <f:selectItems value="#{jogadorBean.tipoJogador}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-4">
+                                        <p:outputLabel for="matricula" value="Matricula" class="label"/>
+                                        <p:inputText disabled="true" id="matricula" value="#{jogadorBean.jogador.matricula}" class="input" required="true"/>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-8">
+                                        <p:outputLabel for="email" value="E-mail" class="label"/>
+                                        <p:inputText disabled="true" id="email" value="#{jogadorBean.jogador.email}" class="input" required="true"/>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-4">
+                                        <p:outputLabel for="login" value="Login" class="label"/>
+                                        <p:inputText disabled="true" id="login" value="#{jogadorBean.jogador.login}" class="input" required="true"/>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-4">
+                                        <p:outputLabel for="senha" value="Senha" class="label"/>
+                                        <p:password disabled="true" id="senha" value="#{jogadorBean.jogador.senha}" class="input" required="true"/>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-4">
+                                        <p:outputLabel for="anoAdmissao" value="Ano admissão" class="label"/>
+                                        <p:inputText disabled="true" id="anoAdmissao" value="#{jogadorBean.jogador.anoAdmissao}" class="input" required="true"/>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-md-4 noMargin">
+                                    <div class="ui-g-12">
+                                        <p:outputLabel for="img" value="Imagem" class="label"/><br />
+                                        <p:fileUpload disabled="true" value="#{jogadorBean.img}" id="img" mode="simple" skinSimple="true" class="input" />
+                                    </div>
+                                    <div class="ui-g-12">
+                                        <center>
+                                            <p:graphicImage rendered="#{jogadorBean.jogador.imagem != null}" library="img" name="#{jogadorBean.jogador.imagem}" width="100%" class="user-img"/>
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p:panel>
+                </div>
+                <div class="ui-g-12">
+                    <p:panel class="card">
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-md-6">
+                                <p:dataTable style="height: 500px;" value="#{jogadorBean.cartas}" var="carta" id="cartas" emptyMessage="Não possui cartas para serem selecionadas."
+                                             paginator="true" paginatorPosition="top" paginatorAlwaysVisible="false" rows="7">
+                                    
+                                    <f:facet name="header">
+                                        Cartas
+                                    </f:facet>
+                                    
+                                    <p:column headerText="Nome" filterBy="#{carta.nome}">
+                                        <h:outputText value="#{carta.nome}" />
+                                    </p:column>
+                                    <p:column style="text-align: center">
+                                        <p:commandButton class="btn-verde" value="Selecionar" action="#{jogadorBean.selecionar}" update="cartas cartasSelecionados">
+                                            <f:setPropertyActionListener target="#{jogadorBean.carta}" value="#{carta}" />
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <p:dataTable style="height: 500px;" value="#{jogadorBean.cartasSelecionadas}" var="carta" id="cartasSelecionados" emptyMessage="Nenhuma carta foi selecionada."
+                                             paginator="true" paginatorPosition="top" paginatorAlwaysVisible="false" rows="7">
+                                    
+                                    <f:facet name="header">
+                                        Cartas Selecionadas
+                                    </f:facet>
+                                    
+                                    <p:column headerText="Login" filterBy="#{carta.nome}">
+                                        <h:outputText value="#{carta.nome}" />
+                                    </p:column>
+                                    <p:column style="text-align: center">
+                                        <p:commandButton class="btn-vermelho" value="Remover" action="#{jogadorBean.remover}" update="cartas cartasSelecionados">
+                                            <f:setPropertyActionListener target="#{jogadorBean.carta}" value="#{carta}" />
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                            <div class="ui-g-12">
+                                <div class="ui-g-12 ui-md-10" />
+                                <div class="ui-g-12 ui-md-2 ui-fluid">
+                                    <p:commandButton value="Salvar" class="btn-verde" action="#{jogadorBean.enviar}" />
+                                </div>
+                            </div>
+                        </div>
+                    </p:panel>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

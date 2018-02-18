@@ -45,16 +45,16 @@
                     </li>
                     <h:panelGroup rendered="#{perfilBean.jogador.tipoJogador eq 'LORD' ? true : false}">
                         <p:separator />
-                        <li class="#{menuBean.getItemCssClass('/adm/carta/listar.xhtml')} #{menuBean.getItemCssClass('/adm/carta/cadastrar.xhtml')}">
+                        <li class="#{menuBean.getItemCssClass('/adm/carta/listar.xhtml')} #{menuBean.getItemCssClass('/adm/carta/cadastrar.xhtml')} #{menuBean.getItemCssClass('/adm/carta/enviar-carta.xhtml')}">
                             <h:link outcome="/adm/carta/listar.xhtml"><i class="fa  fa-fw  fa-square"></i>Carta</h:link>
                         </li>
-                        <li class="#{menuBean.getItemCssClass('/adm/jogador/listar.xhtml')} #{menuBean.getItemCssClass('/adm/jogador/cadastrar.xhtml')}">
+                        <li class="#{menuBean.getItemCssClass('/adm/jogador/listar.xhtml')} #{menuBean.getItemCssClass('/adm/jogador/cadastrar.xhtml')} #{menuBean.getItemCssClass('/adm/jogador/enviar-carta.xhtml')}">
                             <h:link outcome="/adm/jogador/listar.xhtml"><i class="fa  fa-fw  fa-user-plus"></i>Jogador</h:link>
                         </li>
                         <li class="#{menuBean.getItemCssClass('/adm/valecarta/listar.xhtml')} #{menuBean.getItemCssClass('/adm/valecarta/cadastrar.xhtml')}">
                             <h:link outcome="/adm/valecarta/listar.xhtml"><i class="fa  fa-fw  fa-ticket"></i>Vale Carta</h:link>
                         </li>
-                        <li class="#{menuBean.getItemCssClass('/adm/missao/listar.xhtml')} #{menuBean.getItemCssClass('/adm/missao/cadastrar.xhtml')}">
+                        <li class="#{menuBean.getItemCssClass('/adm/missao/listar.xhtml')} #{menuBean.getItemCssClass('/adm/missao/cadastrar.xhtml')} #{menuBean.getItemCssClass('/adm/missao/enviar-recompensa.xhtml')}">
                             <h:link outcome="/adm/missao/listar.xhtml"><i class="fa fa-fw fa-thumb-tack"></i>Missão</h:link>
                         </li>
                         <li class="#{menuBean.getItemCssClass('/adm/duelo/listar.xhtml')}">

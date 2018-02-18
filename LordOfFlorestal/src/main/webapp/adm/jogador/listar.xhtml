@@ -11,7 +11,7 @@
                 <div class="ui-g-12">
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton value="Novo jogador" icon="fa fa-plus" action="#{jogadorBean.novo}" class="btn-azul"/>
+                            <p:commandButton value="Novo jogador" icon="fa fa-plus" action="#{jogadorBean.novo}" class="btn-laranja"/>
                         </f:facet>
                     </p:toolbar>
                 </div>
@@ -50,20 +50,23 @@
                                         <p:graphicImage library="icon" name="#{jogador.tipoJogador == 'LORD' ? 'crown.png' : 'student-hat.png'}" />
                                     </p:column>
 
-                                    <p:column>
+                                    <p:column width="200">
                                         <div class="ui-g ui-fluid no-margin">
-                                            <div class="ui-g-4">
-                                                <p:button icon="fa fa-pencil-square-o" class="btn-verde" outcome="/adm/jogador/cadastrar.xhtml?matricula=#{jogador.matricula}" />
+                                            <div class="ui-g-3">
+                                                <p:button title="Editar" icon="fa fa-pencil-square-o" class="btn-verde" outcome="/adm/jogador/cadastrar.xhtml?matricula=#{jogador.matricula}" />
                                             </div>
-                                            <div class="ui-g-4">
-                                                <p:commandButton onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="jogadores excluir" >
+                                            <div class="ui-g-3">
+                                                <p:commandButton title="Excluir" onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="jogadores excluir" >
                                                     <f:setPropertyActionListener target="#{jogadorBean.jogador}" value="#{jogador}" />
                                                   </p:commandButton>
                                             </div>
-                                            <div class="ui-g-4">
-                                                <p:commandButton icon="fa fa-eye" class="btn-azul" onclick="PF('info').show()" update="info" >
+                                            <div class="ui-g-3">
+                                                <p:commandButton title="Visualizar" icon="fa fa-eye" class="btn-laranja" onclick="PF('info').show()" update="info" >
                                                     <f:setPropertyActionListener target="#{jogadorBean.jogador}" value="#{jogador}" />
                                                 </p:commandButton>
+                                            </div>
+                                            <div class="ui-g-3">
+                                                <p:button title="Cartas" icon="fa fa-square" class="btn-preto" outcome="/adm/jogador/enviar-carta.xhtml?matricula=#{jogador.matricula}" />
                                             </div>
                                         </div>
                                     </p:column>

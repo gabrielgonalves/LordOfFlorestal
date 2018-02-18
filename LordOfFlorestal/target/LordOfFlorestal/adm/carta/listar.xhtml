@@ -11,7 +11,7 @@
                 <div class="ui-g-12">
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton value="Nova carta" icon="fa fa-plus" action="#{cartaBean.novo}" class="btn-azul"/>
+                            <p:commandButton value="Nova carta" icon="fa fa-plus" action="#{cartaBean.novo}" class="btn-laranja"/>
                         </f:facet>
                     </p:toolbar>
                 </div>
@@ -66,20 +66,23 @@
                                         <h:outputText value="#{carta.valorDefesa}" />
                                     </p:column>
 
-                                    <p:column>
+                                    <p:column width="200">
                                         <div class="ui-g ui-fluid no-margin">
-                                            <div class="ui-g-4">
-                                                <p:button icon="fa fa-pencil-square-o" class="btn-verde" outcome="/adm/carta/cadastrar.xhtml?id=#{carta.id}" />
+                                            <div class="ui-g-3">
+                                                <p:button title="Editar" icon="fa fa-pencil-square-o" class="btn-verde" outcome="/adm/carta/cadastrar.xhtml?id=#{carta.id}" />
                                             </div>
-                                            <div class="ui-g-4">
-                                                <p:commandButton onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="cartas excluir" >
+                                            <div class="ui-g-3">
+                                                <p:commandButton title="Excluir" onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="cartas excluir" >
                                                     <f:setPropertyActionListener target="#{cartaBean.carta}" value="#{carta}" />
                                                 </p:commandButton>
                                             </div>
-                                            <div class="ui-g-4">
-                                                <p:commandButton icon="fa fa-eye" class="btn-azul" onclick="PF('info').show()" update="info" >
+                                            <div class="ui-g-3">
+                                                <p:commandButton title="Visualizar" icon="fa fa-eye" class="btn-laranja" onclick="PF('info').show()" update="info" >
                                                     <f:setPropertyActionListener target="#{cartaBean.carta}" value="#{carta}" />
                                                 </p:commandButton>
+                                            </div>
+                                            <div class="ui-g-3">
+                                                <p:button title="Enviar Carta" icon="fa fa-send" class="btn-preto" outcome="/adm/carta/enviar-carta.xhtml?id=#{carta.id}" />
                                             </div>
                                         </div>
                                     </p:column>

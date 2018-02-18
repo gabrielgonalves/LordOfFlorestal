@@ -15,10 +15,10 @@
                 <div class="ui-g-12 tira-margem-tabela">
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton value="Novo jogador" icon="fa fa-plus" action="#{jogadorBean.novo}" class="btn-azul" process="@this"/>
+                            <p:commandButton value="Novo jogador" icon="fa fa-plus" action="#{jogadorBean.novo}" class="btn-laranja" process="@this"/>
                         </f:facet>
                         <f:facet name="right">
-                            <p:button value="Lista de jogadores" icon="fa fa-list" outcome="/adm/jogador/listar.xhtml" class="btn-azul"/>
+                            <p:button value="Lista de jogadores" icon="fa fa-list" outcome="/adm/jogador/listar.xhtml" class="btn-laranja"/>
                         </f:facet>
                     </p:toolbar>
                 </div>
@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="ui-g-12">
                                         <center>
-                                            <p:graphicImage rendered="#{jogadorBean.jogador.imagem != null}" library="img" name="#{jogadorBean.jogador.imagem}" width="100%"/>
+                                            <p:graphicImage rendered="#{jogadorBean.jogador.imagem != null}" library="img" name="#{jogadorBean.jogador.imagem}" width="100%" class="user-img"/>
                                         </center>
                                     </div>
                                 </div>

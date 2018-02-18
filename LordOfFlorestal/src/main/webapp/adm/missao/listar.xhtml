@@ -11,7 +11,7 @@
                 <div class="ui-g-12">
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton value="Nova missão" icon="fa fa-plus" action="#{missaoBean.novo}" class="btn-azul"/>
+                            <p:commandButton value="Nova missão" icon="fa fa-plus" action="#{missaoBean.novo}" class="btn-laranja"/>
                         </f:facet>
                     </p:toolbar>
                 </div>
@@ -54,20 +54,23 @@
                                         <p:graphicImage library="icon" name="#{missao.ativa == true ?'like.png' : 'dislike.png'}" />
                                     </p:column>
 
-                                    <p:column width="150">
+                                    <p:column width="200">
                                         <div class="ui-g ui-fluid no-margin">
-                                            <div class="ui-g-4">
-                                                <p:button icon="fa fa-pencil-square-o" class="btn-verde" outcome="/adm/missao/cadastrar.xhtml?id=#{missao.id}" />
+                                            <div class="ui-g-3">
+                                                <p:button title="Editar" icon="fa fa-pencil-square-o" class="btn-verde" outcome="/adm/missao/cadastrar.xhtml?id=#{missao.id}" />
                                             </div>
-                                            <div class="ui-g-4">
-                                                <p:commandButton onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="missoes excluir" >
+                                            <div class="ui-g-3">
+                                                <p:commandButton title="Excluir" onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="missoes excluir" >
                                                     <f:setPropertyActionListener target="#{missaoBean.missao}" value="#{missao}" />
                                                 </p:commandButton>
                                             </div>
-                                            <div class="ui-g-4">
-                                                <p:commandButton icon="fa fa-eye" class="btn-azul" onclick="PF('info').show()" update="info" >
+                                            <div class="ui-g-3">
+                                                <p:commandButton title="Visualizar" icon="fa fa-eye" class="btn-laranja" onclick="PF('info').show()" update="info" >
                                                     <f:setPropertyActionListener target="#{missaoBean.missao}" value="#{missao}" />
                                                 </p:commandButton>
+                                            </div>
+                                            <div class="ui-g-3">
+                                                <p:button title="Enviar Recompensa" icon="fa fa-send" class="btn-preto" outcome="/adm/missao/enviar-recompensa.xhtml?id=#{missao.id}" />
                                             </div>
                                         </div>
                                     </p:column>

@@ -18,6 +18,7 @@ public class Ranking implements Serializable {
     private int jogosGanho;
     private int jogosGanhoLord;
     private int jogosPerdido;
+    private int jogosPerdidoLord;
 
     public Ranking() {
     }
@@ -60,5 +61,13 @@ public class Ranking implements Serializable {
 
     public void setJogosPerdido(int jogosPerdido) {
         this.jogosPerdido = jogosPerdido;
+    }
+
+    public int getJogosPerdidoLord() {
+        return jogosPerdidoLord;
+    }
+
+    public void setJogosPerdidoLord(int jogosPerdidoLord) {
+        this.jogosPerdidoLord = jogosPerdidoLord;
     }
 }

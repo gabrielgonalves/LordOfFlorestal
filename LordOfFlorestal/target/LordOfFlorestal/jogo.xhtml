@@ -50,14 +50,14 @@
                     <p:outputPanel class="msg-panel" rendered="#{dueloBean.dueloRN.duelo.situacaoDuelo eq 'CANCELADO' ? true : false}">
                         <h:outputText class="msg" value="Seu duelo foi cancelado" />
                         <br/><br/>
-                        <p:button class="btn-azul" outcome="dashboard.xhtml" value="Volte para a página inicial"/>
+                        <p:button class="btn-laranja" outcome="dashboard.xhtml" value="Volte para a página inicial"/>
                     </p:outputPanel>
                     <p:outputPanel class="msg-panel" rendered="#{dueloBean.dueloRN.duelo.situacaoDuelo eq 'FINALIZADO' ? true : false}">
                         <p:graphicImage library="img" name="#{dueloBean.dueloRN.ganhador.imagem}" class="img" width="165"/>
                         <br/><br/>
                         <h:outputText class="msg" value="#{dueloBean.dueloRN.ganhador.login} foi o grande vencedor deste duelo" />
                         <br/><br/>
-                        <p:button class="btn-azul" outcome="dashboard.xhtml" value="Volte para a página inicial"/>
+                        <p:button class="btn-laranja" outcome="dashboard.xhtml" value="Volte para a página inicial"/>
                     </p:outputPanel>
                 </center>
             </p:outputPanel>
@@ -212,7 +212,7 @@
                             </p:selectOneMenu>
                         </div>
                         <div class="ui-g-12">
-                            <p:commandButton class="btn-azul" value="Jogar" action="#{dueloBean.jogarCaraOuCoroa}" disabled="#{!dueloBean.podeJogarCaraCoroa}" update="resultado-caracoroa img-caracoroa @this :btnmsg :msg :batepapo" />
+                            <p:commandButton class="btn-laranja" value="Jogar" action="#{dueloBean.jogarCaraOuCoroa}" disabled="#{!dueloBean.podeJogarCaraCoroa}" update="resultado-caracoroa img-caracoroa @this :btnmsg :msg :batepapo" />
                         </div>
                         <div class="ui-g-12">
                             <center>
@@ -265,7 +265,7 @@
                     </p:outputPanel>
                     <div class="ui-g ui-fluid">
                         <div class="ui-g-12">
-                            <p:commandButton id="salvar62" value="Salvar" class="btn-azul" action="#{dueloBean.selecionar}" disabled="#{dueloBean.listaCartaEfeito.size() ne 0}" onsuccess="PF('carta62').hide();"  update=":btnmsg :msg :batepapo" />
+                            <p:commandButton id="salvar62" value="Salvar" class="btn-laranja" action="#{dueloBean.selecionar}" disabled="#{dueloBean.listaCartaEfeito.size() ne 0}" onsuccess="PF('carta62').hide();"  update=":btnmsg :msg :batepapo" />
                         </div>
                     </div>
                 </p:panel>
@@ -305,7 +305,7 @@
             <div class="ui-g ui-fluid">
                 <div class="ui-g-12 no-margin">
                     <p:inputText id="msg" value="#{dueloBean.mensagem}" placeholder="Digite sua mensagem" disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and dueloBean.dueloRN.podeFinalizar eq true ? false : true}"/>
-                    <p:commandButton id="btnmsg" value="Enviar" class="btn-azul" style="margin-top: 3px !important;" action="#{dueloBean.enviarMensagem}" update="batepapo msg"  disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and dueloBean.dueloRN.podeFinalizar eq true ? false : true}" />
+                    <p:commandButton id="btnmsg" value="Enviar" class="btn-laranja" style="margin-top: 3px !important;" action="#{dueloBean.enviarMensagem}" update="batepapo msg"  disabled="#{dueloBean.dueloRN.duelo.vezDe eq dueloBean.dueloRN.jogador.login and dueloBean.dueloRN.podeFinalizar eq true ? false : true}" />
                     <p:inputTextarea autoResize="true" id="batepapo" disabled="true" value="#{dueloBean.dueloRN.duelo.batePapo}" style="max-height: 300px; margin-top: 3px;" />
                 </div>
             </div>

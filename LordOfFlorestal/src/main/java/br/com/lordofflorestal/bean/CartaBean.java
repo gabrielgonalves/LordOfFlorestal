@@ -6,10 +6,14 @@
 package br.com.lordofflorestal.bean;
 
 import br.com.lordofflorestal.model.Carta;
+import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.SubtipoCarta;
 import br.com.lordofflorestal.model.TipoCarta;
 import br.com.lordofflorestal.rn.CartaRN;
+import br.com.lordofflorestal.rn.JogadorRN;
 import br.com.lordofflorestal.util.FileUploadUtil;
+import br.com.lordofflorestal.util.MessageUtil;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -30,7 +34,14 @@ public class CartaBean {
 
     private HttpServletRequest request;
 
+    private Jogador jogador;
+    private List<Jogador> jogadoresSelecionados;
+    private List<Jogador> jogadores;
+
     public CartaBean() {
+        jogador = new Jogador();
+        jogadores = new JogadorRN().listar();
+        jogadoresSelecionados = new ArrayList();
     }
 
     public void preRender() {
@@ -70,6 +81,27 @@ public class CartaBean {
         return null;
     }
 
+    public String selecionar() {
+        jogadoresSelecionados.add(jogador);
+        jogadores.remove(jogador);
+        return null;
+    }
+
+    public String remover() {
+        jogadoresSelecionados.remove(jogador);
+        jogadores.add(jogador);
+        return null;
+    }
+
+    public String enviar() {
+        JogadorRN jogadorRN = new JogadorRN();
+        for (Jogador j : jogadoresSelecionados) {
+            jogadorRN.inserirCartaJogador(carta, j);
+        }
+        MessageUtil.info("Cartas envidas com sucesso.");
+        return null;
+    }
+
     public Carta getCarta() {
         return carta;
     }
@@ -97,6 +129,30 @@ public class CartaBean {
 
     public void setImg(UploadedFile img) {
         this.img = img;
+    }
+
+    public Jogador getJogador() {
+        return jogador;
+    }
+
+    public void setJogador(Jogador jogador) {
+        this.jogador = jogador;
+    }
+
+    public List<Jogador> getJogadoresSelecionados() {
+        return jogadoresSelecionados;
+    }
+
+    public void setJogadoresSelecionados(List<Jogador> jogadoresSelecionados) {
+        this.jogadoresSelecionados = jogadoresSelecionados;
+    }
+
+    public List<Jogador> getJogadores() {
+        return jogadores;
+    }
+
+    public void setJogadores(List<Jogador> jogadores) {
+        this.jogadores = jogadores;
     }
 
 }

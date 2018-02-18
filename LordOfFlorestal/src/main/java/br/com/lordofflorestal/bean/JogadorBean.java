@@ -5,10 +5,14 @@
  */
 package br.com.lordofflorestal.bean;
 
+import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.TipoJogador;
+import br.com.lordofflorestal.rn.CartaRN;
 import br.com.lordofflorestal.rn.JogadorRN;
 import br.com.lordofflorestal.util.FileUploadUtil;
+import br.com.lordofflorestal.util.MessageUtil;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -30,6 +34,16 @@ public class JogadorBean {
     private UploadedFile img;
 
     private HttpServletRequest request;
+    
+    private Carta carta;
+    private List<Carta> cartas;
+    private List<Carta> cartasSelecionadas;
+
+    public JogadorBean() {
+        carta = new Carta();
+        cartas = new CartaRN().listar();
+        cartasSelecionadas = new ArrayList();
+    }
 
     public void upload(FileUploadEvent event) {
         UploadedFile uploadedFile = event.getFile();
@@ -38,6 +52,28 @@ public class JogadorBean {
     public String novo() {
         this.jogador = new Jogador();
         return "/adm/jogador/cadastrar.xhtml?faces-redirect=true";
+    }
+    
+    public String selecionar() {
+        cartasSelecionadas.add(carta);
+        cartas.remove(carta);
+        return null;
+    }
+
+    public String remover() {
+        cartasSelecionadas.remove(carta);
+        cartas.add(carta);
+        return null;
+    }
+
+    public String enviar() {
+        JogadorRN jogadorRN = new JogadorRN();
+        jogadorRN.excluirTodasCartasJogador(jogador);
+        for (Carta c : cartasSelecionadas) {
+            jogadorRN.inserirCartaJogador(c, jogador);
+        }
+        MessageUtil.info("As cartas do jogador foram atualizadas com sucesso.");
+        return null;
     }
 
     public String salvar() {
@@ -75,6 +111,10 @@ public class JogadorBean {
             matricula = Integer.parseInt(request.getParameter("matricula"));
             JogadorRN jogadorRN = new JogadorRN();
             jogador = jogadorRN.buscarPorMatricula(matricula);
+            cartasSelecionadas = jogadorRN.buscarCartasJogador(jogador);
+            for(Carta c : cartasSelecionadas){
+                cartas.remove(c);
+            }
         }
     }
 
@@ -101,6 +141,30 @@ public class JogadorBean {
 
     public void setImg(UploadedFile img) {
         this.img = img;
+    }
+
+    public Carta getCarta() {
+        return carta;
+    }
+
+    public void setCarta(Carta carta) {
+        this.carta = carta;
+    }
+
+    public List<Carta> getCartas() {
+        return cartas;
+    }
+
+    public void setCartas(List<Carta> cartas) {
+        this.cartas = cartas;
+    }
+
+    public List<Carta> getCartasSelecionadas() {
+        return cartasSelecionadas;
+    }
+
+    public void setCartasSelecionadas(List<Carta> cartasSelecionadas) {
+        this.cartasSelecionadas = cartasSelecionadas;
     }
 
 }

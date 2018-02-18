@@ -26,7 +26,8 @@
         </div>
 
         <div id="cabecalho" class="cabecalho">
-            <p:graphicImage library="img" name="logo.png" class="logo" style="margin-top: 50px;" />
+            <p:graphicImage library="img" name="logo.png" style="margin-top: 50px;" />
+            <p:button value="Login" outcome="login.xhtml" style="position: absolute; left: 50%; margin-left: -30px; bottom: 100px; background: #F57C17; color: white; border: none; padding: 5px; text-shadow: none;" />
         </div>
         <div id="sobre-jogo" class="sobre-jogo">    
             <div class="content">    
@@ -59,28 +60,27 @@
         <div id="ranking" class="ranking">
             <div class="content">
                 <h1>Ranking</h1>
-                <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank">
-                    <p:dataList styleClass="no-border" value="#{indexBean.ranking5}" first="0" var="user" type="definition" >
+                <div class="item">
+                    <p:dataList id="ranking1" itemStyleClass="teste" value="#{indexBean.ranking5}" var="user" type="definition" >
                         <div class="ui-g">
-                            <div class="ui-g-10">
-                                <h:outputText value="#{user.login}" style="font-weight: bold; font-size: 20px;" />
-                            </div>
-                            <div class="ui-g-2">
-                                <p:graphicImage style="padding: 0 20px;" width="20px" library="icon" name="crown.png" class="#{user.jogosGanhoLord ne 0 ? '' : 'img-pb'}" />
+                            <div class="ui-g-12">
+                                <h:outputText value="#{user.login}" style="font-weight: bold;" />
+                                <p:graphicImage style="float: right !important;" width="20px" library="icon" name="crown.png" class="#{user.jogosGanhoLord ne 0 ? '' : 'img-pb'}" />
                             </div>
                         </div>
                     </p:dataList>
-                    <p:dataList styleClass="no-border" value="#{indexBean.ranking10}" first="0" var="user" type="definition" >
+                </div>
+                <div class="item">
+                    <p:dataList id="ranking2" itemStyleClass="teste" value="#{indexBean.ranking10}" var="user" type="definition" >
                         <div class="ui-g">
-                            <div class="ui-g-10">
-                                <h:outputText value="#{user.login}" style="font-weight: bold; font-size: 20px;" />
-                            </div>
-                            <div class="ui-g-2">
-                                <p:graphicImage style="padding: 0 20px;" width="20px" library="icon" name="crown.png" class="#{user.jogosGanhoLord ne 0 ? '' : 'img-pb'}" />
+                            <div class="ui-g-12">
+                                <h:outputText value="#{user.login}" style="font-weight: bold;" />
+                                <p:graphicImage style="float: right !important;" width="20px" library="icon" name="crown.png" class="#{user.jogosGanhoLord ne 0 ? '' : 'img-pb'}" />
                             </div>
                         </div>
                     </p:dataList>
-                </p:panelGrid>
+                </div>
+                <br class="clear" />
             </div>
         </div>
 
@@ -89,47 +89,66 @@
                 <h1>Como Jogar</h1>
 
                 <div class="w3-row">
-                    <a href="javascript:void(0)" onclick="openTab(event, 'Cartas');">
-                        <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding w3-border-red"><h2>Cartas</h2></div>
-                    </a>
-                    <a href="javascript:void(0)" onclick="openTab(event, 'Deck');">
-                        <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><h2>Deck</h2></div>
-                    </a>
-                    <a href="javascript:void(0)" onclick="openTab(event, 'Duelo');">
-                        <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><h2>Duelo</h2></div>
-                    </a>
+                    <center>
+                        <a href="javascript:void(0)" onclick="openTab(event, 'Cartas');">
+                            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding w3-border-red ca"><h2>Cartas</h2></div>
+                        </a>
+                        <a href="javascript:void(0)" onclick="openTab(event, 'Missoes');">
+                            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><h2>Missões</h2></div>
+                        </a>
+                        <a href="javascript:void(0)" onclick="openTab(event, 'Vale');">
+                            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><h2>Vale-cartas</h2></div>
+                        </a>
+                        <a href="javascript:void(0)" onclick="openTab(event, 'Deck');">
+                            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding de"><h2>Deck</h2></div>
+                        </a>
+                        <a href="javascript:void(0)" onclick="openTab(event, 'Duelo');">
+                            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding"><h2>Duelo</h2></div>
+                        </a>
+                    </center>
                 </div>
 
                 <div id="Cartas" class="w3-container tab" style="display:block">
+                    <p>Como dito anteriormente, Lord of Florestal é um jogo de cartas e, portanto, possui cartas. Nesta seção você encontra mais detalhes sobre as informações contidas em cada uma das cartas.</p>
+
+                    <div class="item">
+                        <h2>Desafio</h2>
+                        <p>Cartas de tipo “Desafio” são cartas que possuem o poder para atacar outros desafios e defender os pontos de determinação do jogador. Confira na figura os atributos de uma carta do tipo “Desafio”.</p>
+                        <p:graphicImage library="telas" name="desafio.png" width="100%" />
+                        <p>Uma carta “Desafio”, quando colocada na mesa, pode ser posicionada em modo de ataque ou de defesa.</p>
+                    </div>
+
+                    <div class="item">
+                        <h2>Especial</h2>
+                        <p>Cartas de tipo “Especial” são cartas de efeito imediato. Assim que estas cartas são colocadas na mesa, seu efeito deve acontecer imediatamente. Elas podem, porém, ser guardadas na mão do jogador por tempo indefinido, sem que seu efeito aconteça.</p>
+                        <p>Algumas cartas do tipo “Especial” podem conter valores de ataque (Atk) e defesa (Def). Isso significa que o efeito da carta inclui usá-la como uma carta de tipo “Desafio”, mas lembre-se de que, para que isso seja possível, todas as outras condições de efeito da carta devem ser cumpridas anteriormente.</p>
+                        <p>Cartas do tipo “Especial” não podem surgir na mesa durante uma batalha e podem ser utilizadas apenas em seu turno (a não ser que a própria carta diga o contrário), portanto, para que os efeitos destas cartas sejam utilizados numa batalha, você deve mostrá-las antes de iniciar um ataque.</p>
+                        <p>Caso uma carta de tipo “Desafio” tenha ambos os valores de ataque e defesa levados a zero devido a um efeito de uma carta “Especial”, a carta “Desafio” é eliminada.</p>
+                        <p>A figura mostra os atributos de uma carta de tipo “Especial”.</p>
+                        <p:graphicImage library="telas" name="especial.png" width="100%" />
+                    </div>
+                </div>
+
+                <div id="Missoes" class="w3-container tab" style="display:none">
                     <h2>Coletando suas cartas</h2>
                     <p>Para montar um deck de Lord of Florestal, você deve realizar missões na universidade. A boa notícia é que estas missões não precisam ser trabalhos práticos.</p>
                     <p>Missões podem ser anunciadas ou secretas, individuais ou em grupo, mas todas elas terão ao menos um vale-carta como recompensa. Os professores e o atual Lord de Florestal farão o possível para que missões mais difíceis recompensem os alunos que as concluírem com cartas mais poderosas.</p>
 
-                    <h2>Missões Anunciadas</h2>
-                    <p>Missões Anunciadas são passadas em sala de aula ou através do PVANet, os alunos saberão qual carta será dada como recompensa e todos os passos para obtê-la. Apesar de não necessariamente precisarem saber as datas de anúncio das próximas missões.</p>
-                    <p>Missões Anunciadas podem ter um prazo de vencimento. Por exemplo: um professor pode fazer com que um trabalho de sala seja também uma missão. Neste caso, apenas aqueles que entregassem o trabalho poderiam obter a carta de recompensa.</p>
+                    <div class="item">
+                        <h2>Missões Anunciadas</h2>
+                        <p>Missões Anunciadas são passadas em sala de aula ou através do PVANet, os alunos saberão qual carta será dada como recompensa e todos os passos para obtê-la. Apesar de não necessariamente precisarem saber as datas de anúncio das próximas missões.</p>
+                        <p>Missões Anunciadas podem ter um prazo de vencimento. Por exemplo: um professor pode fazer com que um trabalho de sala seja também uma missão. Neste caso, apenas aqueles que entregassem o trabalho poderiam obter a carta de recompensa.</p>
+                    </div>
 
-                    <h2>Missões Secretas</h2>
-                    <p>Missões Secretas não são anunciadas em nenhum momento e, portanto, devem ser descobertas pelos alunos. As cartas de recompensa destas missões poderão ser obtidas ao conversar sobre certos assuntos-chave com professores e alunos veteranos, ou ao realizar certas ações em lugares específicos do campus.</p>
-                    <p>Assim como as Missões Anunciadas, Missões Secretas também podem ter um prazo de vencimento, isso significa que existe a possibilidade de certos eventos garantirem cartas únicas sem aviso prévio.</p>
+                    <div class="item">
+                        <h2>Missões Secretas</h2>
+                        <p>Missões Secretas não são anunciadas em nenhum momento e, portanto, devem ser descobertas pelos alunos. As cartas de recompensa destas missões poderão ser obtidas ao conversar sobre certos assuntos-chave com professores e alunos veteranos, ou ao realizar certas ações em lugares específicos do campus.</p>
+                        <p>Assim como as Missões Anunciadas, Missões Secretas também podem ter um prazo de vencimento, isso significa que existe a possibilidade de certos eventos garantirem cartas únicas sem aviso prévio.</p>
+                    </div>
+                </div>
 
-                    <h2>Cartas</h2>
-                    <p>Como dito anteriormente, Lord of Florestal é um jogo de cartas e, portanto, possui cartas. Nesta seção você encontra mais detalhes sobre as informações contidas em cada uma das cartas.</p>
-
-                    <h2>Desafio</h2>
-                    <p>Cartas de tipo “Desafio” são cartas que possuem o poder para atacar outros desafios e defender os pontos de determinação do jogador. Confira na figura os atributos de uma carta do tipo “Desafio”.</p>
-                    <p:graphicImage library="telas" name="desafio.png" width="100%" />
-                    <p>Uma carta “Desafio”, quando colocada na mesa, pode ser posicionada em modo de ataque ou de defesa.</p>
-
-                    <h2>Especial</h2>
-                    <p>Cartas de tipo “Especial” são cartas de efeito imediato. Assim que estas cartas são colocadas na mesa, seu efeito deve acontecer imediatamente. Elas podem, porém, ser guardadas na mão do jogador por tempo indefinido, sem que seu efeito aconteça.</p>
-                    <p>Algumas cartas do tipo “Especial” podem conter valores de ataque (Atk) e defesa (Def). Isso significa que o efeito da carta inclui usá-la como uma carta de tipo “Desafio”, mas lembre-se de que, para que isso seja possível, todas as outras condições de efeito da carta devem ser cumpridas anteriormente.</p>
-                    <p>Cartas do tipo “Especial” não podem surgir na mesa durante uma batalha e podem ser utilizadas apenas em seu turno (a não ser que a própria carta diga o contrário), portanto, para que os efeitos destas cartas sejam utilizados numa batalha, você deve mostrá-las antes de iniciar um ataque.</p>
-                    <p>Caso uma carta de tipo “Desafio” tenha ambos os valores de ataque e defesa levados a zero devido a um efeito de uma carta “Especial”, a carta “Desafio” é eliminada.</p>
-                    <p>A figura mostra os atributos de uma carta de tipo “Especial”.</p>
-                    <p:graphicImage library="telas" name="especial.png" width="100%" />
-
-                    <h2>Resgatando vale-cartas</h2>
+                <div id="Vale" class="w3-container tab" style="display:none">
+                    <h2>Resgatando seu voucher</h2>
                     <p>1. Tenha em mãos o seu voucher</p>
                     <p>2. Clique na aba Resgate</p>
                     <p>3. Digite o código do voucher na área indicada</p>

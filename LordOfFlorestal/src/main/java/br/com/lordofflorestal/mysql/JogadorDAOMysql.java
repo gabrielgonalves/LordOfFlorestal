@@ -114,9 +114,7 @@ public class JogadorDAOMysql {
         String sql = "DELETE FROM Jogador WHERE matricula = ?";
 
         try {
-            for (Carta carta : jogador.getCartas()) {
-                excluirCartaJogador(carta, jogador);
-            }
+            excluirTodasCartasJogador(jogador);
 
             connection = ConnectionFactory.getConnection();
 
@@ -212,7 +210,7 @@ public class JogadorDAOMysql {
     public List<Ranking> ranking(){
         List<Ranking> ranking = new ArrayList();
 
-        String sql = "SELECT login, (num_jogos_ganho + num_jogos_ganhou_lord )/(num_jogos) * 100 as media, num_jogos_ganho, num_jogos_ganhou_lord, num_jogos_perdido FROM LordOfFlorestal.Jogador WHERE id_tipo_jogador = 1 AND matricula != 0 order by media desc, num_jogos_ganhou_lord desc limit 10;";
+        String sql = "SELECT login, (num_jogos_ganho + num_jogos_ganhou_lord )/(num_jogos) * 100 as media, num_jogos_ganho, num_jogos_ganhou_lord, num_jogos_perdido, num_jogos_perdeu_lord FROM LordOfFlorestal.Jogador WHERE id_tipo_jogador = 1 order by media desc, num_jogos_ganhou_lord desc limit 10;";
 
         try {
             connection = ConnectionFactory.getConnection();
@@ -228,6 +226,7 @@ public class JogadorDAOMysql {
                 r.setJogosGanho(rs.getInt("num_jogos_ganho"));
                 r.setJogosGanhoLord(rs.getInt("num_jogos_ganhou_lord"));
                 r.setJogosPerdido(rs.getInt("num_jogos_perdido"));
+                r.setJogosPerdidoLord(rs.getInt("num_jogos_perdeu_lord"));
 
                 ranking.add(r);
             }
@@ -527,6 +526,25 @@ public class JogadorDAOMysql {
 
             statement.setInt(1, jogador.getMatricula());
             statement.setInt(2, carta.getId());
+
+            statement.executeUpdate();
+            statement.close();
+
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar operações de exclusão. Erro: " + ex.getMessage());
+        }
+    }
+    
+    public void excluirTodasCartasJogador(Jogador jogador) {
+        String sql = "DELETE FROM Jogador_has_Carta WHERE matricula_jogador = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, jogador.getMatricula());
 
             statement.executeUpdate();
             statement.close();

@@ -87,4 +87,12 @@ public class JogadorRN {
     public void inserirCartaJogador(Carta carta, Jogador jogador) {
         this.jogadorDAOMysql.inserirCartaJogador(carta, jogador);
     }
+    
+    public List<Carta> buscarCartasJogador(Jogador jogador) {
+        return this.jogadorDAOMysql.buscarCartasJogador(jogador);
+    }
+    
+    public void excluirTodasCartasJogador(Jogador jogador) {
+        this.jogadorDAOMysql.excluirTodasCartasJogador(jogador);
+    }
 }

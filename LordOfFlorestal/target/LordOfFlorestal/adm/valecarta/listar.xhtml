@@ -11,7 +11,7 @@
                 <div class="ui-g-12">
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton value="Novo vale carta" icon="fa fa-plus" action="#{valeCartaBean.novo}" class="btn-azul"/>
+                            <p:commandButton value="Novo vale carta" icon="fa fa-plus" action="#{valeCartaBean.novo}" class="btn-laranja"/>
                         </f:facet>
                     </p:toolbar>
                 </div>
@@ -52,7 +52,7 @@
                                     <p:column width="100">
                                         <div class="ui-g ui-fluid no-margin">
                                             <div class="ui-g-12">
-                                                <p:commandButton onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="vales excluir" >
+                                                <p:commandButton title="Excluir" onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="vales excluir" >
                                                     <f:setPropertyActionListener target="#{valeCartaBean.valeCarta}" value="#{vale}" />
                                                 </p:commandButton>
                                             </div>

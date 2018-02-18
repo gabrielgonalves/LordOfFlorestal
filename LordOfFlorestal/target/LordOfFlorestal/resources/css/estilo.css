@@ -134,7 +134,7 @@ body {
     padding: 10px !important;
 }
 
-.btn-azul {
+.btn-laranja {
     background: #F57C17 !important;
     color: #FFFFFF !important;
     text-shadow: none !important;
@@ -156,6 +156,16 @@ body {
     position: fixed; 
     bottom: 20px; 
     left: 0;
+}
+
+#ranking2 {
+    margin-top: -30px;
+}
+
+@media (min-width: 642px) {
+    #ranking2 {
+        margin-top: 0;
+    }
 }
 
 @media (min-width: 960px) {

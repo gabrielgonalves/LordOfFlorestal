@@ -14,7 +14,7 @@
                 <div class="ui-g-12">
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton value="Novo deck" icon="fa fa-plus" action="#{deckBean.novo}" class="btn-azul"/>
+                            <p:commandButton value="Novo deck" icon="fa fa-plus" action="#{deckBean.novo}" class="btn-laranja"/>
                         </f:facet>
                     </p:toolbar>
                 </div>
@@ -60,10 +60,10 @@
                                     <p:column width="100">
                                         <div class="ui-g ui-fluid no-margin">
                                             <div class="ui-g-6">
-                                                <p:button icon="fa fa-pencil-square-o" class="btn-verde" outcome="/novo-deck.xhtml?id=#{deck.id}" />
+                                                <p:button title="Editar" icon="fa fa-pencil-square-o" class="btn-verde" outcome="/novo-deck.xhtml?id=#{deck.id}" />
                                             </div>
                                             <div class="ui-g-6">
-                                                <p:commandButton onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="decks excluir" >
+                                                <p:commandButton title="Excluir" onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="decks excluir" >
                                                     <f:setPropertyActionListener target="#{deckBean.deckJogador}" value="#{deck}" />
                                                 </p:commandButton>
                                             </div>
