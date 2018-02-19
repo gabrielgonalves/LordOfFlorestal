@@ -145,6 +145,9 @@ public class DueloBean {
     }
 
     public String selecionaAtacar() {
+        if(cartaAtaca.getEspecial() == 69){
+            cartaAtaca.setEspecial(0);
+        }
         cartasAtacam.add(cartaAtaca);
         int atk = 0;
         for (int i = 0; i < cartasAtacam.size(); i++) {

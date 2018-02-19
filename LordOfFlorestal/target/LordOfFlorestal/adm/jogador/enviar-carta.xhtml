@@ -69,10 +69,10 @@
                 </div>
                 <div class="ui-g-12">
                     <p:panel class="card">
-                        <div class="ui-g">
+                        <div class="ui-g ui-fluid">
                             <div class="ui-g-12 ui-md-6">
-                                <p:dataTable style="height: 500px;" value="#{jogadorBean.cartas}" var="carta" id="cartas" emptyMessage="Não possui cartas para serem selecionadas."
-                                             paginator="true" paginatorPosition="top" paginatorAlwaysVisible="false" rows="7">
+                                <p:dataTable class="table" value="#{jogadorBean.cartas}" var="carta" id="cartas" emptyMessage="Não possui cartas para serem selecionadas."
+                                             paginator="true" reflow="true" paginatorPosition="top" paginatorAlwaysVisible="false" rows="7">
                                     
                                     <f:facet name="header">
                                         Cartas
@@ -81,7 +81,7 @@
                                     <p:column headerText="Nome" filterBy="#{carta.nome}">
                                         <h:outputText value="#{carta.nome}" />
                                     </p:column>
-                                    <p:column style="text-align: center">
+                                    <p:column width="150">
                                         <p:commandButton class="btn-verde" value="Selecionar" action="#{jogadorBean.selecionar}" update="cartas cartasSelecionados">
                                             <f:setPropertyActionListener target="#{jogadorBean.carta}" value="#{carta}" />
                                         </p:commandButton>
@@ -89,17 +89,17 @@
                                 </p:dataTable>
                             </div>
                             <div class="ui-g-12 ui-md-6">
-                                <p:dataTable style="height: 500px;" value="#{jogadorBean.cartasSelecionadas}" var="carta" id="cartasSelecionados" emptyMessage="Nenhuma carta foi selecionada."
-                                             paginator="true" paginatorPosition="top" paginatorAlwaysVisible="false" rows="7">
+                                <p:dataTable class="table" value="#{jogadorBean.cartasSelecionadas}" var="carta" id="cartasSelecionados" emptyMessage="Nenhuma carta foi selecionada."
+                                             paginator="true" reflow="true" paginatorPosition="top" paginatorAlwaysVisible="false" rows="7">
                                     
                                     <f:facet name="header">
                                         Cartas Selecionadas
                                     </f:facet>
                                     
-                                    <p:column headerText="Login" filterBy="#{carta.nome}">
+                                    <p:column headerText="Nome" filterBy="#{carta.nome}">
                                         <h:outputText value="#{carta.nome}" />
                                     </p:column>
-                                    <p:column style="text-align: center">
+                                    <p:column width="150">
                                         <p:commandButton class="btn-vermelho" value="Remover" action="#{jogadorBean.remover}" update="cartas cartasSelecionados">
                                             <f:setPropertyActionListener target="#{jogadorBean.carta}" value="#{carta}" />
                                         </p:commandButton>

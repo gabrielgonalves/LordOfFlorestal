@@ -53,7 +53,7 @@
                                     <p:column width="150">
                                         <div class="ui-g ui-fluid no-margin">
                                             <div class="ui-g-12">
-                                                <p:commandButton class="btn-verde" disabled="#{juntarDueloBean.deckSelecionado eq deck}" value="Selecionar" update="criar suasCartas cartasSelecionadas @this" action="#{juntarDueloBean.selecionarDeck}" >
+                                                <p:commandButton class="btn-verde" disabled="#{juntarDueloBean.deckSelecionado eq deck}" value="Selecionar" update="criar suasCartas cartasSelecionadas @this" action="#{juntarDueloBean.selecionarDeck}" onstart="PF('carregando').show()" onsuccess="PF('carregando').hide()" >
                                                     <f:setPropertyActionListener target="#{juntarDueloBean.deckSelecionado}" value="#{deck}" />
                                                 </p:commandButton>
                                             </div>
@@ -101,7 +101,7 @@
                             </div>
                             <div class="ui-g-12 ui-md-10"/>
                             <div class="ui-g-12 ui-md-2">
-                                <p:commandButton id="criar" value="Jogar" disabled="#{juntarDueloBean.cartasSelecionadas.size() ne juntarDueloBean.qtCartas ? true : false}" action="#{juntarDueloBean.entrarDuelo}" class="btn" />
+                                <p:commandButton id="criar" value="Jogar" disabled="#{juntarDueloBean.cartasSelecionadas.size() ne juntarDueloBean.qtCartas ? true : false}" action="#{juntarDueloBean.entrarDuelo}" class="btn" onstart="PF('carregando').show()" onsuccess="PF('carregando').hide()" />
                             </div>
                         </div>
                     </p:panel>

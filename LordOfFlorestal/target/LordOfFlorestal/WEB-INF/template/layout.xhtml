@@ -14,8 +14,10 @@
         <h:outputStylesheet library="css" name="components.css" />
 
         <h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />
+        <h:outputScript target="body" library="js" name="notificacao.js" />
         <h:outputScript target="body" library="js" name="app.js" />
         <h:outputScript target="body" library="js" name="cartaHover.js" />
+        <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async="" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </h:head>
@@ -71,6 +73,9 @@
         <div class="content js-content">
             <ui:insert name="conteudo" />
         </div>
+        <p:dialog widgetVar="carregando" modal="true" closable="false" showHeader="false">
+            <p:graphicImage library="img" name="carregando.gif" width="50" />
+        </p:dialog>
     </h:body>
 </html>
 

@@ -166,6 +166,10 @@ body {
     #ranking2 {
         margin-top: 0;
     }
+
+    .table {
+        height: 500px !important;
+    }
 }
 
 @media (min-width: 960px) {
@@ -184,4 +188,23 @@ body {
 
 .img-pb{
     filter: grayscale(100%);
+}
+
+.msg {
+    font-size: 20px;
+    color: #F57C17;
+    font-weight: bold;
+}
+
+.msg-panel {
+    top: 200px;
+    position: relative;
+}
+
+.scroll .ui-widget-content, #suaMao .ui-widget .ui-widget-content, #suaMesa .ui-widget .ui-widget-content, #mesaOponente .ui-widget .ui-widget-content {
+    border: none !important;
+}
+
+.table {
+    height: auto;
 }

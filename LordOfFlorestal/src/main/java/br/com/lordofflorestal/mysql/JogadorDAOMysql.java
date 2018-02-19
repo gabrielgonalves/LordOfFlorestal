@@ -446,6 +446,57 @@ public class JogadorDAOMysql {
 
         return lista;
     }
+    
+    public List<Jogador> listarJogadoresSemCarta(int id) {
+        List<Jogador> lista = new ArrayList();
+
+        String sql = "SELECT * FROM Jogador WHERE matricula NOT IN (SELECT matricula_jogador FROM LordOfFlorestal.Jogador_has_Carta WHERE id_carta = ?);";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            
+            statement.setInt(1, id);
+            
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Jogador jogador = new Jogador();
+
+                jogador.setNome(rs.getString("nome"));
+                jogador.setEmail(rs.getString("email"));
+                jogador.setImagem(rs.getString("imagem"));
+                jogador.setMatricula(rs.getInt("matricula"));
+                jogador.setLogin(rs.getString("login"));
+                jogador.setSenha(rs.getString("senha"));
+                jogador.setTipoJogador(TipoJogador.values()[rs.getInt("id_tipo_jogador") - 1]);
+
+                EstatisticaJogador ej = new EstatisticaJogador();
+                ej.setNumJogos(rs.getInt("num_jogos"));
+                ej.setNumJogosGanho(rs.getInt("num_jogos_ganho"));
+                ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
+                ej.setNumJogosGanhouLord(rs.getInt("num_jogos_ganhou_lord"));
+                ej.setNumJogosPerdeuLord(rs.getInt("num_jogos_perdeu_lord"));
+
+                jogador.setEstatisticaJogador(ej);
+
+                lista.add(jogador);
+            }
+
+            statement.close();
+
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+
+        for (Jogador jogador : lista) {
+            jogador.setCartas(buscarCartasJogador(jogador));
+        }
+
+        return lista;
+    }
 
     public List<Jogador> listarExceto(Jogador jogador) {
         List<Jogador> lista = new ArrayList();

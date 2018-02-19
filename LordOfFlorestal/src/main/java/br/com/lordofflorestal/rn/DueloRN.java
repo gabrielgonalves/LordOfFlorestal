@@ -164,13 +164,13 @@ public class DueloRN {
         }
 
         podeAtacar = false;
-        
+
         boolean retorno = verificaPontosDeterminacao();
 
         if (duelo.getSituacaoDuelo().equals(SituacaoDuelo.FINALIZADO)) {
             int pontosGanhador;
             int pontosPerdedor;
-            if(duelo.getDeckJogador1().getJogador().equals(ganhador)){
+            if (duelo.getDeckJogador1().getJogador().equals(ganhador)) {
                 pontosGanhador = duelo.getDeckJogador1().getPontosDeterminacao();
                 pontosPerdedor = duelo.getDeckJogador2().getPontosDeterminacao();
             } else {
@@ -180,7 +180,7 @@ public class DueloRN {
             salvar(duelo, ganhador, pontosGanhador, pontosPerdedor);
             atualizaEstatistica();
         }
-        
+
         return retorno;
     }
 
@@ -199,13 +199,13 @@ public class DueloRN {
         diminuiPontosDeterminacao(deckOponente, ataque);
 
         podeAtacar = false;
-        
+
         boolean retorno = verificaPontosDeterminacao();
 
         if (duelo.getSituacaoDuelo().equals(SituacaoDuelo.FINALIZADO)) {
             int pontosGanhador;
             int pontosPerdedor;
-            if(duelo.getDeckJogador1().getJogador().equals(ganhador)){
+            if (duelo.getDeckJogador1().getJogador().equals(ganhador)) {
                 pontosGanhador = duelo.getDeckJogador1().getPontosDeterminacao();
                 pontosPerdedor = duelo.getDeckJogador2().getPontosDeterminacao();
             } else {
@@ -215,7 +215,7 @@ public class DueloRN {
             salvar(duelo, ganhador, pontosGanhador, pontosPerdedor);
             atualizaEstatistica();
         }
-        
+
         return retorno;
     }
 
@@ -315,7 +315,9 @@ public class DueloRN {
         CartaJogo carta;
         //Ativa todas as cartas que foram decidas no turno anterior
         for (int i = 0; i < mesa.size(); i++) {
-            mesa.get(i).setAtiva(true);
+            if (mesa.get(i).getEspecial() != 69) {
+                mesa.get(i).setAtiva(true);
+            }
         }
         int qtMao = 3 - mao.size();
         int qtMonte = monte.size();
@@ -386,6 +388,13 @@ public class DueloRN {
             colocaCartaMesa(carta);
             duelo.setBatePapo(jogador.getLogin() + " desceu a carta " + carta.getCarta().getNome() + "\n\n" + duelo.getBatePapo());
         } else {
+            if (deck.isAnulaEspecial()) {
+                deck.setAnulaEspecial(false);
+                duelo.setBatePapo("O seu oponente desceu a carta Interpretação Popular dos Objetivos do Curso e o efeito da sua carta " + carta.getCarta().getNome() + " foi anulado\n\n" + duelo.getBatePapo());
+                colocaCartaDescarte(carta);
+                separaCartas();
+                return;
+            }
             //EFEITOS CARTAS ESPECIAIS
             switch (carta.getCarta().getId()) {
                 case 46:
@@ -444,6 +453,9 @@ public class DueloRN {
                 case 57:
                     MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
                     especialMesa = true;
+                    break;
+                case 58:
+                    EfeitoCartaRN.carta58(deckOponente);
                     break;
                 case 60:
                     MessageUtil.aviso("Selecione uma carta da mesa do seu oponente");
@@ -513,6 +525,10 @@ public class DueloRN {
         for (int i = 0; i < mesa.size(); i++) {
             if (mesa.get(i).getCarta().getId() == 1) {
                 EfeitoCartaRN.carta1(mesa.get(i));
+            }
+            if (mesa.get(i).getEspecial() == 69) {
+                mesa.get(i).setAtiva(true);
+                mesa.get(i).setEspecial(0);
             }
             if (mesa.get(i).getEspecial() == 63) {
                 mesa.get(i).setValorAtaque(mesa.get(i).getValorAtaque() - 2);

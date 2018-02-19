@@ -40,7 +40,7 @@ public class CartaBean {
 
     public CartaBean() {
         jogador = new Jogador();
-        jogadores = new JogadorRN().listar();
+        jogadores = new ArrayList();
         jogadoresSelecionados = new ArrayList();
     }
 
@@ -51,6 +51,7 @@ public class CartaBean {
             id = Integer.parseInt(request.getParameter("id"));
             CartaRN cartaRN = new CartaRN();
             carta = cartaRN.buscarPorId(id);
+            jogadores = new JogadorRN().listarJogadoresSemCarta(id);
         }
     }
 

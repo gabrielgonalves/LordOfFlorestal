@@ -76,6 +76,10 @@ public class JogadorRN {
         return this.jogadorDAOMysql.listar();
     }
     
+    public List<Jogador> listarJogadoresSemCarta(int id) {
+        return this.jogadorDAOMysql.listarJogadoresSemCarta(id);
+    }
+    
     public List<Jogador> listarExceto(Jogador jogador) {
         return this.jogadorDAOMysql.listarExceto(jogador);
     }

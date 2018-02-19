@@ -202,8 +202,8 @@ public class EfeitoCartaRN {
     }
 
     //Interpretação popular dos objetivos do curso
-    public static void carta58() {
-
+    public static void carta58(Deck deckOponente) {
+        deckOponente.setAnulaEspecial(true);
     }
 
     //Lorde of florestal
@@ -289,6 +289,8 @@ public class EfeitoCartaRN {
         } else {
             cartaOponente.setEstadoCarta(EstadoCarta.ATAQUE);
         }
+        cartaOponente.setEspecial(69);
+        cartaOponente.setAtiva(false);
     }
 
     //Reprovação em cálculo 1

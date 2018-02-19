@@ -21,12 +21,14 @@ public class Deck implements Serializable {
     private Jogador jogador;
     private boolean podeUsarEspecial;  //Efeito da carta Desmotivação Induzida Pela Nota da Prova
     private boolean podeAtacar; //Efeito da carta Procrastinação Fora de Controle
+    private boolean anulaEspecial;
 
     public Deck() {
         cartas = new ArrayList();
         pontosDeterminacao = 20;
         podeUsarEspecial = true;
         podeAtacar = true;
+        anulaEspecial = false;
     }
 
     public Deck(int pontosDeterminacao, List<CartaJogo> cartas, Jogador jogador) {
@@ -35,6 +37,7 @@ public class Deck implements Serializable {
         this.jogador = jogador;
         podeUsarEspecial = true;
         podeAtacar = true;
+        anulaEspecial = false;
     }
 
     public int getPontosDeterminacao() {
@@ -75,6 +78,14 @@ public class Deck implements Serializable {
 
     public void setPodeAtacar(boolean podeAtacar) {
         this.podeAtacar = podeAtacar;
+    }
+
+    public boolean isAnulaEspecial() {
+        return anulaEspecial;
+    }
+
+    public void setAnulaEspecial(boolean anulaEspecial) {
+        this.anulaEspecial = anulaEspecial;
     }
 
     @Override
