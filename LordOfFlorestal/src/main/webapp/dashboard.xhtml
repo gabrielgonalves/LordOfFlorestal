@@ -7,7 +7,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/WEB-INF/template/layout.xhtml">
 
-    <ui:define name="conteudo">    
+    <ui:define name="conteudo">      
         <h:form prependId="false">
             <div class="ui-g">
                 <div class="ui-g-12">
@@ -79,7 +79,7 @@
                                             <h:outputText value="Número de cartas: #{duelo.deckJogador1.cartas.size()}" />
                                         </div>
                                         <div class="ui-g-12 ui-md-2">
-                                            <p:commandButton value="Jogar" action="#{dashboardBean.jogar}" class="btn" disabled="#{dashboardBean.verificaSituacaoDuelo(duelo)}" onstart="PF('carregando').show()" onsuccess="PF('carregando').hide()"  >
+                                            <p:commandButton value="Jogar" action="#{dashboardBean.jogar}" class="btn" disabled="#{dashboardBean.verificaSituacaoDuelo(duelo)}" onclick="PF('carregando').show()" onsuccess="PF('carregando').hide()"  >
                                                 <f:setPropertyActionListener target="#{dashboardBean.dueloSelecionado}" value="#{duelo}" />
                                             </p:commandButton>
                                         </div>
@@ -106,7 +106,7 @@
                                         <p:inputText id="mensagem" placeholder="Digite sua mensagem" value="#{dashboardBean.mensagem}" />
                                     </div>
                                     <div class="ui-g-12 ui-md-2 no-margin">
-                                        <p:commandButton style="background: #F57C19; color: white; text-shadow: none; border: none !important;" value="Enviar" action="#{dashboardBean.enviarMensagem}" update="batepapo mensagem" onstart="PF('carregando').show()" onsuccess="PF('carregando').hide()"  />
+                                        <p:commandButton style="background: #F57C19; color: white; text-shadow: none; border: none !important;" value="Enviar" action="#{dashboardBean.enviarMensagem}" update="batepapo mensagem" onclick="PF('carregando').show()" onsuccess="PF('carregando').hide()"  />
                                     </div>
                                     <div class="ui-g-12 no-margin">
                                         <p:commandButton value="Limpar chat" style="margin-top: 10px;" action="#{dashboardBean.limparChat}" update="batepapo" class="btn-laranja" rendered="#{dashboardBean.jogador.tipoJogador eq 'LORD'}" />
