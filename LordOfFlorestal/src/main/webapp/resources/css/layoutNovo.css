@@ -46,7 +46,7 @@ button {
     font-weight: bold;
 }
 
-#gerencial{
+#gerencial-btn{
     width: 15%;
     text-align: left;
     position: absolute;
@@ -55,7 +55,7 @@ button {
     z-index: 2;
 }
 
-#missoes{
+#missao-btn{
     width: 20%;
     text-align: left;
     position: absolute;
@@ -64,7 +64,7 @@ button {
     z-index: 2;
 } 
 
-#resgatar {
+#resgatar-btn {
     width: 15%;
     text-align: right;
     position: absolute;
@@ -73,7 +73,7 @@ button {
     z-index: 2;
 }
 
-#perfil{
+#perfil-btn{
     width: 15%;
     text-align: left;
     position: absolute;
@@ -82,12 +82,66 @@ button {
     z-index: 2;
 } 
 
-#meus-decks {
+#meus-decks-btn {
     width: 20%;
     text-align: right;
     position: absolute;
     right: 5% !important;
     bottom: 25%;
+    z-index: 2;
+}
+
+#duelos-btn{
+    width: 15%;
+    text-align: right;
+    position: absolute;
+    right: 5% !important;
+    bottom: 40%;
+    z-index: 2;
+}
+
+#jogadores-btn{
+    width: 20%;
+    text-align: right;
+    position: absolute;
+    right: 5% !important;
+    bottom: 25%;
+    z-index: 2;
+}
+
+#missoes-btn{
+    width: 15%;
+    text-align: right;
+    position: absolute;
+    right: 5% !important;
+    bottom: 10%;
+    z-index: 2;
+}
+
+#vale-cartas-btn{
+    width: 15%;
+    text-align: left;
+    position: absolute;
+    left: 5% !important;
+    bottom: 10%;
+    z-index: 2;
+}
+
+#cartas-btn{
+    width: 20%;
+    text-align: left;
+    position: absolute;
+    left: 5% !important;
+    bottom: 25%;
+    z-index: 2;
+}
+
+#voltar {
+    width: 15%;
+    text-align: left;
+    position: absolute;
+    left: 5% !important;
+    bottom: 40%;
     z-index: 2;
 }
 
@@ -109,7 +163,7 @@ button {
     border-radius: 10%;
 }
 
-#duelos, #decks, #deck-content, #meu-perfil, #novo-deck, #resgate, #novo-duelo, #juntar-se {
+#duelos, #decks, #deck-content, #meu-perfil, #novo-deck, #resgate, #novo-duelo, #juntar-se, #cartas-content, #vale-cartas-content, #duelos-content, #jogadores-content, #missoes-content {
     padding: 5% 0;
     height: 90% !important;
     width: 100% !important;

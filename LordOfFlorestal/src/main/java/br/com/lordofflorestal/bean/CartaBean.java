@@ -73,7 +73,7 @@ public class CartaBean {
         cartaRN.salvar(carta);
 
         this.carta = new Carta();
-        return "/adm/carta/cadastrar.xhtml";
+        return "/adm/carta/listar.xhtml";
     }
 
     public String excluir() {

@@ -3,27 +3,20 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/template/layout.xhtml">
+                template="/WEB-INF/template/layoutGerencial.xhtml">
 
     <f:metadata>
         <f:event listener="#{cartaBean.preRender}" type="preRenderView" />
     </f:metadata>
 
     <ui:define name="conteudo">
-        <h:form enctype="multipart/form-data">
-            <div class="ui-g">
-                <div class="ui-g-12 tira-margem-tabela">
-                    <p:toolbar>
-                        <f:facet name="left">
-                            <p:commandButton value="Nova carta" icon="fa fa-plus" action="#{cartaBean.novo}" class="btn-laranja" process="@this"/>
-                        </f:facet>
-                        <f:facet name="right">
-                            <p:button value="Lista de cartas" icon="fa fa-list" outcome="/adm/carta/listar.xhtml" class="btn-laranja"/>
-                        </f:facet>
-                    </p:toolbar>
-                </div>
+        <h:form prependId="false" enctype="multipart/form-data">
+            <p:button id="listar" value="Lista de cartas" icon="fa fa-list" outcome="/adm/carta/listar.xhtml" class="btn-laranja"/>
+            <div id="botoes">
+                <p:commandButton value="Salvar" icon="fa fa-floppy-o" action="#{cartaBean.salvar}" ajax="false" class="btn-verde"/>
+                <p:button value="Cancelar" icon="fa fa-times" outcome="/adm/carta/listar.xhtml" class="btn-vermelho"/>
             </div>
-            <div class="ui-g">
+            <div class="ui-g" id="cartas-content">
                 <div class="ui-g-12">
                     <p:panel class="card" header="Cadastrar carta">
                         <p:messages autoUpdate="true" closable="true" />
@@ -76,14 +69,6 @@
                                                 <p:graphicImage rendered="#{cartaBean.carta.imagem != null}" library="cartas" name="#{cartaBean.carta.imagem != null ? cartaBean.carta.imagem : null}" width="150"/>
                                             </center>
                                         </p:outputPanel>     
-                                    </div>
-                                </div>
-                                <div class="ui-g-12 ui-md-8 no-margin">
-                                    <div class="ui-g-12 ui-md-3">
-                                        <p:commandButton value="Salvar" icon="fa fa-floppy-o" action="#{cartaBean.salvar}" ajax="false" class="btn-verde"/>
-                                    </div>
-                                    <div class="ui-g-12 ui-md-3">
-                                        <p:button value="Cancelar" icon="fa fa-times" outcome="/adm/carta/cadastrar.xhtml" class="btn-vermelho"/>
                                     </div>
                                 </div>
                             </div>

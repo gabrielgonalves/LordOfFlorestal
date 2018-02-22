@@ -3,28 +3,20 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/template/layout.xhtml">
+                template="/WEB-INF/template/layoutGerencial.xhtml">
 
     <f:metadata>
         <f:event listener="#{jogadorBean.preRender}" type="preRenderView" />
     </f:metadata>
 
     <ui:define name="conteudo">
-        <h:form enctype="multipart/form-data">
-            <div class="ui-g">
-                <div class="ui-g-12 tira-margem-tabela">
-                    <p:toolbar>
-                        <f:facet name="left">
-                            <p:commandButton value="Novo jogador" icon="fa fa-plus" action="#{jogadorBean.novo}" class="btn-laranja" process="@this"/>
-                        </f:facet>
-                        <f:facet name="right">
-                            <p:button value="Lista de jogadores" icon="fa fa-list" outcome="/adm/jogador/listar.xhtml" class="btn-laranja"/>
-                        </f:facet>
-                    </p:toolbar>
-                </div>
+        <h:form prependId="false" enctype="multipart/form-data">
+            <p:button id="listar" value="Lista de jogadores" icon="fa fa-list" outcome="/adm/jogador/listar.xhtml" class="btn-laranja"/>
+            <div id="botoes">
+                <p:commandButton value="Salvar" icon="fa fa-floppy-o" action="#{jogadorBean.salvar}" ajax="false" class="btn-verde"/>
+                <p:button value="Cancelar" icon="fa fa-times" outcome="/adm/jogador/listar.xhtml" class="btn-vermelho"/>
             </div>
-
-            <div class="ui-g">
+            <div class="ui-g" id="jogadores-content">
                 <div class="ui-g-12">
                     <p:panel class="card" header="Cadastrar jogador">
                         <p:messages autoUpdate="true" closable="true" />
@@ -72,14 +64,6 @@
                                         <center>
                                             <p:graphicImage rendered="#{jogadorBean.jogador.imagem != null}" library="img" name="#{jogadorBean.jogador.imagem}" width="100%" class="user-img"/>
                                         </center>
-                                    </div>
-                                </div>
-                                <div class="ui-g-12 ui-md-8 no-margin">
-                                    <div class="ui-g-12 ui-md-3">
-                                        <p:commandButton value="Salvar" icon="fa fa-floppy-o" action="#{jogadorBean.salvar}" ajax="false" class="btn-verde"/>
-                                    </div>
-                                    <div class="ui-g-12 ui-md-3">
-                                        <p:button value="Cancelar" icon="fa fa-times" outcome="/adm/jogador/cadastrar.xhtml" class="btn-vermelho"/>
                                     </div>
                                 </div>
                             </div>

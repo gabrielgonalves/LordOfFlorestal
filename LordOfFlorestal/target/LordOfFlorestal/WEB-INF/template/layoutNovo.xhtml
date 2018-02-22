@@ -14,11 +14,11 @@
     </h:head>
     <h:body>
         <div id="menu">
-            <p:button rendered="#{perfilBean.jogador.tipoJogador eq 'LORD' ? true : false}" value="Gerencial" id="gerencial" class="#{menuBean.getItemCssClass('/gerencial.xhtml')}" />
-            <p:button value="Missões" outcome="missao.xhtml" id="missoes" class="#{menuBean.getItemCssClass('/missao.xhtml')}" />
-            <p:button value="Perfil" outcome="perfil.xhtml" id="perfil" class="#{menuBean.getItemCssClass('/perfil.xhtml')}" />
-            <p:button value="Resgatar" outcome="resgate.xhtml" id="resgatar" class="#{menuBean.getItemCssClass('/resgate.xhtml')}" />
-            <p:button value="Meus decks" outcome="lista-deck.xhtml" id="meus-decks" class="#{menuBean.getItemCssClass('/lista-deck.xhtml')} #{menuBean.getItemCssClass('/novo-deck.xhtml')}" />
+            <p:button rendered="#{perfilBean.jogador.tipoJogador eq 'LORD' ? true : false}" outcome="/dashboard-gerencial.xhtml" value="Gerencial" id="gerencial-btn"/>
+            <p:button value="Missões" outcome="/missao.xhtml" id="missao-btn" class="#{menuBean.getItemCssClass('/missao.xhtml')}" />
+            <p:button value="Perfil" outcome="/perfil.xhtml" id="perfil-btn" class="#{menuBean.getItemCssClass('/perfil.xhtml')}" />
+            <p:button value="Resgatar" outcome="/resgate.xhtml" id="resgatar-btn" class="#{menuBean.getItemCssClass('/resgate.xhtml')}" />
+            <p:button value="Meus decks" outcome="/lista-deck.xhtml" id="meus-decks-btn" class="#{menuBean.getItemCssClass('/lista-deck.xhtml')} #{menuBean.getItemCssClass('/novo-deck.xhtml')}" />
         </div>
         <div class="mesa">
             <p:graphicImage id="cartahover" />

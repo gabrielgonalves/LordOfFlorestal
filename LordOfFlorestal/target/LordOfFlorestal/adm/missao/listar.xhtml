@@ -3,21 +3,12 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/template/layout.xhtml">
+                template="/WEB-INF/template/layoutGerencial.xhtml">
 
     <ui:define name="conteudo">
         <h:form prependId="false" enctype="multipart/form-data">
-            <div class="ui-g">
-                <div class="ui-g-12">
-                    <p:toolbar>
-                        <f:facet name="left">
-                            <p:commandButton value="Nova missão" icon="fa fa-plus" action="#{missaoBean.novo}" class="btn-laranja"/>
-                        </f:facet>
-                    </p:toolbar>
-                </div>
-            </div>
-
-            <div class="ui-g">
+            <p:commandButton id="novo" value="Nova missão" icon="fa fa-plus" action="#{missaoBean.novo}" class="btn-laranja"/>
+            <div class="ui-g" id="missoes-content">
                 <div class="ui-g-12">
                     <p:panel class="card">
                         <p:messages autoUpdate="true" closable="true" />
@@ -32,10 +23,6 @@
 
                                     <p:column headerText="Id" width="50" filterBy="#{missao.id}">
                                         <h:outputText value="#{missao.id}" />
-                                    </p:column>
-
-                                    <p:column headerText="Descrição">
-                                        <h:outputText value="#{missao.descricao}" />
                                     </p:column>
 
                                     <p:column headerText="Carta" filterBy="#{missao.carta.nome}">
@@ -54,22 +41,22 @@
                                         <p:graphicImage library="icon" name="#{missao.ativa == true ?'like.png' : 'dislike.png'}" />
                                     </p:column>
 
-                                    <p:column width="200">
+                                    <p:column>
                                         <div class="ui-g ui-fluid no-margin">
-                                            <div class="ui-g-3">
+                                            <div class="ui-g-6">
                                                 <p:button title="Editar" icon="fa fa-pencil-square-o" class="btn-verde" outcome="/adm/missao/cadastrar.xhtml?id=#{missao.id}" />
                                             </div>
-                                            <div class="ui-g-3">
+                                            <div class="ui-g-6">
                                                 <p:commandButton title="Excluir" onsuccess="PF('excluir').show()" icon="fa fa-trash" class="btn-vermelho" update="missoes excluir" >
                                                     <f:setPropertyActionListener target="#{missaoBean.missao}" value="#{missao}" />
                                                 </p:commandButton>
                                             </div>
-                                            <div class="ui-g-3">
+                                            <div class="ui-g-6">
                                                 <p:commandButton title="Visualizar" icon="fa fa-eye" class="btn-laranja" onclick="PF('info').show()" update="info" >
                                                     <f:setPropertyActionListener target="#{missaoBean.missao}" value="#{missao}" />
                                                 </p:commandButton>
                                             </div>
-                                            <div class="ui-g-3">
+                                            <div class="ui-g-6">
                                                 <p:button title="Enviar Recompensa" icon="fa fa-send" class="btn-preto" outcome="/adm/missao/enviar-recompensa.xhtml?id=#{missao.id}" />
                                             </div>
                                         </div>

@@ -14,16 +14,16 @@
     </h:head>
     <h:body>
         <div id="menu">
-            <p:button value="Voltar" id="gerencial" class="#{menuBean.getItemCssClass('/gerencial.xhtml')}" />
-            <p:button value="Duelos" outcome="missao.xhtml" id="duelos-btn" class="#{menuBean.getItemCssClass('/missao.xhtml')}" />
-            <p:button value="Jogadores" outcome="missao.xhtml" id="jogadores-btn" class="#{menuBean.getItemCssClass('/missao.xhtml')}" />
-            <p:button value="Missões" outcome="lista-deck.xhtml" id="missoes-btn" class="#{menuBean.getItemCssClass('/lista-deck.xhtml')} #{menuBean.getItemCssClass('/novo-deck.xhtml')}" />
-            <p:button value="Vale-cartas" outcome="perfil.xhtml" id="vale-cartas-btn" class="#{menuBean.getItemCssClass('/perfil.xhtml')}" />
-            <p:button value="Cartas" outcome="resgate.xhtml" id="cartas-btn" class="#{menuBean.getItemCssClass('/resgate.xhtml')}" />
+            <p:button value="Voltar" id="voltar" outcome="/dashboard.xhtml" />
+            <p:button value="Duelos" outcome="/adm/duelo/listar.xhtml" id="duelos-btn" class="#{menuBean.getItemCssClass('/adm/duelo/listar.xhtml')}" />
+            <p:button value="Jogadores" outcome="/adm/jogador/listar.xhtml" id="jogadores-btn" class="#{menuBean.getItemCssClass('/adm/jogador/listar.xhtml')} #{menuBean.getItemCssClass('/adm/jogador/cadastrar.xhtml')} #{menuBean.getItemCssClass('/adm/jogador/enviar-carta.xhtml')}" />
+            <p:button value="Missões" outcome="/adm/missao/listar.xhtml" id="missoes-btn" class="#{menuBean.getItemCssClass('/adm/missao/listar.xhtml')} #{menuBean.getItemCssClass('/adm/missao/cadastrar.xhtml')} #{menuBean.getItemCssClass('/adm/missao/enviar-recompensa.xhtml')}" />
+            <p:button value="Vale-cartas" outcome="/adm/valecarta/listar.xhtml" id="vale-cartas-btn" class="#{menuBean.getItemCssClass('/adm/valecarta/listar.xhtml')} #{menuBean.getItemCssClass('/adm/valecarta/cadastrar.xhtml')}" />
+            <p:button value="Cartas" outcome="/adm/carta/listar.xhtml" id="cartas-btn" class="#{menuBean.getItemCssClass('/adm/carta/listar.xhtml')} #{menuBean.getItemCssClass('/adm/carta/cadastrar.xhtml')} #{menuBean.getItemCssClass('/adm/carta/enviar-carta.xhtml')}" />
         </div>
         <div class="mesa">
             <p:graphicImage id="cartahover" />
-            <a href="dashboard.xhtml" title="Tela Inicial"><p:graphicImage library="img" name="logo.png" id="logo" /></a>
+            <a href="/LordOfFlorestal/dashboard.xhtml" title="Tela Inicial"><p:graphicImage library="img" name="logo.png" id="logo" /></a>
             <div class="conteudo">
                 <ui:insert name="conteudo" />
             </div>

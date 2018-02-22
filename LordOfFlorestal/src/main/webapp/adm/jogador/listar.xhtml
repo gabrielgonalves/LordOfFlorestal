@@ -3,26 +3,17 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/template/layout.xhtml">
+                template="/WEB-INF/template/layoutGerencial.xhtml">
 
     <ui:define name="conteudo">
         <h:form prependId="false" enctype="multipart/form-data">
-            <div class="ui-g">
-                <div class="ui-g-12">
-                    <p:toolbar>
-                        <f:facet name="left">
-                            <p:commandButton value="Novo jogador" icon="fa fa-plus" action="#{jogadorBean.novo}" class="btn-laranja"/>
-                        </f:facet>
-                    </p:toolbar>
-                </div>
-            </div>
-
+            <p:commandButton id="novo" value="Novo jogador" icon="fa fa-plus" action="#{jogadorBean.novo}" class="btn-laranja"/>
             <div class="ui-g">
                 <div class="ui-g-12">
                     <p:panel class="card">
                         <p:messages autoUpdate="true" closable="true" />
 
-                        <div class="ui-g ui-fluid">
+                        <div class="ui-g ui-fluid" id="jogadores-content">
                             <div class="ui-g-12">
                                 <p:dataTable id="jogadores" value="#{jogadorBean.jogadores}" var="jogador" reflow="true" emptyMessage="Nenhum jogador foi encontrado."
                                              paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="15">

@@ -95,7 +95,7 @@ public class JogadorBean {
         jogadorRN.salvar(jogador);
 
         this.jogador = new Jogador();
-        return "/adm/jogador/cadastrar.xhtml";
+        return "/adm/jogador/listar.xhtml";
     }
 
     public String excluir() {
