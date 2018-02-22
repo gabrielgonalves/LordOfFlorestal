@@ -5,159 +5,43 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="/WEB-INF/template/layout.xhtml">
+                template="/WEB-INF/template/layoutNovo.xhtml">
 
     <ui:define name="conteudo">      
         <h:form prependId="false">
             <div class="ui-g">
                 <div class="ui-g-12">
-                    <p:panel class="card">
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-2 no-margin">
-                                <center>
-                                    <p:graphicImage library="img" name="#{dashboardBean.jogador.imagem}" width="150" class="user-img" />
-                                    <br/>
-                                    <h:outputText value="#{dashboardBean.jogador.login}" class="user-txt" />
-                                </center>
-                            </div>
-                            <div class="ui-g-12 ui-md-10 no-margin">
-                                <div class="ui-g-12 no-margin">
-                                    <p:panel id="cartasSelecionadas" header="Suas cartas" >
-                                        <div class="scroll">
-                                            <p:outputPanel autoUpdate="true">
-                                                <ui:repeat var="carta" value="#{dashboardBean.jogador.cartas}">
-                                                    <p:panel class="item">
-                                                        <center>
-                                                            <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="100" />
-                                                        </center>
-                                                    </p:panel>
-                                                </ui:repeat>
-                                            </p:outputPanel>
-                                        </div>
-                                        <f:facet name="footer">
-                                            <p:link outcome="resgate.xhtml" value="Resgatar" class="resgatar" />
-                                        </f:facet>
-                                    </p:panel>
-                                </div>
-                            </div>
-                            <div class="ui-g-12 no-margin">
-                                <div class="ui-g-12 ui-md-8" />
-                                <div class="ui-g-12 ui-md-4 no-margin">
-                                    <p:button value="Ver perfil completo" outcome="perfil.xhtml" class="btn" />
-                                </div>
-                            </div>
-                        </div>
-                    </p:panel>
-                </div>
-                <div class="ui-g-12">
-                    <p:panel class="card">
-                        <div class="ui-g">
-                            <p:poll listener="#{dashboardBean.atualizarDados}" interval="1" />
+                    <p:poll listener="#{dashboardBean.atualizarDados}" interval="1" />
 
-                            <p:poll  listener="#{dashboardBean.removerDuelo}" interval="1" update="duelos" />
-                            <p:dataTable value="#{dashboardBean.duelos}" var="duelo" id="duelos" class="no-margin"
-                                         emptyMessage="Não existem duelos criados, crie um novo.">
-                                <f:facet name="header">
-                                    Duelos
-                                </f:facet>
-
-                                <p:column>
-                                    <div class="ui-g">
-                                        <div class="ui-g-12 ui-md-3">
-                                            <center>
-                                                <p:graphicImage library="img" name="#{duelo.criadoPor.imagem}" width="100" class="user-img-duelo" />
-                                                <p:graphicImage library="img" rendered="#{duelo.oponente eq null ? false : true}" name="#{duelo.oponente.imagem}" width="100" class="user-img-duelo" />
-                                            </center>
-                                        </div>
-                                        <div class="ui-g-12 ui-md-7">
-                                            <h:outputText value="Jogador 1: #{duelo.criadoPor.login}" /> <br/>
-                                            <h:outputText value="#{duelo.oponente eq null ? 'Jogador 2: Aguardando oponente' : dashboardBean.textoOponente(duelo.oponente)}" /> <br/>
-                                            <h:outputText value="Entre até: " rendered="#{duelo.oponente eq null ? true : false}" />
-                                            <h:outputText value="#{duelo.dataCriacao.time}" rendered="#{duelo.oponente eq null ? true : false}">
-                                                <f:convertDateTime timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy HH:mm:ss" />
-                                            </h:outputText> <br/>
-                                            <h:outputText value="Número de cartas: #{duelo.deckJogador1.cartas.size()}" />
-                                        </div>
-                                        <div class="ui-g-12 ui-md-2">
-                                            <p:commandButton value="Jogar" action="#{dashboardBean.jogar}" class="btn" disabled="#{dashboardBean.verificaSituacaoDuelo(duelo)}" onclick="PF('carregando').show()" onsuccess="PF('carregando').hide()"  >
-                                                <f:setPropertyActionListener target="#{dashboardBean.dueloSelecionado}" value="#{duelo}" />
-                                            </p:commandButton>
-                                        </div>
-                                    </div>
-                                </p:column>
-                            </p:dataTable>
-                            <div class="ui-g-12 no-margin">
-                                <div class="ui-g-12 ui-md-8"/>
-                                <div class="ui-g-12 ui-md-4 no-margin">
-                                    <p:button value="Novo duelo" outcome="novo-duelo.xhtml" class="btn"/>
-                                </div>
-                            </div>
-                        </div>
-                    </p:panel>
-                </div>
-                <div class="ui-g-12 ui-md-6">
-                    <p:panel class="card" header="Bate-papo" style="min-height: 515px;">
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-12 no-margin ui-fluid">
-                                <p:poll update="batepapo" interval="1" />
-                                <p:inputTextarea autoResize="true" style="min-height: 430px; max-height: 430px;" id="batepapo" value="#{dashboardBean.batePapo}" disabled="true" />
-                                <div class="ui-g no-margin" style="margin-top: 10px;">
-                                    <div class="ui-g-12 ui-md-10 no-margin">
-                                        <p:inputText id="mensagem" placeholder="Digite sua mensagem" value="#{dashboardBean.mensagem}" />
-                                    </div>
-                                    <div class="ui-g-12 ui-md-2 no-margin">
-                                        <p:commandButton style="background: #F57C19; color: white; text-shadow: none; border: none !important;" value="Enviar" action="#{dashboardBean.enviarMensagem}" update="batepapo mensagem" onclick="PF('carregando').show()" onsuccess="PF('carregando').hide()"  />
-                                    </div>
-                                    <div class="ui-g-12 no-margin">
-                                        <p:commandButton value="Limpar chat" style="margin-top: 10px;" action="#{dashboardBean.limparChat}" update="batepapo" class="btn-laranja" rendered="#{dashboardBean.jogador.tipoJogador eq 'LORD'}" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </p:panel>
-                </div>
-                <div class="ui-g-12 ui-md-6">
-                    <p:panel class="card" header="Ranking" style="min-height: 250px;">
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-6 no-margin ui-fluid">
-                                <p:dataList id="ranking1" itemStyleClass="teste" value="#{dashboardBean.ranking5}" var="user" type="definition" >
-                                    <div class="ui-g">
-                                        <div class="ui-g-12">
-                                            <h:outputText value="#{user.login}" style="font-weight: bold;" />
-                                            <p:graphicImage style="float: right !important;" width="20px" library="icon" name="crown.png" class="#{user.jogosGanhoLord ne 0 ? '' : 'img-pb'}" />
-                                        </div>
-                                    </div>
-                                </p:dataList>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 no-margin ui-fluid">
-                                <p:dataList id="ranking2" itemStyleClass="teste" value="#{dashboardBean.ranking10}" var="user" type="definition" >
-                                    <div class="ui-g">
-                                        <div class="ui-g-12">
-                                            <h:outputText value="#{user.login}" style="font-weight: bold;" />
-                                            <p:graphicImage style="float: right !important;" width="20px" library="icon" name="crown.png" class="#{user.jogosGanhoLord ne 0 ? '' : 'img-pb'}" />
-                                        </div>
-                                    </div>
-                                </p:dataList>
-                            </div>
-                        </div>
-                    </p:panel>
-
-                    <div class="ui-g-12 ui-md-12 no-margin">
-                        <p:carousel style="min-height: 250px; margin-top: 10px;" vertical="false" circular="true" responsive="true" class="card" headerText="Missões" numVisible="1" var="missao" value="#{dashboardBean.missoes}">
+                    <p:poll  listener="#{dashboardBean.removerDuelo}" interval="1" update="duelos" />
+                    <p:dataTable value="#{dashboardBean.duelos}" var="duelo" id="duelos" class="no-margin"
+                                 emptyMessage="Não existem duelos criados, crie um novo.">
+                        <p:column>
                             <div class="ui-g">
-                                <div class="ui-g-12 ui-md-9">
-                                    <h:outputText value="Descrição" style="font-weight: bold" /> <br/>
-                                    <h:outputText value="#{missao.descricao}" />
-                                </div>
                                 <div class="ui-g-12 ui-md-3">
-                                    <h:outputText value="Recompensa" style="font-weight: bold" />
                                     <center>
-                                        <p:graphicImage library="cartas" name="#{missao.carta.imagem}" width="100%" style="margin-top: 10px;" onmouseout="removeClasse();" onmouseover="adicionaClasse('#{missao.carta.imagem}')" />
+                                        <p:graphicImage library="img" name="#{duelo.criadoPor.imagem}" width="100" class="user-img-duelo" />
+                                        <p:graphicImage library="img" rendered="#{duelo.oponente eq null ? false : true}" name="#{duelo.oponente.imagem}" width="100" class="user-img-duelo" />
                                     </center>
                                 </div>
+                                <div class="ui-g-12 ui-md-7">
+                                    <h:outputText value="Jogador 1: #{duelo.criadoPor.login}" /> <br/>
+                                    <h:outputText value="#{duelo.oponente eq null ? 'Jogador 2: Aguardando oponente' : dashboardBean.textoOponente(duelo.oponente)}" /> <br/>
+                                    <h:outputText value="Entre até: " rendered="#{duelo.situacaoDuelo eq 'CRIADO' ? true : false}" />
+                                    <h:outputText value="#{duelo.dataCriacao.time}" rendered="#{duelo.situacaoDuelo eq 'CRIADO' ? true : false}">
+                                        <f:convertDateTime timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy HH:mm:ss" />
+                                    </h:outputText> <br/>
+                                    <h:outputText value="Número de cartas: #{duelo.deckJogador1.cartas.size()}" />
+                                </div>
+                                <div class="ui-g-12 ui-md-2">
+                                    <p:commandButton value="Jogar" action="#{dashboardBean.jogar}" class="btn" disabled="#{dashboardBean.verificaSituacaoDuelo(duelo)}" onclick="PF('carregando').show()" onsuccess="PF('carregando').hide()"  >
+                                        <f:setPropertyActionListener target="#{dashboardBean.dueloSelecionado}" value="#{duelo}" />
+                                    </p:commandButton>
+                                </div>
                             </div>
-                        </p:carousel>
-                    </div>
+                        </p:column>
+                    </p:dataTable>
+                    <p:button value="Novo duelo" outcome="novo-duelo.xhtml" id="novo"/>
                 </div>
             </div>
         </h:form>

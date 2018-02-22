@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/layoutNovo.xhtml">
+
+    <ui:define name="conteudo">
+        <h:form prependId="false">
+            <div class="ui-g" id="resgate">
+                <div class="ui-g-12">
+                    <p:carousel style="min-height: 250px; margin-top: 10px;" vertical="false" circular="true" responsive="true" class="card" headerText="Missões" numVisible="1" var="missao" value="#{dashboardBean.missoes}">
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-md-9">
+                                <h:outputText value="Descrição" style="font-weight: bold" /> <br/>
+                                <h:outputText value="#{missao.descricao}" />
+                            </div>
+                            <div class="ui-g-12 ui-md-3">
+                                <h:outputText value="Recompensa" style="font-weight: bold" />
+                                <center>
+                                    <p:graphicImage library="cartas" name="#{missao.carta.imagem}" width="100%" style="margin-top: 10px;" onmouseout="removeClasse();" onmouseover="adicionaClasse('#{missao.carta.imagem}')" />
+                                </center>
+                            </div>
+                        </div>
+                    </p:carousel>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

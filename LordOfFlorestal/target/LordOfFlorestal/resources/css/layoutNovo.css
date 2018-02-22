@@ -1,0 +1,201 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background: white;
+    background: url("#{request.contextPath}/resources/img/grama.jpg");
+    background-size: 100%;
+}
+
+.ui-panel-titlebar {
+    background: #994d00;
+    color: white;
+}
+
+.mesa {
+    width: 80%;
+    height: 90%;
+    background: url("#{request.contextPath}/resources/img/mesa.jpg");
+    background-size: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 2%;
+}
+
+.is-selected, #menu button:hover{
+    background: #ff8c1a !important;
+}
+
+@media screen and (max-width: 700px){
+    button {
+        font-size: 12px !important;
+    }
+}
+
+button {
+    padding: 10px 5px !important;
+    color: white !important;
+    background: #994d00 !important;
+    text-shadow: none !important;
+    border: none !important;
+    font-weight: bold;
+}
+
+#gerencial{
+    width: 15%;
+    text-align: left;
+    position: absolute;
+    left: 5% !important;
+    bottom: 40%;
+    z-index: 2;
+}
+
+#missoes{
+    width: 20%;
+    text-align: left;
+    position: absolute;
+    left: 5% !important;
+    bottom: 25%;
+    z-index: 2;
+} 
+
+#resgatar {
+    width: 15%;
+    text-align: right;
+    position: absolute;
+    right: 5% !important;
+    bottom: 10%;
+    z-index: 2;
+}
+
+#perfil{
+    width: 15%;
+    text-align: left;
+    position: absolute;
+    left: 5% !important;
+    bottom: 10%;
+    z-index: 2;
+} 
+
+#meus-decks {
+    width: 20%;
+    text-align: right;
+    position: absolute;
+    right: 5% !important;
+    bottom: 25%;
+    z-index: 2;
+}
+
+.conteudo {
+    position: absolute;
+    width: 60%;
+    height: 105%;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background: #f2f2f2;
+    border-radius: 5%;
+}
+
+.user-img {
+    object-fit:cover;
+    width: 100px;
+    border-radius: 10%;
+}
+
+#duelos, #decks, #deck-content, #meu-perfil, #novo-deck, #resgate, #novo-duelo, #juntar-se {
+    padding: 5% 0;
+    height: 90% !important;
+    width: 100% !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5%;
+    z-index: 2;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#novo, #listar {
+    z-index: 3;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+#botoes {
+    z-index: 3;
+    position: absolute;
+    bottom: -10px;
+    left: 50% !important;
+    margin-right: -50% !important;
+    transform: translate(-50%, 0%) !important;
+}
+
+#logo {
+    position: absolute;
+    left: -5%;
+    top: -5%;
+    z-index: 100;
+    width: 25%;
+}
+
+#excluir-panel {
+    width: 200px;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    margin-right: -50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+#cartahover {
+    width: 20%;
+    visibility: hidden;
+    z-index: 9999;
+    top: 50%;
+    left: 80%;
+    margin-right: -50%;
+    transform: translate(0%, -50%);
+    position: absolute;
+}
+
+.ui-column-title {
+    font-size: 14px;
+}
+
+.scroll {
+    overflow-y: hidden !important;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.scroll .item {
+    display: inline-block;
+    padding: 0 !important;
+    position: relative;
+    margin: 0 10px;
+}
+
+.scroll .ui-widget-content, #suaMao .ui-widget .ui-widget-content, #suaMesa .ui-widget .ui-widget-content, #mesaOponente .ui-widget .ui-widget-content {
+    border: none !important;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #FFFFFF;
+}
+::-webkit-scrollbar {
+    width: 6px;
+    background: #FFFFFF;
+}
+::-webkit-scrollbar-thumb {
+    background: #994d00;
+}

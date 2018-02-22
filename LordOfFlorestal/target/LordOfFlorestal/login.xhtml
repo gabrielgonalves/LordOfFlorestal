@@ -9,10 +9,22 @@
         <h:outputStylesheet library="css" name="login.css" />
         <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        
+
         <link rel="icon" href="resources/img/icon.ico" type="image/x-icon"/>
         <link rel="shortcut icon" href="resources/img/icon.ico" type="image/x-icon"/>
         <h:outputScript target="body" library="js" name="notificacao.js" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" />
+        <script>
+            function teste() {
+                var doc = window.document;
+                var docEl = doc.documentElement;
+
+                docEl.mozRequestFullScreen();
+                docEl.msRequestFullscreen();
+                docEl.requestFullscreen(); // standard
+            }
+
+        </script>
     </h:head>
     <f:metadata>
         <f:event listener="#{loginBean.preRender}" type="preRenderView" />
@@ -38,7 +50,7 @@
                         <a href="login.xhtml" style="float: right;">Esqueceu a senha?</a>
                     </div>
                     <div class="ui-g-12">
-                        <input class="btn" type="submit" value="Entrar" />
+                        <input class="btn" type="submit" value="Entrar" onclick="teste()"/>
                     </div>
                 </div>
                 <div class="ui-lg-4 ui-md-2 ui-g-1"/>

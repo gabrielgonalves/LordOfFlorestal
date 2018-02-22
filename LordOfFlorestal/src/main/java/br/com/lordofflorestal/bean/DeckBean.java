@@ -86,7 +86,7 @@ public class DeckBean {
         deckJogador.setJogador(jogador);
         deckJogador.setCartas(cartasSelecionadas);
         new DeckJogadorRN().salvar(deckJogador);
-        return null;
+        return "lista-deck.xhtml";
     }
 
     public String excluir() {

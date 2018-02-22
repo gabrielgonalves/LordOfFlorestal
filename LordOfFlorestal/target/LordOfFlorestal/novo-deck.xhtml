@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="/WEB-INF/template/layout.xhtml"
+                template="/WEB-INF/template/layoutNovo.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <f:metadata>
@@ -14,22 +14,15 @@
 
     <ui:define name="conteudo">
         <h:form prependId="false">
-            <div class="ui-g">
-                <div class="ui-g-12 tira-margem-tabela">
-                    <p:toolbar>
-                        <f:facet name="left">
-                            <p:commandButton value="Novo deck" icon="fa fa-plus" action="#{deckBean.novo}" class="btn-laranja" process="@this"/>
-                        </f:facet>
-                        <f:facet name="right">
-                            <p:button value="Lista de decks" icon="fa fa-list" outcome="/lista-deck.xhtml" class="btn-laranja"/>
-                        </f:facet>
-                    </p:toolbar>
-                </div>
+            <p:button value="Lista de decks" icon="fa fa-list" outcome="/lista-deck.xhtml" id="listar"/>
+            <div id="botoes">
+                <p:commandButton id="salvar" value="Salvar" icon="fa fa-floppy-o" disabled="#{deckBean.cartasSelecionadas.size() lt deckBean.qtCartas ? true : false}" action="#{deckBean.salvar}" ajax="false" class="btn-verde"/>
+                <p:button id="cancelar" value="Cancelar" icon="fa fa-times" outcome="/lista-deck.xhtml" class="btn-vermelho"/>
             </div>
-            <div class="ui-g">
+            <div class="ui-g" id="novo-deck">
                 <div class="ui-g-12">
-                    <p:panel class="card" header="Cadastrar deck">
-                        <p:messages autoUpdate="true" closable="true" />
+                    <p:panel header="#{deckBean.deckJogador.nome ne '' ? 'Editando o deck '.concat(deckBean.deckJogador.nome) : 'Cadastrar deck'}">
+                        <p:growl autoUpdate="true" />
                         <div class="ui-g ui-fluid">
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
                                 <div class="ui-g-12 ui-md-12 no-margin">
@@ -81,14 +74,6 @@
                                                 </p:outputPanel>
                                             </div>
                                         </p:panel>
-                                    </div>
-                                </div>
-                                <div class="ui-g-12 ui-md-8 no-margin">
-                                    <div class="ui-g-12 ui-md-3">
-                                        <p:commandButton id="salvar" value="Salvar" icon="fa fa-floppy-o" disabled="#{deckBean.cartasSelecionadas.size() lt deckBean.qtCartas ? true : false}" action="#{deckBean.salvar}" ajax="false" class="btn-verde"/>
-                                    </div>
-                                    <div class="ui-g-12 ui-md-3">
-                                        <p:button value="Cancelar" icon="fa fa-times" outcome="/novo-deck.xhtml" class="btn-vermelho"/>
                                     </div>
                                 </div>
                             </div>

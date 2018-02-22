@@ -157,6 +157,8 @@ public class DueloBean {
             MessageUtil.aviso("Você selecionou mais de uma carta para atacar o seu oponente. Seu novo valor de ataque é " + atk);
         }
         dueloRN.setPodeAtacar(true);
+        dueloRN.setEspecialMesa(false);
+        dueloRN.setEspecialMesaOponete(false);
         return null;
     }
 

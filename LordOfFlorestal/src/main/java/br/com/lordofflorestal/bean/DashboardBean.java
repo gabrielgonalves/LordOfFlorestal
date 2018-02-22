@@ -40,12 +40,12 @@ public class DashboardBean {
 
     public DashboardBean() {
         this.jogador = new JogadorRN().buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
-        duelos = DueloSingleton.getInstance().buscaDuelosMinCarta(jogador.getCartas().size());
+        duelos = DueloSingleton.getInstance().buscaDuelosMinCartaJogador(jogador, jogador.getCartas().size());
     }
 
     public void atualizarDados() {
         dataAtual = Calendar.getInstance();
-        duelos = DueloSingleton.getInstance().buscaDuelosMinCarta(jogador.getCartas().size());
+        duelos = DueloSingleton.getInstance().buscaDuelosMinCartaJogador(jogador, jogador.getCartas().size());
     }
 
     public void removerDuelo() {

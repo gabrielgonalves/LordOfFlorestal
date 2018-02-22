@@ -5,10 +5,13 @@
  */
 package br.com.lordofflorestal.util;
 
+import br.com.lordofflorestal.model.Duelo;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import org.primefaces.model.UploadedFile;
@@ -30,7 +33,7 @@ public class FileUploadUtil {
         }
 
     }
-    
+
     public void uploadCarta(UploadedFile uploadedFile, String nome) {
         try {
             File file = new File(diretorioRaizCarta(), nome);
@@ -42,14 +45,40 @@ public class FileUploadUtil {
         }
 
     }
-    
-    public String diretorioRaiz(){
+
+    public void uploadLog(Duelo duelo) {
+        try {
+            FileWriter arq = new FileWriter(diretorioRaizLog() + "/" + duelo.getUri() + ".txt");
+            PrintWriter gravarArq = new PrintWriter(arq);
+
+            gravarArq.printf("Duelo: %s\n", duelo.getUri());
+            gravarArq.printf("Situação: %s\n", duelo.getSituacaoDuelo());
+            gravarArq.printf("Jogador: %s\n", duelo.getCriadoPor().getLogin());
+            if (duelo.getOponente() != null) {
+                gravarArq.printf("Oponente: %s\n", duelo.getOponente().getLogin());
+            }
+            gravarArq.printf("Data de Criação: %s\n", duelo.getDataCriacao().getTime());
+            gravarArq.printf("Histórico de ações: \n\n");
+            gravarArq.printf("%s", duelo.getBatePapo());
+            
+            arq.close();
+        } catch (IOException e) {
+        }
+
+    }
+
+    public String diretorioRaiz() {
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         return servletContext.getRealPath("") + "resources/img";
     }
-    
-    public String diretorioRaizCarta(){
+
+    public String diretorioRaizCarta() {
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         return servletContext.getRealPath("") + "resources/cartas";
+    }
+
+    public String diretorioRaizLog() {
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        return servletContext.getRealPath("") + "resources/logs";
     }
 }

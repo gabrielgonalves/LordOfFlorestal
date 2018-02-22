@@ -40,6 +40,8 @@ public class NovoDueloBean {
 
     private List<DeckJogador> decks;
     private DeckJogador deckSelecionado;
+    
+    private Jogador oponente;
 
     public NovoDueloBean() {
         qtCartas = 10;
@@ -89,6 +91,8 @@ public class NovoDueloBean {
         }
         duelo.getDeckJogador1().setCartas(cartas);
         duelo.setVezDe(duelo.getCriadoPor().getLogin());
+        
+        duelo.setOponente(oponente);
 
         duelo.setBatePapo(jogador.getLogin() + " criou o duelo");
 
@@ -145,6 +149,14 @@ public class NovoDueloBean {
         this.deckSelecionado = deckSelecionado;
     }
 
+    public Jogador getOponente() {
+        return oponente;
+    }
+
+    public void setOponente(Jogador oponente) {
+        this.oponente = oponente;
+    }
+
     public void onSlideEnd(SlideEndEvent event) {
         qtCartas = event.getValue();
         if (qtCartas < cartasSelecionadas.size()) {
@@ -165,6 +177,11 @@ public class NovoDueloBean {
             }
         }
         return lista;
+    }
+    
+    public List<Jogador> getJogadores(){
+        Jogador jogador = new JogadorRN().buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
+        return new JogadorRN().listarExceto(jogador);
     }
 
 }

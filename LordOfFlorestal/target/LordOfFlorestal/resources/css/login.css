@@ -2,18 +2,21 @@ body, html {
     padding: 0;
     margin: 0;
     height: 100%;
-    background-repeat: no-repeat;
-    background-image: linear-gradient(rgb(245,124,23), rgb(244,158,8));
+    background: url("#{request.contextPath}/resources/img/grama.jpg");
+    background-size: 100%;
 }
 
 .telaLogin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
     max-width: 350px;
     padding: 40px 40px;
     background-color: #F7F7F7;
     /* just in case there no content*/
     padding: 20px 25px 30px;
-    margin: 0 auto 25px;
-    margin-top: 100px;
     /* shadows and rounded borders */
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;

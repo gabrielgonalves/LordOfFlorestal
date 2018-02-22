@@ -16,6 +16,7 @@ import br.com.lordofflorestal.model.SituacaoDuelo;
 import br.com.lordofflorestal.model.TipoCarta;
 import br.com.lordofflorestal.model.TipoJogador;
 import br.com.lordofflorestal.mysql.DueloDAOMysql;
+import br.com.lordofflorestal.util.FileUploadUtil;
 import br.com.lordofflorestal.util.MessageUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,6 +35,7 @@ public class DueloRN {
 
     private List<CartaJogo> descarte;
     private List<CartaJogo> mao;
+    private List<CartaJogo> maoOponente;
     private List<CartaJogo> mesa;
     private List<CartaJogo> mesaOponente;
     private List<CartaJogo> monte;
@@ -62,12 +64,15 @@ public class DueloRN {
         this.mao = new ArrayList();
         this.mesa = new ArrayList();
         this.mesaOponente = new ArrayList();
+        this.maoOponente = new ArrayList();
         this.monte = new ArrayList();
         this.duelo = DueloSingleton.getInstance().buscaPorURI(uri);
         inicializaDuelo(login);
     }
 
     public void alterarEstadoCarta(CartaJogo carta) {
+        especialMesa = false;
+        especialMesaOponete = false;
         if (carta.getEstadoCarta().equals(EstadoCarta.ATAQUE)) {
             duelo.setBatePapo(jogador.getLogin() + " alterou a posição da carta " + carta.getCarta().getNome() + " para modo de defesa " + "\n\n" + duelo.getBatePapo());
             carta.setEstadoCarta(EstadoCarta.DEFESA);
@@ -177,6 +182,7 @@ public class DueloRN {
                 pontosGanhador = duelo.getDeckJogador2().getPontosDeterminacao();
                 pontosPerdedor = duelo.getDeckJogador1().getPontosDeterminacao();
             }
+            new FileUploadUtil().uploadLog(duelo);
             salvar(duelo, ganhador, pontosGanhador, pontosPerdedor);
             atualizaEstatistica();
         }
@@ -212,6 +218,7 @@ public class DueloRN {
                 pontosGanhador = duelo.getDeckJogador2().getPontosDeterminacao();
                 pontosPerdedor = duelo.getDeckJogador1().getPontosDeterminacao();
             }
+            new FileUploadUtil().uploadLog(duelo);
             salvar(duelo, ganhador, pontosGanhador, pontosPerdedor);
             atualizaEstatistica();
         }
@@ -307,6 +314,8 @@ public class DueloRN {
     }
 
     public void comprar() {
+        especialMesa = false;
+        especialMesaOponete = false;
         podeAtacar = false;
         podeComprar = false;
         podeDescer = true;
@@ -555,6 +564,9 @@ public class DueloRN {
         podeDescer = false;
         podeComprar = true;
         podeAtacar = false;
+        
+        especialMesa = false;
+        especialMesaOponete = false;
 
         duelo.setVezDe(oponente.getLogin());
     }
@@ -586,6 +598,7 @@ public class DueloRN {
         this.mao = new ArrayList();
         this.mesa = new ArrayList();
         this.mesaOponente = new ArrayList();
+        this.maoOponente = new ArrayList();
         this.monte = new ArrayList();
 
         //Separa suas cartas
@@ -614,6 +627,9 @@ public class DueloRN {
         //Separa cartas oponente
         for (CartaJogo carta : deckOponente.getCartas()) {
             switch (carta.getLocalCarta()) {
+                case MAO:
+                    maoOponente.add(carta);
+                    break;
                 case MESA:
                     if (carta.getEstadoCarta().equals(EstadoCarta.DEFESA)) {
                         possuiCartaDefesa = true;
@@ -723,6 +739,7 @@ public class DueloRN {
         Calendar dataAtual = Calendar.getInstance();
         if (duelo.getDataCriacao().getTimeInMillis() <= dataAtual.getTimeInMillis() && duelo.getSituacaoDuelo().equals(SituacaoDuelo.CRIADO)) {
             duelo.setSituacaoDuelo(SituacaoDuelo.CANCELADO);
+            new FileUploadUtil().uploadLog(duelo);
             salvar(duelo, null, 0, 0);
         }
     }
@@ -906,6 +923,14 @@ public class DueloRN {
 
     public void setEspecialMesaOponete(boolean especialMesaOponete) {
         this.especialMesaOponete = especialMesaOponete;
+    }
+
+    public List<CartaJogo> getMaoOponente() {
+        return maoOponente;
+    }
+
+    public void setMaoOponente(List<CartaJogo> maoOponente) {
+        this.maoOponente = maoOponente;
     }
 
 }

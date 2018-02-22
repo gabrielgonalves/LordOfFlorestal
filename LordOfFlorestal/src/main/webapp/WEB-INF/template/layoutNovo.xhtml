@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Lord of Florestal</title>
+        <h:outputStylesheet library="css" name="layoutNovo.css" />
+        <h:outputScript library="js" name="cartaHover.js" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </h:head>
+    <h:body>
+        <div id="menu">
+            <p:button rendered="#{perfilBean.jogador.tipoJogador eq 'LORD' ? true : false}" value="Gerencial" id="gerencial" class="#{menuBean.getItemCssClass('/gerencial.xhtml')}" />
+            <p:button value="Missões" outcome="missao.xhtml" id="missoes" class="#{menuBean.getItemCssClass('/missao.xhtml')}" />
+            <p:button value="Perfil" outcome="perfil.xhtml" id="perfil" class="#{menuBean.getItemCssClass('/perfil.xhtml')}" />
+            <p:button value="Resgatar" outcome="resgate.xhtml" id="resgatar" class="#{menuBean.getItemCssClass('/resgate.xhtml')}" />
+            <p:button value="Meus decks" outcome="lista-deck.xhtml" id="meus-decks" class="#{menuBean.getItemCssClass('/lista-deck.xhtml')} #{menuBean.getItemCssClass('/novo-deck.xhtml')}" />
+        </div>
+        <div class="mesa">
+            <p:graphicImage id="cartahover" />
+            <a href="dashboard.xhtml" title="Tela Inicial"><p:graphicImage library="img" name="logo.png" id="logo" /></a>
+            <div class="conteudo">
+                <ui:insert name="conteudo" />
+            </div>
+        </div>
+        <p:dialog widgetVar="carregando" modal="true" closable="false" showHeader="false" resizable="false" >
+            <p:graphicImage library="img" name="carregando.gif" width="50" />
+        </p:dialog>
+    </h:body>
+</html>
+

@@ -5,11 +5,14 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="/WEB-INF/template/layout.xhtml">
+                template="/WEB-INF/template/layoutNovo.xhtml">
     <ui:define name="conteudo">    
         <h:form prependId="false">
+            <div id="botoes">
+                <p:commandButton id="criar" value="Jogar" disabled="#{juntarDueloBean.cartasSelecionadas.size() ne juntarDueloBean.qtCartas ? true : false}" action="#{juntarDueloBean.entrarDuelo}" class="btn" onclick="PF('carregando').show()" onsuccess="PF('carregando').hide()" />
+            </div>
             <p:growl autoUpdate="true" />
-            <div class="ui-fluid">
+            <div class="ui-fluid" id="juntar-se">
                 <div class="ui-g-12">
                     <p:panel class="card">
                         <div class="ui-g">
@@ -20,18 +23,14 @@
                                 <h:outputText value="Você pode selecionar #{juntarDueloBean.qtCartas} cartas" class="user-txt" />
                             </div>
                             <div class="ui-g-12">
-                                <p:dataTable style="box-shadow: none !important;" id="decks" value="#{juntarDueloBean.decks}" var="deck" reflow="true" emptyMessage="Nenhum deck foi encontrado."
+                                <p:dataTable style="box-shadow: none !important;" id="decks-duelo" value="#{juntarDueloBean.decks}" var="deck" reflow="true" emptyMessage="Nenhum deck foi encontrado."
                                              paginator="true" widgetVar="decks" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="15">
                                     <f:facet name="header">
                                         Seus decks
                                     </f:facet>
 
-                                    <p:column headerText="Nome" width="250" filterBy="#{deck.nome}">
+                                    <p:column headerText="Nome" filterBy="#{deck.nome}">
                                         <h:outputText value="#{deck.nome}" />
-                                    </p:column>
-
-                                    <p:column headerText="Qt de Cartas" width="100" style="text-align: center" filterBy="#{deck.cartas.size()}">
-                                        <h:outputText value="#{deck.cartas.size()}" />
                                     </p:column>
 
                                     <p:column headerText="Cartas">
@@ -50,7 +49,7 @@
                                         </p:panel>
                                     </p:column>
 
-                                    <p:column width="150">
+                                    <p:column>
                                         <div class="ui-g ui-fluid no-margin">
                                             <div class="ui-g-12">
                                                 <p:commandButton class="btn-verde" disabled="#{juntarDueloBean.deckSelecionado eq deck}" value="Selecionar" update="criar suasCartas cartasSelecionadas @this" action="#{juntarDueloBean.selecionarDeck}" onclick="PF('carregando').show()" onsuccess="PF('carregando').hide()" >
@@ -70,7 +69,7 @@
                                                     <center>
                                                         <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="165" />
                                                         <br/>
-                                                        <p:commandButton disabled="#{juntarDueloBean.cartasSelecionadas.size() lt juntarDueloBean.qtCartas ? false : true}" class="btn-verde" value="Adicionar" action="#{juntarDueloBean.adicionarCarta}" update="criar cartasSelecionadas suasCartas decks" >
+                                                        <p:commandButton disabled="#{juntarDueloBean.cartasSelecionadas.size() lt juntarDueloBean.qtCartas ? false : true}" class="btn-verde" value="Adicionar" action="#{juntarDueloBean.adicionarCarta}" update="criar cartasSelecionadas suasCartas decks-duelo" >
                                                             <f:setPropertyActionListener target="#{juntarDueloBean.cartaSelecionada}" value="#{carta}" />
                                                         </p:commandButton>
                                                     </center>
@@ -89,7 +88,7 @@
                                                     <center>
                                                         <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="165" /> 
                                                         <br />
-                                                        <p:commandButton class="btn-vermelho" value="Remover" action="#{juntarDueloBean.removerCarta}" update="criar cartasSelecionadas suasCartas decks" >
+                                                        <p:commandButton class="btn-vermelho" value="Remover" action="#{juntarDueloBean.removerCarta}" update="criar cartasSelecionadas suasCartas decks-duelo" >
                                                             <f:setPropertyActionListener target="#{juntarDueloBean.cartaSelecionada}" value="#{carta}" />
                                                         </p:commandButton>
                                                     </center>
@@ -98,10 +97,6 @@
                                         </p:outputPanel>
                                     </div>
                                 </p:panel>
-                            </div>
-                            <div class="ui-g-12 ui-md-10"/>
-                            <div class="ui-g-12 ui-md-2">
-                                <p:commandButton id="criar" value="Jogar" disabled="#{juntarDueloBean.cartasSelecionadas.size() ne juntarDueloBean.qtCartas ? true : false}" action="#{juntarDueloBean.entrarDuelo}" class="btn" onclick="PF('carregando').show()" onsuccess="PF('carregando').hide()" />
                             </div>
                         </div>
                     </p:panel>
