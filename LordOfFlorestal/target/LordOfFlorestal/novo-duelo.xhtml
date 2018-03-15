@@ -17,6 +17,10 @@
             <div class="ui-fluid" id="novo-duelo">
                 <div class="ui-g-12">
                     <p:panel class="card">
+                        <p:outputPanel autoUpdate="true">
+                            <h:outputText id="teste" value="Você ainda tem #{novoDueloBean.tempoThread.tempo} segundo(s) para criar o seu duelo." />
+                            <p:poll update="teste" interval="1" />
+                        </p:outputPanel>
                         <div class="ui-g">
                             <div class="ui-g-12 ui-md-3">
                                 <p:outputLabel for="tempo" value="Tempo de espera" class="user-txt" />
@@ -41,7 +45,7 @@
                                 <p:outputLabel for="jogadores" value="Selecione seu oponente" class="user-txt" />
                             </div>
                             <div class="ui-g-9">
-                                <p:selectOneMenu id="jogadores" value="#{novoDueloBean.oponente}" converter="jogadorconverter">
+                                <p:selectOneMenu id="jogadores" value="#{novoDueloBean.oponente}" converter="jogadorconverter" filter="true" filterMatchMode="startsWith">
                                     <f:selectItem itemLabel="Não desejo jogar com alguém em específico" itemValue="#{null}" />
                                     <f:selectItems value="#{novoDueloBean.jogadores}" var="jogador" itemLabel="#{jogador.login}" itemValue="#{jogador}" />
                                 </p:selectOneMenu>

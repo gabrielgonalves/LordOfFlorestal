@@ -13,8 +13,8 @@
         <h:form prependId="false" enctype="multipart/form-data">
             <p:button id="listar" value="Lista de vale cartas" icon="fa fa-list" outcome="/adm/valecarta/listar.xhtml" class="btn-laranja"/>
             <div id="botoes">
-                <p:commandButton value="Gerar" icon="fa fa-floppy-o" action="#{valeCartaBean.gerar}" ajax="false" class="btn-verde"/>
                 <p:button value="Cancelar" icon="fa fa-times" outcome="/adm/valecarta/listar.xhtml" class="btn-vermelho"/>
+                <p:commandButton value="Gerar" icon="fa fa-floppy-o" action="#{valeCartaBean.gerar}" ajax="false" class="btn-verde"/>
             </div>
             <div class="ui-g" id="vale-cartas-content">
                 <div class="ui-g-12">

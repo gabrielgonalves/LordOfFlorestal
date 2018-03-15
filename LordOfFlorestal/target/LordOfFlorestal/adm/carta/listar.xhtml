@@ -11,7 +11,7 @@
             <div class="ui-g" id="cartas-content">
                 <div class="ui-g-12">
                     <p:panel class="card">
-                        <p:messages autoUpdate="true" closable="true" />
+                        <p:growl autoUpdate="true"/>
 
                         <div class="ui-g ui-fluid">
                             <div class="ui-g-12">
@@ -75,7 +75,7 @@
                     </p:panel>
                 </div>
             </div>
-            <p:dialog modal="true" widgetVar="excluir" resizable="false" header="Atenção" showEffect="fade" hideEffect="fade">
+            <p:dialog id="excluir-panel" widgetVar="excluir" resizable="false" header="Atenção" showEffect="fade" hideEffect="fade">
                 <p:panel id="excluir" style="border: none !important">
                     <div class="ui-g ui-fluid">
                         <div class="ui-g-12">
@@ -90,7 +90,7 @@
                     </div>
                 </p:panel>
             </p:dialog>
-            <p:dialog showEffect="fade" hideEffect="fade" width="50%" style="min-height: 400px;" position="center center" header="Detalhes da carta" modal="true" responsive="true" resizable="false" widgetVar="info">
+            <p:dialog id="info-panel" showEffect="fade" hideEffect="fade" position="center center" header="Detalhes da carta" resizable="false" widgetVar="info">
                 <p:outputPanel id="info">
                     <div class="ui-g">
                         <div class="ui-g-12 no-margin">

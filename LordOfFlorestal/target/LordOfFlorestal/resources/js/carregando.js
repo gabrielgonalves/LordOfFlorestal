@@ -1,6 +1,8 @@
+$(document).ready(function(){
 
-var goFS = document.getElementById("entrar");
-  goFS.addEventListener("click", function() {
-      document.body.requestFullscreen();
-      alert('entrou');
-  }, false);
+    //Esconde preloader
+    $(window).load(function(){
+        $('#carregando').fadeOut();//1500 é a duração do efeito (1.5 seg)
+    });
+
+});

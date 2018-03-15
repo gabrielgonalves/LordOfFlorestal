@@ -99,4 +99,8 @@ public class JogadorRN {
     public void excluirTodasCartasJogador(Jogador jogador) {
         this.jogadorDAOMysql.excluirTodasCartasJogador(jogador);
     }
+    
+    public boolean jogadorEstaCadastrado(String login){
+        return this.jogadorDAOMysql.jogadorEstaCadastrado(login);
+    }
 }

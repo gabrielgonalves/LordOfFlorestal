@@ -15,6 +15,7 @@ import br.com.lordofflorestal.model.LocalCarta;
 import br.com.lordofflorestal.model.SituacaoDuelo;
 import br.com.lordofflorestal.model.TipoCarta;
 import br.com.lordofflorestal.model.TipoJogador;
+import br.com.lordofflorestal.model.ValeCarta;
 import br.com.lordofflorestal.mysql.DueloDAOMysql;
 import br.com.lordofflorestal.util.FileUploadUtil;
 import br.com.lordofflorestal.util.MessageUtil;
@@ -591,6 +592,27 @@ public class DueloRN {
             monte.get(2).setLocalCarta(LocalCarta.MAO);
             separaCartas();
         }
+    }
+    
+    public String recompensa(CartaJogo carta){
+        String retorno = "";
+        if(ganhador.getCartas().contains(carta.getCarta())){
+            ValeCarta valeCarta = new ValeCarta();
+            valeCarta.setCarta(carta.getCarta());
+            valeCarta.setValido(true);
+            
+            ValeCartaRN valeCartaRN = new ValeCartaRN();
+            valeCartaRN.salvar(valeCarta);
+            
+            
+            retorno = "A carta selecionada foi "+ carta.getCarta().getNome() + " e você já possui ela na sua conta. Com isso, geramos um voucher para você poder presentear um amigo. Anote ele entregue para um amigo. Voucher:" + valeCarta.getCodigo();
+        } else {
+            JogadorRN jogadorRN = new JogadorRN();
+            jogadorRN.inserirCartaJogador(carta.getCarta(), ganhador);
+            retorno = "A carta selecionada foi "+ carta.getCarta().getNome() + " e ela já foi adicionada à sua conta";
+        }
+        
+        return retorno;
     }
 
     public void separaCartas() {

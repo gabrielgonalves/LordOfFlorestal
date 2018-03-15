@@ -6,11 +6,43 @@ body, html {
     background: white;
     background: url("#{request.contextPath}/resources/img/grama.jpg");
     background-size: 100%;
+    font-size: 14px !important;
 }
 
 .ui-panel-titlebar {
     background: #994d00;
     color: white;
+}
+
+#carregando img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+#carregando {
+    background: white;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow: auto;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#fullscreen{
+    background: #994d00;
+    color: white;
+    padding: 5px;
+    position: absolute;
+    top: 5%;
+    right: 10%;
+    z-index: 10;
+    visibility: hidden;
 }
 
 .mesa {
@@ -33,8 +65,45 @@ body, html {
 
 @media screen and (max-width: 700px){
     button {
-        font-size: 12px !important;
+        font-size: 5px !important;
     }
+}
+
+@media screen  and (orientation: portrait) {
+    #aviso {
+        visibility: visible !important;
+        color: white;
+        font-weight: bold;
+        font-size: 24px;
+        width: 80% !important;
+        height: 90% !important;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        background: url("#{request.contextPath}/resources/img/mesa.jpg");
+        background-size: 100%;
+    }
+    
+    #aviso p {
+        width: 80%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+    }
+    #novo, #gerencial-btn, #missao-btn, #perfil-btn, #voltar, #cartas-btn, #vale-cartas-btn, #duelos-btn, #jogadores-btn, #missoes-btn, #meus-decks-btn, #resgatar-btn, #dashboard-btn, .mesa {
+        visibility: hidden;
+    }
+}
+
+#aviso {
+    visibility: hidden;
+    width: 0;
+    height: 0;
 }
 
 button {
@@ -44,103 +113,121 @@ button {
     text-shadow: none !important;
     border: none !important;
     font-weight: bold;
+    font-size: 14px !important;
+}
+
+#gerencial-btn, #missao-btn, #perfil-btn, #voltar, #cartas-btn, #vale-cartas-btn {
+    border-left: 5px solid #ff8c1a !important;
+}
+
+#duelos-btn, #jogadores-btn, #missoes-btn, #meus-decks-btn, #resgatar-btn, #dashboard-btn {
+    border-right: 5px solid #ff8c1a !important;
+}
+
+#dashboard-btn {
+    width: 10%;
+    text-align: right;
+    position: absolute;
+    right: 8% !important;
+    bottom: 40%;
+    z-index: 2;
 }
 
 #gerencial-btn{
-    width: 15%;
+    width: 10%;
     text-align: left;
     position: absolute;
-    left: 5% !important;
+    left: 8% !important;
     bottom: 40%;
     z-index: 2;
 }
 
 #missao-btn{
-    width: 20%;
+    width: 15%;
     text-align: left;
     position: absolute;
-    left: 5% !important;
+    left: 8% !important;
     bottom: 25%;
     z-index: 2;
 } 
 
 #resgatar-btn {
-    width: 15%;
+    width: 10%;
     text-align: right;
     position: absolute;
-    right: 5% !important;
+    right: 8% !important;
     bottom: 10%;
     z-index: 2;
 }
 
 #perfil-btn{
-    width: 15%;
+    width: 10%;
     text-align: left;
     position: absolute;
-    left: 5% !important;
+    left: 8% !important;
     bottom: 10%;
     z-index: 2;
 } 
 
 #meus-decks-btn {
-    width: 20%;
+    width: 15%;
     text-align: right;
     position: absolute;
-    right: 5% !important;
+    right: 8% !important;
     bottom: 25%;
     z-index: 2;
 }
 
 #duelos-btn{
-    width: 15%;
+    width: 10%;
     text-align: right;
     position: absolute;
-    right: 5% !important;
+    right: 8% !important;
     bottom: 40%;
     z-index: 2;
 }
 
 #jogadores-btn{
-    width: 20%;
+    width: 15%;
     text-align: right;
     position: absolute;
-    right: 5% !important;
+    right: 8% !important;
     bottom: 25%;
     z-index: 2;
 }
 
 #missoes-btn{
-    width: 15%;
+    width: 10%;
     text-align: right;
     position: absolute;
-    right: 5% !important;
+    right: 8% !important;
     bottom: 10%;
     z-index: 2;
 }
 
 #vale-cartas-btn{
-    width: 15%;
+    width: 10%;
     text-align: left;
     position: absolute;
-    left: 5% !important;
+    left: 8% !important;
     bottom: 10%;
     z-index: 2;
 }
 
 #cartas-btn{
-    width: 20%;
+    width: 15%;
     text-align: left;
     position: absolute;
-    left: 5% !important;
+    left: 8% !important;
     bottom: 25%;
     z-index: 2;
 }
 
 #voltar {
-    width: 15%;
+    width: 10%;
     text-align: left;
     position: absolute;
-    left: 5% !important;
+    left: 8% !important;
     bottom: 40%;
     z-index: 2;
 }
@@ -161,6 +248,64 @@ button {
     object-fit:cover;
     width: 100px;
     border-radius: 10%;
+}
+
+.user-img-duelo {
+    border-radius: 50% !important; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 20px;
+    width: 65px !important;
+    height: 65px !important;
+    object-fit:cover;
+}
+
+.user-img-pb {
+    border-radius: 50% !important; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 20px;
+    filter: grayscale(100%);
+    border-color: #F1431B !important;
+    border-width: 4px !important;
+    border-style: solid !important;
+    width: 150px !important;
+    height: 150px !important;
+    object-fit:cover;
+}
+
+.user-img-g {
+    border-radius: 50% !important; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 20px;
+    border-color: #379125 !important;
+    border-width: 4px !important;
+    border-style: solid !important;
+    width: 150px !important;
+    height: 150px !important;
+    object-fit:cover;
+}
+
+.btn-verde {
+    background: #336600 !important;
+    color: #FFFFFF !important;
+    text-shadow: none !important;
+    border: none !important;
+    padding: 10px !important;
+}
+
+.btn-vermelho {
+    background: #cc2900 !important;
+    color: #FFFFFF !important;
+    text-shadow: none !important;
+    border: none !important;
+    padding: 10px !important;
+}
+
+.btn-preto {
+    background: #363636 !important;
+    color: #FFFFFF !important;
+    text-shadow: none !important;
+    border: none !important;
+    padding: 10px !important;
 }
 
 #duelos, #decks, #deck-content, #meu-perfil, #novo-deck, #resgate, #novo-duelo, #juntar-se, #cartas-content, #vale-cartas-content, #duelos-content, #jogadores-content, #missoes-content {
@@ -202,7 +347,7 @@ button {
     width: 25%;
 }
 
-#excluir-panel {
+#excluir-panel, #info-panel {
     width: 200px;
     position: absolute !important;
     top: 50% !important;
@@ -212,14 +357,18 @@ button {
 }
 
 #cartahover {
-    width: 20%;
+    width: 18%;
     visibility: hidden;
     z-index: 9999;
-    top: 50%;
-    left: 80%;
-    margin-right: -50%;
-    transform: translate(0%, -50%);
+    top: 10%;
+    left: 81%;
+    transform: translate(0%, -10%);
     position: absolute;
+    border-radius: 10px;
+}
+
+.visible {
+    visibility: visible !important;
 }
 
 .ui-column-title {

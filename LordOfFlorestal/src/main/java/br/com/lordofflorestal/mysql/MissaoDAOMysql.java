@@ -69,7 +69,7 @@ public class MissaoDAOMysql {
     }
 
     public void excluir(Missao missao) {
-        String sql = "DELETE FROM Missao WHERE id_duelo = ?";
+        String sql = "DELETE FROM Missao WHERE id_missao = ?";
 
         try {
             connection = ConnectionFactory.getConnection();

@@ -16,8 +16,8 @@
         <h:form prependId="false">
             <p:button value="Lista de decks" icon="fa fa-list" outcome="/lista-deck.xhtml" id="listar"/>
             <div id="botoes">
-                <p:commandButton id="salvar" value="Salvar" icon="fa fa-floppy-o" disabled="#{deckBean.cartasSelecionadas.size() lt deckBean.qtCartas ? true : false}" action="#{deckBean.salvar}" ajax="false" class="btn-verde"/>
                 <p:button id="cancelar" value="Cancelar" icon="fa fa-times" outcome="/lista-deck.xhtml" class="btn-vermelho"/>
+                <p:commandButton id="salvar" value="Salvar" icon="fa fa-floppy-o" disabled="#{deckBean.cartasSelecionadas.size() lt deckBean.qtCartas ? true : false}" action="#{deckBean.salvar}" ajax="false" class="btn-verde"/>
             </div>
             <div class="ui-g" id="novo-deck">
                 <div class="ui-g-12">

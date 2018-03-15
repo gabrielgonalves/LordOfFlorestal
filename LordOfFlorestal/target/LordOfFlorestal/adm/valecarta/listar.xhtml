@@ -11,7 +11,7 @@
             <div class="ui-g" id="vale-cartas-content">
                 <div class="ui-g-12">
                     <p:panel class="card">
-                        <p:messages autoUpdate="true" closable="true" />
+                        <p:growl autoUpdate="true" />
                         <div class="ui-g ui-fluid">
                             <div class="ui-g-12">
                                 <p:dataTable id="vales" value="#{valeCartaBean.valeCartas}" var="vale" reflow="true" emptyMessage="Nenhum vale carta foi encontrado."
@@ -55,7 +55,7 @@
                     </p:panel>
                 </div>
             </div>
-            <p:dialog modal="true" widgetVar="excluir" resizable="false" header="Atenção" showEffect="fade" hideEffect="fade">
+            <p:dialog id="excluir-panel" widgetVar="excluir" resizable="false" header="Atenção" showEffect="fade" hideEffect="fade">
                 <p:panel id="excluir" style="border: none !important">
                     <div class="ui-g ui-fluid">
                         <div class="ui-g-12">

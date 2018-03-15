@@ -14,6 +14,7 @@ import br.com.lordofflorestal.model.DeckJogador;
 import br.com.lordofflorestal.rn.DeckJogadorRN;
 import br.com.lordofflorestal.rn.JogadorRN;
 import br.com.lordofflorestal.util.MessageUtil;
+import br.com.lordofflorestal.util.TempoThread;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,10 +41,18 @@ public class NovoDueloBean {
 
     private List<DeckJogador> decks;
     private DeckJogador deckSelecionado;
-    
+
     private Jogador oponente;
 
+    private TempoThread tempoThread;
+
+    public TempoThread getTempoThread() {
+        return tempoThread;
+    }
+
     public NovoDueloBean() {
+        tempoThread = new TempoThread();
+        new Thread(tempoThread).start();
         qtCartas = 10;
         cartasSelecionadas = new ArrayList();
         suasCartas = new JogadorRN().buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser()).getCartas();
@@ -91,7 +100,7 @@ public class NovoDueloBean {
         }
         duelo.getDeckJogador1().setCartas(cartas);
         duelo.setVezDe(duelo.getCriadoPor().getLogin());
-        
+
         duelo.setOponente(oponente);
 
         duelo.setBatePapo(jogador.getLogin() + " criou o duelo");
@@ -178,8 +187,8 @@ public class NovoDueloBean {
         }
         return lista;
     }
-    
-    public List<Jogador> getJogadores(){
+
+    public List<Jogador> getJogadores() {
         Jogador jogador = new JogadorRN().buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
         return new JogadorRN().listarExceto(jogador);
     }

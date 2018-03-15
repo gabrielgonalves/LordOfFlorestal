@@ -7,9 +7,11 @@ package br.com.lordofflorestal.bean;
 
 import br.com.lordofflorestal.model.CartaJogo;
 import br.com.lordofflorestal.model.EstadoCarta;
+import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.LocalCarta;
 import br.com.lordofflorestal.model.SituacaoDuelo;
 import br.com.lordofflorestal.model.TipoCarta;
+import br.com.lordofflorestal.model.TipoJogador;
 import br.com.lordofflorestal.rn.DueloRN;
 import br.com.lordofflorestal.util.MessageUtil;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class DueloBean {
     private String login;
     private String uri;
     private String mensagem;
+    private String voucher;
 
     private HttpServletRequest request;
 
@@ -41,6 +44,7 @@ public class DueloBean {
     private CartaJogo cartaSelecionada;
     private CartaJogo cartaSelecionadaMesa;
     private CartaJogo cartaSelecionadaMesaOponente;
+    private CartaJogo cartaRecompensa;
 
     private List<CartaJogo> cartasAtacam;
     private List<CartaJogo> listaCartaEfeito;
@@ -71,6 +75,26 @@ public class DueloBean {
                 this.dueloRN = new DueloRN(uri, login);
             }
         }
+    }
+
+    public String verificaRecompensa() {
+        TipoJogador j1 = dueloRN.getJogador().getTipoJogador();
+        TipoJogador j2 = dueloRN.getOponente().getTipoJogador();
+        if (dueloRN.getGanhador().getTipoJogador().equals(TipoJogador.ALUNO) && dueloRN.getGanhador().getLogin().equals(login)) {
+            if (j1.equals(TipoJogador.LORD) || j2.equals(TipoJogador.LORD)) {
+                return "true";
+            }
+        }
+        return "false";
+    }
+
+    public String recompensa() {
+        String retorno = dueloRN.recompensa(cartaRecompensa);
+        if (retorno.contains("Voucher")) {
+            voucher = retorno.split("Voucher:")[1];
+        }
+        MessageUtil.info(retorno);
+        return null;
     }
 
     public String alterarPosicaoCarta() {
@@ -145,7 +169,7 @@ public class DueloBean {
     }
 
     public String selecionaAtacar() {
-        if(cartaAtaca.getEspecial() == 69){
+        if (cartaAtaca.getEspecial() == 69) {
             cartaAtaca.setEspecial(0);
         }
         cartasAtacam.add(cartaAtaca);
@@ -379,5 +403,21 @@ public class DueloBean {
     public void setCaracoroaResultado(boolean caracoroaResultado) {
         this.caracoroaResultado = caracoroaResultado;
     }
-    
+
+    public String getVoucher() {
+        return voucher;
+    }
+
+    public void setVoucher(String voucher) {
+        this.voucher = voucher;
+    }
+
+    public CartaJogo getCartaRecompensa() {
+        return cartaRecompensa;
+    }
+
+    public void setCartaRecompensa(CartaJogo cartaRecompensa) {
+        this.cartaRecompensa = cartaRecompensa;
+    }
+
 }

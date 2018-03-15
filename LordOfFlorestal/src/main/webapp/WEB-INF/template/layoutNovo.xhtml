@@ -9,16 +9,20 @@
         <title>Lord of Florestal</title>
         <h:outputStylesheet library="css" name="layoutNovo.css" />
         <h:outputScript library="js" name="cartaHover.js" />
+        <h:outputScript library="js" name="fullscreen.js" />
+        <h:outputScript library="js" name="carregando.js" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </h:head>
     <h:body>
+        <a class="fa fa-expand" id="fullscreen" onclick="toggleFullScreen(document.body);"></a>
         <div id="menu">
             <p:button rendered="#{perfilBean.jogador.tipoJogador eq 'LORD' ? true : false}" outcome="/dashboard-gerencial.xhtml" value="Gerencial" id="gerencial-btn"/>
             <p:button value="Missões" outcome="/missao.xhtml" id="missao-btn" class="#{menuBean.getItemCssClass('/missao.xhtml')}" />
             <p:button value="Perfil" outcome="/perfil.xhtml" id="perfil-btn" class="#{menuBean.getItemCssClass('/perfil.xhtml')}" />
             <p:button value="Resgatar" outcome="/resgate.xhtml" id="resgatar-btn" class="#{menuBean.getItemCssClass('/resgate.xhtml')}" />
             <p:button value="Meus decks" outcome="/lista-deck.xhtml" id="meus-decks-btn" class="#{menuBean.getItemCssClass('/lista-deck.xhtml')} #{menuBean.getItemCssClass('/novo-deck.xhtml')}" />
+            <p:button value="Duelos" outcome="/dashboard.xhtml" id="dashboard-btn" class="#{menuBean.getItemCssClass('/dashboard.xhtml')} #{menuBean.getItemCssClass('/novo-duelo.xhtml')} #{menuBean.getItemCssClass('/juntar-se.xhtml')}"/>
         </div>
         <div class="mesa">
             <p:graphicImage id="cartahover" />
@@ -30,6 +34,12 @@
         <p:dialog widgetVar="carregando" modal="true" closable="false" showHeader="false" resizable="false" >
             <p:graphicImage library="img" name="carregando.gif" width="50" />
         </p:dialog>
+        <div id="carregando">
+            <p:graphicImage library="img" name="carregando.gif" width="50" />
+        </div>
+        <div id="aviso">
+            <p> Para uma melhor experiência, recomendamos a utilização de um computador para jogar. Caso queira utilizar o jogo em seu dispositivo móvel, coloque a tela em modo paisagem. </p>
+        </div>
     </h:body>
 </html>
 

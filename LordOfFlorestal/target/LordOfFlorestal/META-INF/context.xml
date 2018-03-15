@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/LordOfFlorestal">
     <Resource auth="Container"
-    driverClassName="com.mysql.jdbc.Driver"
-    maxActive="20" maxldle="10" maxWait="-1"
-     name = "jdbc/LordOfFlorestal"
-     type="javax.sql.DataSource"
-     url="jdbc:mysql://localhost:3306/LordOfFlorestal"
-     username="root"
-     password="root" />
+              driverClassName="com.mysql.jdbc.Driver"
+              maxActive="200" maxIdle="20" maxWait="3000"
+              name = "jdbc/LordOfFlorestal"
+              type="javax.sql.DataSource"
+              url="jdbc:mysql://localhost:3306/LordOfFlorestal"
+              username="root"
+              password="root" />
 </Context>

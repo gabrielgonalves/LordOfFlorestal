@@ -50,7 +50,7 @@ public class JogadorDAOMysql {
             statement.setString(6, jogador.getSenha());
             statement.setInt(7, jogador.getTipoJogador().ordinal() + 1);
             statement.setInt(8, jogador.getAnoAdmissao());
-
+       
             statement.executeUpdate();
             statement.close();
 
@@ -171,6 +171,9 @@ public class JogadorDAOMysql {
 
                 return jogador;
             }
+            statement.close();
+
+            connection.close();
         } catch (SQLException e) {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
@@ -206,8 +209,8 @@ public class JogadorDAOMysql {
         }
         return "";
     }
-    
-    public List<Ranking> ranking(){
+
+    public List<Ranking> ranking() {
         List<Ranking> ranking = new ArrayList();
 
         String sql = "SELECT login, ((num_jogos_ganhou_lord * 5 + num_jogos_ganho * 1)/((num_jogos_ganho + num_jogos_perdido) + (num_jogos_ganhou_lord + num_jogos_perdeu_lord) * 5)) * 100 as media, num_jogos_ganho, num_jogos_ganhou_lord, num_jogos_perdido, num_jogos_perdeu_lord FROM LordOfFlorestal.Jogador WHERE id_tipo_jogador = 1  order by media desc, num_jogos_ganhou_lord desc limit 10;";
@@ -262,7 +265,7 @@ public class JogadorDAOMysql {
             statement.close();
 
             connection.close();
-            
+
             return login;
         } catch (SQLException e) {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
@@ -361,6 +364,10 @@ public class JogadorDAOMysql {
 
                 return jogador;
             }
+
+            statement.close();
+
+            connection.close();
         } catch (SQLException e) {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
@@ -446,7 +453,7 @@ public class JogadorDAOMysql {
 
         return lista;
     }
-    
+
     public List<Jogador> listarJogadoresSemCarta(int id) {
         List<Jogador> lista = new ArrayList();
 
@@ -456,9 +463,9 @@ public class JogadorDAOMysql {
             connection = ConnectionFactory.getConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
-            
+
             statement.setInt(1, id);
-            
+
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -586,7 +593,7 @@ public class JogadorDAOMysql {
             System.out.println("Erro ao fechar operações de exclusão. Erro: " + ex.getMessage());
         }
     }
-    
+
     public void excluirTodasCartasJogador(Jogador jogador) {
         String sql = "DELETE FROM Jogador_has_Carta WHERE matricula_jogador = ?";
 
@@ -667,6 +674,28 @@ public class JogadorDAOMysql {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
         return "user.png";
+    }
+
+    public boolean jogadorEstaCadastrado(String login) {
+        String sql = "SELECT login FROM Jogador WHERE login = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, login);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+        return false;
     }
 
 }

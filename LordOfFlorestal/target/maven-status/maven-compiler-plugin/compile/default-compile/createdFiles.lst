@@ -1,5 +1,6 @@
 br/com/lordofflorestal/bean/JuntarDueloBean.class
 br/com/lordofflorestal/model/Missao.class
+br/com/lordofflorestal/util/TempoThread.class
 br/com/lordofflorestal/model/Duelo.class
 br/com/lordofflorestal/rn/MissaoRN.class
 br/com/lordofflorestal/bean/DashboardBean.class
@@ -53,3 +54,4 @@ br/com/lordofflorestal/bean/DeckBean.class
 br/com/lordofflorestal/mysql/ValeCartaDAOMysql.class
 br/com/lordofflorestal/mysql/JogadorDAOMysql.class
 br/com/lordofflorestal/mysql/CartaDAOMysql.class
+br/com/lordofflorestal/util/ConexaoJDBC.class
