@@ -12,6 +12,7 @@ import br.com.lordofflorestal.model.SituacaoDuelo;
 import br.com.lordofflorestal.control.DueloSingleton;
 import br.com.lordofflorestal.model.DeckJogador;
 import br.com.lordofflorestal.model.Jogador;
+import br.com.lordofflorestal.model.TipoJogador;
 import br.com.lordofflorestal.rn.DeckJogadorRN;
 import br.com.lordofflorestal.rn.JogadorRN;
 import br.com.lordofflorestal.util.MessageUtil;
@@ -48,6 +49,10 @@ public class JuntarDueloBean {
         request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String uri = request.getParameter("duelo");
         duelo = DueloSingleton.getInstance().buscaPorURI(uri);
+        if (!duelo.isCronometro()) {
+            new Thread(duelo.getTempoThread()).start();
+            duelo.setCronometro(true);
+        }
         qtCartas = duelo.getDeckJogador1().getCartas().size();
         cartasSelecionadas = new ArrayList();
         suasCartas = new JogadorRN().buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser()).getCartas();
@@ -78,6 +83,37 @@ public class JuntarDueloBean {
             MessageUtil.info("Deck " + deckSelecionado.getNome() + " selecionado com sucesso.");
         }
         return null;
+    }
+
+    private boolean jaSalvou = false;
+
+    public boolean isJaSalvou() {
+        return jaSalvou;
+    }
+
+    public void cronometro() {
+        if (duelo.getTempoThread().getTempo() == 0) {
+            duelo.setSituacaoDuelo(SituacaoDuelo.CANCELADO);
+            if (duelo.getCriadoPor().getTipoJogador().equals(TipoJogador.ALUNO)) {
+                duelo.getOponente().getEstatisticaJogador().setNumJogosPerdido(duelo.getOponente().getEstatisticaJogador().getNumJogosPerdido() + 1);
+                duelo.getOponente().getEstatisticaJogador().setNumJogos(duelo.getOponente().getEstatisticaJogador().getNumJogos() + 1);
+            } else {
+                duelo.getOponente().getEstatisticaJogador().setNumJogosPerdeuLord(duelo.getOponente().getEstatisticaJogador().getNumJogosPerdeuLord() + 1);
+                duelo.getOponente().getEstatisticaJogador().setNumJogos(duelo.getOponente().getEstatisticaJogador().getNumJogos() + 1);
+            }
+            if (duelo.getOponente().getTipoJogador().equals(TipoJogador.ALUNO)) {
+                duelo.getCriadoPor().getEstatisticaJogador().setNumJogosGanho(duelo.getCriadoPor().getEstatisticaJogador().getNumJogosGanho() + 1);
+                duelo.getCriadoPor().getEstatisticaJogador().setNumJogos(duelo.getCriadoPor().getEstatisticaJogador().getNumJogos() + 1);
+            } else {
+                duelo.getCriadoPor().getEstatisticaJogador().setNumJogosGanhouLord(duelo.getCriadoPor().getEstatisticaJogador().getNumJogosGanhouLord() + 1);
+                duelo.getCriadoPor().getEstatisticaJogador().setNumJogos(duelo.getCriadoPor().getEstatisticaJogador().getNumJogos() + 1);
+            }
+            if (!jaSalvou) {
+                new JogadorRN().salvar(duelo.getOponente());
+                new JogadorRN().salvar(duelo.getCriadoPor());
+                jaSalvou = true;
+            }
+        }
     }
 
     public String entrarDuelo() {

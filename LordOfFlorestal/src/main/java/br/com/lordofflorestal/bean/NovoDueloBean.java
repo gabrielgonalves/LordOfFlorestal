@@ -14,7 +14,6 @@ import br.com.lordofflorestal.model.DeckJogador;
 import br.com.lordofflorestal.rn.DeckJogadorRN;
 import br.com.lordofflorestal.rn.JogadorRN;
 import br.com.lordofflorestal.util.MessageUtil;
-import br.com.lordofflorestal.util.TempoThread;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -44,15 +43,7 @@ public class NovoDueloBean {
 
     private Jogador oponente;
 
-    private TempoThread tempoThread;
-
-    public TempoThread getTempoThread() {
-        return tempoThread;
-    }
-
     public NovoDueloBean() {
-        tempoThread = new TempoThread();
-        new Thread(tempoThread).start();
         qtCartas = 10;
         cartasSelecionadas = new ArrayList();
         suasCartas = new JogadorRN().buscarPorLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser()).getCartas();

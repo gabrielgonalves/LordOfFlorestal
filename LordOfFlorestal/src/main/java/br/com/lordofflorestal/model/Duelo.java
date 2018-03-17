@@ -5,6 +5,7 @@
  */
 package br.com.lordofflorestal.model;
 
+import br.com.lordofflorestal.util.TempoThread;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
@@ -27,6 +28,8 @@ public class Duelo {
     private Deck deckJogador2;
     private String vezDe;
     private String batePapo;
+    private boolean cronometro;
+    private TempoThread tempoThread;
 
     public Duelo() {
         UUID uuid = UUID.randomUUID();
@@ -36,6 +39,8 @@ public class Duelo {
         deckJogador1 = new Deck();
         deckJogador2 = new Deck();
         batePapo = "";
+        cronometro = false;
+        tempoThread = new TempoThread();
     }
 
     public Jogador getCriadoPor() {
@@ -116,6 +121,22 @@ public class Duelo {
 
     public void setBatePapo(String batePapo) {
         this.batePapo = batePapo;
+    }
+
+    public boolean isCronometro() {
+        return cronometro;
+    }
+
+    public void setCronometro(boolean cronometro) {
+        this.cronometro = cronometro;
+    }
+
+    public TempoThread getTempoThread() {
+        return tempoThread;
+    }
+
+    public void setTempoThread(TempoThread tempoThread) {
+        this.tempoThread = tempoThread;
     }
 
     @Override

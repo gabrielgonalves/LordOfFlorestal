@@ -54,4 +54,3 @@ br/com/lordofflorestal/bean/DeckBean.class
 br/com/lordofflorestal/mysql/ValeCartaDAOMysql.class
 br/com/lordofflorestal/mysql/JogadorDAOMysql.class
 br/com/lordofflorestal/mysql/CartaDAOMysql.class
-br/com/lordofflorestal/util/ConexaoJDBC.class

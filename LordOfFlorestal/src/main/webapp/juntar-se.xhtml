@@ -8,14 +8,21 @@
                 template="/WEB-INF/template/layoutNovo.xhtml">
     <ui:define name="conteudo">    
         <h:form prependId="false">
-            <div id="botoes">
-                <p:commandButton id="criar" value="Jogar" disabled="#{juntarDueloBean.cartasSelecionadas.size() ne juntarDueloBean.qtCartas ? true : false}" action="#{juntarDueloBean.entrarDuelo}" class="btn" onclick="PF('carregando').show()" onsuccess="PF('carregando').hide()" />
-            </div>
+            <p:outputPanel autoUpdate="true" id="botoes">
+                <p:commandButton id="criar" value="Jogar" disabled="#{juntarDueloBean.cartasSelecionadas.size() ne juntarDueloBean.qtCartas or juntarDueloBean.duelo.situacaoDuelo eq 'CANCELADO' ? true : false}" rendered="#{!juntarDueloBean.jaSalvou}" action="#{juntarDueloBean.entrarDuelo}" class="btn" onclick="PF('carregando').show()" onsuccess="PF('carregando').hide()" />
+                <p:button outcome="dashboard.xhtml" id="cancelado" value="Você foi derrotado pelo tempo! Clique para voltar." rendered="#{juntarDueloBean.jaSalvou || juntarDueloBean.duelo.situacaoDuelo eq 'CANCELADO'}" class="btn"  />
+            </p:outputPanel>
             <p:growl autoUpdate="true" />
             <div class="ui-fluid" id="juntar-se">
                 <div class="ui-g-12">
                     <p:panel class="card">
                         <div class="ui-g">
+                            <div class="ui-g-12 ui-md-12">
+                                <p:outputPanel autoUpdate="true">
+                                    <h:outputText id="cronometro" value="Você ainda tem #{juntarDueloBean.duelo.tempoThread.tempo} segundo(s) para montar o seu deck." rendered="#{juntarDueloBean.duelo.situacaoDuelo ne 'CANCELADO'}" />
+                                    <p:poll update="cronometro cancelado criar" interval="1" listener="#{juntarDueloBean.cronometro}" />
+                                </p:outputPanel>
+                            </div>
                             <div class="ui-g-12 ui-md-6">
                                 <h:outputText value="Você foi desafiado por #{juntarDueloBean.duelo.criadoPor.login}" />
                             </div>

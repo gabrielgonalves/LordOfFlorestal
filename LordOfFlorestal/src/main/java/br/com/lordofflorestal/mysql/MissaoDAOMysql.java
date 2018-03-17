@@ -26,7 +26,7 @@ public class MissaoDAOMysql {
     private Connection connection;
 
     public void salvar(Missao missao) {
-        String sql = "INSERT INTO Missao (descricao, id_carta, ativa) VALUES (?, ?);";
+        String sql = "INSERT INTO Missao (descricao, id_carta, ativa) VALUES (?, ?, ?);";
 
         try {
             connection = ConnectionFactory.getConnection();
