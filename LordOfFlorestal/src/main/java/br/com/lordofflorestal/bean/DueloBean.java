@@ -7,11 +7,11 @@ package br.com.lordofflorestal.bean;
 
 import br.com.lordofflorestal.model.CartaJogo;
 import br.com.lordofflorestal.model.EstadoCarta;
-import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.LocalCarta;
 import br.com.lordofflorestal.model.SituacaoDuelo;
 import br.com.lordofflorestal.model.TipoCarta;
 import br.com.lordofflorestal.model.TipoJogador;
+import br.com.lordofflorestal.mysql.DueloDAOMysql;
 import br.com.lordofflorestal.rn.DueloRN;
 import br.com.lordofflorestal.util.MessageUtil;
 import java.util.ArrayList;
@@ -88,6 +88,26 @@ public class DueloBean {
         return "false";
     }
 
+    private boolean jaSalvou = false;
+
+    public void verificaCronometro() {
+        if (!dueloRN.getDuelo().getVezDe().equals(login)) {
+            if (!dueloRN.getDuelo().isCronometro()) {
+                new Thread(dueloRN.getDuelo().getTempoThread()).start();
+                dueloRN.getDuelo().setCronometro(true);
+            }
+            if (dueloRN.getDuelo().getTempoThread().getTempo() == 0) {
+                dueloRN.getDuelo().setSituacaoDuelo(SituacaoDuelo.CANCELADO);
+                dueloRN.setGanhador(dueloRN.getJogador());
+                if (!jaSalvou) {
+                    dueloRN.atualizaEstatistica();
+                    new DueloDAOMysql().salvar(dueloRN.getDuelo(), dueloRN.getJogador(), 20, 20);
+                    jaSalvou = true;
+                }
+            }
+        }
+    }
+
     public String recompensa() {
         String retorno = dueloRN.recompensa(cartaRecompensa);
         if (retorno.contains("Voucher")) {
@@ -136,6 +156,7 @@ public class DueloBean {
     }
 
     public void atualizarDados() {
+        verificaCronometro();
         dueloRN.atualizarDados(login);
     }
 

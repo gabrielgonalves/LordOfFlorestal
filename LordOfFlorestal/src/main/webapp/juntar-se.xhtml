@@ -19,7 +19,7 @@
                         <div class="ui-g">
                             <div class="ui-g-12 ui-md-12">
                                 <p:outputPanel autoUpdate="true">
-                                    <h:outputText id="cronometro" value="Você ainda tem #{juntarDueloBean.duelo.tempoThread.tempo} segundo(s) para montar o seu deck." rendered="#{juntarDueloBean.duelo.situacaoDuelo ne 'CANCELADO'}" />
+                                    <h:outputText id="cronometro" value="#{juntarDueloBean.duelo.tempoThread.tempo} segundo(s)" rendered="#{juntarDueloBean.duelo.situacaoDuelo ne 'CANCELADO'}" />
                                     <p:poll update="cronometro cancelado criar" interval="1" listener="#{juntarDueloBean.cronometro}" />
                                 </p:outputPanel>
                             </div>
@@ -74,7 +74,7 @@
                                             <ui:repeat var="carta" value="#{juntarDueloBean.suasCartas}">
                                                 <p:panel class="item">
                                                     <center>
-                                                        <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="165" />
+                                                        <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="100" />
                                                         <br/>
                                                         <p:commandButton disabled="#{juntarDueloBean.cartasSelecionadas.size() lt juntarDueloBean.qtCartas ? false : true}" class="btn-verde" value="Adicionar" action="#{juntarDueloBean.adicionarCarta}" update="criar cartasSelecionadas suasCartas decks-duelo" >
                                                             <f:setPropertyActionListener target="#{juntarDueloBean.cartaSelecionada}" value="#{carta}" />
@@ -93,7 +93,7 @@
                                             <ui:repeat var="carta" value="#{juntarDueloBean.cartasSelecionadas}">
                                                 <p:panel class="item">
                                                     <center>
-                                                        <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="165" /> 
+                                                        <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="100" /> 
                                                         <br />
                                                         <p:commandButton class="btn-vermelho" value="Remover" action="#{juntarDueloBean.removerCarta}" update="criar cartasSelecionadas suasCartas decks-duelo" >
                                                             <f:setPropertyActionListener target="#{juntarDueloBean.cartaSelecionada}" value="#{carta}" />

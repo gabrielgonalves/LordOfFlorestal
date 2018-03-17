@@ -9,6 +9,18 @@ body, html {
     font-size: 14px !important;
 }
 
+#cronometro {
+    position: fixed;
+    top: 0px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, 0%);
+    margin-top: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+}
+
 .ui-panel-titlebar {
     background: #994d00;
     color: white;

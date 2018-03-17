@@ -24,6 +24,12 @@
             <p:graphicImage id="cartahover" />
             <p:growl autoUpdate="true" />
             <p:poll interval="1" widgetVar="poll" update="pontuacao @form :batepapo" listener="#{dueloBean.atualizarDados()}" />
+            <p:poll interval="1" update="cronometro" />
+
+            <p:outputPanel autoUpdate="true" id="cronometro" rendered="#{dueloBean.dueloRN.duelo.situacaoDuelo eq 'EM_ANDAMENTO'}">
+                <h:outputText value="#{dueloBean.dueloRN.duelo.tempoThread.tempo} segundo(s)" rendered="#{dueloBean.dueloRN.duelo.situacaoDuelo ne 'CANCELADO'}" /> <br/>
+                <h:outputText value="#{dueloBean.login eq dueloBean.dueloRN.duelo.vezDe ? 'Sua vez' : 'Vez do oponente'}" />   
+            </p:outputPanel>
 
             <p:outputPanel autoUpdate="true" rendered="#{dueloBean.dueloRN.duelo.situacaoDuelo ne 'EM_ANDAMENTO' ? true : false}">
                 <div id="notificacoes">

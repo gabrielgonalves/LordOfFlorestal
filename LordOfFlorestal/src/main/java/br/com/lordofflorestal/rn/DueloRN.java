@@ -19,6 +19,7 @@ import br.com.lordofflorestal.model.ValeCarta;
 import br.com.lordofflorestal.mysql.DueloDAOMysql;
 import br.com.lordofflorestal.util.FileUploadUtil;
 import br.com.lordofflorestal.util.MessageUtil;
+import br.com.lordofflorestal.util.TempoThread;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -570,6 +571,8 @@ public class DueloRN {
         especialMesaOponete = false;
 
         duelo.setVezDe(oponente.getLogin());
+        duelo.setCronometro(false);
+        duelo.setTempoThread(new TempoThread());
     }
 
     public void inicializaDuelo(String login) {

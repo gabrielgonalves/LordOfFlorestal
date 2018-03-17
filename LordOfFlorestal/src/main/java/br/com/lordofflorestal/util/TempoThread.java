@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class TempoThread implements Runnable {
 
-    private int tempo = 20;
+    private int tempo = 120;
 
     @Override
     public void run() {

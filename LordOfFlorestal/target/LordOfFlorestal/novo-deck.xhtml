@@ -44,7 +44,7 @@
                                                     <ui:repeat var="carta" value="#{deckBean.suasCartas}">
                                                         <p:panel class="item">
                                                             <center>
-                                                                <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="165" />
+                                                                <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="100" />
                                                                 <br/>
                                                                 <p:commandButton process="@this" disabled="#{deckBean.cartasSelecionadas.size() lt deckBean.qtCartas ? false : true}" class="btn-verde" value="Adicionar" action="#{deckBean.adicionarCarta}" update="salvar spin qt cartasSelecionadas suasCartas" >
                                                                     <f:setPropertyActionListener target="#{deckBean.cartaSelecionada}" value="#{carta}" />
@@ -63,7 +63,7 @@
                                                     <ui:repeat var="carta" value="#{deckBean.cartasSelecionadas}">
                                                         <p:panel class="item">
                                                             <center>
-                                                                <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="165" /> 
+                                                                <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="100" /> 
                                                                 <br />
                                                                 <p:commandButton class="btn-vermelho" value="Remover" action="#{deckBean.removerCarta}" update="salvar spin qt cartasSelecionadas suasCartas" >
                                                                     <f:setPropertyActionListener target="#{deckBean.cartaSelecionada}" value="#{carta}" />

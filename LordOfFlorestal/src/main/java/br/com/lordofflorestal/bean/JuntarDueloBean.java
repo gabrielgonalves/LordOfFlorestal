@@ -13,9 +13,11 @@ import br.com.lordofflorestal.control.DueloSingleton;
 import br.com.lordofflorestal.model.DeckJogador;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.TipoJogador;
+import br.com.lordofflorestal.mysql.DueloDAOMysql;
 import br.com.lordofflorestal.rn.DeckJogadorRN;
 import br.com.lordofflorestal.rn.JogadorRN;
 import br.com.lordofflorestal.util.MessageUtil;
+import br.com.lordofflorestal.util.TempoThread;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -109,8 +111,9 @@ public class JuntarDueloBean {
                 duelo.getCriadoPor().getEstatisticaJogador().setNumJogos(duelo.getCriadoPor().getEstatisticaJogador().getNumJogos() + 1);
             }
             if (!jaSalvou) {
-                new JogadorRN().salvar(duelo.getOponente());
-                new JogadorRN().salvar(duelo.getCriadoPor());
+                new JogadorRN().atualizarPontos(duelo.getOponente());
+                new JogadorRN().atualizarPontos(duelo.getCriadoPor());
+                new DueloDAOMysql().salvar(duelo, duelo.getCriadoPor(), 20, 20);
                 jaSalvou = true;
             }
         }
@@ -123,6 +126,8 @@ public class JuntarDueloBean {
         }
         duelo.getDeckJogador2().setCartas(cartas);
         duelo.setSituacaoDuelo(SituacaoDuelo.EM_ANDAMENTO);
+        duelo.setCronometro(false);
+        duelo.setTempoThread(new TempoThread());
         duelo.setBatePapo(duelo.getOponente().getLogin() + " juntou-se ao duelo.\n\n" + duelo.getBatePapo());
         return "jogo.xhtml?duelo=" + duelo.getUri() + "&faces-redirect=true";
     }
