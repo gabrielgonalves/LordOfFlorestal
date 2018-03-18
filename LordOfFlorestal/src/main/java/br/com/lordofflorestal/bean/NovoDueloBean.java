@@ -66,6 +66,11 @@ public class NovoDueloBean {
     }
 
     public String selecionarDeck() {
+        if (!cartasSelecionadas.isEmpty()) {
+            for (Carta carta : cartasSelecionadas) {
+                suasCartas.add(carta);
+            }
+        }
         cartasSelecionadas = deckSelecionado.getCartas();
         for (Carta carta : cartasSelecionadas) {
             suasCartas.remove(carta);

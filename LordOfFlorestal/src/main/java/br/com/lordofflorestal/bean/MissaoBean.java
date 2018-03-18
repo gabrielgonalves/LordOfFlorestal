@@ -76,7 +76,6 @@ public class MissaoBean {
         jogador = new Jogador();
         jogadoresSelecionados = new ArrayList();
         JogadorRN jogadorRN = new JogadorRN();
-        jogadores = jogadorRN.listar();
     }
 
     public void preRender() {
@@ -86,6 +85,7 @@ public class MissaoBean {
             id = Integer.parseInt(request.getParameter("id"));
             MissaoRN missaoRN = new MissaoRN();
             this.missao = missaoRN.buscaPorId(id);
+            jogadores = new JogadorRN().listarJogadoresSemCarta(missao.getCarta().getId());
         }
     }
 

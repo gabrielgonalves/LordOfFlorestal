@@ -27,12 +27,12 @@
                             <div class="ui-g-12 ui-md-9 no-margin">
                                 <div class="ui-g-12">
                                     <p:inplace style="font-size: 25px; font-weight: bold;">
-                                        <p:inputText value="#{perfilBean.jogador.nome}" placeholder="Nome" />
+                                        <p:inputText maxlength="45" value="#{perfilBean.jogador.nome}" placeholder="Nome" />
                                     </p:inplace>
                                 </div>
                                 <div class="ui-g-12">
                                     <p:inplace>
-                                        <p:inputText value="#{perfilBean.jogador.email}" placeholder="E-mail" />
+                                        <p:inputText maxlength="45" value="#{perfilBean.jogador.email}" placeholder="E-mail" />
                                     </p:inplace>
                                 </div>
                                 <div class="ui-g-12 ui-md-6">
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="ui-g-12 ui-md-6">
                                     <p:inplace label="*****">
-                                        <p:password value="#{perfilBean.jogador.senha}" autocomplete="true" placeholder="Senha" required="true" requiredMessage="O campo senha é necessário"/>
+                                        <p:password maxlength="45" value="#{perfilBean.jogador.senha}" autocomplete="true" placeholder="Senha" required="true" requiredMessage="O campo senha é necessário"/>
                                     </p:inplace> 
                                 </div>
                             </div>

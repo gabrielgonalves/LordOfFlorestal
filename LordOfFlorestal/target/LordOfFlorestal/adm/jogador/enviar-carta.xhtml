@@ -13,6 +13,9 @@
 
     <ui:define name="conteudo">    
         <h:form prependId="false">
+            <div id="botoes">
+                <p:commandButton value="Salvar" class="btn-verde" action="#{jogadorBean.enviar}" />
+            </div>
             <div class="ui-g" id="jogadores-content">
                 <div class="ui-g-12">
                     <p:panel class="card" header="Jogador">
@@ -105,12 +108,6 @@
                                         </p:commandButton>
                                     </p:column>
                                 </p:dataTable>
-                            </div>
-                            <div class="ui-g-12">
-                                <div class="ui-g-12 ui-md-10" />
-                                <div class="ui-g-12 ui-md-2 ui-fluid">
-                                    <p:commandButton value="Salvar" class="btn-verde" action="#{jogadorBean.enviar}" />
-                                </div>
                             </div>
                         </div>
                     </p:panel>

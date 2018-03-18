@@ -17,6 +17,7 @@
     <h:body>
         <a class="fa fa-expand" id="fullscreen" onclick="toggleFullScreen(document.body);"></a>
         <div id="menu">
+            <a id="sair" onclick="document.location = '#{request.contextPath}/j_spring_security_logout'"><i class="fa  fa-fw  fa-sign-out"></i>Sair</a>
             <p:button rendered="#{perfilBean.jogador.tipoJogador eq 'LORD' ? true : false}" outcome="/dashboard-gerencial.xhtml" value="Gerencial" id="gerencial-btn"/>
             <p:button value="Missões" outcome="/missao.xhtml" id="missao-btn" class="#{menuBean.getItemCssClass('/missao.xhtml')}" />
             <p:button value="Perfil" outcome="/perfil.xhtml" id="perfil-btn" class="#{menuBean.getItemCssClass('/perfil.xhtml')}" />

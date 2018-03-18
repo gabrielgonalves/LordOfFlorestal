@@ -107,7 +107,7 @@ body, html {
         margin-right: -50%;
         transform: translate(-50%, -50%);
     }
-    #novo, #gerencial-btn, #missao-btn, #perfil-btn, #voltar, #cartas-btn, #vale-cartas-btn, #duelos-btn, #jogadores-btn, #missoes-btn, #meus-decks-btn, #resgatar-btn, #dashboard-btn, .mesa {
+    #novo, #sair, #gerencial-btn, #missao-btn, #perfil-btn, #voltar, #cartas-btn, #vale-cartas-btn, #duelos-btn, #jogadores-btn, #missoes-btn, #meus-decks-btn, #resgatar-btn, #dashboard-btn, .mesa {
         visibility: hidden;
     }
 }
@@ -132,7 +132,7 @@ button {
     border-left: 5px solid #ff8c1a !important;
 }
 
-#duelos-btn, #jogadores-btn, #missoes-btn, #meus-decks-btn, #resgatar-btn, #dashboard-btn {
+#duelos-btn, #sair, #jogadores-btn, #missoes-btn, #meus-decks-btn, #resgatar-btn, #dashboard-btn {
     border-right: 5px solid #ff8c1a !important;
 }
 
@@ -162,6 +162,20 @@ button {
     bottom: 25%;
     z-index: 2;
 } 
+
+#sair {
+    width: 5%;
+    text-align: center;
+    position: absolute;
+    right: 8% !important;
+    top: 3%;
+    z-index: 2;
+    color: white;
+    background: #994d00;
+    font-size: 18px;
+    padding: 5px;
+    border-radius: 5%;
+}
 
 #resgatar-btn {
     width: 10%;
