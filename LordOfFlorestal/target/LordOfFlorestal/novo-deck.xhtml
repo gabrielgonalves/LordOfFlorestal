@@ -57,7 +57,7 @@
                                         </p:panel>
                                     </div>
                                     <div class="ui-g-12">
-                                        <p:panel id="cartasSelecionadas" header="Suas cartas" footer="Você já selecionou #{deckBean.cartasSelecionadas.size()} carta(s)">
+                                        <p:panel id="cartasSelecionadas" header="Cartas selecionadas" footer="Você já selecionou #{deckBean.cartasSelecionadas.size()} carta(s)">
                                             <div class="scroll">
                                                 <p:outputPanel autoUpdate="true">
                                                     <ui:repeat var="carta" value="#{deckBean.cartasSelecionadas}">
@@ -65,7 +65,7 @@
                                                             <center>
                                                                 <p:graphicImage onmouseout="removeClasse();" onmouseover="adicionaClasse('#{carta.imagem}')" library="cartas" name="#{carta.imagem}" width="100" /> 
                                                                 <br />
-                                                                <p:commandButton class="btn-vermelho" value="Remover" action="#{deckBean.removerCarta}" update="salvar spin qt cartasSelecionadas suasCartas" >
+                                                                <p:commandButton process="@this" class="btn-vermelho" value="Remover" action="#{deckBean.removerCarta}" update="salvar spin qt cartasSelecionadas suasCartas" >
                                                                     <f:setPropertyActionListener target="#{deckBean.cartaSelecionada}" value="#{carta}" />
                                                                 </p:commandButton>
                                                             </center>
