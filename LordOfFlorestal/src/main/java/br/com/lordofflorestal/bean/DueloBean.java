@@ -13,6 +13,7 @@ import br.com.lordofflorestal.model.TipoCarta;
 import br.com.lordofflorestal.model.TipoJogador;
 import br.com.lordofflorestal.mysql.DueloDAOMysql;
 import br.com.lordofflorestal.rn.DueloRN;
+import br.com.lordofflorestal.rn.JogadorRN;
 import br.com.lordofflorestal.util.MessageUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,7 @@ public class DueloBean {
     private boolean caracoroa;
     private boolean caracoroaResultado;
     private boolean podeJogarCaraCoroa;
+    private boolean podePegarRecompensa;
 
     public DueloBean() {
         podeJogarCaraCoroa = true;
@@ -63,6 +65,7 @@ public class DueloBean {
         this.cartasAtacam = new ArrayList();
         this.listaCartaEfeito = new ArrayList();
         this.ordemMonte = new ArrayList();
+        this.podePegarRecompensa = true;
     }
 
     public void preRender() {
@@ -100,6 +103,11 @@ public class DueloBean {
                 dueloRN.getDuelo().setSituacaoDuelo(SituacaoDuelo.CANCELADO);
                 dueloRN.setGanhador(dueloRN.getJogador());
                 if (!jaSalvou) {
+                    if (dueloRN.getOponente().getTipoJogador().equals(TipoJogador.ALUNO)) {
+                        new JogadorRN().alteraXpJogador(dueloRN.getJogador(), 100);
+                    } else {
+                        new JogadorRN().alteraXpJogador(dueloRN.getJogador(), 500);
+                    }
                     dueloRN.atualizaEstatistica();
                     new DueloDAOMysql().salvar(dueloRN.getDuelo(), dueloRN.getJogador(), 20, 20);
                     jaSalvou = true;
@@ -114,6 +122,7 @@ public class DueloBean {
             voucher = retorno.split("Voucher:")[1];
         }
         MessageUtil.info(retorno);
+        podePegarRecompensa = false;
         return null;
     }
 
@@ -439,6 +448,14 @@ public class DueloBean {
 
     public void setCartaRecompensa(CartaJogo cartaRecompensa) {
         this.cartaRecompensa = cartaRecompensa;
+    }
+
+    public boolean isPodePegarRecompensa() {
+        return podePegarRecompensa;
+    }
+
+    public void setPodePegarRecompensa(boolean podePegarRecompensa) {
+        this.podePegarRecompensa = podePegarRecompensa;
     }
 
 }

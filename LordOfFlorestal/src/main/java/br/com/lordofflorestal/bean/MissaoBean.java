@@ -66,6 +66,7 @@ public class MissaoBean {
         JogadorRN jogadorRN = new JogadorRN();
         for (Jogador j : jogadoresSelecionados) {
             jogadorRN.inserirCartaJogador(missao.getCarta(), j);
+            jogadorRN.alteraXpJogador(j, 150);
         }
         MessageUtil.info("Cartas envidas com sucesso.");
         return null;

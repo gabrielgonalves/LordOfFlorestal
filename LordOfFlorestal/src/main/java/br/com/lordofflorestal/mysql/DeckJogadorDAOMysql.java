@@ -77,7 +77,7 @@ public class DeckJogadorDAOMysql {
         } catch (SQLException ex) {
             System.out.println("Erro ao fechar operações de atualização. Erro: " + ex.getMessage());
         }
-        
+
         for (Carta carta : deckJogador.getCartas()) {
             adicionarCarta(deckJogador.getId(), carta.getId());
         }
@@ -156,16 +156,15 @@ public class DeckJogadorDAOMysql {
                 deckJogador.setId(rs.getInt("id_deck"));
                 deckJogador.setNome(rs.getString("nome"));
 
-                statement.close();
-
-                connection.close();
-
                 break;
             }
+            statement.close();
+
+            connection.close();
         } catch (SQLException e) {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
-        
+
         deckJogador.setCartas(buscaCartasPorDeck(deckJogador.getId()));
 
         return deckJogador;
@@ -232,8 +231,8 @@ public class DeckJogadorDAOMysql {
             System.out.println("Erro ao realizar a inserção. Erro: " + e.getMessage());
         }
     }
-    
-    public void removerCartasDeck(int id){
+
+    public void removerCartasDeck(int id) {
         String sql = "DELETE FROM Deck_has_Carta WHERE id_deck = ?;";
 
         try {
@@ -242,7 +241,7 @@ public class DeckJogadorDAOMysql {
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, id);
-            
+
             statement.executeUpdate();
             statement.close();
 

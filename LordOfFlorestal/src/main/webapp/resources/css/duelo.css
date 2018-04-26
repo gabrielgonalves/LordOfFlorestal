@@ -309,6 +309,24 @@ and (min-width: 701px){
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+#nivelop {
+    position: absolute;
+    width: 100px;
+    z-index: 10;
+    top: 100px;
+    left: -5px;
+    color: white;
+}
+
+#nivel {
+    position: absolute;
+    width: 100px;
+    z-index: 10;
+    bottom: 100px;
+    left: -5px;
+    color: white;
+}
+
 #suaDeterminacao {
     position: absolute;
     bottom: -15px;

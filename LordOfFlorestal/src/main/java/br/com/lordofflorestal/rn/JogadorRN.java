@@ -19,18 +19,18 @@ import java.util.List;
  * @author gabriel
  */
 public class JogadorRN {
-    
+
     private JogadorDAOMysql jogadorDAOMysql;
-    
+
     public JogadorRN() {
         this.jogadorDAOMysql = new JogadorDAOMysql();
     }
-    
+
     public void salvar(Jogador jogador) {
         if (buscarPorMatricula(jogador.getMatricula()) == null) {
             if (buscarPorLogin(jogador.getLogin()) == null) {
                 this.jogadorDAOMysql.salvar(jogador);
-                
+
                 MessageUtil.info("Jogador " + jogador.getNome() + " salvo com sucesso!");
             } else {
                 MessageUtil.erro("O login informado já esta em uso!");
@@ -40,67 +40,108 @@ public class JogadorRN {
             MessageUtil.info("Jogador " + jogador.getNome() + " editado com sucesso!");
         }
     }
-    
+
     public void atualizarPontos(Jogador jogador) {
         if (buscarPorMatricula(jogador.getMatricula()).getEstatisticaJogador().getNumJogos() != jogador.getEstatisticaJogador().getNumJogos()) {
             this.jogadorDAOMysql.atualizarPontuacao(jogador);
         }
     }
-    
+
     public void excluir(Jogador jogador) {
         this.jogadorDAOMysql.excluir(jogador);
         MessageUtil.info("Jogador " + jogador.getNome() + " excluido com sucesso!");
     }
-    
-    public List<Ranking> ranking(){
+
+    public List<Ranking> ranking() {
         return this.jogadorDAOMysql.ranking();
     }
-    
-    public List<DuelosJogador> buscaDuelosJogador(int matricula){
+
+    public List<DuelosJogador> buscaDuelosJogador(int matricula) {
         return this.jogadorDAOMysql.buscaDuelosJogador(matricula);
     }
-    
+
     public Jogador buscarPorLogin(String login) {
         return this.jogadorDAOMysql.buscarPorLogin(login);
     }
-    
+
     public Jogador buscarPorMatricula(Integer matricula) {
         return this.jogadorDAOMysql.buscarPorMatricula(matricula);
     }
-    
+
     public EstatisticaJogador buscarEstatisticaJogador(Integer matricula) {
         return this.jogadorDAOMysql.buscarEstatisticaJogador(matricula);
     }
-    
+
     public List<Jogador> listar() {
         return this.jogadorDAOMysql.listar();
     }
-    
+
     public List<Jogador> listarJogadoresSemCarta(int id) {
         return this.jogadorDAOMysql.listarJogadoresSemCarta(id);
     }
-    
+
     public List<Jogador> listarExceto(Jogador jogador) {
         return this.jogadorDAOMysql.listarExceto(jogador);
     }
-    
+
     public String buscaImagemJogador(String login) {
         return this.jogadorDAOMysql.buscaImagemJogador(login);
     }
-    
+
     public void inserirCartaJogador(Carta carta, Jogador jogador) {
         this.jogadorDAOMysql.inserirCartaJogador(carta, jogador);
     }
-    
+
     public List<Carta> buscarCartasJogador(Jogador jogador) {
         return this.jogadorDAOMysql.buscarCartasJogador(jogador);
     }
-    
+
     public void excluirTodasCartasJogador(Jogador jogador) {
         this.jogadorDAOMysql.excluirTodasCartasJogador(jogador);
     }
-    
-    public boolean jogadorEstaCadastrado(String login){
+
+    public boolean jogadorEstaCadastrado(String login) {
         return this.jogadorDAOMysql.jogadorEstaCadastrado(login);
+    }
+
+    public void alteraXpJogador(Jogador jogador, int xp) {
+        String nivelAtual = jogador.getNivel();
+        this.jogadorDAOMysql.alteraXpJogador(jogador, xp);
+        jogador.setXp(jogador.getXp() + xp);
+        String novoNivel = jogador.getNivel();
+        Carta carta = new Carta();
+        try {
+            if (!nivelAtual.equals(novoNivel)) {
+                switch (novoNivel) {
+                    case "Novato(a)":
+                        carta.setId(3);
+                        inserirCartaJogador(carta, jogador);
+                        MessageUtil.info("Parabéns, você atingiu o nível Novato(a)! Confira sua nova carta em seu perfil.");
+                        break;
+                    case "Calouro(a)":
+                        carta.setId(4);
+                        inserirCartaJogador(carta, jogador);
+                        MessageUtil.info("Parabéns, você atingiu o nível Calouro(a)! Confira sua nova carta em seu perfil.");
+                        break;
+                    case "Veterano(a)":
+                        carta.setId(19);
+                        inserirCartaJogador(carta, jogador);
+                        MessageUtil.info("Parabéns, você atingiu o nível Veterano(a)! Confira sua nova carta em seu perfil.");
+                        break;
+                    case "Formando(a)":
+                        carta.setId(23);
+                        inserirCartaJogador(carta, jogador);
+                        MessageUtil.info("Parabéns, você atingiu o nível Formando(a)! Confira sua nova carta em seu perfil.");
+                        break;
+                    case "Graduado(a)":
+                        carta.setId(1);
+                        inserirCartaJogador(carta, jogador);
+                        MessageUtil.info("Parabéns, você atingiu o nível Graduado(a)! Confira sua nova carta em seu perfil.");
+                        break;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Ocorreu um erro inesperado: " + e.getMessage());
+        }
     }
 }

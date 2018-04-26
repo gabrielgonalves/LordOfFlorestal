@@ -17,9 +17,20 @@
                     <p:panel class="card">
                         <p:growl autoUpdate="true" />
                         <div class="ui-g no-margin">
+                            <div class="ui-g-12" style="padding: 10px; margin: 0; background-color: #994d00; position: relative;">
+                                <div style="z-index: 5; position: absolute; padding: 0px; margin: -10px; height: 100%; width: #{100 - (100*perfilBean.jogador.xpProximoNivel)/(perfilBean.jogador.xpProximoNivel + perfilBean.jogador.xp)}%; background-color: #F57C19;"/>
+                                <h:outputText rendered="#{perfilBean.jogador.xpProximoNivel ne 0}" value="Faltam #{perfilBean.jogador.xpProximoNivel} ponto(s) de xp para atingir o próximo nível" style="position: relative; float: right; color: white; z-index: 40;" /> 
+                                <h:outputText rendered="#{perfilBean.jogador.xpProximoNivel eq 0}" value="Parabéns, você atingiu o nível máximo do jogo" style="position: relative; float: right; color: white; z-index: 40;" /> 
+                            </div>
                             <div class="ui-g-12 ui-md-3">
                                 <center>
+                                    <div class="ui-g-12">
+                                        <h:outputText value="#{perfilBean.jogador.nivel}" style="font-size: 15px; font-weight: bold;" /><br/>
+                                    </div>
                                     <p:graphicImage library="img" name="#{perfilBean.jogador.imagem}" width="150" class="user-img" />
+                                    <br/>
+                                        <h:outputText value="#{perfilBean.jogador.xp} pts" style="font-size: 10px; font-style: italic" />
+                                    <br/>
                                     <br/>
                                     <p:fileUpload mode="simple" skinSimple="true" label="Escolher" value="#{perfilBean.img}" />
                                 </center>

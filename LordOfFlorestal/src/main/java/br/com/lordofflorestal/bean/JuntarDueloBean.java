@@ -20,6 +20,7 @@ import br.com.lordofflorestal.util.MessageUtil;
 import br.com.lordofflorestal.util.TempoThread;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -134,6 +135,11 @@ public class JuntarDueloBean {
         duelo.setCronometro(false);
         duelo.setTempoThread(new TempoThread());
         duelo.setBatePapo(duelo.getOponente().getLogin() + " juntou-se ao duelo.\n\n" + duelo.getBatePapo());
+        if(Math.abs(new Random().nextInt()) % 2 == 0){
+            duelo.setVezDe(duelo.getCriadoPor().getLogin());
+        } else {
+            duelo.setVezDe(duelo.getOponente().getLogin());
+        }
         return "jogo.xhtml?duelo=" + duelo.getUri() + "&faces-redirect=true";
     }
 

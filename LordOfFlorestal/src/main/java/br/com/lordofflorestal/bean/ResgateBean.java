@@ -44,6 +44,9 @@ public class ResgateBean {
                     idCarta = valeCarta.getCarta().getId();
 
                     jogadorRN.inserirCartaJogador(valeCarta.getCarta(), jogador);
+                    
+                    jogadorRN.alteraXpJogador(jogador, 300);
+                    
                     MessageUtil.info("Cupom " + valeCarta.getCodigo() + " resgatado com sucesso!");
                     return null;
                 }

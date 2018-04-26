@@ -94,9 +94,9 @@ public class ValeCartaDAOMysql {
             connection = ConnectionFactory.getConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
-            
+
             statement.setString(1, codigo);
-            
+
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -104,7 +104,7 @@ public class ValeCartaDAOMysql {
 
                 valeCarta.setCodigo(rs.getString("codigo"));
                 valeCarta.setValido(rs.getBoolean("valido"));
-                
+
                 Carta carta = new Carta();
 
                 carta.setId(rs.getInt("id_carta"));
@@ -118,19 +118,22 @@ public class ValeCartaDAOMysql {
                 if (rs.getInt("id_subtipo_carta") != 0) {
                     carta.setSubtipoCarta(SubtipoCarta.values()[rs.getInt("id_subtipo_carta") - 1]);
                 }
-                
+
                 valeCarta.setCarta(carta);
+
+                statement.close();
+
+                connection.close();
 
                 return valeCarta;
             }
-
             statement.close();
 
             connection.close();
         } catch (SQLException e) {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
-        
+
         return null;
     }
 
@@ -143,9 +146,9 @@ public class ValeCartaDAOMysql {
             connection = ConnectionFactory.getConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
-            
+
             statement.setBoolean(1, status);
-            
+
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -153,7 +156,7 @@ public class ValeCartaDAOMysql {
 
                 valeCarta.setCodigo(rs.getString("codigo"));
                 valeCarta.setValido(rs.getBoolean("valido"));
-                
+
                 Carta carta = new Carta();
 
                 carta.setId(rs.getInt("id_carta"));
@@ -167,7 +170,7 @@ public class ValeCartaDAOMysql {
                 if (rs.getInt("id_subtipo_carta") != 0) {
                     carta.setSubtipoCarta(SubtipoCarta.values()[rs.getInt("id_subtipo_carta") - 1]);
                 }
-                
+
                 valeCarta.setCarta(carta);
 
                 lista.add(valeCarta);
@@ -179,7 +182,7 @@ public class ValeCartaDAOMysql {
         } catch (SQLException e) {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
-        
+
         return lista;
     }
 
@@ -192,9 +195,9 @@ public class ValeCartaDAOMysql {
             connection = ConnectionFactory.getConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
-            
+
             statement.setInt(1, idCarta);
-            
+
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -202,7 +205,7 @@ public class ValeCartaDAOMysql {
 
                 valeCarta.setCodigo(rs.getString("codigo"));
                 valeCarta.setValido(rs.getBoolean("valido"));
-                
+
                 Carta carta = new Carta();
 
                 carta.setId(rs.getInt("id_carta"));
@@ -216,7 +219,7 @@ public class ValeCartaDAOMysql {
                 if (rs.getInt("id_subtipo_carta") != 0) {
                     carta.setSubtipoCarta(SubtipoCarta.values()[rs.getInt("id_subtipo_carta") - 1]);
                 }
-                
+
                 valeCarta.setCarta(carta);
 
                 lista.add(valeCarta);
@@ -228,7 +231,7 @@ public class ValeCartaDAOMysql {
         } catch (SQLException e) {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
-        
+
         return lista;
     }
 
@@ -248,7 +251,7 @@ public class ValeCartaDAOMysql {
 
                 valeCarta.setCodigo(rs.getString("codigo"));
                 valeCarta.setValido(rs.getBoolean("valido"));
-                
+
                 Carta carta = new Carta();
 
                 carta.setId(rs.getInt("id_carta"));
@@ -262,7 +265,7 @@ public class ValeCartaDAOMysql {
                 if (rs.getInt("id_subtipo_carta") != 0) {
                     carta.setSubtipoCarta(SubtipoCarta.values()[rs.getInt("id_subtipo_carta") - 1]);
                 }
-                
+
                 valeCarta.setCarta(carta);
 
                 lista.add(valeCarta);

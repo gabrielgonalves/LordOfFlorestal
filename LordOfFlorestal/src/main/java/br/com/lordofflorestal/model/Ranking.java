@@ -19,6 +19,7 @@ public class Ranking implements Serializable {
     private int jogosGanhoLord;
     private int jogosPerdido;
     private int jogosPerdidoLord;
+    private int xp;
 
     public Ranking() {
     }
@@ -69,5 +70,13 @@ public class Ranking implements Serializable {
 
     public void setJogosPerdidoLord(int jogosPerdidoLord) {
         this.jogosPerdidoLord = jogosPerdidoLord;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
     }
 }

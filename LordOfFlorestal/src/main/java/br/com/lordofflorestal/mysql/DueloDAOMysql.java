@@ -60,6 +60,8 @@ public class DueloDAOMysql {
 
     public boolean jaInserido(Duelo duelo) {
         String sql = "SELECT * FROM Duelo WHERE uri = ?";
+        
+        boolean result = false;
 
         try {
             connection = ConnectionFactory.getConnection();
@@ -71,12 +73,16 @@ public class DueloDAOMysql {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                return true;
+                result = true;
             }
+            
+            statement.close();
+
+            connection.close();
         } catch (SQLException e) {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
-        return false;
+        return result;
 
     }
 }

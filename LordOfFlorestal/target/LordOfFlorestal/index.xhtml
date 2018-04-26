@@ -67,6 +67,7 @@
                             <div class="ui-g-12">
                                 <h:outputText value="#{user.login}" style="font-weight: bold;" />
                                 <p:graphicImage style="float: right !important;" width="20px" library="icon" name="crown.png" class="#{user.jogosGanhoLord ne 0 ? '' : 'img-pb'}" />
+                                <h:outputText value="#{user.xp} pts" style="margin-right: 50px;float: right !important;" />
                             </div>
                         </div>
                     </p:dataList>
@@ -77,6 +78,7 @@
                             <div class="ui-g-12">
                                 <h:outputText value="#{user.login}" style="font-weight: bold;" />
                                 <p:graphicImage style="float: right !important;" width="20px" library="icon" name="crown.png" class="#{user.jogosGanhoLord ne 0 ? '' : 'img-pb'}" />
+                                <h:outputText value="#{user.xp} pts" style="margin-right: 50px;float: right !important;" />
                             </div>
                         </div>
                     </p:dataList>
@@ -180,7 +182,7 @@
                     <p>Clicando no botão "Novo duelo", a tela a seguir é apresentada onde devemos informar o tempo de espera para que um oponente aceite o seu duelo, a quantidade de cartas necessárias para duelas, com quem você deseja jogar, podendo ser alguém em específico ou esparar por um jogador aleatório, e por fim você escolhe qual Deck deseja utilizar, tendo a opção de editar as cartas contidas nele. Feito isso basta clicar no botão "Criar" que você será redirecionado para a tela do duelo.</p>
                     <p:graphicImage library="telas" name="novo.jpg" width="100%" />
                     <p>A tela para se juntar a um duelo já criado, é bastante similar a tela para criação. Nela temos a informação de quem foi o jogador que está te desafiando e quantas cartas você deve escolher para se juntar ao duelo. A forma para seleção das cartas é a mesma, e após selecionado seu deck, basta clicar no botão "Jogar".</p>
-                    
+
                     <h2>Como duelar</h2>
 
                     <p>Chegamos a parte mais importante, o duelo. Após montado os decks, todas as cartas são embaralhadas e colocadas no monte de cada jogador. Para se iniciar, cada jogador recebe 3 (três) cartas para dar inicio a batalha. Na tela de duelo temos: uma área para que possamos alterar o plano de fundo do nosso deck, o placar onde consta os pontos de determinação de cada jogador, um chat para comunicação, a mesa do oponente, sua mesa, sua mão, e os botões para comprar cartas e finalizar o turno. O jogador que inicia o duelo é sempre o jogador que o criou.</p>

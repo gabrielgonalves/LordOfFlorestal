@@ -35,7 +35,7 @@ public class JogadorDAOMysql {
     private Connection connection;
 
     public void salvar(Jogador jogador) {
-        String sql = "INSERT INTO Jogador (nome, email, imagem, matricula, login, senha, id_tipo_jogador, ano_admissao) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO Jogador (nome, email, imagem, matricula, login, senha, id_tipo_jogador, ano_admissao, xp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try {
             connection = ConnectionFactory.getConnection();
@@ -50,7 +50,8 @@ public class JogadorDAOMysql {
             statement.setString(6, jogador.getSenha());
             statement.setInt(7, jogador.getTipoJogador().ordinal() + 1);
             statement.setInt(8, jogador.getAnoAdmissao());
-       
+            statement.setInt(9, jogador.getXp());
+
             statement.executeUpdate();
             statement.close();
 
@@ -153,6 +154,7 @@ public class JogadorDAOMysql {
                 jogador.setLogin(rs.getString("login"));
                 jogador.setSenha(rs.getString("senha"));
                 jogador.setTipoJogador(TipoJogador.values()[rs.getInt("id_tipo_jogador") - 1]);
+                jogador.setXp(rs.getInt("xp"));
 
                 EstatisticaJogador ej = new EstatisticaJogador();
                 ej.setNumJogos(rs.getInt("num_jogos"));
@@ -213,7 +215,7 @@ public class JogadorDAOMysql {
     public List<Ranking> ranking() {
         List<Ranking> ranking = new ArrayList();
 
-        String sql = "SELECT login, ((num_jogos_ganhou_lord * 5 + num_jogos_ganho * 1)/((num_jogos_ganho + num_jogos_perdido) + (num_jogos_ganhou_lord + num_jogos_perdeu_lord) * 5)) * 100 as media, num_jogos_ganho, num_jogos_ganhou_lord, num_jogos_perdido, num_jogos_perdeu_lord FROM LordOfFlorestal.Jogador WHERE id_tipo_jogador = 1  order by media desc, num_jogos_ganhou_lord desc limit 10;";
+        String sql = "SELECT matricula, nome, login, count(id_carta) as qtcarta, xp  FROM LordOfFlorestal.Jogador_has_Carta inner join Jogador on matricula_jogador = matricula where id_tipo_jogador != 2 group by matricula_jogador order by xp desc, qtcarta desc limit 10;";
 
         try {
             connection = ConnectionFactory.getConnection();
@@ -225,11 +227,7 @@ public class JogadorDAOMysql {
             while (rs.next()) {
                 Ranking r = new Ranking();
                 r.setLogin(rs.getString("login"));
-                r.setMedia(rs.getInt("media"));
-                r.setJogosGanho(rs.getInt("num_jogos_ganho"));
-                r.setJogosGanhoLord(rs.getInt("num_jogos_ganhou_lord"));
-                r.setJogosPerdido(rs.getInt("num_jogos_perdido"));
-                r.setJogosPerdidoLord(rs.getInt("num_jogos_perdeu_lord"));
+                r.setXp(rs.getInt("xp"));
 
                 ranking.add(r);
             }
@@ -346,6 +344,7 @@ public class JogadorDAOMysql {
                 jogador.setLogin(rs.getString("login"));
                 jogador.setSenha(rs.getString("senha"));
                 jogador.setTipoJogador(TipoJogador.values()[rs.getInt("id_tipo_jogador") - 1]);
+                jogador.setXp(rs.getInt("xp"));
 
                 EstatisticaJogador ej = new EstatisticaJogador();
                 ej.setNumJogos(rs.getInt("num_jogos"));
@@ -427,6 +426,7 @@ public class JogadorDAOMysql {
                 jogador.setLogin(rs.getString("login"));
                 jogador.setSenha(rs.getString("senha"));
                 jogador.setTipoJogador(TipoJogador.values()[rs.getInt("id_tipo_jogador") - 1]);
+                jogador.setXp(rs.getInt("xp"));
 
                 EstatisticaJogador ej = new EstatisticaJogador();
                 ej.setNumJogos(rs.getInt("num_jogos"));
@@ -478,6 +478,7 @@ public class JogadorDAOMysql {
                 jogador.setLogin(rs.getString("login"));
                 jogador.setSenha(rs.getString("senha"));
                 jogador.setTipoJogador(TipoJogador.values()[rs.getInt("id_tipo_jogador") - 1]);
+                jogador.setXp(rs.getInt("xp"));
 
                 EstatisticaJogador ej = new EstatisticaJogador();
                 ej.setNumJogos(rs.getInt("num_jogos"));
@@ -527,6 +528,7 @@ public class JogadorDAOMysql {
                 j.setLogin(rs.getString("login"));
                 j.setSenha(rs.getString("senha"));
                 j.setTipoJogador(TipoJogador.values()[rs.getInt("id_tipo_jogador") - 1]);
+                jogador.setXp(rs.getInt("xp"));
 
                 EstatisticaJogador ej = new EstatisticaJogador();
                 ej.setNumJogos(rs.getInt("num_jogos"));
@@ -657,6 +659,7 @@ public class JogadorDAOMysql {
 
     public String buscaImagemJogador(String login) {
         String sql = "SELECT imagem FROM Jogador WHERE login = ?";
+        String imagem = "";
 
         try {
             connection = ConnectionFactory.getConnection();
@@ -668,17 +671,26 @@ public class JogadorDAOMysql {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                return rs.getString("imagem");
+                imagem = rs.getString("imagem");
             }
+            statement.close();
+
+            connection.close();
         } catch (SQLException e) {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
-        return "user.png";
+        if (imagem.equals("") || imagem.isEmpty()) {
+            return "user.png";
+        } else {
+            return imagem;
+        }
     }
 
     public boolean jogadorEstaCadastrado(String login) {
         String sql = "SELECT login FROM Jogador WHERE login = ?";
 
+        boolean result = false;
+
         try {
             connection = ConnectionFactory.getConnection();
 
@@ -689,13 +701,37 @@ public class JogadorDAOMysql {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                return true;
+                result = true;
             }
+
+            statement.close();
+
+            connection.close();
 
         } catch (SQLException e) {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
-        return false;
+        return result;
+    }
+
+    public void alteraXpJogador(Jogador jogador, int xp) {
+        String sql = "UPDATE Jogador SET xp = ? WHERE matricula = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, jogador.getXp() + xp);
+            statement.setInt(2, jogador.getMatricula());
+
+            statement.executeUpdate();
+            statement.close();
+
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar operações de atualização. Erro: " + ex.getMessage());
+        }
     }
 
 }

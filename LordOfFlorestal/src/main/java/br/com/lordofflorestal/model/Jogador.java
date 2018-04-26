@@ -26,10 +26,12 @@ public class Jogador implements Serializable {
     private int anoAdmissao;
     private EstatisticaJogador estatisticaJogador;
     private List<Carta> cartas;
+    private int xp;
 
     public Jogador() {
         cartas = new ArrayList();
         estatisticaJogador = new EstatisticaJogador();
+        xp = 0;
     }
 
     public Jogador(String nome, int matricula, String email, String login, String senha, String imagem, TipoJogador tipoJogador, int anoAdmissao, EstatisticaJogador estatisticaJogador, List<Carta> cartas) {
@@ -125,6 +127,44 @@ public class Jogador implements Serializable {
         this.cartas = cartas;
     }
 
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public String getNivel() {
+        if (xp > 100000) {
+            return "Graduado(a)";
+        } else if (xp >= 50000) {
+            return "Formando(a)";
+        } else if (xp >= 1000) {
+            return "Veterano(a)";
+        } else if (xp >= 500) {
+            return "Calouro(a)";
+        } else if (xp >= 100) {
+            return "Novato(a)";
+        }
+        return "";
+    }
+
+    public int getXpProximoNivel() {
+        if (xp < 100) {
+            return 100 - xp;
+        } else if (xp < 500) {
+            return 500 - xp;
+        } else if (xp < 1000) {
+            return 1000 - xp;
+        } else if (xp < 50000) {
+            return 50000 - xp;
+        } else if (xp < 100000) {
+            return 100000 - xp;
+        }
+        return 0;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -177,5 +217,5 @@ public class Jogador implements Serializable {
         }
         return true;
     }
-    
+
 }

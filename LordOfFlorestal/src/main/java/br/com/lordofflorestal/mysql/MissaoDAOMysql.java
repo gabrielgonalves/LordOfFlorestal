@@ -87,7 +87,7 @@ public class MissaoDAOMysql {
         }
     }
 
-    public Missao buscaPorId(int id){
+    public Missao buscaPorId(int id) {
         String sql = "SELECT * FROM Missao INNER JOIN Carta ON Carta.id_carta = Missao.id_carta WHERE id_missao = ?";
 
         try {
@@ -99,13 +99,13 @@ public class MissaoDAOMysql {
 
             ResultSet rs = statement.executeQuery();
 
+            Missao missao = new Missao();
             while (rs.next()) {
-                Missao missao = new Missao();
 
                 missao.setId(rs.getInt("id_missao"));
                 missao.setDescricao(rs.getString("descricao"));
                 missao.setAtiva(rs.getBoolean("ativa"));
-                
+
                 Carta carta = new Carta();
 
                 carta.setId(rs.getInt("id_carta"));
@@ -119,21 +119,22 @@ public class MissaoDAOMysql {
                 if (rs.getInt("id_subtipo_carta") != 0) {
                     carta.setSubtipoCarta(SubtipoCarta.values()[rs.getInt("id_subtipo_carta") - 1]);
                 }
-                
+
                 missao.setCarta(carta);
-                
-                statement.close();
 
-                connection.close();
-
-                return missao;
+                break;
             }
+            statement.close();
+
+            connection.close();
+
+            return missao;
         } catch (SQLException e) {
             System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
         }
         return null;
     }
-    
+
     public List<Missao> listar() {
         List<Missao> lista = new ArrayList();
 
@@ -151,7 +152,7 @@ public class MissaoDAOMysql {
                 missao.setId(rs.getInt("id_missao"));
                 missao.setDescricao(rs.getString("descricao"));
                 missao.setAtiva(rs.getBoolean("ativa"));
-                
+
                 Carta carta = new Carta();
 
                 carta.setId(rs.getInt("id_carta"));
@@ -165,7 +166,7 @@ public class MissaoDAOMysql {
                 if (rs.getInt("id_subtipo_carta") != 0) {
                     carta.setSubtipoCarta(SubtipoCarta.values()[rs.getInt("id_subtipo_carta") - 1]);
                 }
-                
+
                 missao.setCarta(carta);
 
                 lista.add(missao);
@@ -180,7 +181,7 @@ public class MissaoDAOMysql {
 
         return lista;
     }
-    
+
     public List<Missao> listarAtivas() {
         List<Missao> lista = new ArrayList();
 
@@ -197,7 +198,7 @@ public class MissaoDAOMysql {
 
                 missao.setId(rs.getInt("id_missao"));
                 missao.setDescricao(rs.getString("descricao"));
-                
+
                 Carta carta = new Carta();
 
                 carta.setId(rs.getInt("id_carta"));
@@ -211,7 +212,7 @@ public class MissaoDAOMysql {
                 if (rs.getInt("id_subtipo_carta") != 0) {
                     carta.setSubtipoCarta(SubtipoCarta.values()[rs.getInt("id_subtipo_carta") - 1]);
                 }
-                
+
                 missao.setCarta(carta);
 
                 lista.add(missao);

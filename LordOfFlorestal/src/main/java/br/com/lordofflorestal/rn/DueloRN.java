@@ -375,6 +375,23 @@ public class DueloRN {
                 diminuiPontosDeterminacao(deck, 1);
             }
         }
+        
+        boolean retorno = verificaPontosDeterminacao();
+
+        if (duelo.getSituacaoDuelo().equals(SituacaoDuelo.FINALIZADO)) {
+            int pontosGanhador;
+            int pontosPerdedor;
+            if (duelo.getDeckJogador1().getJogador().equals(ganhador)) {
+                pontosGanhador = duelo.getDeckJogador1().getPontosDeterminacao();
+                pontosPerdedor = duelo.getDeckJogador2().getPontosDeterminacao();
+            } else {
+                pontosGanhador = duelo.getDeckJogador2().getPontosDeterminacao();
+                pontosPerdedor = duelo.getDeckJogador1().getPontosDeterminacao();
+            }
+            new FileUploadUtil().uploadLog(duelo);
+            salvar(duelo, ganhador, pontosGanhador, pontosPerdedor);
+            atualizaEstatistica();
+        }
     }
 
     public void colocaCartaDescarte(CartaJogo carta) {
@@ -566,7 +583,7 @@ public class DueloRN {
         podeDescer = false;
         podeComprar = true;
         podeAtacar = false;
-        
+
         especialMesa = false;
         especialMesaOponete = false;
 
@@ -596,25 +613,24 @@ public class DueloRN {
             separaCartas();
         }
     }
-    
-    public String recompensa(CartaJogo carta){
+
+    public String recompensa(CartaJogo carta) {
         String retorno = "";
-        if(ganhador.getCartas().contains(carta.getCarta())){
+        if (ganhador.getCartas().contains(carta.getCarta())) {
             ValeCarta valeCarta = new ValeCarta();
             valeCarta.setCarta(carta.getCarta());
             valeCarta.setValido(true);
-            
+
             ValeCartaRN valeCartaRN = new ValeCartaRN();
             valeCartaRN.salvar(valeCarta);
-            
-            
-            retorno = "A carta selecionada foi "+ carta.getCarta().getNome() + " e você já possui ela na sua conta. Com isso, geramos um voucher para você poder presentear um amigo. Anote ele entregue para um amigo. Voucher:" + valeCarta.getCodigo();
+
+            retorno = "A carta selecionada foi " + carta.getCarta().getNome() + " e você já possui ela na sua conta. Com isso, geramos um voucher para você poder presentear um amigo. Anote ele entregue para um amigo. Voucher:" + valeCarta.getCodigo();
         } else {
             JogadorRN jogadorRN = new JogadorRN();
             jogadorRN.inserirCartaJogador(carta.getCarta(), ganhador);
-            retorno = "A carta selecionada foi "+ carta.getCarta().getNome() + " e ela já foi adicionada à sua conta";
+            retorno = "A carta selecionada foi " + carta.getCarta().getNome() + " e ela já foi adicionada à sua conta";
         }
-        
+
         return retorno;
     }
 
@@ -672,6 +688,25 @@ public class DueloRN {
 
     public void salvar(Duelo duelo, Jogador vencedor, int pontos_ganhador, int pontos_perdedor) {
         if (!dueloDAOMysql.jaInserido(duelo)) {
+            if (oponente != null) {
+                if (jogador.equals(vencedor)) {
+                    if (oponente.getTipoJogador().equals(TipoJogador.ALUNO)) {
+                        new JogadorRN().alteraXpJogador(jogador, 100);
+                        new JogadorRN().alteraXpJogador(oponente, 50);
+                    } else {
+                        new JogadorRN().alteraXpJogador(jogador, 500);
+                        new JogadorRN().alteraXpJogador(oponente, 50);
+                    }
+                } else {
+                    if (jogador.getTipoJogador().equals(TipoJogador.ALUNO)) {
+                        new JogadorRN().alteraXpJogador(oponente, 100);
+                        new JogadorRN().alteraXpJogador(jogador, 50);
+                    } else {
+                        new JogadorRN().alteraXpJogador(oponente, 500);
+                        new JogadorRN().alteraXpJogador(jogador, 50);
+                    }
+                }
+            }
             this.dueloDAOMysql.salvar(duelo, vencedor, pontos_ganhador, pontos_perdedor);
         }
     }
