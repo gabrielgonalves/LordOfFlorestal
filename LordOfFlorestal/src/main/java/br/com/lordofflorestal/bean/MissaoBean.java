@@ -5,6 +5,7 @@
  */
 package br.com.lordofflorestal.bean;
 
+import br.com.lordofflorestal.model.Badge;
 import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.Jogador;
 import br.com.lordofflorestal.model.Missao;
@@ -67,6 +68,16 @@ public class MissaoBean {
         for (Jogador j : jogadoresSelecionados) {
             jogadorRN.inserirCartaJogador(missao.getCarta(), j);
             jogadorRN.alteraXpJogador(j, 150);
+            jogadorRN.adicionaUmaMissao(j);
+            Badge badge = new Badge();
+            if(j.getCartas().size() + 1 == 10){
+                badge.setId(10);
+                jogadorRN.inserirBadgeJogador(badge, j);
+            }
+            if(j.getCartas().size() + 1 == 30){
+                badge.setId(11);
+                jogadorRN.inserirBadgeJogador(badge, j);
+            }
         }
         MessageUtil.info("Cartas envidas com sucesso.");
         return null;

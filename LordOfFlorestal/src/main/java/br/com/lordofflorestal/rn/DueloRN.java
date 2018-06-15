@@ -6,6 +6,7 @@
 package br.com.lordofflorestal.rn;
 
 import br.com.lordofflorestal.control.DueloSingleton;
+import br.com.lordofflorestal.model.Badge;
 import br.com.lordofflorestal.model.CartaJogo;
 import br.com.lordofflorestal.model.Deck;
 import br.com.lordofflorestal.model.Duelo;
@@ -375,7 +376,7 @@ public class DueloRN {
                 diminuiPontosDeterminacao(deck, 1);
             }
         }
-        
+
         boolean retorno = verificaPontosDeterminacao();
 
         if (duelo.getSituacaoDuelo().equals(SituacaoDuelo.FINALIZADO)) {
@@ -628,6 +629,15 @@ public class DueloRN {
         } else {
             JogadorRN jogadorRN = new JogadorRN();
             jogadorRN.inserirCartaJogador(carta.getCarta(), ganhador);
+            Badge badge = new Badge();
+            if (ganhador.getCartas().size() + 1 == 10) {
+                badge.setId(10);
+                jogadorRN.inserirBadgeJogador(badge, ganhador);
+            }
+            if (ganhador.getCartas().size() + 1 == 30) {
+                badge.setId(11);
+                jogadorRN.inserirBadgeJogador(badge, ganhador);
+            }
             retorno = "A carta selecionada foi " + carta.getCarta().getNome() + " e ela já foi adicionada à sua conta";
         }
 
@@ -687,6 +697,7 @@ public class DueloRN {
     }
 
     public void salvar(Duelo duelo, Jogador vencedor, int pontos_ganhador, int pontos_perdedor) {
+        Badge badge = new Badge();
         if (!dueloDAOMysql.jaInserido(duelo)) {
             if (oponente != null) {
                 if (jogador.equals(vencedor)) {
@@ -694,19 +705,77 @@ public class DueloRN {
                         new JogadorRN().alteraXpJogador(jogador, 100);
                         new JogadorRN().alteraXpJogador(oponente, 50);
                     } else {
+                        if (jogador.getEstatisticaJogador().getNumJogosGanhouLord() == 0) {
+                            badge.setId(17);
+                            new JogadorRN().inserirBadgeJogador(badge, jogador);
+                        }
                         new JogadorRN().alteraXpJogador(jogador, 500);
                         new JogadorRN().alteraXpJogador(oponente, 50);
+                    }
+                    if (jogador.getEstatisticaJogador().getNumJogosGanho() == 0) {
+                        badge.setId(14);
+                        new JogadorRN().inserirBadgeJogador(badge, jogador);
+                    }
+                    if (oponente.getEstatisticaJogador().getNumJogosPerdido() == 0) {
+                        badge.setId(15);
+                        new JogadorRN().inserirBadgeJogador(badge, oponente);
                     }
                 } else {
                     if (jogador.getTipoJogador().equals(TipoJogador.ALUNO)) {
                         new JogadorRN().alteraXpJogador(oponente, 100);
                         new JogadorRN().alteraXpJogador(jogador, 50);
                     } else {
+                        if (oponente.getEstatisticaJogador().getNumJogosGanhouLord() == 0) {
+                            badge.setId(17);
+                            new JogadorRN().inserirBadgeJogador(badge, oponente);
+                        }
                         new JogadorRN().alteraXpJogador(oponente, 500);
                         new JogadorRN().alteraXpJogador(jogador, 50);
                     }
+
+                    if (oponente.getEstatisticaJogador().getNumJogosGanho() == 0) {
+                        badge.setId(14);
+                        new JogadorRN().inserirBadgeJogador(badge, oponente);
+                    }
+                    if (jogador.getEstatisticaJogador().getNumJogosPerdido() == 0) {
+                        badge.setId(15);
+                        new JogadorRN().inserirBadgeJogador(badge, jogador);
+                    }
+                }
+                switch (jogador.getEstatisticaJogador().getNumJogos() + 1) {
+                    case 10:
+                        badge.setId(7);
+                        new JogadorRN().inserirBadgeJogador(badge, jogador);
+                        break;
+                    case 50:
+                        badge.setId(8);
+                        new JogadorRN().inserirBadgeJogador(badge, jogador);
+                        break;
+                    case 100:
+                        badge.setId(9);
+                        new JogadorRN().inserirBadgeJogador(badge, jogador);
+                        break;
+                    default:
+                        break;
+                }
+                switch (oponente.getEstatisticaJogador().getNumJogos() + 1) {
+                    case 10:
+                        badge.setId(7);
+                        new JogadorRN().inserirBadgeJogador(badge, oponente);
+                        break;
+                    case 50:
+                        badge.setId(8);
+                        new JogadorRN().inserirBadgeJogador(badge, oponente);
+                        break;
+                    case 100:
+                        badge.setId(9);
+                        new JogadorRN().inserirBadgeJogador(badge, oponente);
+                        break;
+                    default:
+                        break;
                 }
             }
+
             this.dueloDAOMysql.salvar(duelo, vencedor, pontos_ganhador, pontos_perdedor);
         }
     }

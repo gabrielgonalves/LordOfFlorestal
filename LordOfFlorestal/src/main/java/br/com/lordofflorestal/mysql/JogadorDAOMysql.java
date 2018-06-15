@@ -5,6 +5,7 @@
  */
 package br.com.lordofflorestal.mysql;
 
+import br.com.lordofflorestal.model.Badge;
 import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.EstatisticaJogador;
 import br.com.lordofflorestal.model.Jogador;
@@ -88,7 +89,7 @@ public class JogadorDAOMysql {
     }
 
     public void atualizarPontuacao(Jogador jogador) {
-        String sql = "UPDATE Jogador SET num_jogos = ?, num_jogos_ganho = ?, num_jogos_perdido = ?, num_jogos_ganhou_lord = ?, num_jogos_perdeu_lord = ? WHERE matricula = ?";
+        String sql = "UPDATE Jogador SET num_jogos = ?, num_jogos_ganho = ?, num_jogos_perdido = ?, num_jogos_ganhou_lord = ?, num_jogos_perdeu_lord = ?, num_missoes = ? WHERE matricula = ?";
 
         try {
             connection = ConnectionFactory.getConnection();
@@ -100,7 +101,8 @@ public class JogadorDAOMysql {
             statement.setInt(3, jogador.getEstatisticaJogador().getNumJogosPerdido());
             statement.setInt(4, jogador.getEstatisticaJogador().getNumJogosGanhouLord());
             statement.setInt(5, jogador.getEstatisticaJogador().getNumJogosPerdeuLord());
-            statement.setInt(6, jogador.getMatricula());
+            statement.setInt(6, jogador.getEstatisticaJogador().getNumMissoes());
+            statement.setInt(7, jogador.getMatricula());
 
             statement.executeUpdate();
             statement.close();
@@ -162,6 +164,7 @@ public class JogadorDAOMysql {
                 ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
                 ej.setNumJogosGanhouLord(rs.getInt("num_jogos_ganhou_lord"));
                 ej.setNumJogosPerdeuLord(rs.getInt("num_jogos_perdeu_lord"));
+                ej.setNumMissoes(rs.getInt("num_missoes"));
 
                 jogador.setEstatisticaJogador(ej);
 
@@ -170,6 +173,7 @@ public class JogadorDAOMysql {
                 connection.close();
 
                 jogador.setCartas(buscarCartasJogador(jogador));
+                jogador.setBadges(buscarBadgesJogador(jogador.getMatricula()));
 
                 return jogador;
             }
@@ -228,6 +232,37 @@ public class JogadorDAOMysql {
                 Ranking r = new Ranking();
                 r.setLogin(rs.getString("login"));
                 r.setXp(rs.getInt("xp"));
+
+                ranking.add(r);
+            }
+
+            statement.close();
+
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+
+        return ranking;
+    }
+    
+    public List<Ranking> rankingGeral() {
+        List<Ranking> ranking = new ArrayList();
+
+        String sql = "SELECT matricula, nome, login, count(id_carta) as qtcarta, xp  FROM LordOfFlorestal.Jogador_has_Carta inner join Jogador on matricula_jogador = matricula where id_tipo_jogador != 2 group by matricula_jogador order by xp desc, qtcarta desc;";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Ranking r = new Ranking();
+                r.setLogin(rs.getString("login"));
+                r.setXp(rs.getInt("xp"));
+                r.setMatricula(rs.getInt("matricula"));
 
                 ranking.add(r);
             }
@@ -352,6 +387,7 @@ public class JogadorDAOMysql {
                 ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
                 ej.setNumJogosGanhouLord(rs.getInt("num_jogos_ganhou_lord"));
                 ej.setNumJogosPerdeuLord(rs.getInt("num_jogos_perdeu_lord"));
+                ej.setNumMissoes(rs.getInt("num_missoes"));
 
                 jogador.setEstatisticaJogador(ej);
 
@@ -360,6 +396,7 @@ public class JogadorDAOMysql {
                 connection.close();
 
                 jogador.setCartas(buscarCartasJogador(jogador));
+                jogador.setBadges(buscarBadgesJogador(jogador.getMatricula()));
 
                 return jogador;
             }
@@ -392,6 +429,7 @@ public class JogadorDAOMysql {
                 ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
                 ej.setNumJogosGanhouLord(rs.getInt("num_jogos_ganhou_lord"));
                 ej.setNumJogosPerdeuLord(rs.getInt("num_jogos_perdeu_lord"));
+                ej.setNumMissoes(rs.getInt("num_missoes"));
 
                 statement.close();
 
@@ -434,6 +472,7 @@ public class JogadorDAOMysql {
                 ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
                 ej.setNumJogosGanhouLord(rs.getInt("num_jogos_ganhou_lord"));
                 ej.setNumJogosPerdeuLord(rs.getInt("num_jogos_perdeu_lord"));
+                ej.setNumMissoes(rs.getInt("num_missoes"));
 
                 jogador.setEstatisticaJogador(ej);
 
@@ -449,6 +488,7 @@ public class JogadorDAOMysql {
 
         for (Jogador jogador : lista) {
             jogador.setCartas(buscarCartasJogador(jogador));
+            jogador.setBadges(buscarBadgesJogador(jogador.getMatricula()));
         }
 
         return lista;
@@ -486,6 +526,7 @@ public class JogadorDAOMysql {
                 ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
                 ej.setNumJogosGanhouLord(rs.getInt("num_jogos_ganhou_lord"));
                 ej.setNumJogosPerdeuLord(rs.getInt("num_jogos_perdeu_lord"));
+                ej.setNumMissoes(rs.getInt("num_missoes"));
 
                 jogador.setEstatisticaJogador(ej);
 
@@ -501,6 +542,7 @@ public class JogadorDAOMysql {
 
         for (Jogador jogador : lista) {
             jogador.setCartas(buscarCartasJogador(jogador));
+            jogador.setBadges(buscarBadgesJogador(jogador.getMatricula()));
         }
 
         return lista;
@@ -536,6 +578,7 @@ public class JogadorDAOMysql {
                 ej.setNumJogosPerdido(rs.getInt("num_jogos_perdido"));
                 ej.setNumJogosGanhouLord(rs.getInt("num_jogos_ganhou_lord"));
                 ej.setNumJogosPerdeuLord(rs.getInt("num_jogos_perdeu_lord"));
+                ej.setNumMissoes(rs.getInt("num_missoes"));
 
                 j.setEstatisticaJogador(ej);
 
@@ -551,6 +594,7 @@ public class JogadorDAOMysql {
 
         for (Jogador j : lista) {
             j.setCartas(buscarCartasJogador(j));
+            jogador.setBadges(buscarBadgesJogador(jogador.getMatricula()));
         }
 
         return lista;
@@ -566,6 +610,26 @@ public class JogadorDAOMysql {
 
             statement.setInt(1, jogador.getMatricula());
             statement.setInt(2, carta.getId());
+
+            statement.executeUpdate();
+            statement.close();
+
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar operações de inserção. Erro: " + ex.getMessage());
+        }
+    }
+    
+    public void inserirBadgeJogador(Badge badge, Jogador jogador) {
+        String sql = "INSERT INTO Jogador_has_Badge (matricula_jogador, id_badge) VALUES (?, ?);";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, jogador.getMatricula());
+            statement.setInt(2, badge.getId());
 
             statement.executeUpdate();
             statement.close();
@@ -656,6 +720,40 @@ public class JogadorDAOMysql {
 
         return lista;
     }
+    
+    public List<Badge> buscarBadgesJogador(int matricula) {
+        List<Badge> lista = new ArrayList();
+
+        String sql = "SELECT * FROM Jogador_has_Badge NATURAL JOIN Badge WHERE matricula_jogador = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, matricula);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Badge badge = new Badge();
+
+                badge.setId(rs.getInt("id_badge"));
+                badge.setNome(rs.getString("nome"));
+                badge.setImg(rs.getString("imagem"));
+                badge.setDescricao(rs.getString("descricao"));
+                
+                lista.add(badge);
+            }
+
+            statement.close();
+
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar a consulta. Erro: " + e.getMessage());
+        }
+        return lista;
+    }
 
     public String buscaImagemJogador(String login) {
         String sql = "SELECT imagem FROM Jogador WHERE login = ?";
@@ -733,5 +831,25 @@ public class JogadorDAOMysql {
             System.out.println("Erro ao fechar operações de atualização. Erro: " + ex.getMessage());
         }
     }
+    
+     public void adicionaUmaMissao(Jogador jogador){
+         String sql = "UPDATE Jogador SET num_missoes = ? WHERE matricula = ?";
+
+        try {
+            connection = ConnectionFactory.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, jogador.getEstatisticaJogador().getNumMissoes() + 1);
+            statement.setInt(2, jogador.getMatricula());
+
+            statement.executeUpdate();
+            statement.close();
+
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar operações de atualização. Erro: " + ex.getMessage());
+        }
+     }
 
 }

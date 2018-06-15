@@ -18,6 +18,7 @@ public class EstatisticaJogador implements Serializable {
     private int numJogosPerdido;
     private int numJogosGanhouLord;
     private int numJogosPerdeuLord;
+    private int numMissoes;
 
     public EstatisticaJogador() {
     }
@@ -68,6 +69,14 @@ public class EstatisticaJogador implements Serializable {
 
     public void setNumJogosPerdeuLord(int numJogosPerdeuLord) {
         this.numJogosPerdeuLord = numJogosPerdeuLord;
+    }
+
+    public int getNumMissoes() {
+        return numMissoes;
+    }
+
+    public void setNumMissoes(int numMissoes) {
+        this.numMissoes = numMissoes;
     }
 
     @Override

@@ -5,6 +5,7 @@
  */
 package br.com.lordofflorestal.rn;
 
+import br.com.lordofflorestal.model.Badge;
 import br.com.lordofflorestal.model.Carta;
 import br.com.lordofflorestal.model.DuelosJogador;
 import br.com.lordofflorestal.model.EstatisticaJogador;
@@ -55,6 +56,10 @@ public class JogadorRN {
     public List<Ranking> ranking() {
         return this.jogadorDAOMysql.ranking();
     }
+    
+    public List<Ranking> rankingGeral() {
+        return this.jogadorDAOMysql.rankingGeral();
+    }
 
     public List<DuelosJogador> buscaDuelosJogador(int matricula) {
         return this.jogadorDAOMysql.buscaDuelosJogador(matricula);
@@ -103,6 +108,14 @@ public class JogadorRN {
     public boolean jogadorEstaCadastrado(String login) {
         return this.jogadorDAOMysql.jogadorEstaCadastrado(login);
     }
+    
+    public List<Badge> buscarBadgesJogador(int matricula) {
+        return this.jogadorDAOMysql.buscarBadgesJogador(matricula);
+    }
+    
+    public void inserirBadgeJogador(Badge badge, Jogador jogador) {
+        this.jogadorDAOMysql.inserirBadgeJogador(badge, jogador);
+    }
 
     public void alteraXpJogador(Jogador jogador, int xp) {
         String nivelAtual = jogador.getNivel();
@@ -110,31 +123,42 @@ public class JogadorRN {
         jogador.setXp(jogador.getXp() + xp);
         String novoNivel = jogador.getNivel();
         Carta carta = new Carta();
+        Badge badge = new Badge();
         try {
             if (!nivelAtual.equals(novoNivel)) {
                 switch (novoNivel) {
                     case "Novato(a)":
                         carta.setId(3);
+                        badge.setId(2);
+                        inserirBadgeJogador(badge, jogador);
                         inserirCartaJogador(carta, jogador);
                         MessageUtil.info("Parabéns, você atingiu o nível Novato(a)! Confira sua nova carta em seu perfil.");
                         break;
                     case "Calouro(a)":
                         carta.setId(4);
+                        badge.setId(3);
+                        inserirBadgeJogador(badge, jogador);
                         inserirCartaJogador(carta, jogador);
                         MessageUtil.info("Parabéns, você atingiu o nível Calouro(a)! Confira sua nova carta em seu perfil.");
                         break;
                     case "Veterano(a)":
                         carta.setId(19);
+                        badge.setId(4);
+                        inserirBadgeJogador(badge, jogador);
                         inserirCartaJogador(carta, jogador);
                         MessageUtil.info("Parabéns, você atingiu o nível Veterano(a)! Confira sua nova carta em seu perfil.");
                         break;
                     case "Formando(a)":
                         carta.setId(23);
+                        badge.setId(5);
+                        inserirBadgeJogador(badge, jogador);
                         inserirCartaJogador(carta, jogador);
                         MessageUtil.info("Parabéns, você atingiu o nível Formando(a)! Confira sua nova carta em seu perfil.");
                         break;
                     case "Graduado(a)":
                         carta.setId(1);
+                        badge.setId(6);
+                        inserirBadgeJogador(badge, jogador);
                         inserirCartaJogador(carta, jogador);
                         MessageUtil.info("Parabéns, você atingiu o nível Graduado(a)! Confira sua nova carta em seu perfil.");
                         break;
@@ -143,5 +167,14 @@ public class JogadorRN {
         } catch (Exception e) {
             System.out.println("Ocorreu um erro inesperado: " + e.getMessage());
         }
+    }
+    
+    public void adicionaUmaMissao(Jogador jogador){
+        if(jogador.getEstatisticaJogador().getNumMissoes() + 1 == 10){
+            Badge badge = new Badge();
+            badge.setId(12);
+            this.jogadorDAOMysql.inserirBadgeJogador(badge, jogador);
+        }
+        this.jogadorDAOMysql.adicionaUmaMissao(jogador);
     }
 }

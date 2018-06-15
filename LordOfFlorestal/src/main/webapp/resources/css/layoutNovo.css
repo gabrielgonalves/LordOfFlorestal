@@ -9,6 +9,10 @@ body, html {
     font-size: 14px !important;
 }
 
+.img-pb{
+    filter: grayscale(100%);
+}
+
 #cronometro {
     position: fixed;
     top: 0px;
@@ -107,7 +111,7 @@ body, html {
         margin-right: -50%;
         transform: translate(-50%, -50%);
     }
-    #novo, #sair, #gerencial-btn, #missao-btn, #perfil-btn, #voltar, #cartas-btn, #vale-cartas-btn, #duelos-btn, #jogadores-btn, #missoes-btn, #meus-decks-btn, #resgatar-btn, #dashboard-btn, .mesa {
+    #novo, #sair, #ranking-btn, #gerencial-btn, #missao-btn, #perfil-btn, #voltar, #cartas-btn, #vale-cartas-btn, #duelos-btn, #jogadores-btn, #missoes-btn, #meus-decks-btn, #resgatar-btn, #dashboard-btn, .mesa {
         visibility: hidden;
     }
 }
@@ -128,7 +132,7 @@ button {
     font-size: 14px !important;
 }
 
-#gerencial-btn, #missao-btn, #perfil-btn, #voltar, #cartas-btn, #vale-cartas-btn {
+#ranking-btn, #gerencial-btn, #missao-btn, #perfil-btn, #voltar, #cartas-btn, #vale-cartas-btn {
     border-left: 5px solid #ff8c1a !important;
 }
 
@@ -146,6 +150,15 @@ button {
 }
 
 #gerencial-btn{
+    width: 10%;
+    text-align: left;
+    position: absolute;
+    left: 8% !important;
+    bottom: 55%;
+    z-index: 2;
+}
+
+#ranking-btn{
     width: 10%;
     text-align: left;
     position: absolute;
@@ -334,7 +347,7 @@ button {
     padding: 10px !important;
 }
 
-#duelos, #decks, #deck-content, #meu-perfil, #novo-deck, #resgate, #novo-duelo, #juntar-se, #cartas-content, #vale-cartas-content, #duelos-content, #jogadores-content, #missoes-content {
+#duelos, #decks, #deck-content, #meu-perfil, #novo-deck, #resgate, #novo-duelo, #juntar-se, #cartas-content, #vale-cartas-content, #duelos-content, #jogadores-content, #missoes-content, #ranking-geral {
     padding: 5% 0;
     height: 90% !important;
     width: 100% !important;

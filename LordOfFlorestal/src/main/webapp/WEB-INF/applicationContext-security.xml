@@ -18,6 +18,7 @@
         <intercept-url pattern="/novo-deck.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>
         <intercept-url pattern="/novo-duelo.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>
         <intercept-url pattern="/perfil.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>
+        <intercept-url pattern="/ranking.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>
         <intercept-url pattern="/resgate.xhtml" access="ROLE_LORD, ROLE_ALUNO"/>
         <form-login login-page="/login.xhtml" always-use-default-target="true" default-target-url="/dashboard.xhtml" authentication-failure-url="/login.xhtml?login_error=1" />
         <logout />

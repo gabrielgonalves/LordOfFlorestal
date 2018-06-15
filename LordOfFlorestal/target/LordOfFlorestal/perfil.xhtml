@@ -29,7 +29,7 @@
                                     </div>
                                     <p:graphicImage library="img" name="#{perfilBean.jogador.imagem}" width="150" class="user-img" />
                                     <br/>
-                                        <h:outputText value="#{perfilBean.jogador.xp} pts" style="font-size: 10px; font-style: italic" />
+                                    <h:outputText value="#{perfilBean.jogador.xp} pts" style="font-size: 10px; font-style: italic" />
                                     <br/>
                                     <br/>
                                     <p:fileUpload mode="simple" skinSimple="true" label="Escolher" value="#{perfilBean.img}" />
@@ -57,6 +57,23 @@
                                     </p:inplace> 
                                 </div>
                             </div>
+                        </div>
+                    </p:panel>
+                </div>
+                <div class="ui-g-12">
+                    <p:panel id="badges" header="Suas conquistas" >
+                        <div class="scroll">
+                            <p:outputPanel autoUpdate="true">
+                                <ui:repeat var="badge" value="#{perfilBean.jogador.badges}">
+                                    <p:panel class="item">
+                                        <center>
+                                            <p:graphicImage title="#{badge.descricao}" library="badges" name="#{badge.img}" width="100" />
+                                            <br/>
+                                            <h:outputText value="#{badge.nome}" style="font-weight: bold" />
+                                        </center>
+                                    </p:panel>
+                                </ui:repeat>
+                            </p:outputPanel>
                         </div>
                     </p:panel>
                 </div>

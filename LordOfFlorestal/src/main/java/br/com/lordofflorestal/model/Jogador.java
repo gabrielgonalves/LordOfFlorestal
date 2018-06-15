@@ -27,11 +27,14 @@ public class Jogador implements Serializable {
     private EstatisticaJogador estatisticaJogador;
     private List<Carta> cartas;
     private int xp;
+    private List<Badge> badges;
+    private Badge badge;
 
     public Jogador() {
         cartas = new ArrayList();
         estatisticaJogador = new EstatisticaJogador();
         xp = 0;
+        badges = new ArrayList();
     }
 
     public Jogador(String nome, int matricula, String email, String login, String senha, String imagem, TipoJogador tipoJogador, int anoAdmissao, EstatisticaJogador estatisticaJogador, List<Carta> cartas) {
@@ -136,9 +139,9 @@ public class Jogador implements Serializable {
     }
 
     public String getNivel() {
-        if (xp > 100000) {
+        if (xp >= 15000) {
             return "Graduado(a)";
-        } else if (xp >= 50000) {
+        } else if (xp >= 5000) {
             return "Formando(a)";
         } else if (xp >= 1000) {
             return "Veterano(a)";
@@ -157,12 +160,28 @@ public class Jogador implements Serializable {
             return 500 - xp;
         } else if (xp < 1000) {
             return 1000 - xp;
-        } else if (xp < 50000) {
-            return 50000 - xp;
-        } else if (xp < 100000) {
-            return 100000 - xp;
+        } else if (xp < 5000) {
+            return 5000 - xp;
+        } else if (xp < 15000) {
+            return 15000 - xp;
         }
         return 0;
+    }
+
+    public List<Badge> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(List<Badge> badge) {
+        this.badges = badge;
+    }
+
+    public Badge getBadge() {
+        return badge;
+    }
+
+    public void setBadge(Badge badge) {
+        this.badge = badge;
     }
 
     @Override

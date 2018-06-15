@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/layoutNovo.xhtml">
+
+    <f:metadata>
+        <f:event listener="#{indexBean.preRender}" type="preRenderView" />
+    </f:metadata>
+
+    <ui:define name="conteudo">
+        <h:form prependId="false">
+            <div class="ui-fluid" id="ranking-geral">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <p:panel>
+                            <h3 style="text-align: center">Você está em #{indexBean.posicao()}º lugar</h3>
+                        </p:panel>
+                        <p:dataList id="ranking" itemStyleClass="teste" value="#{indexBean.ranking}" var="user" type="definition" >
+                            <f:facet name="header">
+                                Ranking Geral
+                            </f:facet>
+                            <div class="ui-g">
+                                <div class="ui-g-12">
+                                    <div class="ui-g-5">
+                                        <h:outputText value="#{user.login}" style="font-weight: bold;" />
+                                        <h:outputText value="#{user.xp} pts" style="float: right !important;" />
+                                    </div>
+                                    <div class="ui-g-7">
+                                        <div class="scroll">
+                                            <p:outputPanel autoUpdate="true">
+                                                <ui:repeat var="badge" value="#{indexBean.buscaBadge(user.matricula)}">
+                                                    <p:panel class="item">
+                                                        <center>
+                                                            <p:graphicImage title="#{badge.descricao}" library="badges" name="#{badge.img}" width="50" />
+                                                        </center>
+                                                    </p:panel>
+                                                </ui:repeat>
+                                            </p:outputPanel>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p:dataList>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -44,6 +44,7 @@ br/com/lordofflorestal/util/FileUploadUtil.class
 br/com/lordofflorestal/rn/JogadorRN.class
 br/com/lordofflorestal/bean/MenuBean.class
 br/com/lordofflorestal/util/comparator/DueloComparator.class
+br/com/lordofflorestal/model/Badge.class
 br/com/lordofflorestal/rn/DueloRN$1.class
 br/com/lordofflorestal/util/ConnectionFactory.class
 br/com/lordofflorestal/bean/CartaBean.class
